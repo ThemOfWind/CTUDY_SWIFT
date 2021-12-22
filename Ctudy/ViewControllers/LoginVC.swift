@@ -7,18 +7,71 @@
 
 import UIKit
 
-class LoginVC: UIViewController {
+class LoginVC: UIViewController, UIGestureRecognizerDelegate {
     
+    @IBOutlet weak var loginView: UIView!
     @IBOutlet weak var userName: UITextField!
     @IBOutlet weak var userPw: UITextField!
     @IBOutlet weak var loginBtn: UIButton!
     @IBOutlet weak var goToSignUpBtn: UIButton!
+    var keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
+    var distance: Double = 0
     
+    // MARK: - overrid methods
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
         self.config()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("LoginVC - viewWillAppear() called")
+        // 키보드 올라가는 이벤트를 받는 처리
+        // 키보드 노티 등록
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShowHandle(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHideHandle), name: UIResponder.keyboardDidHideNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        print("LoginVC - viewWillDisappear() called")
+        // 키보드 노티 해제
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
+    }
+    
+    // MARK: - objc and fileprivate methods
+    @objc func onLoginBtnClicked() {
+        print("LoginVC - onLoginBtnClicked() called")
+    }
+    
+    @objc func keyboardWillShowHandle(notification: NSNotification) {
+        print("LoginVC - keyboardWillShowHandle() called")
+        // 키보드 사이즈 가져오기
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            
+            print("keyboardSize.height: \(keyboardSize.height)")
+            print("loginBtn.frame.origin.y: \(loginBtn.frame.origin.y)")
+            
+            if (keyboardSize.height <= loginBtn.frame.origin.y) {
+                distance = keyboardSize.height - loginBtn.frame.origin.y
+                print("keyboard covered searchbtn / distance: \(distance)")
+                print("changed upvalue: \(distance - loginBtn.frame.height)")
+
+                self.view.frame.origin.y = distance - loginBtn.frame.height + 30
+            }
+        }
+    }
+    
+    @objc func keyboardWillHideHandle() {
+        print("LoginVC - keyboardWillHideHandle() called")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.0001, execute: {
+            // 포커싱 해제
+            self.view.frame.origin.y = 0
+        })
     }
     
     fileprivate func config() {
@@ -28,18 +81,17 @@ class LoginVC: UIViewController {
         
         // add Btn methods
         loginBtn.addTarget(self, action: #selector(onLoginBtnClicked), for: .touchUpInside)
-    }
-    
-    
-    // MARK: - objc methods
-    @objc func onLoginBtnClicked() {
-        print("LoginVC - onLoginBtnClicked() called")
         
+        // delegate
+        self.keyboardDismissTabGesture.delegate = self
+        
+        // 제스처
+        self.view.addGestureRecognizer(keyboardDismissTabGesture)
     }
     
     // MARK: - @IBACiton methods
     @IBAction func editingChanged(_ sender: Any) {
-        if userName.text!.isEmpty || userPw.text!.isEmpty{
+        if userName.text!.isEmpty || userPw.text!.isEmpty {
             loginBtn.isEnabled = false
         } else {
             loginBtn.isEnabled = true
@@ -47,5 +99,24 @@ class LoginVC: UIViewController {
     }
     
     @IBAction func unwindLoginVC(_ segue: UIStoryboardSegue) {}
+    
+    // MARK: - UIGestureRecognizerDelegate
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        print("LoginVC - gestureRecognizer shouldReceive() called")
+        
+        if touch.view?.isDescendant(of: userName) == true {
+            print("registerName touched!")
+            return false
+        }
+        else if touch.view?.isDescendant(of: userPw) == true {
+            print("registerUserName touched!")
+            return false
+        }
+        
+        else {
+            view.endEditing(true)
+            return true
+        }
+    }
 }
 

@@ -27,8 +27,37 @@ final class AlamofireManager {
         session = Session(interceptor: interceptors)
     }
     
+    // 아이디 중복체크
+    func getUserNameCheck(username username: String, completion: @escaping (Result<UserNameCheckResponse, Errors>) -> Void) {
+        
+        print("AlamofireManger - getUserNameCheck() called / parameters = [username : \(username)]")
+        
+        self.session
+            .request(AuthRouter.usernamecheck(username: username))
+            .validate(statusCode: 200..<401)
+            .responseJSON(completionHandler: { response in
+                guard let responseValue = response.value else { return }
+                let responseJson = JSON(responseValue)
+                
+                print("responseJson.count : \(responseJson.count)")
+                
+                guard let result = responseJson["result"].bool else { return }
+                
+                // 사용가능한 아이디일때
+                if result {
+                    guard let username = responseJson["response"]["username"].string else { return }
+                    let jsonData = UserNameCheckResponse(result: result, username: username)
+                    completion(.success(jsonData))
+                }
+                // 중복 아이디일때
+                else {
+                    completion(.failure(.duplicatedUserName))
+                }
+            })
+    }
+    
     // 회원가입
-    func postSignUp(name name: String, username username: String, password password: String, completion: @escaping (Result<Response, Errors>) -> Void) {
+    func postSignUp(name name: String, username username: String, password password: String, completion: @escaping (Result<SignUpResponse, Errors>) -> Void) {
         
         print("AlamofireManager - postSignUp() called / parameters = [name : \(name), username : \(username), password : \(password)]")
         
@@ -47,7 +76,7 @@ final class AlamofireManager {
                       let name = responseJson["response"]["name"].string,
                       let username = responseJson["response"]["username"].string else { return }
                 
-                let jsonData = Response(result: result, username: username, name: name)
+                let jsonData = SignUpResponse(result: result, name: name, username: username)
                 
                 if jsonData.result {
                     completion(.success(jsonData))

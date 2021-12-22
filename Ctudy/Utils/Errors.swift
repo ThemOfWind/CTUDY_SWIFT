@@ -8,6 +8,6 @@
 import Foundation
 
 enum Errors : String, Error {
-    case duplicatedUserName = "중복된 아이디입니다."
+    case duplicatedUserName = "이미 사용된 아이디(이메일)입니다."
     case noSignUp = "회원가입에 실패하였습니다."
 }

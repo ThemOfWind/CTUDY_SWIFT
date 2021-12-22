@@ -22,8 +22,10 @@
 		5AC1CE732765CADC009586B2 /* RoomRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC1CE722765CADC009586B2 /* RoomRouter.swift */; };
 		5AC1CE772765CB0D009586B2 /* CouponRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC1CE762765CB0D009586B2 /* CouponRouter.swift */; };
 		5AC1CE792765CB20009586B2 /* MemberRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC1CE782765CB20009586B2 /* MemberRouter.swift */; };
-		5AC1CE7C2765D5E8009586B2 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC1CE7B2765D5E8009586B2 /* Response.swift */; };
+		5AC1CE7C2765D5E8009586B2 /* SignUpResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC1CE7B2765D5E8009586B2 /* SignUpResponse.swift */; };
 		5AC1CE7E2765D6B7009586B2 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC1CE7D2765D6B7009586B2 /* Errors.swift */; };
+		5ACF0C9327673065003907E9 /* LogInResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACF0C9227673065003907E9 /* LogInResponse.swift */; };
+		5ACF0C96276733F7003907E9 /* UserNameCheckResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACF0C95276733F7003907E9 /* UserNameCheckResponse.swift */; };
 		5ADDFC792765B983001291DD /* AlamofireManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADDFC782765B983001291DD /* AlamofireManager.swift */; };
 		5ADDFC7B2765BED9001291DD /* BaseInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADDFC7A2765BED9001291DD /* BaseInterceptor.swift */; };
 		5E8F0DACD2EAF7F0B8D95D57 /* Pods_Ctudy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AEB34C08528B3EDE17B79DD /* Pods_Ctudy.framework */; };
@@ -49,8 +51,10 @@
 		5AC1CE722765CADC009586B2 /* RoomRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomRouter.swift; sourceTree = "<group>"; };
 		5AC1CE762765CB0D009586B2 /* CouponRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponRouter.swift; sourceTree = "<group>"; };
 		5AC1CE782765CB20009586B2 /* MemberRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberRouter.swift; sourceTree = "<group>"; };
-		5AC1CE7B2765D5E8009586B2 /* Response.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		5AC1CE7B2765D5E8009586B2 /* SignUpResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpResponse.swift; sourceTree = "<group>"; };
 		5AC1CE7D2765D6B7009586B2 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		5ACF0C9227673065003907E9 /* LogInResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInResponse.swift; sourceTree = "<group>"; };
+		5ACF0C95276733F7003907E9 /* UserNameCheckResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameCheckResponse.swift; sourceTree = "<group>"; };
 		5ADDFC782765B983001291DD /* AlamofireManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireManager.swift; sourceTree = "<group>"; };
 		5ADDFC7A2765BED9001291DD /* BaseInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseInterceptor.swift; sourceTree = "<group>"; };
 		7AEB34C08528B3EDE17B79DD /* Pods_Ctudy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ctudy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -147,9 +151,19 @@
 		5AC1CE7A2765D4DD009586B2 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				5AC1CE7B2765D5E8009586B2 /* Response.swift */,
+				5ACF0C942767338D003907E9 /* Auths */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		5ACF0C942767338D003907E9 /* Auths */ = {
+			isa = PBXGroup;
+			children = (
+				5AC1CE7B2765D5E8009586B2 /* SignUpResponse.swift */,
+				5ACF0C95276733F7003907E9 /* UserNameCheckResponse.swift */,
+				5ACF0C9227673065003907E9 /* LogInResponse.swift */,
+			);
+			path = Auths;
 			sourceTree = "<group>";
 		};
 		5ADDFC772765B970001291DD /* API */ = {
@@ -291,11 +305,13 @@
 				5AC1CE702765C9E0009586B2 /* AuthRouter.swift in Sources */,
 				5AC1CE732765CADC009586B2 /* RoomRouter.swift in Sources */,
 				5AA86D0B2761005D0067620C /* MainVC.swift in Sources */,
+				5ACF0C96276733F7003907E9 /* UserNameCheckResponse.swift in Sources */,
 				5ADDFC7B2765BED9001291DD /* BaseInterceptor.swift in Sources */,
-				5AC1CE7C2765D5E8009586B2 /* Response.swift in Sources */,
+				5AC1CE7C2765D5E8009586B2 /* SignUpResponse.swift in Sources */,
 				5A31966E2766045D007400EE /* SignUpSuccessVC.swift in Sources */,
 				5A58EE9A275F7E83000A1A39 /* AppDelegate.swift in Sources */,
 				5ABB95C22760F697003B4764 /* SignUpVC.swift in Sources */,
+				5ACF0C9327673065003907E9 /* LogInResponse.swift in Sources */,
 				5ADDFC792765B983001291DD /* AlamofireManager.swift in Sources */,
 				5A58EE9C275F7E83000A1A39 /* SceneDelegate.swift in Sources */,
 				5AC1CE772765CB0D009586B2 /* CouponRouter.swift in Sources */,

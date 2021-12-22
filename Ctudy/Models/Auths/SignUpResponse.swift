@@ -6,10 +6,9 @@
 //
 
 import Foundation
-import SwiftyJSON
 
-struct Response : Codable {
+struct SignUpResponse : Codable {
     var result : Bool
-    var username : String
     var name : String
+    var username : String
 }

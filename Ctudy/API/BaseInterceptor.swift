@@ -45,7 +45,6 @@ class BaseInterceptor : RequestInterceptor {
         let data = ["statusCode" : statusCode ]
         
         //노티피케이션을 이용하여 fail정보 넘기기
-        
         completion(.doNotRetry)
     }
 }
