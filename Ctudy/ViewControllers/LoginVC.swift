@@ -11,7 +11,7 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var loginView: UIView!
     @IBOutlet weak var userName: UITextField!
-    @IBOutlet weak var userPw: UITextField!
+    @IBOutlet weak var password: UITextField!
     @IBOutlet weak var loginBtn: UIButton!
     @IBOutlet weak var goToSignUpBtn: UIButton!
     var keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
@@ -45,6 +45,20 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
     // MARK: - objc and fileprivate methods
     @objc func onLoginBtnClicked() {
         print("LoginVC - onLoginBtnClicked() called")
+        
+        AlamofireManager.shared.postSignIn(username: userName.text!, password: password.text!, completion: { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let memberData):
+                print("LoginVC - postSignIn.success")
+                
+                self.performSegue(withIdentifier: "MainVC", sender: nil)
+                
+            case .failure(let error):
+                print("LoginVC - postSignIn.failure / error : \(error)")
+                self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
+            }
+        })
     }
     
     @objc func keyboardWillShowHandle(notification: NSNotification) {
@@ -91,7 +105,7 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: - @IBACiton methods
     @IBAction func editingChanged(_ sender: Any) {
-        if userName.text!.isEmpty || userPw.text!.isEmpty {
+        if userName.text!.isEmpty || password.text!.isEmpty {
             loginBtn.isEnabled = false
         } else {
             loginBtn.isEnabled = true
@@ -107,13 +121,10 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
         if touch.view?.isDescendant(of: userName) == true {
             print("registerName touched!")
             return false
-        }
-        else if touch.view?.isDescendant(of: userPw) == true {
+        } else if touch.view?.isDescendant(of: password) == true {
             print("registerUserName touched!")
             return false
-        }
-        
-        else {
+        } else {
             view.endEditing(true)
             return true
         }

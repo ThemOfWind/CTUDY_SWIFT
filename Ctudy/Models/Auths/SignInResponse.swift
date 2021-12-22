@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct LogInResponse : Codable {
+struct SignInResponse : Codable {
     var result : Bool
     var token : String
 }

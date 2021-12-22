@@ -104,26 +104,26 @@ class SignUpVC : UIViewController, UITextFieldDelegate, UIGestureRecognizerDeleg
                 print("SignUpVC - getUserNameCheck.success")
                 // 사용가능 문구 띄우기
                 //self.view.makeToast("사용가능한 아이디(이메일)입니다.", duration: 1.0, position: .center)
-                self.trueMsgSetting(msgLabel: self.userNameMsg, MsgString: "사용가능한 아이디(이메일)입니다.")
+                self.trueMsgSetting(msgLabel: self.userNameMsg, msgString: "사용가능한 아이디(이메일)입니다.")
             case .failure(let error):
                 print("SignUpVC - getUserNameCheck.failure / error : \(error)")
                 // 중복사용 문구 띄우기
                 //self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
-                self.falseMsgSetting(msgLabel: self.userNameMsg, MsgString: error.rawValue)
+                self.falseMsgSetting(msgLabel: self.userNameMsg, msgString: error.rawValue)
             }
         })
     }
     
     // textField 맞게 입력 되었을때
-    fileprivate func trueMsgSetting(msgLabel: UILabel, MsgString: String) {
+    fileprivate func trueMsgSetting(msgLabel: UILabel, msgString: String) {
         msgLabel.textColor = .systemGreen
-        msgLabel.text = MsgString
+        msgLabel.text = msgString
     }
     
     // textField 잘못 입력 되었을때
-    fileprivate func falseMsgSetting(msgLabel: UILabel, MsgString: String) {
+    fileprivate func falseMsgSetting(msgLabel: UILabel, msgString: String) {
         msgLabel.textColor = .systemRed
-        msgLabel.text = MsgString
+        msgLabel.text = msgString
     }
     
     // 회원가입 버튼 활성화 & 비활성화 체크
@@ -162,7 +162,7 @@ class SignUpVC : UIViewController, UITextFieldDelegate, UIGestureRecognizerDeleg
     fileprivate func passwordValueChecked() {
         guard registerPassword.text != "" else {
             if registerPasswordChk.text != "" {
-                falseMsgSetting(msgLabel: passwordChkMsg, MsgString: "비밀번호가 일치하지 않습니다.")
+                falseMsgSetting(msgLabel: passwordChkMsg, msgString: "비밀번호가 일치하지 않습니다.")
             } else {
                 passwordChkMsg.text = ""
             }
@@ -170,10 +170,10 @@ class SignUpVC : UIViewController, UITextFieldDelegate, UIGestureRecognizerDeleg
         }
         
         if registerPassword.text == registerPasswordChk.text {
-            trueMsgSetting(msgLabel: passwordChkMsg, MsgString: "비밀번호가 일치합니다.")
+            trueMsgSetting(msgLabel: passwordChkMsg, msgString: "비밀번호가 일치합니다.")
             passwordOKFlag = true
         } else {
-            falseMsgSetting(msgLabel: passwordChkMsg, MsgString: "비밀번호가 일치하지 않습니다.")
+            falseMsgSetting(msgLabel: passwordChkMsg, msgString: "비밀번호가 일치하지 않습니다.")
             passwordOKFlag = false
         }
     }
@@ -292,9 +292,9 @@ class SignUpVC : UIViewController, UITextFieldDelegate, UIGestureRecognizerDeleg
             nameOKFlag = isValidData(flag: "registerName", data: inputData)
             
             if nameOKFlag {
-                trueMsgSetting(msgLabel: msgLabel, MsgString: "사용가능한 이름입니다.")
+                trueMsgSetting(msgLabel: msgLabel, msgString: "사용가능한 이름입니다.")
             } else {
-                falseMsgSetting(msgLabel: msgLabel, MsgString: "이름이 옳바르지 않습니다.")
+                falseMsgSetting(msgLabel: msgLabel, msgString: "이름이 옳바르지 않습니다.")
             }
         case registerUserName:
             usernameOKFlag = isValidData(flag: "registerUserName", data: inputData)
@@ -302,15 +302,15 @@ class SignUpVC : UIViewController, UITextFieldDelegate, UIGestureRecognizerDeleg
             if usernameOKFlag {
                 userNameChecked(inputUserName: inputData)
             } else {
-                falseMsgSetting(msgLabel: msgLabel, MsgString: "아이디(이메일)가 옳바르지 않습니다.")
+                falseMsgSetting(msgLabel: msgLabel, msgString: "아이디(이메일)가 옳바르지 않습니다.")
             }
         case registerPassword:
             let OKFlag = isValidData(flag: "registerPassword", data: inputData)
             
             if OKFlag {
-                trueMsgSetting(msgLabel: msgLabel, MsgString: "사용가능한 비밀번호 입니다.")
+                trueMsgSetting(msgLabel: msgLabel, msgString: "사용가능한 비밀번호 입니다.")
             } else {
-                falseMsgSetting(msgLabel: msgLabel, MsgString: "비밀번호가 옳바르지 않습니다.")
+                falseMsgSetting(msgLabel: msgLabel, msgString: "비밀번호가 옳바르지 않습니다.")
             }
             
             passwordValueChecked()

@@ -24,7 +24,7 @@
 		5AC1CE792765CB20009586B2 /* MemberRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC1CE782765CB20009586B2 /* MemberRouter.swift */; };
 		5AC1CE7C2765D5E8009586B2 /* SignUpResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC1CE7B2765D5E8009586B2 /* SignUpResponse.swift */; };
 		5AC1CE7E2765D6B7009586B2 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC1CE7D2765D6B7009586B2 /* Errors.swift */; };
-		5ACF0C9327673065003907E9 /* LogInResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACF0C9227673065003907E9 /* LogInResponse.swift */; };
+		5ACF0C9327673065003907E9 /* SignInResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACF0C9227673065003907E9 /* SignInResponse.swift */; };
 		5ACF0C96276733F7003907E9 /* UserNameCheckResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACF0C95276733F7003907E9 /* UserNameCheckResponse.swift */; };
 		5ADDFC792765B983001291DD /* AlamofireManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADDFC782765B983001291DD /* AlamofireManager.swift */; };
 		5ADDFC7B2765BED9001291DD /* BaseInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADDFC7A2765BED9001291DD /* BaseInterceptor.swift */; };
@@ -53,7 +53,7 @@
 		5AC1CE782765CB20009586B2 /* MemberRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberRouter.swift; sourceTree = "<group>"; };
 		5AC1CE7B2765D5E8009586B2 /* SignUpResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpResponse.swift; sourceTree = "<group>"; };
 		5AC1CE7D2765D6B7009586B2 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
-		5ACF0C9227673065003907E9 /* LogInResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInResponse.swift; sourceTree = "<group>"; };
+		5ACF0C9227673065003907E9 /* SignInResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInResponse.swift; sourceTree = "<group>"; };
 		5ACF0C95276733F7003907E9 /* UserNameCheckResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameCheckResponse.swift; sourceTree = "<group>"; };
 		5ADDFC782765B983001291DD /* AlamofireManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireManager.swift; sourceTree = "<group>"; };
 		5ADDFC7A2765BED9001291DD /* BaseInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseInterceptor.swift; sourceTree = "<group>"; };
@@ -161,7 +161,7 @@
 			children = (
 				5AC1CE7B2765D5E8009586B2 /* SignUpResponse.swift */,
 				5ACF0C95276733F7003907E9 /* UserNameCheckResponse.swift */,
-				5ACF0C9227673065003907E9 /* LogInResponse.swift */,
+				5ACF0C9227673065003907E9 /* SignInResponse.swift */,
 			);
 			path = Auths;
 			sourceTree = "<group>";
@@ -311,7 +311,7 @@
 				5A31966E2766045D007400EE /* SignUpSuccessVC.swift in Sources */,
 				5A58EE9A275F7E83000A1A39 /* AppDelegate.swift in Sources */,
 				5ABB95C22760F697003B4764 /* SignUpVC.swift in Sources */,
-				5ACF0C9327673065003907E9 /* LogInResponse.swift in Sources */,
+				5ACF0C9327673065003907E9 /* SignInResponse.swift in Sources */,
 				5ADDFC792765B983001291DD /* AlamofireManager.swift in Sources */,
 				5A58EE9C275F7E83000A1A39 /* SceneDelegate.swift in Sources */,
 				5AC1CE772765CB0D009586B2 /* CouponRouter.swift in Sources */,

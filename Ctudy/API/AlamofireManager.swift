@@ -29,12 +29,11 @@ final class AlamofireManager {
     
     // 아이디 중복체크
     func getUserNameCheck(username username: String, completion: @escaping (Result<UserNameCheckResponse, Errors>) -> Void) {
-        
         print("AlamofireManger - getUserNameCheck() called / parameters = [username : \(username)]")
         
         self.session
             .request(AuthRouter.usernamecheck(username: username))
-            .validate(statusCode: 200..<401)
+            .validate(statusCode: 200..<501)
             .responseJSON(completionHandler: { response in
                 guard let responseValue = response.value else { return }
                 let responseJson = JSON(responseValue)
@@ -58,18 +57,15 @@ final class AlamofireManager {
     
     // 회원가입
     func postSignUp(name name: String, username username: String, password password: String, completion: @escaping (Result<SignUpResponse, Errors>) -> Void) {
-        
         print("AlamofireManager - postSignUp() called / parameters = [name : \(name), username : \(username), password : \(password)]")
         
         self.session
             .request(AuthRouter.signup(name: name, username: username, password: password))
-            .validate(statusCode: 200..<401)
+            .validate(statusCode: 200..<501)
             .responseJSON(completionHandler: { response in
                 guard let responseValue = response.value else { return }
                 let responseJson = JSON(responseValue)
-//                let jsonArray = responseJson["result", "response"]
                 
-//                print("jsonArray.count : \(jsonArray.count)")
                 print("responseJson.count : \(responseJson.count)")
                 
                 guard let result = responseJson["result"].bool,
@@ -88,6 +84,29 @@ final class AlamofireManager {
     }
     
     // 로그인
-    
-    
+    func postSignIn(username: String, password: String, completion: @escaping(Result<SignInResponse, Errors>) -> Void) {
+        print("AlamofireManager - postSignIn() called / parameters = [username : \(username), password : \(password)]")
+        
+        self.session
+            .request(AuthRouter.signin(username: username, password: password))
+            .validate(statusCode: 200..<501)
+            .responseJSON(completionHandler: { response in
+                guard let responseValue = response.value else {
+                    print("responseValue = \(response.value)")
+                    return }
+                let responseJson = JSON(responseValue)
+                
+                guard let result = responseJson["result"].bool,
+                      let token = responseJson["response"]["access_token"].string else { return }
+                
+                let jsonData = SignInResponse(result: result, token: token)
+                
+                if jsonData.result {
+                    completion(.success(jsonData))
+                } else {
+                    completion(.failure(.noSignIn))
+                }
+                
+            })
+    }
 }
