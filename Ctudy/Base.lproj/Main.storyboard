@@ -113,8 +113,9 @@
                         <outlet property="goToSignUpBtn" destination="xvG-kw-i90" id="DvR-Ho-vne"/>
                         <outlet property="loginBtn" destination="7gN-kk-bjO" id="ede-KO-6fj"/>
                         <outlet property="loginView" destination="wb7-r3-eqr" id="srz-2o-jFf"/>
+                        <outlet property="password" destination="Iok-Yw-mY2" id="DAz-Gc-hfv"/>
                         <outlet property="userName" destination="V9M-Ia-TKE" id="cmv-7h-ryJ"/>
-                        <outlet property="userPw" destination="Iok-Yw-mY2" id="GK1-IR-PSu"/>
+                        <segue destination="q4H-9d-hxk" kind="show" identifier="MainVC" id="6G6-5J-R5N"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
