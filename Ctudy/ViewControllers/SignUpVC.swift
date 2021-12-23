@@ -193,7 +193,6 @@ class SignUpVC : UIViewController, UITextFieldDelegate, UIGestureRecognizerDeleg
                 self.memberName = memberData.name
                 self.memberUserName = memberData.username
                 self.performSegue(withIdentifier: "signUpSuccessVC", sender: nil)
-                
             case .failure(let error):
                 print("SignUpVC - postSignUp.failure / error : \(error)")
                 self.view.makeToast(error.rawValue, duration: 1.0, position: .center)

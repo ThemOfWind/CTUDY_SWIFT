@@ -17,14 +17,19 @@ final class AlamofireManager {
     let interceptors = Interceptor(interceptors: [BaseInterceptor()])
     
     // 로거 설정
-    
+    let monitors = [
+        MyStatusLogger()
+    ] as [EventMonitor]
     
     // 세션 설정
     var session : Session
     
     
     private init() {
-        session = Session(interceptor: interceptors)
+        session = Session(
+            interceptor: interceptors
+            , eventMonitors: monitors
+        )
     }
     
     // 아이디 중복체크
@@ -96,8 +101,14 @@ final class AlamofireManager {
                     return }
                 let responseJson = JSON(responseValue)
                 
-                guard let result = responseJson["result"].bool,
-                      let token = responseJson["response"]["access_token"].string else { return }
+                guard let result = responseJson["result"].bool else { return }
+                var token : String = ""
+                
+                if result {
+                    if let jtoken = responseJson["response"]["access_token"].string {
+                        token = jtoken
+                    } else { return }
+                }
                 
                 let jsonData = SignInResponse(result: result, token: token)
                 

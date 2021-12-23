@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LoginVC: UIViewController, UIGestureRecognizerDelegate {
+class LoginVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var loginView: UIView!
     @IBOutlet weak var userName: UITextField!
@@ -16,6 +16,7 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var goToSignUpBtn: UIButton!
     var keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
     var distance: Double = 0
+    var loginViewY: Double!
     
     // MARK: - overrid methods
     override func viewDidLoad() {
@@ -27,19 +28,19 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("LoginVC - viewWillAppear() called")
+        print("LoginVC - viewWillAppear() called / animated : \(animated)")
         // 키보드 올라가는 이벤트를 받는 처리
         // 키보드 노티 등록
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShowHandle(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHideHandle), name: UIResponder.keyboardDidHideNotification, object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShowHandle(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHideHandle), name: UIResponder.keyboardDidHideNotification, object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        print("LoginVC - viewWillDisappear() called")
+        print("LoginVC - viewWillDisappear() called / animated : \(animated)")
         // 키보드 노티 해제
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
+        //NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        //NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
     }
     
     // MARK: - objc and fileprivate methods
@@ -65,39 +66,41 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
         print("LoginVC - keyboardWillShowHandle() called")
         // 키보드 사이즈 가져오기
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            
             print("keyboardSize.height: \(keyboardSize.height)")
             print("loginBtn.frame.origin.y: \(loginBtn.frame.origin.y)")
-            
+
             if (keyboardSize.height <= loginBtn.frame.origin.y) {
                 distance = keyboardSize.height - loginBtn.frame.origin.y
                 print("keyboard covered searchbtn / distance: \(distance)")
                 print("changed upvalue: \(distance - loginBtn.frame.height)")
 
-                self.view.frame.origin.y = distance - loginBtn.frame.height + 30
+                self.loginView.frame.origin.y = distance - loginBtn.frame.height + loginViewY
             }
         }
     }
     
-    @objc func keyboardWillHideHandle() {
-        print("LoginVC - keyboardWillHideHandle() called")
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.0001, execute: {
+    @objc func keyboardWillHideHandle(noti: Notification) {
+        print("LoginVC - keyboardWillHideHandle() called / loginViewY : \(loginViewY)")
+        UIView.animate(withDuration: noti.userInfo![UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval) {
             // 포커싱 해제
-            self.view.frame.origin.y = 0
-        })
+            self.loginView.frame.origin.y = self.loginViewY
+        }
     }
     
     fileprivate func config() {
         // UI
-        loginBtn.layer.cornerRadius = 5
-        loginBtn.isEnabled = false
+        self.loginBtn.layer.cornerRadius = 5
+        self.loginBtn.isEnabled = false
+        self.loginViewY = self.loginView.frame.origin.y
+        print("loginViewY : \(self.loginViewY)")
         
         // add Btn methods
-        loginBtn.addTarget(self, action: #selector(onLoginBtnClicked), for: .touchUpInside)
+        self.loginBtn.addTarget(self, action: #selector(onLoginBtnClicked), for: .touchUpInside)
         
         // delegate
         self.keyboardDismissTabGesture.delegate = self
+        self.userName.delegate = self
+        self.password.delegate = self
         
         // 제스처
         self.view.addGestureRecognizer(keyboardDismissTabGesture)
@@ -128,6 +131,13 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate {
             view.endEditing(true)
             return true
         }
+    }
+    
+    // MARK: - textField delegate
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        self.dismiss(animated: true, completion: nil)
+        return true
     }
 }
 
