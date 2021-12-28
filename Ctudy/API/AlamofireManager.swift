@@ -8,6 +8,7 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
+import UIKit
 
 final class AlamofireManager {
     // 싱글턴 적용
@@ -69,9 +70,8 @@ final class AlamofireManager {
             .validate(statusCode: 200..<501)
             .responseJSON(completionHandler: { response in
                 guard let responseValue = response.value else { return }
-                let responseJson = JSON(responseValue)
                 
-                print("responseJson.count : \(responseJson.count)")
+                let responseJson = JSON(responseValue)
                 
                 guard let result = responseJson["result"].bool,
                       let name = responseJson["response"]["name"].string,
@@ -97,11 +97,12 @@ final class AlamofireManager {
             .validate(statusCode: 200..<501)
             .responseJSON(completionHandler: { response in
                 guard let responseValue = response.value else {
-                    print("responseValue = \(response.value)")
                     return }
+                
                 let responseJson = JSON(responseValue)
                 
                 guard let result = responseJson["result"].bool else { return }
+                
                 var token : String = ""
                 
                 if result {
@@ -118,6 +119,28 @@ final class AlamofireManager {
                     completion(.failure(.noSignIn))
                 }
                 
+            })
+    }
+    
+    // 로그아웃
+    func getLogout(completion: @escaping(Result<Bool, Errors>) -> Void) {
+        self.session
+            .request(AuthRouter.logout)
+            .validate(statusCode: 200..<501)
+            .responseJSON(completionHandler: { response in
+                guard let responseValue = response.value else {
+                    return
+                }
+                
+                let responseJson = JSON(responseValue)
+                
+                guard let result = responseJson["result"].bool else { return }
+                
+                if result {
+                    completion(.success(result))
+                } else {
+                    completion(.failure(.noLogout))
+                }
             })
     }
 }

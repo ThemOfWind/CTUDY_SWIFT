@@ -13,12 +13,15 @@ class BaseInterceptor : RequestInterceptor {
     // 정상작동 시 응답 methods
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         print("BaseInterceptor - adapt() called")
-        
+
         var request = urlRequest
         
         // 헤더 추가
         request.addValue("application/json; charset=UTF-8", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json; charset=UTF-8", forHTTPHeaderField: "Accept")
+        
+        // tocken 추가
+        
         
         // 공통 파라미터 추가
 //        var dictionary = [String:String]()

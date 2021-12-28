@@ -7,70 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "63F3ADEF-897A-47FD-8501-2C0E8764D93D"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Ctudy/API/AlamofireManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
-            landmarkName = "postSignUp(name:username:password:completion:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "63F3ADEF-897A-47FD-8501-2C0E8764D93D - d37983b12eab2fa4"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in Ctudy.AlamofireManager.postSignUp(name: Swift.String, username: Swift.String, password: Swift.String, completion: (Swift.Result&lt;Ctudy.SignUpResponse, Ctudy.Errors&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "Ctudy"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/kimjieun/Documents/CTUDY_SWIFT/Ctudy/API/AlamofireManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "71"
-                  endingLineNumber = "71"
-                  offsetFromSymbolStart = "212">
-               </Location>
-               <Location
-                  uuid = "63F3ADEF-897A-47FD-8501-2C0E8764D93D - d37983b12eab2fa4"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Alamofire.DataResponse&lt;Any, Alamofire.AFError&gt;) -&gt; () in Ctudy.AlamofireManager.postSignUp(name: Swift.String, username: Swift.String, password: Swift.String, completion: (Swift.Result&lt;Ctudy.SignUpResponse, Ctudy.Errors&gt;) -&gt; ()) -&gt; ()"
-                  moduleName = "Ctudy"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/kimjieun/Documents/CTUDY_SWIFT/Ctudy/API/AlamofireManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "71"
-                  endingLineNumber = "71"
-                  offsetFromSymbolStart = "272">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "C49A55A4-D1FD-4B38-8099-178350214854"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Ctudy/API/AlamofireManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "69"
-            endingLineNumber = "69"
-            landmarkName = "postSignUp(name:username:password:completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "CA28FD21-4A93-4EE8-B5CC-E39508E3175C"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
@@ -78,8 +14,8 @@
             filePath = "Ctudy/API/BaseInterceptor.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
             landmarkName = "retry(_:for:dueTo:completion:)"
             landmarkType = "7">
          </BreakpointContent>
