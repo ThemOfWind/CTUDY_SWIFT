@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct UserNameCheckResponse : Codable {
-    var result : Bool
-    var username : String
+struct UserNameCheckResponse: Codable {
+    var result: Bool
+    var username: String
 }

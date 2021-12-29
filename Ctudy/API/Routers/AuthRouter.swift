@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-enum AuthRouter : URLRequestConvertible {
+enum AuthRouter: URLRequestConvertible {
     // logout(get), signin(post), signup(get, post)
     
     case signin(username: String, password: String) // 로그인

@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-class BaseInterceptor : RequestInterceptor {
+class BaseInterceptor: RequestInterceptor {
     
     // 정상작동 시 응답 methods
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
@@ -21,7 +21,9 @@ class BaseInterceptor : RequestInterceptor {
         request.addValue("application/json; charset=UTF-8", forHTTPHeaderField: "Accept")
         
         // tocken 추가
-        
+        if let accessToken = TokenManager().tokenLoad(API.SERVICEID, account: "accessToken") {
+            request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        } else { print("accesToken is nil") }
         
         // 공통 파라미터 추가
 //        var dictionary = [String:String]()
@@ -32,7 +34,7 @@ class BaseInterceptor : RequestInterceptor {
 //        } catch {
 //            print("error")
 //        }
-        
+        print("Authorization value: \(request.headers.value(for: "Authorization"))")
         completion(.success(request))
     }
     

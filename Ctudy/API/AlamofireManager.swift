@@ -35,7 +35,7 @@ final class AlamofireManager {
     
     // 아이디 중복체크
     func getUserNameCheck(username username: String, completion: @escaping (Result<UserNameCheckResponse, Errors>) -> Void) {
-        print("AlamofireManger - getUserNameCheck() called / parameters = [username : \(username)]")
+        print("AlamofireManger - getUserNameCheck() called / parameters = [username: \(username)]")
         
         self.session
             .request(AuthRouter.usernamecheck(username: username))
@@ -44,7 +44,7 @@ final class AlamofireManager {
                 guard let responseValue = response.value else { return }
                 let responseJson = JSON(responseValue)
                 
-                print("responseJson.count : \(responseJson.count)")
+                print("responseJson.count: \(responseJson.count)")
                 
                 guard let result = responseJson["result"].bool else { return }
                 
@@ -63,7 +63,7 @@ final class AlamofireManager {
     
     // 회원가입
     func postSignUp(name name: String, username username: String, password password: String, completion: @escaping (Result<SignUpResponse, Errors>) -> Void) {
-        print("AlamofireManager - postSignUp() called / parameters = [name : \(name), username : \(username), password : \(password)]")
+        print("AlamofireManager - postSignUp() called / parameters = [name: \(name), username: \(username), password: \(password)]")
         
         self.session
             .request(AuthRouter.signup(name: name, username: username, password: password))
@@ -90,7 +90,7 @@ final class AlamofireManager {
     
     // 로그인
     func postSignIn(username: String, password: String, completion: @escaping(Result<SignInResponse, Errors>) -> Void) {
-        print("AlamofireManager - postSignIn() called / parameters = [username : \(username), password : \(password)]")
+        print("AlamofireManager - postSignIn() called / parameters = [username: \(username), password: \(password)]")
         
         self.session
             .request(AuthRouter.signin(username: username, password: password))
@@ -103,18 +103,23 @@ final class AlamofireManager {
                 
                 guard let result = responseJson["result"].bool else { return }
                 
-                var token : String = ""
+                var accessToken : String = ""
                 
                 if result {
                     if let jtoken = responseJson["response"]["access_token"].string {
-                        token = jtoken
-                    } else { return }
+                        accessToken = jtoken
+                    }
                 }
                 
-                let jsonData = SignInResponse(result: result, token: token)
+                let jsonData = SignInResponse(result: result, token: accessToken)
                 
                 if jsonData.result {
-                    completion(.success(jsonData))
+                    // 토큰 정보 저장
+                    if TokenManager().tokenSave(API.SERVICEID, account: "accessToken", value: accessToken) {
+                        completion(.success(jsonData))
+                    } else {
+                        completion(.failure(.noSaveToken))
+                    }
                 } else {
                     completion(.failure(.noSignIn))
                 }
@@ -137,7 +142,12 @@ final class AlamofireManager {
                 guard let result = responseJson["result"].bool else { return }
                 
                 if result {
-                    completion(.success(result))
+                    // 토큰 정보 삭제
+                    if TokenManager().tokenDelete(API.SERVICEID, account: "accessToken") {
+                        completion(.success(result))
+                    } else {
+                        completion(.failure(.noDelToken))
+                    }
                 } else {
                     completion(.failure(.noLogout))
                 }

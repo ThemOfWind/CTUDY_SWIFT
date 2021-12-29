@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-final class MyLogger : EventMonitor {
+final class MyLogger: EventMonitor {
     let queue = DispatchQueue(label: "APILog")
     
     // header log

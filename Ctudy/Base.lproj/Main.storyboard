@@ -116,7 +116,7 @@
                         <outlet property="loginView" destination="wb7-r3-eqr" id="srz-2o-jFf"/>
                         <outlet property="password" destination="Iok-Yw-mY2" id="DAz-Gc-hfv"/>
                         <outlet property="userName" destination="V9M-Ia-TKE" id="cmv-7h-ryJ"/>
-                        <segue destination="eQW-nd-kJd" kind="show" identifier="MainVC" id="WuX-2h-t21"/>
+                        <segue destination="eQW-nd-kJd" kind="show" identifier="MainTabBarVC" id="WuX-2h-t21"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -329,6 +329,7 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dff-XJ-oQS">
                                         <rect key="frame" x="149" y="326.5" width="76" height="32"/>
+                                        <color key="backgroundColor" red="0.89507958779999997" green="0.75340163270000005" blue="0.90725615530000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <color key="tintColor" red="0.65746537009999995" green="0.37381510769999998" blue="0.76244870580000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="로그아웃">

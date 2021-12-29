@@ -10,7 +10,7 @@ import UIKit
 import Toast_Swift
 import Alamofire
 
-class SignUpVC : UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
+class SignUpVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var registerName: UITextField!
     @IBOutlet weak var registerUserName: UITextField!
@@ -24,11 +24,11 @@ class SignUpVC : UIViewController, UITextFieldDelegate, UIGestureRecognizerDeleg
     @IBOutlet weak var goToLoginBtn: UIButton!
     
     var keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
-    var memberName : String?
-    var memberUserName : String?
-    var nameOKFlag : Bool = false
-    var usernameOKFlag : Bool = false
-    var passwordOKFlag : Bool = false
+    var memberName: String?
+    var memberUserName: String?
+    var nameOKFlag: Bool = false
+    var usernameOKFlag: Bool = false
+    var passwordOKFlag: Bool = false
     
     // MARK: - overrid methods
     override func viewDidLoad() {
@@ -95,7 +95,7 @@ class SignUpVC : UIViewController, UITextFieldDelegate, UIGestureRecognizerDeleg
     }
     
     // 아이디 중복체크
-    fileprivate func userNameChecked(inputUserName : String) {
+    fileprivate func userNameChecked(inputUserName: String) {
         AlamofireManager.shared.getUserNameCheck(username: inputUserName, completion: {
             [weak self] result in
             guard let self = self else { return }
@@ -106,7 +106,7 @@ class SignUpVC : UIViewController, UITextFieldDelegate, UIGestureRecognizerDeleg
                 //self.view.makeToast("사용가능한 아이디(이메일)입니다.", duration: 1.0, position: .center)
                 self.trueMsgSetting(msgLabel: self.userNameMsg, msgString: "사용가능한 아이디(이메일)입니다.")
             case .failure(let error):
-                print("SignUpVC - getUserNameCheck.failure / error : \(error)")
+                print("SignUpVC - getUserNameCheck.failure / error: \(error)")
                 // 중복사용 문구 띄우기
                 //self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
                 self.falseMsgSetting(msgLabel: self.userNameMsg, msgString: error.rawValue)
@@ -138,7 +138,7 @@ class SignUpVC : UIViewController, UITextFieldDelegate, UIGestureRecognizerDeleg
     
     // 이름, 아이디(이메일), 비밀번호 정규식 체크 이벤트
     fileprivate func isValidData(flag: String, data: String) -> Bool {
-        print("SignUpVC - isValidData() called / data : \(data), flag : \(flag)")
+        print("SignUpVC - isValidData() called / data: \(data), flag: \(flag)")
         
         guard data != "" else { return false }
         
@@ -194,7 +194,7 @@ class SignUpVC : UIViewController, UITextFieldDelegate, UIGestureRecognizerDeleg
                 self.memberUserName = memberData.username
                 self.performSegue(withIdentifier: "signUpSuccessVC", sender: nil)
             case .failure(let error):
-                print("SignUpVC - postSignUp.failure / error : \(error)")
+                print("SignUpVC - postSignUp.failure / error: \(error)")
                 self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
             }
         })
@@ -227,7 +227,7 @@ class SignUpVC : UIViewController, UITextFieldDelegate, UIGestureRecognizerDeleg
     // textfield editingChanged event
     
     @objc func textFieldEditingChanged(_ sender: UITextField) {
-        print("SignUpVC - textFieldEditingChanged() called / sender.text : \(sender.text)")
+        print("SignUpVC - textFieldEditingChanged() called / sender.text: \(sender.text)")
         
         switch sender {
         case registerName :
@@ -248,7 +248,7 @@ class SignUpVC : UIViewController, UITextFieldDelegate, UIGestureRecognizerDeleg
     
     // 비밀번호 일치하는지 체크하는 editingChanged
     @objc func passwordChkEditingChanged(_ sender: UITextField) {
-        print("SignUpVC - passwordChkEditingChanged() called / sender.text : \(sender.text)")
+        print("SignUpVC - passwordChkEditingChanged() called / sender.text: \(sender.text)")
         
         passwordValueChecked()
         
