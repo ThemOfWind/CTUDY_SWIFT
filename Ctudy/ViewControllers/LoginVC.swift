@@ -29,6 +29,10 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegat
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("LoginVC - viewWillAppear() called / animated: \(animated)")
+        // text refresh
+        self.userName.text = ""
+        self.password.text = ""
+        
         // 키보드 올라가는 이벤트를 받는 처리
         // 키보드 노티 등록
         //NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShowHandle(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)

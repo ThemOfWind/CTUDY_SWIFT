@@ -372,9 +372,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="홈" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jVp-nz-DUW">
-                                <rect key="frame" x="186" y="438" width="15" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="홈" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jVp-nz-DUW">
+                                <rect key="frame" x="199.5" y="437.5" width="15" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.6649731915" green="0.24060014120000001" blue="0.85707957469999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
@@ -382,6 +381,10 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="4OD-5Z-UZT"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="jVp-nz-DUW" firstAttribute="centerY" secondItem="Stn-pN-TAM" secondAttribute="centerY" id="0Zb-dL-TDH"/>
+                            <constraint firstItem="jVp-nz-DUW" firstAttribute="centerX" secondItem="Stn-pN-TAM" secondAttribute="centerX" id="nfm-f9-inI"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="홈" id="Aak-wM-4go">
                         <imageReference key="image" image="house.fill" catalog="system" symbolScale="large"/>

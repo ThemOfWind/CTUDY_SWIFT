@@ -29,7 +29,7 @@ final class AlamofireManager {
     private init() {
         session = Session(
             interceptor: interceptors
-            , eventMonitors: monitors
+          , eventMonitors: monitors
         )
     }
     
@@ -84,7 +84,6 @@ final class AlamofireManager {
                 } else {
                     completion(.failure(.noSignUp))
                 }
-                
             })
     }
     
@@ -96,8 +95,7 @@ final class AlamofireManager {
             .request(AuthRouter.signin(username: username, password: password))
             .validate(statusCode: 200..<501)
             .responseJSON(completionHandler: { response in
-                guard let responseValue = response.value else {
-                    return }
+                guard let responseValue = response.value else { return }
                 
                 let responseJson = JSON(responseValue)
                 
