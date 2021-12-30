@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct SignUpResponse : Codable {
-    var result : Bool
-    var name : String
-    var username : String
+struct SignUpResponse: Codable {
+    var result: Bool
+    var name: String
+    var username: String
 }

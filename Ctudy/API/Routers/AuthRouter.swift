@@ -8,12 +8,13 @@
 import Foundation
 import Alamofire
 
-enum AuthRouter : URLRequestConvertible {
+enum AuthRouter: URLRequestConvertible {
     // logout(get), signin(post), signup(get, post)
     
     case signin(username: String, password: String) // 로그인
     case usernamecheck(username: String) // 아이디 중복체크
     case signup(name: String, username: String, password: String) // 회원가입
+    case logout // 로그아웃
     
     var baseURL: URL {
         return URL(string: API.BASE_URL + "account/")!
@@ -27,6 +28,8 @@ enum AuthRouter : URLRequestConvertible {
             return .get
         case .signup:
             return .post
+        case .logout:
+            return .get
         }
     }
     
@@ -38,6 +41,8 @@ enum AuthRouter : URLRequestConvertible {
             return "signup/"
         case .signup:
             return "signup/"
+        case .logout:
+            return "logout/"
         }
     }
     
@@ -49,6 +54,9 @@ enum AuthRouter : URLRequestConvertible {
             return ["username" : username]
         case let .signup(name, username, password):
             return ["name" : name, "username" : username, "password" : password]
+        case .logout:
+            return ["" : ""]
+            
         }
     }
     

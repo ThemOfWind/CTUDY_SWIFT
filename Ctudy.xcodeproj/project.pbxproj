@@ -15,8 +15,12 @@
 		5A58EEA4275F7E83000A1A39 /* Ctudy.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5A58EEA2275F7E83000A1A39 /* Ctudy.xcdatamodeld */; };
 		5A58EEA6275F7E84000A1A39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A58EEA5275F7E84000A1A39 /* Assets.xcassets */; };
 		5A58EEA9275F7E84000A1A39 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A58EEA7275F7E84000A1A39 /* LaunchScreen.storyboard */; };
+		5A9D31BA277B17DD00DCEAEA /* UserInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9D31B9277B17DD00DCEAEA /* UserInfoVC.swift */; };
+		5A9D31BC277B18D100DCEAEA /* MainTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9D31BB277B18D100DCEAEA /* MainTabBarVC.swift */; };
+		5A9D31C0277C0B9900DCEAEA /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9D31BF277C0B9900DCEAEA /* TokenManager.swift */; };
+		5A9D31C3277C71B900DCEAEA /* UserInfos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9D31C2277C71B900DCEAEA /* UserInfos.swift */; };
 		5AA86D0B2761005D0067620C /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA86D0A2761005D0067620C /* MainVC.swift */; };
-		5AAE346D2761D2BE00EE6A5D /* Constatns.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAE346C2761D2BE00EE6A5D /* Constatns.swift */; };
+		5AAE346D2761D2BE00EE6A5D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAE346C2761D2BE00EE6A5D /* Constants.swift */; };
 		5ABB95C22760F697003B4764 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABB95C12760F697003B4764 /* SignUpVC.swift */; };
 		5AC1CE702765C9E0009586B2 /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC1CE6F2765C9E0009586B2 /* AuthRouter.swift */; };
 		5AC1CE732765CADC009586B2 /* RoomRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC1CE722765CADC009586B2 /* RoomRouter.swift */; };
@@ -46,8 +50,12 @@
 		5A58EEA5275F7E84000A1A39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5A58EEA8275F7E84000A1A39 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5A58EEAA275F7E84000A1A39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5A9D31B9277B17DD00DCEAEA /* UserInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoVC.swift; sourceTree = "<group>"; };
+		5A9D31BB277B18D100DCEAEA /* MainTabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarVC.swift; sourceTree = "<group>"; };
+		5A9D31BF277C0B9900DCEAEA /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
+		5A9D31C2277C71B900DCEAEA /* UserInfos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfos.swift; sourceTree = "<group>"; };
 		5AA86D0A2761005D0067620C /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
-		5AAE346C2761D2BE00EE6A5D /* Constatns.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constatns.swift; sourceTree = "<group>"; };
+		5AAE346C2761D2BE00EE6A5D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		5ABB95C12760F697003B4764 /* SignUpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		5AC1CE6F2765C9E0009586B2 /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
 		5AC1CE722765CADC009586B2 /* RoomRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomRouter.swift; sourceTree = "<group>"; };
@@ -127,7 +135,9 @@
 				5A58EE9D275F7E83000A1A39 /* LoginVC.swift */,
 				5ABB95C12760F697003B4764 /* SignUpVC.swift */,
 				5AA86D0A2761005D0067620C /* MainVC.swift */,
+				5A9D31BB277B18D100DCEAEA /* MainTabBarVC.swift */,
 				5A31966D2766045D007400EE /* SignUpSuccessVC.swift */,
+				5A9D31B9277B17DD00DCEAEA /* UserInfoVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -135,8 +145,10 @@
 		5AAE346B2761D2AE00EE6A5D /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				5AAE346C2761D2BE00EE6A5D /* Constatns.swift */,
+				5AAE346C2761D2BE00EE6A5D /* Constants.swift */,
 				5AC1CE7D2765D6B7009586B2 /* Errors.swift */,
+				5A9D31BF277C0B9900DCEAEA /* TokenManager.swift */,
+				5A9D31C2277C71B900DCEAEA /* UserInfos.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -324,15 +336,19 @@
 				5AC1CE7C2765D5E8009586B2 /* SignUpResponse.swift in Sources */,
 				5A31966E2766045D007400EE /* SignUpSuccessVC.swift in Sources */,
 				5A58EE9A275F7E83000A1A39 /* AppDelegate.swift in Sources */,
+				5A9D31BA277B17DD00DCEAEA /* UserInfoVC.swift in Sources */,
 				5ABB95C22760F697003B4764 /* SignUpVC.swift in Sources */,
 				5ACF0C9327673065003907E9 /* SignInResponse.swift in Sources */,
 				5ADDFC792765B983001291DD /* AlamofireManager.swift in Sources */,
 				5A58EE9C275F7E83000A1A39 /* SceneDelegate.swift in Sources */,
 				5AC1CE772765CB0D009586B2 /* CouponRouter.swift in Sources */,
+				5A9D31C0277C0B9900DCEAEA /* TokenManager.swift in Sources */,
 				5AC4471F2774620F00077242 /* MyStatusLogger.swift in Sources */,
 				5A58EEA4275F7E83000A1A39 /* Ctudy.xcdatamodeld in Sources */,
+				5A9D31C3277C71B900DCEAEA /* UserInfos.swift in Sources */,
+				5A9D31BC277B18D100DCEAEA /* MainTabBarVC.swift in Sources */,
 				5AC4471D27745E8400077242 /* MyLogger.swift in Sources */,
-				5AAE346D2761D2BE00EE6A5D /* Constatns.swift in Sources */,
+				5AAE346D2761D2BE00EE6A5D /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

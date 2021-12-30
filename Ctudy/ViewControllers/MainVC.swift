@@ -8,12 +8,19 @@
 import Foundation
 import UIKit
 
-class MainVC : UIViewController {
+class MainVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
         print("MainVC - viewDidLoad() called")
         
         self.navigationController?.isNavigationBarHidden = true
+        
+        let tk = TokenManager()
+        if let accessToken = tk.tokenLoad(API.SERVICEID, account: "accessToken") {
+            print("accessToken: \(accessToken)")
+        } else {
+            print("accessToken is nil")
+        }
     }
 }

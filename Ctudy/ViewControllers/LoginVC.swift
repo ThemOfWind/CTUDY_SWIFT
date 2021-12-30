@@ -28,7 +28,11 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegat
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("LoginVC - viewWillAppear() called / animated : \(animated)")
+        print("LoginVC - viewWillAppear() called / animated: \(animated)")
+        // text refresh
+        self.userName.text = ""
+        self.password.text = ""
+        
         // 키보드 올라가는 이벤트를 받는 처리
         // 키보드 노티 등록
         //NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShowHandle(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -37,7 +41,7 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegat
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        print("LoginVC - viewWillDisappear() called / animated : \(animated)")
+        print("LoginVC - viewWillDisappear() called / animated: \(animated)")
         // 키보드 노티 해제
         //NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         //NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
@@ -52,11 +56,10 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegat
             switch result {
             case .success(let memberData):
                 print("LoginVC - postSignIn.success")
-                
-                self.performSegue(withIdentifier: "MainVC", sender: nil)
+                self.performSegue(withIdentifier: "MainTabBarVC", sender: nil)
                 
             case .failure(let error):
-                print("LoginVC - postSignIn.failure / error : \(error)")
+                print("LoginVC - postSignIn.failure / error: \(error)")
                 self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
             }
         })
@@ -80,7 +83,7 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegat
     }
     
     @objc func keyboardWillHideHandle(noti: Notification) {
-        print("LoginVC - keyboardWillHideHandle() called / loginViewY : \(loginViewY)")
+        print("LoginVC - keyboardWillHideHandle() called / loginViewY: \(loginViewY)")
         UIView.animate(withDuration: noti.userInfo![UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval) {
             // 포커싱 해제
             self.loginView.frame.origin.y = self.loginViewY
@@ -92,7 +95,7 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegat
         self.loginBtn.layer.cornerRadius = 5
         self.loginBtn.isEnabled = false
         self.loginViewY = self.loginView.frame.origin.y
-        print("loginViewY : \(self.loginViewY)")
+        print("loginViewY: \(self.loginViewY)")
         
         // add Btn methods
         self.loginBtn.addTarget(self, action: #selector(onLoginBtnClicked), for: .touchUpInside)
