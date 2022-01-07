@@ -34,18 +34,16 @@ final class AlamofireManager {
     }
     
     // 아이디 중복체크
-    func getUserNameCheck(username username: String, completion: @escaping (Result<UserNameCheckResponse, Errors>) -> Void) {
+    func getUserNameCheck(username username: String, completion: @escaping (Result<UserNameCheckResponse, AuthErrors>) -> Void) {
         print("AlamofireManger - getUserNameCheck() called / parameters = [username: \(username)]")
         
         self.session
             .request(AuthRouter.usernamecheck(username: username))
             .validate(statusCode: 200..<501)
             .responseJSON(completionHandler: { response in
+                
                 guard let responseValue = response.value else { return }
                 let responseJson = JSON(responseValue)
-                
-                print("responseJson.count: \(responseJson.count)")
-                
                 guard let result = responseJson["result"].bool else { return }
                 
                 // 사용가능한 아이디일때
@@ -62,21 +60,19 @@ final class AlamofireManager {
     }
     
     // 회원가입
-    func postSignUp(name name: String, username username: String, password password: String, completion: @escaping (Result<SignUpResponse, Errors>) -> Void) {
+    func postSignUp(name name: String, username username: String, password password: String, completion: @escaping (Result<SignUpResponse, AuthErrors>) -> Void) {
         print("AlamofireManager - postSignUp() called / parameters = [name: \(name), username: \(username), password: \(password)]")
         
         self.session
             .request(AuthRouter.signup(name: name, username: username, password: password))
             .validate(statusCode: 200..<501)
             .responseJSON(completionHandler: { response in
+                
                 guard let responseValue = response.value else { return }
-                
                 let responseJson = JSON(responseValue)
-                
                 guard let result = responseJson["result"].bool,
                       let name = responseJson["response"]["name"].string,
                       let username = responseJson["response"]["username"].string else { return }
-                
                 let jsonData = SignUpResponse(result: result, name: name, username: username)
                 
                 if jsonData.result {
@@ -88,19 +84,17 @@ final class AlamofireManager {
     }
     
     // 로그인
-    func postSignIn(username: String, password: String, completion: @escaping(Result<SignInResponse, Errors>) -> Void) {
+    func postSignIn(username: String, password: String, completion: @escaping(Result<SignInResponse, AuthErrors>) -> Void) {
         print("AlamofireManager - postSignIn() called / parameters = [username: \(username), password: \(password)]")
         
         self.session
             .request(AuthRouter.signin(username: username, password: password))
             .validate(statusCode: 200..<501)
             .responseJSON(completionHandler: { response in
+                
                 guard let responseValue = response.value else { return }
-                
                 let responseJson = JSON(responseValue)
-                
                 guard let result = responseJson["result"].bool else { return }
-                
                 var accessToken : String = ""
                 
                 if result {
@@ -126,17 +120,14 @@ final class AlamofireManager {
     }
     
     // 로그아웃
-    func getLogout(completion: @escaping(Result<Bool, Errors>) -> Void) {
+    func getLogout(completion: @escaping(Result<Bool, AuthErrors>) -> Void) {
         self.session
             .request(AuthRouter.logout)
             .validate(statusCode: 200..<501)
             .responseJSON(completionHandler: { response in
-                guard let responseValue = response.value else {
-                    return
-                }
                 
+                guard let responseValue = response.value else { return }
                 let responseJson = JSON(responseValue)
-                
                 guard let result = responseJson["result"].bool else { return }
                 
                 if result {
@@ -148,6 +139,40 @@ final class AlamofireManager {
                     }
                 } else {
                     completion(.failure(.noLogout))
+                }
+            })
+    }
+    
+    // 전체 스터디 룸 조회
+    func getSearchRoom(completion: @escaping(Result<[SearchRoomResponse], RoomErrors>) -> Void) {
+        self.session
+            .request(RoomRouter.searchroom)
+            .validate(statusCode: 200..<501)
+            .responseJSON(completionHandler: { response in
+                
+                guard let responseValue = response.value else { return }
+                let responseJson = JSON(responseValue)
+                guard let result = responseJson["result"].bool else { return }
+                let response = responseJson["response"]
+                var rooms = [SearchRoomResponse]()
+                
+                for (index, subJson) : (String, JSON) in response {
+                    guard let name = subJson["name"].string
+                    , let membercount = subJson["member_count"].int
+                    , let mastername = subJson["master_name"].string else { return }
+                    
+                    let roomItem = SearchRoomResponse(name: name, membercount: membercount, mastername: mastername)
+                    rooms.append(roomItem)
+                }
+                
+                if result {
+                    if rooms.count > 0 {
+                        completion(.success(rooms))
+                    } else {
+                        completion(.failure(.noSearhRoom))
+                    }
+                } else {
+                    completion(.failure(.noSearhRoom))
                 }
             })
     }

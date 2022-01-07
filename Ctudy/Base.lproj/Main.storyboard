@@ -6,6 +6,7 @@
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -86,10 +87,10 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xvG-kw-i90">
-                                <rect key="frame" x="117.5" y="789.5" width="179" height="52.5"/>
+                                <rect key="frame" x="167.5" y="759.5" width="79.5" height="33.5"/>
                                 <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="계정이 아직 없으신가요?            회원가입">
+                                <buttonConfiguration key="configuration" style="plain" title="회원가입">
                                     <fontDescription key="titleFontDescription" type="system" weight="medium" pointSize="16"/>
                                 </buttonConfiguration>
                                 <connections>
@@ -109,7 +110,9 @@
                             <constraint firstItem="wb7-r3-eqr" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="vAb-Tw-s1W"/>
                         </constraints>
                     </view>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" id="CRI-UQ-fRc"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="goToSignUpBtn" destination="xvG-kw-i90" id="DvR-Ho-vne"/>
                         <outlet property="loginBtn" destination="7gN-kk-bjO" id="ede-KO-6fj"/>
@@ -132,7 +135,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="324-TW-Tnr">
-                                <rect key="frame" x="117.5" y="789" width="179" height="53"/>
+                                <rect key="frame" x="117.5" y="740" width="179" height="53"/>
                                 <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="계정이 이미 있으신가요?              로그인">
@@ -140,7 +143,7 @@
                                 </buttonConfiguration>
                             </button>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gWT-vq-TTv">
-                                <rect key="frame" x="0.0" y="88" width="414" height="656"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="607"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Jv-Na-Nju">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="650"/>
@@ -325,10 +328,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gnh-9t-ztj">
-                                <rect key="frame" x="20" y="108" width="374" height="685"/>
+                                <rect key="frame" x="20" y="108" width="374" height="636"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dff-XJ-oQS">
-                                        <rect key="frame" x="149" y="326.5" width="76" height="32"/>
+                                        <rect key="frame" x="149" y="302" width="76" height="32"/>
                                         <color key="backgroundColor" red="0.89507958779999997" green="0.75340163270000005" blue="0.90725615530000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <color key="tintColor" red="0.65746537009999995" green="0.37381510769999998" blue="0.76244870580000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <state key="normal" title="Button"/>
@@ -372,18 +375,65 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="홈" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jVp-nz-DUW">
-                                <rect key="frame" x="199.5" y="437.5" width="15" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.6649731915" green="0.24060014120000001" blue="0.85707957469999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="CJa-Pp-6lq">
+                                <rect key="frame" x="30" y="138" width="354" height="576"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="XZ6-qM-JHm">
+                                    <size key="itemSize" width="350" height="129"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="GGH-8Z-PgY">
+                                        <rect key="frame" x="2" y="0.0" width="350" height="110"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="JTa-rm-Wlc">
+                                            <rect key="frame" x="0.0" y="0.0" width="350" height="110"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iMs-qn-YWO">
+                                                    <rect key="frame" x="10" y="10" width="330" height="90"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ply-Nd-z3n">
+                                                            <rect key="frame" x="20" y="25" width="290" height="40"/>
+                                                            <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <state key="normal" title="Button"/>
+                                                            <buttonConfiguration key="configuration" style="plain" image="plus.app" catalog="system" imagePlacement="top" subtitle="스터디룸 추가">
+                                                                <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="30"/>
+                                                            </buttonConfiguration>
+                                                        </button>
+                                                    </subviews>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                    <constraints>
+                                                        <constraint firstItem="ply-Nd-z3n" firstAttribute="leading" secondItem="iMs-qn-YWO" secondAttribute="leading" constant="20" id="80N-8H-QUl"/>
+                                                        <constraint firstItem="ply-Nd-z3n" firstAttribute="top" secondItem="iMs-qn-YWO" secondAttribute="top" constant="25" id="HQX-YH-zug"/>
+                                                        <constraint firstItem="ply-Nd-z3n" firstAttribute="centerY" secondItem="iMs-qn-YWO" secondAttribute="centerY" id="Pk8-Zg-kIO"/>
+                                                        <constraint firstAttribute="trailing" secondItem="ply-Nd-z3n" secondAttribute="trailing" constant="20" id="jnF-gw-tJP"/>
+                                                        <constraint firstItem="ply-Nd-z3n" firstAttribute="centerX" secondItem="iMs-qn-YWO" secondAttribute="centerX" id="qt3-S2-tQV"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="iMs-qn-YWO" firstAttribute="top" secondItem="JTa-rm-Wlc" secondAttribute="top" constant="10" id="6vh-sm-fmy"/>
+                                                <constraint firstAttribute="bottom" secondItem="iMs-qn-YWO" secondAttribute="bottom" constant="10" id="mCd-aK-I1O"/>
+                                                <constraint firstItem="iMs-qn-YWO" firstAttribute="leading" secondItem="JTa-rm-Wlc" secondAttribute="leading" constant="10" id="wg8-RL-bpO"/>
+                                                <constraint firstAttribute="trailing" secondItem="iMs-qn-YWO" secondAttribute="trailing" constant="10" id="yks-qe-Les"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="350" height="110"/>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="4OD-5Z-UZT"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="jVp-nz-DUW" firstAttribute="centerY" secondItem="Stn-pN-TAM" secondAttribute="centerY" id="0Zb-dL-TDH"/>
-                            <constraint firstItem="jVp-nz-DUW" firstAttribute="centerX" secondItem="Stn-pN-TAM" secondAttribute="centerX" id="nfm-f9-inI"/>
+                            <constraint firstItem="CJa-Pp-6lq" firstAttribute="leading" secondItem="4OD-5Z-UZT" secondAttribute="leading" constant="30" id="Hna-Gl-JoJ"/>
+                            <constraint firstItem="CJa-Pp-6lq" firstAttribute="top" secondItem="4OD-5Z-UZT" secondAttribute="top" constant="50" id="gbx-My-zMn"/>
+                            <constraint firstItem="4OD-5Z-UZT" firstAttribute="bottom" secondItem="CJa-Pp-6lq" secondAttribute="bottom" constant="50" id="iLx-jw-bOJ"/>
+                            <constraint firstItem="4OD-5Z-UZT" firstAttribute="trailing" secondItem="CJa-Pp-6lq" secondAttribute="trailing" constant="30" id="kP0-mv-iCQ"/>
+                            <constraint firstItem="CJa-Pp-6lq" firstAttribute="centerX" secondItem="Stn-pN-TAM" secondAttribute="centerX" id="qwS-ef-gb2"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="홈" id="Aak-wM-4go">
@@ -392,7 +442,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wih-Jz-hIQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2441" y="-793"/>
+            <point key="canvasLocation" x="2439.130434782609" y="-793.52678571428567"/>
         </scene>
         <!--MainTabBarVC-->
         <scene sceneID="CSq-HO-uA3">
@@ -402,7 +452,7 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="1jb-GX-cb7">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.86462350560000001" green="0.80676001909999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <color key="selectedImageTintColor" red="0.74337107280000003" green="0.50398279670000001" blue="0.90725615530000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </tabBar>
                     <connections>
@@ -423,7 +473,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r2B-hj-Bra">
-                                <rect key="frame" x="30" y="108" width="354" height="734"/>
+                                <rect key="frame" x="30" y="108" width="354" height="685"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FGx-RV-8Io">
                                         <rect key="frame" x="10" y="30" width="0.0" height="0.0"/>
@@ -444,7 +494,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GQY-mP-JfU">
-                                        <rect key="frame" x="20" y="534" width="314" height="50"/>
+                                        <rect key="frame" x="20" y="485" width="314" height="50"/>
                                         <color key="backgroundColor" red="0.74337107280000003" green="0.50398279670000001" blue="0.90725615530000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="UcX-0m-ipT"/>
@@ -691,6 +741,7 @@
         <image name="highlighter" catalog="system" width="128" height="119"/>
         <image name="house.fill" catalog="system" width="128" height="106"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
+        <image name="plus.app" catalog="system" width="128" height="114"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
