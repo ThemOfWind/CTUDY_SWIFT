@@ -23,9 +23,9 @@ class MainVC: UIViewController {
         // 스터디룸 데이터
         getSearchRoom()
         
-        var testList = [SearchRoomResponse(name: "바람의 녀석들", membercount: 4, mastername: "김밍구")]
-        testList.append(contentsOf: [SearchRoomResponse(name: "밍구사룽", membercount: 2, mastername: "김지니")])
-        self.rooms = testList
+//        var testList = [SearchRoomResponse(name: "바람의 녀석들", membercount: 4, mastername: "김밍구")]
+//        testList.append(contentsOf: [SearchRoomResponse(name: "밍구사룽", membercount: 2, mastername: "김지니")])
+//        self.rooms = testList
     }
     
     fileprivate func getSearchRoom() {
@@ -47,10 +47,8 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
         print("MainVC - collectionView count : \(rooms.count)")
         // 셀의 갯수 지정
         if rooms.count <= 0 {
-            print("return count : 2")
-            return 2
+            return 0
         } else {
-            print("return count : \(rooms.count)")
             return rooms.count
         }
     }
