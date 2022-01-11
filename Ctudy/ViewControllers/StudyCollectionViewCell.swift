@@ -10,6 +10,7 @@ import UIKit
 
 class StudyCollectionViewCell: UICollectionViewCell {
     
+   
     @IBOutlet weak var roomName: UILabel!
     @IBOutlet weak var roomMasterName: UILabel!
     @IBOutlet weak var roomMembers: UILabel!

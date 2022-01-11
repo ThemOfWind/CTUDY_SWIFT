@@ -8,6 +8,5 @@
 import Foundation
 
 struct UserNameCheckResponse: Codable {
-    var result: Bool // 결과(true, false)
     var username: String // 아이디(이메일)
 }

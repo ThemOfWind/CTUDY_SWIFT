@@ -49,7 +49,7 @@ final class AlamofireManager {
                 // 사용가능한 아이디일때
                 if result {
                     guard let username = responseJson["response"]["username"].string else { return }
-                    let jsonData = UserNameCheckResponse(result: result, username: username)
+                    let jsonData = UserNameCheckResponse(username: username)
                     completion(.success(jsonData))
                 }
                 // 중복 아이디일때
@@ -73,9 +73,9 @@ final class AlamofireManager {
                 guard let result = responseJson["result"].bool,
                       let name = responseJson["response"]["name"].string,
                       let username = responseJson["response"]["username"].string else { return }
-                let jsonData = SignUpResponse(result: result, name: name, username: username)
+                let jsonData = SignUpResponse(name: name, username: username)
                 
-                if jsonData.result {
+                if result {
                     completion(.success(jsonData))
                 } else {
                     completion(.failure(.noSignUp))
@@ -103,9 +103,9 @@ final class AlamofireManager {
                     }
                 }
                 
-                let jsonData = SignInResponse(result: result, token: accessToken)
+                let jsonData = SignInResponse(token: accessToken)
                 
-                if jsonData.result {
+                if result {
                     // 토큰 정보 저장
                     if TokenManager().tokenSave(API.SERVICEID, account: "accessToken", value: accessToken) {
                         completion(.success(jsonData))

@@ -8,6 +8,5 @@
 import Foundation
 
 struct SignInResponse: Codable {
-    var result: Bool // 결과(true, false)
     var token: String // 인증토큰
 }
