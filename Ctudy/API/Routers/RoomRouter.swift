@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 enum RoomRouter: URLRequestConvertible {
-case searchroom
+    case searchroom
     
     var baseURL: URL {
         return URL(string:API.BASE_URL + "study/")!
@@ -41,7 +41,6 @@ case searchroom
         
         var request = URLRequest(url: url)
         request.method = method
-        
         request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
         
         return request

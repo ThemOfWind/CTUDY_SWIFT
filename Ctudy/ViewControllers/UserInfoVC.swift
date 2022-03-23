@@ -18,12 +18,11 @@ class UserInfoVC: UIViewController {
     }
     
     fileprivate func config() {
-        self.navigationController?.isNavigationBarHidden = true
         self.logoutBtn.addTarget(self, action: #selector(onLogoutBtnClicked), for: .touchUpInside)
     }
     
     @objc func onLogoutBtnClicked() {
-        let alert = UIAlertController(title: nil, message: "로그아웃하시겠습니까?", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: "로그아웃 하시겠습니까?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "취소", style: .cancel))
         alert.addAction(UIAlertAction(title: "확인", style: .destructive, handler: { (_) in
             AlamofireManager.shared.getLogout(completion: {
@@ -32,18 +31,18 @@ class UserInfoVC: UIViewController {
                 switch result {
                 case .success(let checkData):
                     print("UserInfoVC - getLogout.success")
-                    // 로컬 데이터 삭제 처리
-                    //UserInfos.localLogout()
-                    // 사용가능 문구 띄우기
-                    //DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
-                        // 로그인화면으로 이동
-                        self.navigationController?.popViewController(animated: true)
-                        self.navigationController?.view.makeToast("로그아웃 되었습니다.", duration: 1.0, position: .center)
-                    //})
+                    
+                    self.navigationController?.popViewController(animated: true)
+                    self.navigationController?.view.makeToast("로그아웃 되었습니다.", duration: 1.0, position: .center)
+                    
                 case .failure(let error):
                     print("UserInfoVC - getLogout.failure / error: \(error)")
                     // 중복사용 문구 띄우기
-                    self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
+                    
+                    guard let mainVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginVC") as? LoginVC else { return }
+                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(mainVC, animated: false)
+                    
+                    //self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
                 }
             })
         }))

@@ -29,11 +29,11 @@ final class AlamofireManager {
     private init() {
         session = Session(
             interceptor: interceptors
-          , eventMonitors: monitors
+            , eventMonitors: monitors
         )
     }
     
-    // 아이디 중복체크
+    // MARK: - 아이디 중복체크
     func getUserNameCheck(username username: String, completion: @escaping (Result<UserNameCheckResponse, AuthErrors>) -> Void) {
         print("AlamofireManger - getUserNameCheck() called / parameters = [username: \(username)]")
         
@@ -59,7 +59,7 @@ final class AlamofireManager {
             })
     }
     
-    // 회원가입
+    // MARK: - 회원가입
     func postSignUp(name name: String, username username: String, password password: String, completion: @escaping (Result<SignUpResponse, AuthErrors>) -> Void) {
         print("AlamofireManager - postSignUp() called / parameters = [name: \(name), username: \(username), password: \(password)]")
         
@@ -83,7 +83,7 @@ final class AlamofireManager {
             })
     }
     
-    // 로그인
+    // MARK: - 로그인
     func postSignIn(username: String, password: String, completion: @escaping(Result<SignInResponse, AuthErrors>) -> Void) {
         print("AlamofireManager - postSignIn() called / parameters = [username: \(username), password: \(password)]")
         
@@ -119,7 +119,7 @@ final class AlamofireManager {
             })
     }
     
-    // 로그아웃
+    // MARK: - 로그아웃
     func getLogout(completion: @escaping(Result<Bool, AuthErrors>) -> Void) {
         self.session
             .request(AuthRouter.logout)
@@ -143,7 +143,7 @@ final class AlamofireManager {
             })
     }
     
-    // 전체 스터디 룸 조회
+    // MARK: - 전체 스터디 룸 조회
     func getSearchRoom(completion: @escaping(Result<[SearchRoomResponse], RoomErrors>) -> Void) {
         self.session
             .request(RoomRouter.searchroom)
@@ -158,8 +158,8 @@ final class AlamofireManager {
                 
                 for (index, subJson) : (String, JSON) in response {
                     guard let name = subJson["name"].string
-                    , let membercount = subJson["member_count"].int
-                    , let mastername = subJson["master_name"].string else { return }
+                            , let membercount = subJson["member_count"].int
+                            , let mastername = subJson["master_name"].string else { return }
                     
                     let roomItem = SearchRoomResponse(name: name, membercount: membercount, mastername: mastername)
                     rooms.append(roomItem)
@@ -169,10 +169,49 @@ final class AlamofireManager {
                     if rooms.count > 0 {
                         completion(.success(rooms))
                     } else {
-                        completion(.failure(.noSearhRoom))
+                        completion(.failure(.noSearchRoom))
                     }
                 } else {
-                    completion(.failure(.noSearhRoom))
+                    completion(.failure(.noSearchRoom))
+                }
+            })
+    }
+    
+    // MARK: - 전체 멤버 조회
+    func getSearchMember(competion: @escaping(Result<[SearchMemberResponse], MemberErrors>) -> Void) {
+        self.session
+            .request(MemberRouter.searchmember)
+            .validate(statusCode: 200..<501)
+            .responseJSON(completionHandler: { response in
+                
+                guard let responseValue = response.value else { return }
+                let responseJson = JSON(responseValue)
+                guard let result = responseJson["result"].bool else { return }
+                let response = responseJson["response"]
+                let list = response["list"]
+                
+                var members = [SearchMemberResponse]()
+                
+                if result {
+                    for (index, subJson) : (String, JSON) in list {
+                        guard let id = subJson["id"].int
+                                ,let username = subJson["username"].string
+                        else { return }
+                        
+                        let memberItem = SearchMemberResponse(id: id, userName: username)
+                        members.append(memberItem)
+                    }
+                    
+                    if members.count > 0 {
+                        competion(.success(members))
+                        print("members: \(members)")
+                    }
+                    else {
+                        competion(.failure(.noSearchMember))
+                    }
+                }
+                else {
+                    competion(.failure(.noSearchMember))
                 }
             })
     }
