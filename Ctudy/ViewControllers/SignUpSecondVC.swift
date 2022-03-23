@@ -10,38 +10,33 @@ import UIKit
 import Toast_Swift
 import Alamofire
 
-class SignUpVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
-    
-    @IBOutlet weak var registerName: UITextField!
+class SignUpSecondVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
+
     @IBOutlet weak var registerUserName: UITextField!
     @IBOutlet weak var registerPassword: UITextField!
     @IBOutlet weak var registerPasswordChk: UITextField!
-    @IBOutlet weak var nameMsg: UILabel!
     @IBOutlet weak var userNameMsg: UILabel!
     @IBOutlet weak var passwordMsg: UILabel!
     @IBOutlet weak var passwordChkMsg: UILabel!
     @IBOutlet weak var signUpBtn: UIButton!
-    @IBOutlet weak var goToLoginBtn: UIButton!
     
     var keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
+    var registerName: String?
     var memberName: String?
     var memberUserName: String?
-    var nameOKFlag: Bool = false
     var usernameOKFlag: Bool = false
     var passwordOKFlag: Bool = false
     
-    // MARK: - overrid methods
+    // MARK: - overrid func
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print("SignUpVC - viewDidLoad() called")
-        
+        print("SignUpSecondVC - viewDidLoad() called")
         self.config()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("SignUpVC - viewWillAppear() called")
+        print("SignUpSecondVC - viewWillAppear() called")
         // 키보드 올라가는 이벤트를 받는 처리
         // 키보드 노티 등록
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShowHandle(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -50,7 +45,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelega
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        print("SignUpVC - viewWillDisappear() called")
+        print("SignUpSecondVC - viewWillDisappear() called")
         // 키보드 노티 해제
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
@@ -65,10 +60,9 @@ class SignUpVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelega
         }
     }
     
-    // MARK: - fileprivate methods
+    // MARK: - fileprivate func
     fileprivate func config() {
         // UI
-        self.navigationController?.isNavigationBarHidden = true
         self.signUpBtn.layer.cornerRadius = 5
         self.signUpBtn.isEnabled = false
         self.registerPassword.isSecureTextEntry = true
@@ -76,16 +70,13 @@ class SignUpVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelega
         
         // add Btn methods
         self.signUpBtn.addTarget(self, action: #selector(onSignUpBtnClicked), for: .touchUpInside)
-        self.goToLoginBtn.addTarget(self, action: #selector(onGoToLoginBtnClicked), for: .touchUpInside)
         
         // add textField methods
-        self.registerName.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
         self.registerUserName.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
         self.registerPassword.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
         self.registerPasswordChk.addTarget(self, action: #selector(passwordChkEditingChanged(_:)), for: .editingChanged)
         
         // delegate
-        self.registerName.delegate = self
         self.registerUserName.delegate = self
         self.registerPassword.delegate = self
         self.keyboardDismissTabGesture.delegate = self
@@ -101,12 +92,12 @@ class SignUpVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelega
             guard let self = self else { return }
             switch result {
             case .success(let checkData):
-                print("SignUpVC - getUserNameCheck.success")
+                print("SignUpSecondVC - getUserNameCheck.success")
                 // 사용가능 문구 띄우기
                 //self.view.makeToast("사용가능한 아이디(이메일)입니다.", duration: 1.0, position: .center)
                 self.trueMsgSetting(msgLabel: self.userNameMsg, msgString: "사용가능한 아이디(이메일)입니다.")
             case .failure(let error):
-                print("SignUpVC - getUserNameCheck.failure / error: \(error)")
+                print("SignUpSecondVC - getUserNameCheck.failure / error: \(error)")
                 // 중복사용 문구 띄우기
                 //self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
                 self.falseMsgSetting(msgLabel: self.userNameMsg, msgString: error.rawValue)
@@ -126,10 +117,10 @@ class SignUpVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelega
         msgLabel.text = msgString
     }
     
-    // 회원가입 버튼 활성화 & 비활성화 체크 이벤트
+    // 회원가입 버튼 활성화 & 비활성화 이벤트
     fileprivate func signUpBtnAleChecked() {
-        print("SignUpVC - signUpBtnAleChecked() called / nameOKFlage: \(nameOKFlag), usernameOKFlage: \(usernameOKFlag), passwordOKFlage: \(passwordOKFlag)")
-        if nameOKFlag && usernameOKFlag && passwordOKFlag {
+        print("SignUpSecondVC - signUpBtnAleChecked() called / usernameOKFlage: \(usernameOKFlag), passwordOKFlage: \(passwordOKFlag)")
+        if usernameOKFlag && passwordOKFlag {
             signUpBtn.isEnabled = true
         } else {
             signUpBtn.isEnabled = false
@@ -141,7 +132,6 @@ class SignUpVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelega
         print("SignUpVC - isValidData() called / data: \(data), flag: \(flag)")
         
         guard data != "" else { return false }
-        
         let pred : NSPredicate
         
         switch flag {
@@ -178,60 +168,48 @@ class SignUpVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelega
         }
     }
     
-    // MARK: - @objc methods
+    // MARK: - @objc func
     // 회원가입 버튼 이벤트
     @objc func onSignUpBtnClicked() {
-        print("SignUpVC - onSignUpBtnClicked() called")
+        print("SignUpSecondVC - onSignUpBtnClicked() called")
         
-        AlamofireManager.shared.postSignUp(name: registerName.text!, username: registerUserName.text!, password: registerPassword.text!, completion: { [weak self] result in
+        AlamofireManager.shared.postSignUp(name: registerName!, username: registerUserName.text!, password: registerPassword.text!, completion: { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let memberData):
-                print("SignUpVC - postSignUp.success")
+                print("SignUpSecondVC - postSignUp.success")
                 
                 // 회원가입 완료 페이지 띄우기
                 self.memberName = memberData.name
                 self.memberUserName = memberData.username
-                self.performSegue(withIdentifier: "signUpSuccessVC", sender: nil)
+                self.performSegue(withIdentifier: "SignUpSuccessVC", sender: nil)
             case .failure(let error):
-                print("SignUpVC - postSignUp.failure / error: \(error)")
+                print("SignUpSecondVC - postSignUp.failure / error: \(error)")
                 self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
             }
         })
     }
     
-    // 로그인화면으로 이동 버튼 이벤트
-    @objc func onGoToLoginBtnClicked() {
-        print("SignUpVC - onGoToLoginBtnClicked() called / naviggationController poped")
-        
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    
-    // keyboard event
-    
+    // keyboard 이벤트
     @objc func keyboardWillShowHandle(notification: NSNotification) {
-        print("SignUpVC - keyboardWillShowHandle() called")
+        print("SignUpSecondVC - keyboardWillShowHandle() called")
         // 키보드 사이즈 가져오기
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
         }
     }
     
     @objc func keyboardWillHideHandle() {
-        print("SignUpVC - keyboardWillHideHandle() called")
+        print("SignUpSecondVC - keyboardWillHideHandle() called")
         
         self.view.frame.origin.y = 0
     }
     
     
-    // textfield editingChanged event
+    // textfield 변경할때 이벤트
     @objc func textFieldEditingChanged(_ sender: UITextField) {
-        print("SignUpVC - textFieldEditingChanged() called / sender.text: \(sender.text)")
+        print("SignUpSecondVC - textFieldEditingChanged() called / sender.text: \(sender.text)")
         
         switch sender {
-        case registerName :
-            // 자음 및 모음 X, 2글자 이상, 특수문자 사용 X
-            textFieldCheck(textField: sender, msgLabel: nameMsg, inputData: registerName.text ?? "")
         case registerUserName:
             // @email 형식 체크
             textFieldCheck(textField: sender, msgLabel: userNameMsg, inputData: registerUserName.text ?? "")
@@ -245,24 +223,20 @@ class SignUpVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelega
         signUpBtnAleChecked()
     }
     
-    // 비밀번호 일치하는지 체크하는 editingChanged
+    // 비밀번호 일치하는지 체크하는 editingChanged 이벤트
     @objc func passwordChkEditingChanged(_ sender: UITextField) {
-        print("SignUpVC - passwordChkEditingChanged() called / sender.text: \(sender.text)")
+        print("SignUpSecondVC - passwordChkEditingChanged() called / sender.text: \(sender.text)")
         
         passwordValueChecked()
-        
         signUpBtnAleChecked()
     }
     
     // MARK: - textField Delegate
-    // textField에서 enter키 눌렀을때
+    // textField에서 enter키 눌렀을때 이벤트
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print("SignUpVC - textFieldShouldReturn() called")
+        print("SignUpSecondVC - textFieldShouldReturn() called")
         
         switch textField {
-        case registerName :
-            // 자음 및 모음 X, 2글자 이상, 특수문자 사용 X
-            textFieldCheck(textField: textField, msgLabel: nameMsg, inputData: registerName.text ?? "" )
         case registerUserName:
             // @email 형식 체크
             textFieldCheck(textField: textField, msgLabel: userNameMsg, inputData: registerUserName.text ?? "")
@@ -278,7 +252,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelega
     }
     
     func textFieldCheck(textField: UITextField, msgLabel: UILabel, inputData: String) {
-        print("SignUpVC - textFieldCheck() called / msgLabel: \(msgLabel), inputData: \(inputData)")
+        print("SignUpSecondVC - textFieldCheck() called / msgLabel: \(msgLabel), inputData: \(inputData)")
         
         guard inputData != "" else {
             msgLabel.text = ""
@@ -286,17 +260,8 @@ class SignUpVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelega
         }
         
         switch textField {
-        case registerName:
-            nameOKFlag = isValidData(flag: "registerName", data: inputData)
-            
-            if nameOKFlag {
-                trueMsgSetting(msgLabel: msgLabel, msgString: "사용가능한 이름입니다.")
-            } else {
-                falseMsgSetting(msgLabel: msgLabel, msgString: "이름이 옳바르지 않습니다.")
-            }
         case registerUserName:
             usernameOKFlag = isValidData(flag: "registerUserName", data: inputData)
-            
             if usernameOKFlag {
                 userNameChecked(inputUserName: inputData)
             } else {
@@ -312,7 +277,6 @@ class SignUpVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelega
             }
             
             passwordValueChecked()
-            
         default:
             print("default")
         }
@@ -320,12 +284,9 @@ class SignUpVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelega
     
     // MARK: - UIGestureRecognizerDelegate
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        print("SignUpVC - gestureRecognizer shouldReceive() called")
+        print("SignUpSecondVC - gestureRecognizer shouldReceive() called")
         
-        if touch.view?.isDescendant(of: registerName) == true {
-            return false
-        }
-        else if touch.view?.isDescendant(of: registerUserName) == true {
+        if touch.view?.isDescendant(of: registerUserName) == true {
             return false
         }
         else if touch.view?.isDescendant(of: registerPassword) == true {
