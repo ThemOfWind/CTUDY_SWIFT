@@ -14,7 +14,8 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegat
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var loginBtn: UIButton!
     @IBOutlet weak var goToFindIdBtn: UIButton!
-    @IBOutlet weak var goToSignUpBtn: UIButton!
+    @IBOutlet weak var goToFindPwBtn: UIButton!
+    @IBOutlet weak var goToStartBtn: UIButton!
     @IBOutlet weak var actIndicator: UIActivityIndicatorView!
     var keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
     var distance: Double = 0
@@ -50,6 +51,31 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegat
     }
     
     // MARK: - objc and fileprivate methods
+    // 기본 셋팅
+    fileprivate func config() {
+        // text 초기화
+        self.userName.text = ""
+        self.password.text = ""
+        
+        // UI
+        self.loginBtn.layer.cornerRadius = 5
+        self.loginBtn.isEnabled = false
+        self.loginViewY = self.loginView.frame.origin.y
+        
+        // 버튼 이벤트 연결
+        self.loginBtn.addTarget(self, action: #selector(onLoginBtnClicked), for: .touchUpInside)
+        self.goToStartBtn.addTarget(self, action: #selector(onGoToStartBtnClicked), for: .touchUpInside)
+        
+        // delegate
+        self.keyboardDismissTabGesture.delegate = self
+        self.userName.delegate = self
+        self.password.delegate = self
+        
+        // 제스처
+        self.view.addGestureRecognizer(keyboardDismissTabGesture)
+    }
+    
+    // 로그인 버튼 이벤트
     @objc func onLoginBtnClicked() {
         print("LoginVC - onLoginBtnClicked() called")
         
@@ -106,31 +132,12 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegat
         }
     }
     
-    // 기본 셋팅
-    fileprivate func config() {
-        // text refresh
-        self.userName.text = ""
-        self.password.text = ""
-        
-        // UI
-        self.loginBtn.layer.cornerRadius = 5
-        self.loginBtn.isEnabled = false
-        self.loginViewY = self.loginView.frame.origin.y
-        
-        // add Btn methods
-        self.loginBtn.addTarget(self, action: #selector(onLoginBtnClicked), for: .touchUpInside)
-        
-        // delegate
-        self.keyboardDismissTabGesture.delegate = self
-        self.userName.delegate = self
-        self.password.delegate = self
-        
-        // 제스처
-        self.view.addGestureRecognizer(keyboardDismissTabGesture)
+    @objc fileprivate func onGoToStartBtnClicked() {
+        self.navigationController?.popViewController(animated: true)
     }
     
     // MARK: - @IBACiton methods
-    // 아이디&비밀번호 입력시 로그인 버튼 enable event
+    // 로그인 버튼 활성화 & 비활성화 이벤트
     @IBAction func editingChanged(_ sender: Any) {
         if userName.text!.isEmpty || password.text!.isEmpty {
             loginBtn.isEnabled = false
@@ -139,7 +146,6 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegat
         }
     }
     
-    //
     @IBAction func unwindLoginVC(_ segue: UIStoryboardSegue) {}
     
     // MARK: - UIGestureRecognizerDelegate

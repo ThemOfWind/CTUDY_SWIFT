@@ -13,8 +13,6 @@ class AddStudyNameVC : UIViewController, UITextFieldDelegate {
     @IBOutlet weak var registerStudyName: UITextField!
     @IBOutlet weak var nextBtn: UIButton!
     
-    var studyName : String?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.config()
