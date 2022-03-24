@@ -18,10 +18,13 @@ class UserInfoVC: UIViewController {
     }
     
     fileprivate func config() {
+        // Btn 연결 event
         self.logoutBtn.addTarget(self, action: #selector(onLogoutBtnClicked), for: .touchUpInside)
     }
     
+    // logoutBtn event
     @objc func onLogoutBtnClicked() {
+        // logout alert 띄우기
         let alert = UIAlertController(title: nil, message: "로그아웃 하시겠습니까?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "취소", style: .cancel))
         alert.addAction(UIAlertAction(title: "확인", style: .destructive, handler: { (_) in
