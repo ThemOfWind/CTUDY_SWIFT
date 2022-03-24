@@ -31,8 +31,8 @@ class SignUpFirstVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerD
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("SignUpFirstVC - viewWillAppear() called")
-        // 키보드 올라가는 이벤트를 받는 처리
-        // 키보드 노티 등록
+        // keyboard 올라가는 이벤트를 받는 처리
+        // keyboard 노티 등록
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShowHandle(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHideHandle), name: UIResponder.keyboardDidHideNotification, object: nil)
     }
@@ -40,12 +40,12 @@ class SignUpFirstVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerD
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         print("SignUpFirstVC - viewWillDisappear() called")
-        // 키보드 노티 해제
+        // keyboard 노티 해제
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
     }
     
-    //
+    // 다음 화면 이동 시 입력받은 이름정보 넘기기
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let id = segue.identifier, id == "SignUpSecondVC" {
             if let controller = segue.destination as? SignUpSecondVC {
@@ -57,31 +57,35 @@ class SignUpFirstVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerD
     
     // MARK: - fileprivate func
     fileprivate func config() {
+        // UI
+        self.navigationController?.isNavigationBarHidden = true
+        self.nextBtn.layer.cornerRadius = 30
+        self.nextBtn.layer.borderWidth = 1
+        self.nextBtn.layer.borderColor = UIColor(red: 180/255, green: 125/255, blue: 200/255, alpha: 1).cgColor
+        self.nextBtn.isEnabled = false
         
-        // 버튼 이벤트 연결
+        // Btn event 연결
         self.goToStartBtn.addTarget(self, action: #selector(onGoToStartBtnClicked), for: .touchUpInside)
         
-        // textField 이벤트 연결
+        // textField event 연결
         self.registerName.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
         
         // delegate
         self.registerName.delegate = self
     }
     
-    // textField 맞게 입력 되었을때
-    fileprivate func trueMsgSetting(msgLabel: UILabel, msgString: String) {
-        msgLabel.textColor = .systemGreen
+    // msgLabel 셋팅
+    fileprivate func setMsgLabel(flag: Bool, msgLabel: UILabel, msgString: String) {
+        if flag {
+            msgLabel.textColor = .systemGreen
+        } else {
+            msgLabel.textColor = .systemRed
+        }
         msgLabel.text = msgString
     }
     
-    // textField 잘못 입력 되었을때
-    fileprivate func falseMsgSetting(msgLabel: UILabel, msgString: String) {
-        msgLabel.textColor = .systemRed
-        msgLabel.text = msgString
-    }
-    
-    // 다음 버튼 활성화 & 비활성화 이벤트
-    fileprivate func signUpBtnAleChecked() {
+    // nextBtn 활성화 & 비활성화 event
+    fileprivate func nextBtnAbleChecked() {
         if nameOKFlag {
             nextBtn.isEnabled = true
         } else {
@@ -89,7 +93,7 @@ class SignUpFirstVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerD
         }
     }
     
-    // 이름 정규식 체크 이벤트
+    // 이름 정규식 체크 event
     fileprivate func isValidData(flag: String, data: String) -> Bool {
         print("SignUpFirstVC - isValidData() called / data: \(data), flag: \(flag)")
         
@@ -108,7 +112,7 @@ class SignUpFirstVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerD
     }
     
     // MARK: - @objc func
-    // 키보드 이벤트
+    // keyboard event
     @objc func keyboardWillShowHandle(notification: NSNotification) {
         print("SignUpFirstVC - keyboardWillShowHandle() called")
         // 키보드 사이즈 가져오기
@@ -122,7 +126,7 @@ class SignUpFirstVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerD
         self.view.frame.origin.y = 0
     }
     
-    // textfield 변경할때 이벤트
+    // textfield 변경할때 event
     @objc func textFieldEditingChanged(_ sender: UITextField) {
         print("SignUpFirstVC - textFieldEditingChanged() called / sender.text: \(sender.text)")
         
@@ -134,7 +138,7 @@ class SignUpFirstVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerD
             print("default")
         }
         
-        signUpBtnAleChecked()
+        nextBtnAbleChecked()
     }
     
     @objc fileprivate func onGoToStartBtnClicked() {
@@ -142,7 +146,7 @@ class SignUpFirstVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerD
     }
     
     // MARK: - textField Delegate
-    // textField에서 enter키 눌렀을때 이벤트
+    // textField에서 enter키 눌렀을때 event
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         print("SignUpFirstVC - textFieldShouldReturn() called")
         
@@ -170,13 +174,21 @@ class SignUpFirstVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerD
         case registerName:
             nameOKFlag = isValidData(flag: "registerName", data: inputData)
             if nameOKFlag {
-                trueMsgSetting(msgLabel: msgLabel, msgString: "사용가능한 이름입니다.")
+                setMsgLabel(flag: nameOKFlag, msgLabel: msgLabel, msgString: "사용가능한 이름입니다.")
             } else {
-                falseMsgSetting(msgLabel: msgLabel, msgString: "이름이 옳바르지 않습니다.")
+                setMsgLabel(flag: nameOKFlag, msgLabel: msgLabel, msgString: "이름이 옳바르지 않습니다.")
             }
         default:
             print("default")
         }
+    }
+    
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+//        textFeild.text!.removeAll()
+        nameOKFlag = false
+        
+        nextBtnAbleChecked()
+        return true
     }
     
     // MARK: - UIGestureRecognizerDelegate

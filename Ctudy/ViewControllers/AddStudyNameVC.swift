@@ -29,7 +29,9 @@ class AddStudyNameVC : UIViewController, UITextFieldDelegate {
     fileprivate func config() {
         self.registerStudyName.text = ""
         self.registerStudyName.delegate = self
-        self.nextBtn.layer.cornerRadius = 5
+        self.nextBtn.layer.cornerRadius = 30
+        self.nextBtn.layer.borderWidth = 1
+        self.nextBtn.layer.borderColor = UIColor(red: 180/255, green: 125/255, blue: 200/255, alpha: 1).cgColor
         self.nextBtn.isEnabled = false
         self.nextBtn.addTarget(self, action: #selector(onNextBtnClicked(_:)), for: .touchUpInside)
     }

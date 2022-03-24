@@ -11,12 +11,18 @@ import UIKit
 class AddStudyMemberVC : UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var MemberTableView: UITableView!
+    @IBOutlet weak var registerStudyBtn: UIButton!
     
     var members : Array<SearchMemberResponse> = []
     var studyName : String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //UI
+        self.registerStudyBtn.layer.cornerRadius = 30
+        self.registerStudyBtn.layer.borderWidth = 1
+        self.registerStudyBtn.layer.borderColor = UIColor(red: 180/255, green: 125/255, blue: 200/255, alpha: 1).cgColor
         
         // 셀 리소스 파일 가져오기
         let memberCell = UINib(nibName: String(describing: MemberTableViewCell.self), bundle: nil)

@@ -18,14 +18,18 @@ class SignUpSuccessVC : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         print("SignUpSuccessVC - viewDidLoad() calld")
         
-        self.goToLoginBtn.layer.cornerRadius = 5
+        // UI
+        self.navigationController?.isNavigationBarHidden = true
+        self.goToLoginBtn.layer.cornerRadius = 30
+        self.goToLoginBtn.layer.borderWidth = 1
+        self.goToLoginBtn.layer.borderColor = UIColor(red: 180/255, green: 125/255, blue: 200/255, alpha: 1).cgColor
         self.enterName.text = memberName
     }
-//
-//    @IBAction func onGoToLoginBtnClicked(_ sender: Any) {
-//        performSegue(withIdentifier: "unwindLoginVC", sender: self)
-//    }
+
+    @IBAction func onGoToLoginBtnClicked(_ sender: Any) {
+        print("click!!!!")
+        performSegue(withIdentifier: "unwindLoginVC", sender: self)
+    }
 }

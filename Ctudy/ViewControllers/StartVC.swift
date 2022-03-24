@@ -18,7 +18,13 @@ class StartVC : UIViewController {
         
         // UI
         self.navigationController?.isNavigationBarHidden = true
-        self.signUpBtn.layer.cornerRadius = 5
-        self.loginBtn.layer.cornerRadius = 5
+        self.signUpBtn.layer.cornerRadius = 30
+        self.signUpBtn.layer.borderWidth = 1
+        self.signUpBtn.layer.borderColor = UIColor(red: 180/255, green: 125/255, blue: 200/255, alpha: 1).cgColor
+        self.loginBtn.layer.cornerRadius = 30
+        self.loginBtn.layer.borderColor = UIColor(red: 180/255, green: 125/255, blue: 200/255, alpha: 1).cgColor
+        self.loginBtn.layer.borderWidth = 1
     }
+    
+    @IBAction func unwindLoginVC(_ segue: UIStoryboardSegue) {}
 }

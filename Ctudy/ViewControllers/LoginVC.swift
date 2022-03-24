@@ -45,7 +45,7 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegat
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         print("LoginVC - viewWillDisappear() called / animated: \(animated)")
-        // 키보드 노티 해제
+        // keyboard 노티 해제
         //NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         //NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
     }
@@ -53,16 +53,19 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegat
     // MARK: - objc and fileprivate methods
     // 기본 셋팅
     fileprivate func config() {
-        // text 초기화
+        // textField 초기화
         self.userName.text = ""
         self.password.text = ""
         
         // UI
-        self.loginBtn.layer.cornerRadius = 5
+        self.navigationController?.isNavigationBarHidden = true
+        self.loginBtn.layer.cornerRadius = 30
+        self.loginBtn.layer.borderWidth = 1
+        self.loginBtn.layer.borderColor = UIColor(red: 180/255, green: 125/255, blue: 200/255, alpha: 1).cgColor
         self.loginBtn.isEnabled = false
         self.loginViewY = self.loginView.frame.origin.y
         
-        // 버튼 이벤트 연결
+        // Btn event 연결
         self.loginBtn.addTarget(self, action: #selector(onLoginBtnClicked), for: .touchUpInside)
         self.goToStartBtn.addTarget(self, action: #selector(onGoToStartBtnClicked), for: .touchUpInside)
         
@@ -75,7 +78,7 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegat
         self.view.addGestureRecognizer(keyboardDismissTabGesture)
     }
     
-    // 로그인 버튼 이벤트
+    // loginBtn event
     @objc func onLoginBtnClicked() {
         print("LoginVC - onLoginBtnClicked() called")
         
@@ -109,7 +112,7 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegat
     
     @objc func keyboardWillShowHandle(notification: NSNotification) {
         print("LoginVC - keyboardWillShowHandle() called")
-        // 키보드 사이즈 가져오기
+        // keyboard 사이즈 가져오기
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             print("keyboardSize.height: \(keyboardSize.height)")
             print("loginBtn.frame.origin.y: \(loginBtn.frame.origin.y)")
@@ -127,7 +130,7 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegat
     @objc func keyboardWillHideHandle(noti: Notification) {
         print("LoginVC - keyboardWillHideHandle() called / loginViewY: \(loginViewY)")
         UIView.animate(withDuration: noti.userInfo![UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval) {
-            // 포커싱 해제
+            // focusing 해제
             self.loginView.frame.origin.y = self.loginViewY
         }
     }
@@ -137,7 +140,7 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegat
     }
     
     // MARK: - @IBACiton methods
-    // 로그인 버튼 활성화 & 비활성화 이벤트
+    // loginBtn 활성화 & 비활성화 event
     @IBAction func editingChanged(_ sender: Any) {
         if userName.text!.isEmpty || password.text!.isEmpty {
             loginBtn.isEnabled = false
