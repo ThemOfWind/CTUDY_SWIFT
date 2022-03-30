@@ -8,34 +8,39 @@
 import Foundation
 import UIKit
 
-class CheckButton: UIButton {
+class MemberCheckButton: UIButton {
     // bool property
     var isChecked: Bool = false {
         didSet {
             if isChecked {
                 // btn check on 설정
                 self.setTitle("", for: .normal)
-                self.setTitleColor(.white, for: .normal)
-                self.setImage(UIImage(named: "checkmark"), for: .normal)
-                self.setBackgroundColor(UIColor(red: 180/255, green: 125/255, blue: 200/255, alpha: 1), for: .normal)
+                self.tintColor = .white
+                self.setImage(UIImage(systemName: "checkmark")!, for: .normal)
+                self.backgroundColor = COLOR.SIGNATURE_COLOR
             } else {
                 // btn check off 설정
                 self.setTitle("초대", for: .normal)
-                self.setTitleColor(UIColor(red: 180/255, green: 125/255, blue: 200/255, alpha: 1), for: .normal)
-                self.setImage(nil, for: .normal)
-                self.setBackgroundColor(.white, for: .normal)
+                self.tintColor = COLOR.SIGNATURE_COLOR
+                self.setBackgroundImage(nil, for: .normal)
+                self.backgroundColor = .white
             }
         }
     }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         self.layer.cornerRadius = 20
         self.layer.borderWidth = 1
+        self.layer.borderColor = COLOR.SIGNATURE_COLOR.cgColor
         self.addTarget(self, action: #selector(btnClicked(sender:)), for: .touchUpInside)
         self.isChecked = false
     }
     
+    // checkbtn click event
     @objc func btnClicked(sender: UIButton) {
+        print("MemberCheckButton - btnClicked() called / sender.tag = \(sender.tag)")
         if sender == self {
             isChecked = !isChecked
         }
