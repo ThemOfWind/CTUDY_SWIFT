@@ -9,7 +9,6 @@ import Foundation
 import Alamofire
 
 class BaseInterceptor: RequestInterceptor {
-    
     // 정상작동 시 응답 methods
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         print("BaseInterceptor - adapt() called")

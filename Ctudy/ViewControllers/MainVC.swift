@@ -31,6 +31,10 @@ class MainVC: UIViewController {
         // 스터디룸 조회
         getSearchRoom()
         
+        if rooms.count <= 0 {
+            // 스터디룸 추가하라는 라벨을 레이아웃 가운데에 표기
+        }
+        
         // 스터디룸 추가 셀
         //        var testList = [SearchRoomResponse(name: "바람의 녀석들", membercount: 4, mastername: "김밍구")]
         //        testList.append(contentsOf: [SearchRoomResponse(name: "", membercount: 2, mastername: "김지니")])

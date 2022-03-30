@@ -178,9 +178,9 @@ final class AlamofireManager {
     }
     
     // MARK: - 전체 멤버 조회
-    func getSearchMember(competion: @escaping(Result<[SearchMemberResponse], MemberErrors>) -> Void) {
+    func getSearchMember(page: String, competion: @escaping(Result<JSON, MemberErrors>) -> Void) {
         self.session
-            .request(MemberRouter.searchmember)
+            .request(MemberRouter.searchmember(page: page))
             .validate(statusCode: 200..<501)
             .responseJSON(completionHandler: { response in
                 
@@ -188,23 +188,23 @@ final class AlamofireManager {
                 let responseJson = JSON(responseValue)
                 guard let result = responseJson["result"].bool else { return }
                 let response = responseJson["response"]
-                let list = response["list"]
+                //let list = response["list"]
+//                let nextPage = response["next"]
                 
-                var members = [SearchMemberResponse]()
+                //var members = [SearchMemberResponse]()
                 
                 if result {
-                    for (index, subJson) : (String, JSON) in list {
-                        guard let id = subJson["id"].int
-                                ,let username = subJson["username"].string
-                        else { return }
-                        
-                        let memberItem = SearchMemberResponse(id: id, userName: username)
-                        members.append(memberItem)
-                    }
+//                    for (index, subJson) : (String, JSON) in list {
+//                        guard let id = subJson["id"].int
+//                             ,let username = subJson["username"].string
+//                        else { return }
+//
+//                        let memberItem = SearchMemberResponse(id: id, userName: username)
+//                        members.append(memberItem)
+//                    }
                     
-                    if members.count > 0 {
-                        competion(.success(members))
-                        print("members: \(members)")
+                    if response.exists() {
+                        competion(.success(response))
                     }
                     else {
                         competion(.failure(.noSearchMember))

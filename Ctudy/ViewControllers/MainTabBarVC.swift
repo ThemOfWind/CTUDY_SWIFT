@@ -9,11 +9,15 @@ import Foundation
 import UIKit
 
 class MainTabBarVC : UITabBarController, UITabBarControllerDelegate {
-    public var addBtn : UIButton!
+    var addBtn : UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.config()
+    }
+    
+    fileprivate func config() {
         // navigationbar item 설정
         self.navigationController?.isNavigationBarHidden = false
         self.navigationItem.hidesBackButton = true
