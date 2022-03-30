@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5A0AD87727EC3D250038FD07 /* NavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0AD87627EC3D250038FD07 /* NavigationVC.swift */; };
+		5A0AD87727EC3D250038FD07 /* BasicVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0AD87627EC3D250038FD07 /* BasicVC.swift */; };
 		5A122A37278F08A800FC3971 /* PlusCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A122A36278F08A800FC3971 /* PlusCollectionViewCell.xib */; };
 		5A24494327EA17280082EC88 /* AddStudyMemberVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A24494227EA17280082EC88 /* AddStudyMemberVC.swift */; };
 		5A2D86C027EAE8A9000BF69B /* MemberTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A2D86BF27EAE8A9000BF69B /* MemberTableViewCell.xib */; };
@@ -26,6 +26,8 @@
 		5A58EEA4275F7E83000A1A39 /* Ctudy.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5A58EEA2275F7E83000A1A39 /* Ctudy.xcdatamodeld */; };
 		5A58EEA6275F7E84000A1A39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A58EEA5275F7E84000A1A39 /* Assets.xcassets */; };
 		5A58EEA9275F7E84000A1A39 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A58EEA7275F7E84000A1A39 /* LaunchScreen.storyboard */; };
+		5A741B3827F35096005E1D11 /* NaviBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A741B3727F35096005E1D11 /* NaviBarItem.swift */; };
+		5A741B3B27F4090B005E1D11 /* BarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A741B3A27F4090B005E1D11 /* BarButtonItem.swift */; };
 		5A8BAB142786E94100CFF908 /* StudyCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A8BAB132786E94100CFF908 /* StudyCollectionViewCell.xib */; };
 		5A8BAB162786F79200CFF908 /* StudyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8BAB152786F79200CFF908 /* StudyCollectionViewCell.swift */; };
 		5A8BAB19278812AD00CFF908 /* SearchRoomResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8BAB18278812AD00CFF908 /* SearchRoomResponse.swift */; };
@@ -34,6 +36,7 @@
 		5A9D31BC277B18D100DCEAEA /* MainTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9D31BB277B18D100DCEAEA /* MainTabBarVC.swift */; };
 		5A9D31C0277C0B9900DCEAEA /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9D31BF277C0B9900DCEAEA /* TokenManager.swift */; };
 		5A9D31C3277C71B900DCEAEA /* UserInfos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9D31C2277C71B900DCEAEA /* UserInfos.swift */; };
+		5A9EDD1427F0C89500ED3343 /* MemberCheckButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9EDD1327F0C89500ED3343 /* MemberCheckButton.swift */; };
 		5AA86D0B2761005D0067620C /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA86D0A2761005D0067620C /* MainVC.swift */; };
 		5AAE346D2761D2BE00EE6A5D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAE346C2761D2BE00EE6A5D /* Constants.swift */; };
 		5ABB95C22760F697003B4764 /* SignUpSecondVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABB95C12760F697003B4764 /* SignUpSecondVC.swift */; };
@@ -55,7 +58,7 @@
 /* Begin PBXFileReference section */
 		068A07C8F4FE2B4F18CB7A99 /* Pods-Ctudy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ctudy.release.xcconfig"; path = "Target Support Files/Pods-Ctudy/Pods-Ctudy.release.xcconfig"; sourceTree = "<group>"; };
 		2B69261F1FB25B4F48561F6E /* Pods-Ctudy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ctudy.debug.xcconfig"; path = "Target Support Files/Pods-Ctudy/Pods-Ctudy.debug.xcconfig"; sourceTree = "<group>"; };
-		5A0AD87627EC3D250038FD07 /* NavigationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationVC.swift; sourceTree = "<group>"; };
+		5A0AD87627EC3D250038FD07 /* BasicVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicVC.swift; sourceTree = "<group>"; };
 		5A122A36278F08A800FC3971 /* PlusCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlusCollectionViewCell.xib; sourceTree = "<group>"; };
 		5A24494227EA17280082EC88 /* AddStudyMemberVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStudyMemberVC.swift; sourceTree = "<group>"; };
 		5A2D86BF27EAE8A9000BF69B /* MemberTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MemberTableViewCell.xib; sourceTree = "<group>"; };
@@ -76,6 +79,8 @@
 		5A58EEA5275F7E84000A1A39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5A58EEA8275F7E84000A1A39 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5A58EEAA275F7E84000A1A39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5A741B3727F35096005E1D11 /* NaviBarItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaviBarItem.swift; sourceTree = "<group>"; };
+		5A741B3A27F4090B005E1D11 /* BarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarButtonItem.swift; sourceTree = "<group>"; };
 		5A8BAB132786E94100CFF908 /* StudyCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StudyCollectionViewCell.xib; sourceTree = "<group>"; };
 		5A8BAB152786F79200CFF908 /* StudyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyCollectionViewCell.swift; sourceTree = "<group>"; };
 		5A8BAB18278812AD00CFF908 /* SearchRoomResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRoomResponse.swift; sourceTree = "<group>"; };
@@ -84,6 +89,7 @@
 		5A9D31BB277B18D100DCEAEA /* MainTabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarVC.swift; sourceTree = "<group>"; };
 		5A9D31BF277C0B9900DCEAEA /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
 		5A9D31C2277C71B900DCEAEA /* UserInfos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfos.swift; sourceTree = "<group>"; };
+		5A9EDD1327F0C89500ED3343 /* MemberCheckButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCheckButton.swift; sourceTree = "<group>"; };
 		5AA86D0A2761005D0067620C /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		5AAE346C2761D2BE00EE6A5D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		5ABB95C12760F697003B4764 /* SignUpSecondVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpSecondVC.swift; sourceTree = "<group>"; };
@@ -131,18 +137,18 @@
 			path = Members;
 			sourceTree = "<group>";
 		};
-		5A4CD0DA27E895CB00F6C829 /* Custom */ = {
+		5A4CD0DA27E895CB00F6C829 /* Customs */ = {
 			isa = PBXGroup;
 			children = (
+				5A741B3927F4066F005E1D11 /* NavigationBarItems */,
 				5A8BAB132786E94100CFF908 /* StudyCollectionViewCell.xib */,
 				5A122A36278F08A800FC3971 /* PlusCollectionViewCell.xib */,
-				5A4CD0D827E86F1F00F6C829 /* AddBarButtonItem.xib */,
 				5A2D86BF27EAE8A9000BF69B /* MemberTableViewCell.xib */,
 				5A8BAB152786F79200CFF908 /* StudyCollectionViewCell.swift */,
-				5A4CD0DB27E8A09E00F6C829 /* AddBarButtonItem.swift */,
 				5A2D86C127EAEBB8000BF69B /* MemberTableViewCell.swift */,
+				5A9EDD1327F0C89500ED3343 /* MemberCheckButton.swift */,
 			);
-			path = Custom;
+			path = Customs;
 			sourceTree = "<group>";
 		};
 		5A58EE8D275F7E83000A1A39 = {
@@ -170,7 +176,7 @@
 				5ADDFC772765B970001291DD /* API */,
 				5A79F9A8275F885100B061AF /* ViewControllers */,
 				5AAE346B2761D2AE00EE6A5D /* Utils */,
-				5A4CD0DA27E895CB00F6C829 /* Custom */,
+				5A4CD0DA27E895CB00F6C829 /* Customs */,
 				5A58EE99275F7E83000A1A39 /* AppDelegate.swift */,
 				5A58EE9B275F7E83000A1A39 /* SceneDelegate.swift */,
 				5A58EE9F275F7E83000A1A39 /* Main.storyboard */,
@@ -182,10 +188,21 @@
 			path = Ctudy;
 			sourceTree = "<group>";
 		};
+		5A741B3927F4066F005E1D11 /* NavigationBarItems */ = {
+			isa = PBXGroup;
+			children = (
+				5A4CD0D827E86F1F00F6C829 /* AddBarButtonItem.xib */,
+				5A4CD0DB27E8A09E00F6C829 /* AddBarButtonItem.swift */,
+				5A741B3A27F4090B005E1D11 /* BarButtonItem.swift */,
+				5A741B3727F35096005E1D11 /* NaviBarItem.swift */,
+			);
+			path = NavigationBarItems;
+			sourceTree = "<group>";
+		};
 		5A79F9A8275F885100B061AF /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				5A0AD87627EC3D250038FD07 /* NavigationVC.swift */,
+				5A0AD87627EC3D250038FD07 /* BasicVC.swift */,
 				5A3BBBEB27EB4F6C00BA9E3F /* StartVC.swift */,
 				5A58EE9D275F7E83000A1A39 /* LoginVC.swift */,
 				5A8DC12A27EB5FA5008FA26E /* SignUpFirstVC.swift */,
@@ -412,20 +429,23 @@
 				5A8BAB162786F79200CFF908 /* StudyCollectionViewCell.swift in Sources */,
 				5A31966E2766045D007400EE /* SignUpSuccessVC.swift in Sources */,
 				5A58EE9A275F7E83000A1A39 /* AppDelegate.swift in Sources */,
-				5A0AD87727EC3D250038FD07 /* NavigationVC.swift in Sources */,
+				5A0AD87727EC3D250038FD07 /* BasicVC.swift in Sources */,
 				5A9D31BA277B17DD00DCEAEA /* UserInfoVC.swift in Sources */,
 				5ABB95C22760F697003B4764 /* SignUpSecondVC.swift in Sources */,
 				5A3BBBE927EAF31300BA9E3F /* SearhMemberResponse.swift in Sources */,
 				5ACF0C9327673065003907E9 /* SignInResponse.swift in Sources */,
+				5A741B3B27F4090B005E1D11 /* BarButtonItem.swift in Sources */,
 				5ADDFC792765B983001291DD /* AlamofireManager.swift in Sources */,
 				5A58EE9C275F7E83000A1A39 /* SceneDelegate.swift in Sources */,
 				5AC1CE772765CB0D009586B2 /* CouponRouter.swift in Sources */,
+				5A9EDD1427F0C89500ED3343 /* MemberCheckButton.swift in Sources */,
 				5A9D31C0277C0B9900DCEAEA /* TokenManager.swift in Sources */,
 				5A8BAB19278812AD00CFF908 /* SearchRoomResponse.swift in Sources */,
 				5A453AFE27E9B25B006F0A1D /* AddStudyNameVC.swift in Sources */,
 				5A4CD0DC27E8A09E00F6C829 /* AddBarButtonItem.swift in Sources */,
 				5A24494327EA17280082EC88 /* AddStudyMemberVC.swift in Sources */,
 				5AC4471F2774620F00077242 /* MyStatusLogger.swift in Sources */,
+				5A741B3827F35096005E1D11 /* NaviBarItem.swift in Sources */,
 				5A4CD0DE27E8C2F600F6C829 /* MainDetailVC.swift in Sources */,
 				5A58EEA4275F7E83000A1A39 /* Ctudy.xcdatamodeld in Sources */,
 				5A2D86C227EAEBB8000BF69B /* MemberTableViewCell.swift in Sources */,

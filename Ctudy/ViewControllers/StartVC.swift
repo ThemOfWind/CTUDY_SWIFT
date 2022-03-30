@@ -16,8 +16,11 @@ class StartVC : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.config()
+    }
+    
+    fileprivate func config() {
         // UI
-        self.navigationController?.isNavigationBarHidden = true
         self.signUpBtn.layer.cornerRadius = 30
         self.signUpBtn.layer.borderWidth = 1
         self.signUpBtn.layer.borderColor = UIColor(red: 180/255, green: 125/255, blue: 200/255, alpha: 1).cgColor

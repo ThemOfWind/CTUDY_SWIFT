@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum API {
     static let BASE_URL: String = "https://api.ctudy.com/api/v1/"
@@ -19,5 +20,6 @@ enum REGEX {
     static let PASSWORD_REGEX: String = "^(?=.*[A-Za-z])(?=.*[!@#$%^])(?=.*[0-9]).{8,20}"
 }
 
-enum NAVIITEM {
+enum COLOR {
+    static let SIGNATURE_COLOR: UIColor = UIColor(red: 180/255, green: 125/255, blue: 200/255, alpha: 1)
 }

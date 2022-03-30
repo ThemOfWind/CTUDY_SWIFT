@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class SignUpFirstVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
+class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
     
     // MARK: - 변수
     @IBOutlet weak var registerName: UITextField!
@@ -20,17 +20,20 @@ class SignUpFirstVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerD
     var memberName: String?
     var nameOKFlag: Bool = false
     
-    
     // MARK: - override func
     override func viewDidLoad() {
         super.viewDidLoad()
         print("SignUpFirstVC - viewDidLoad() called")
+        
         self.config()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("SignUpFirstVC - viewWillAppear() called")
+        
+        //
+        self.leftItem = LeftItem.none
         // keyboard 올라가는 이벤트를 받는 처리
         // keyboard 노티 등록
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShowHandle(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -54,11 +57,10 @@ class SignUpFirstVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerD
         }
     }
     
-    
     // MARK: - fileprivate func
     fileprivate func config() {
         // UI
-        self.navigationController?.isNavigationBarHidden = true
+        self.leftItem = LeftItem.none
         self.nextBtn.layer.cornerRadius = 30
         self.nextBtn.layer.borderWidth = 1
         self.nextBtn.layer.borderColor = UIColor(red: 180/255, green: 125/255, blue: 200/255, alpha: 1).cgColor

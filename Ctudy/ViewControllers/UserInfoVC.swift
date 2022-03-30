@@ -14,6 +14,7 @@ class UserInfoVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.config()
     }
     

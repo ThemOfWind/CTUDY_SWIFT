@@ -5,10 +5,10 @@
 //  Created by 김지은 on 2022/03/29.
 //
 
-protocol NaviBarItemDelegate: AnyObject {
-    // 위임해줄 기능
-    func btnItemAction(btn: UIButton)
-}
+//protocol NaviBarItemDelegate: AnyObject {
+//    // 위임해줄 기능
+//    func btnItemAction(btn: UIButton)
+//}
 
 import Foundation
 import UIKit
@@ -36,7 +36,7 @@ class NaviBarItem: UIBarButtonItem {
         return type(of: self).init(customView: view)
     }
     
-    var itemDelegate: NaviBarItemDelegate?
+//    var itemDelegate: NaviBarItemDelegate?
     
     override class func awakeFromNib() {
         super.awakeFromNib()
@@ -45,11 +45,11 @@ class NaviBarItem: UIBarButtonItem {
     @objc fileprivate func onLeftBtnClicked(_ sender: UIButton) {
         print("backBtn click!!")
         
-        itemDelegate?.btnItemAction(btn: sender)
+//        itemDelegate?.btnItemAction(btn: sender)
     }
     
     @objc fileprivate func onCustomBtnClicked(_ sender: UIButton) {
-        itemDelegate?.btnItemAction(btn: sender)
+//        itemDelegate?.btnItemAction(btn: sender)
     }
     
     

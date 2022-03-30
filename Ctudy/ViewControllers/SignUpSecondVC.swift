@@ -10,8 +10,8 @@ import UIKit
 import Toast_Swift
 import Alamofire
 
-class SignUpSecondVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
-    
+class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, NaviBarItemDelegate {
+   
     @IBOutlet weak var registerUserName: UITextField!
     @IBOutlet weak var registerPassword: UITextField!
     @IBOutlet weak var registerPasswordChk: UITextField!
@@ -62,8 +62,12 @@ class SignUpSecondVC: UIViewController, UITextFieldDelegate, UIGestureRecognizer
     
     // MARK: - fileprivate func
     fileprivate func config() {
-        // UI
-        self.navigationController?.isNavigationBarHidden = false
+        // navigationbar item 설정
+        self.leftItem = LeftItem.backGeneral
+        self.titleItem = TitleItem.titleGeneral(title: "회원가입")
+        self.rightItem = RightItem.anyCustoms(items: [.plus], title: nil, rightSpaceCloseToDefault: true)
+        
+        // ui
         self.signUpBtn.layer.cornerRadius = 30
         self.signUpBtn.layer.borderWidth = 1
         self.signUpBtn.layer.borderColor = UIColor(red: 180/255, green: 125/255, blue: 200/255, alpha: 1).cgColor
@@ -71,7 +75,7 @@ class SignUpSecondVC: UIViewController, UITextFieldDelegate, UIGestureRecognizer
         self.registerPassword.isSecureTextEntry = true
         self.registerPasswordChk.isSecureTextEntry = true
         
-        // Btn event 연결
+        // btn event 연결
         self.signUpBtn.addTarget(self, action: #selector(onSignUpBtnClicked), for: .touchUpInside)
         
         // textField event 연결
@@ -86,6 +90,10 @@ class SignUpSecondVC: UIViewController, UITextFieldDelegate, UIGestureRecognizer
         
         // 제스처
         self.view.addGestureRecognizer(keyboardDismissTabGesture)
+    }
+    
+    func btnItemAction(btn: UIButton) {
+        self.navigationController?.popViewController(animated: true)
     }
     
     // 아이디 중복체크 api 호출 event
@@ -236,6 +244,11 @@ class SignUpSecondVC: UIViewController, UITextFieldDelegate, UIGestureRecognizer
         passwordValueChecked()
         // 버튼 활성화 & 비활성화 체크
         signUpBtnAbleChecked()
+    }
+    
+    // MARK: - NavigationBarItem Delegate
+    func rightItemAction(items: [UIBarButtonItem]) {
+        print("rightItems click!!!")
     }
     
     // MARK: - textField Delegate

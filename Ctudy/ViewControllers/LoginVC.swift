@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LoginVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegate {
+class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var loginView: UIView!
     @IBOutlet weak var userName: UITextField!
@@ -58,7 +58,7 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegat
         self.password.text = ""
         
         // UI
-        self.navigationController?.isNavigationBarHidden = true
+        self.leftItem = LeftItem.none
         self.loginBtn.layer.cornerRadius = 30
         self.loginBtn.layer.borderWidth = 1
         self.loginBtn.layer.borderColor = UIColor(red: 180/255, green: 125/255, blue: 200/255, alpha: 1).cgColor
