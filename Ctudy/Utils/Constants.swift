@@ -22,4 +22,5 @@ enum REGEX {
 
 enum COLOR {
     static let SIGNATURE_COLOR: UIColor = UIColor(red: 180/255, green: 125/255, blue: 200/255, alpha: 1)
+    static let DISABLE_COLORL: UIColor = UIColor(red: 197/255, green: 197/255, blue: 197/255, alpha: 1)
 }

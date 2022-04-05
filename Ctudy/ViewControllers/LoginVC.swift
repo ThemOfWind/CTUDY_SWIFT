@@ -9,6 +9,7 @@ import UIKit
 
 class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
     
+    // MARK: - 변수
     @IBOutlet weak var loginView: UIView!
     @IBOutlet weak var userName: UITextField!
     @IBOutlet weak var password: UITextField!
@@ -21,11 +22,9 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
     var distance: Double = 0
     var loginViewY: Double!
     
-    // MARK: - overrid methods
+    // MARK: - overrid func
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
         self.config()
     }
     
@@ -50,22 +49,26 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
         //NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
     }
     
-    // MARK: - objc and fileprivate methods
+    // MARK: - fileprivate func
     // 기본 셋팅
     fileprivate func config() {
         // textField 초기화
         self.userName.text = ""
         self.password.text = ""
         
-        // UI
+        // navigationBar item
         self.leftItem = LeftItem.none
+        self.titleItem = TitleItem.none
+        self.rightItem = RightItem.none
+        
+        // btn ui
         self.loginBtn.layer.cornerRadius = 30
         self.loginBtn.layer.borderWidth = 1
-        self.loginBtn.layer.borderColor = UIColor(red: 180/255, green: 125/255, blue: 200/255, alpha: 1).cgColor
+        self.loginBtn.layer.borderColor = COLOR.DISABLE_COLORL.cgColor
         self.loginBtn.isEnabled = false
         self.loginViewY = self.loginView.frame.origin.y
         
-        // Btn event 연결
+        // btn event 연결
         self.loginBtn.addTarget(self, action: #selector(onLoginBtnClicked), for: .touchUpInside)
         self.goToStartBtn.addTarget(self, action: #selector(onGoToStartBtnClicked), for: .touchUpInside)
         
@@ -74,10 +77,11 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
         self.userName.delegate = self
         self.password.delegate = self
         
-        // 제스처
+        // gesture
         self.view.addGestureRecognizer(keyboardDismissTabGesture)
     }
     
+    // MARK: - @objc func
     // loginBtn event
     @objc func onLoginBtnClicked() {
         print("LoginVC - onLoginBtnClicked() called")
@@ -139,19 +143,21 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
         self.navigationController?.popViewController(animated: true)
     }
     
-    // MARK: - @IBACiton methods
+    // MARK: - @IBACiton func
     // loginBtn 활성화 & 비활성화 event
     @IBAction func editingChanged(_ sender: Any) {
         if userName.text!.isEmpty || password.text!.isEmpty {
-            loginBtn.isEnabled = false
+            self.loginBtn.isEnabled = false
+            self.loginBtn.layer.borderColor = COLOR.DISABLE_COLORL.cgColor
         } else {
-            loginBtn.isEnabled = true
+            self.loginBtn.isEnabled = true
+            self.loginBtn.layer.borderColor = COLOR.SIGNATURE_COLOR.cgColor
         }
     }
     
     @IBAction func unwindLoginVC(_ segue: UIStoryboardSegue) {}
     
-    // MARK: - UIGestureRecognizerDelegate
+    // MARK: - UIGestureRecognizer delegate
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         print("LoginVC - gestureRecognizer shouldReceive() called")
         

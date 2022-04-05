@@ -15,6 +15,7 @@ import UIKit
 
 class BasicVC: UIViewController {
     
+    // left navigationBar item
     enum LeftItem {
         case none // nil
         case backSystemDefault // 기본 backItem
@@ -25,11 +26,13 @@ class BasicVC: UIViewController {
         case customView(view: UIView)
     }
     
+    // titleView
     enum TitleItem {
         case none
         case titleGeneral(title: String?)
     }
     
+    // right navigationBar item
     enum RightItem {
         case none // nil
         case anyCustoms(items: [Items]?, title: String?, rightSpaceCloseToDefault: Bool)
@@ -38,11 +41,13 @@ class BasicVC: UIViewController {
         case customView(view: UIView)
     }
     
+    // right navigationBar item type
     enum Items {
         case plus
         case camera
     }
     
+    // right naviagtionBar item
     var rightItemDelegate: NaviBarItemDelegate?
     
     // leftItem 생성
@@ -52,33 +57,37 @@ class BasicVC: UIViewController {
         }
     }
     
+    // titleItem 생성
     var titleItem: TitleItem = TitleItem.none {
         didSet {
             self.updateNavigationBarTitleUI()
         }
     }
     
+    // rightItem 생성
     var rightItem: RightItem = RightItem.none {
         didSet {
             self.updateNavigationBarRightUI()
         }
     }
     
-    // leftItem Image
+    // leftItem image
     lazy var backButtonImage = UIImage(systemName: "chevron.backward")
     
-    // rightItem Image
+    // rightItem image
     lazy var anyButtonImages: Array = [UIImage(systemName: "plus")]
     
+    // navigationController pop event
     func navigationControllerPop() {
         self.navigationController?.popViewController(animated: true)
     }
     
-    // empty leftItem action
+    // empty leftItem event
     func createEmptyButton() -> UIBarButtonItem {
         return UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
     }
     
+    // anyItem click event
     func AnyItemAction(sender: [UIBarButtonItem]) {
         rightItemDelegate?.rightItemAction(items: sender)
     }
@@ -111,10 +120,12 @@ class BasicVC: UIViewController {
         return arr
     }
     
+    // createBackBtn + pop action
     func createBackButtonGeneral(title: String?) -> [UIBarButtonItem] {
         return createCustomBackButton(image: backButtonImage, title: title, leftSpaceCloseToDefault: true, backFn: navigationControllerPop)
     }
     
+    // createBackBtn + custom action
     func createBackButtonWithFn(backFn: @escaping (() -> ())) -> [UIBarButtonItem] {
         return createCustomBackButton(image: backButtonImage, title: nil, leftSpaceCloseToDefault: true, backFn: backFn)
     }
@@ -155,12 +166,13 @@ class BasicVC: UIViewController {
         return arr
     }
     
+    // createAnyBtn + custom action
     func createAnyButtons(items: [Items]?, title: String?, rightSpaceCloseToDefault: Bool, anyFn: @escaping (([UIBarButtonItem]) -> ())) -> [UIBarButtonItem] {
         return createCustomAnyButton(items: items, title: title, rightSpaceCloseToDefault: rightSpaceCloseToDefault, anyFn: AnyItemAction(sender:))
     }
     // MARK: - init func
     
-    // btn setting
+    // leftItem setting
     func updateNavigationBarLeftUI() {
         print("BasicVC - updateNavigationBarUI() called")
         
@@ -190,6 +202,7 @@ class BasicVC: UIViewController {
         }
     }
     
+    // titleItem setting
     func updateNavigationBarTitleUI() {
         switch self.titleItem {
         case .none:
@@ -205,6 +218,7 @@ class BasicVC: UIViewController {
         }
     }
     
+    // rightItem setting
     func updateNavigationBarRightUI() {
         // rightItem
         switch self.rightItem {
@@ -225,7 +239,6 @@ class BasicVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.reset()
         self.updateNavigationBarLeftUI()
         self.updateNavigationBarTitleUI()

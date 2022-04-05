@@ -33,7 +33,6 @@ class MemberTableViewCell : UITableViewCell {
     // cell간 간격 띄우기 (수정해야돼)
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
     }
     
