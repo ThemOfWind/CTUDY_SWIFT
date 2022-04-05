@@ -9,28 +9,35 @@ import Foundation
 import UIKit
 import SwiftyJSON
 
-class AddStudyMemberVC : UIViewController, UITableViewDelegate, UITableViewDataSource {
+class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, MemberCheckButtonDelegate {
     
+    // MARK: - 변수
     @IBOutlet weak var memberTableView: UITableView!
     @IBOutlet weak var registerStudyBtn: UIButton!
-    
+    @IBOutlet weak var memberSearchBar: UITableView!
     var members : Array<SearchMemberResponse> = []
     var nextPage : String? = "1"
-    var fetchingMore = false //
+    var fetchingMore = false
     var studyName : String?
     
-    // MARK: - overrid & filepriavte methods
+    // MARK: - overrid func
     override func viewDidLoad() {
         super.viewDidLoad()
-
         self.config()
     }
     
+    // MARK: - fileprivate func
     fileprivate func config() {
-        //UI
+        // navigationBar item 설정
+        self.leftItem = LeftItem.backGeneral
+        self.titleItem = TitleItem.titleGeneral(title: "스터디멤버 등록")
+        self.rightItem = RightItem.none
+        
+        // btn
         self.registerStudyBtn.layer.cornerRadius = 30
         self.registerStudyBtn.layer.borderWidth = 1
-        self.registerStudyBtn.layer.borderColor = UIColor(red: 180/255, green: 125/255, blue: 200/255, alpha: 1).cgColor
+        self.registerStudyBtn.layer.borderColor = COLOR.DISABLE_COLORL.cgColor
+        self.registerStudyBtn.isEnabled = false
         
         // 셀 리소스 파일 가져오기
         let memberCell = UINib(nibName: String(describing: MemberTableViewCell.self), bundle: nil)
@@ -48,7 +55,7 @@ class AddStudyMemberVC : UIViewController, UITableViewDelegate, UITableViewDataS
         self.memberTableView.dataSource = self
         
         // 전체 멤버 조회
-        getSearchMember()
+        self.getSearchMember()
     }
     
     // 전체 멤버 조회
@@ -68,7 +75,7 @@ class AddStudyMemberVC : UIViewController, UITableViewDelegate, UITableViewDataS
                             ,let username = subJson["username"].string
                     else { return }
                     
-                    let memberItem = SearchMemberResponse(id: id, userName: username)
+                    let memberItem = SearchMemberResponse(id: id, userName: username, ischecked: false)
                     self.members.append(memberItem)
                 }
                 // view reload
@@ -89,7 +96,22 @@ class AddStudyMemberVC : UIViewController, UITableViewDelegate, UITableViewDataS
         return footerView
     }
     
-    // MARK: - Delegate
+    // ischecked 값에 따라 registerStudyBtn enable event
+    fileprivate func editingChange() {
+        // ischecked true 확인
+        for index in 0..<members.count {
+            if members[index].ischecked {
+                self.registerStudyBtn.layer.borderColor = COLOR.SIGNATURE_COLOR.cgColor
+                self.registerStudyBtn.isEnabled = true
+                return
+            }
+        }
+        
+        self.registerStudyBtn.layer.borderColor = COLOR.DISABLE_COLORL.cgColor
+        self.registerStudyBtn.isEnabled = false
+    }
+    
+    // MARK: - delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return members.count
     }
@@ -98,13 +120,18 @@ class AddStudyMemberVC : UIViewController, UITableViewDelegate, UITableViewDataS
         let cell = memberTableView.dequeueReusableCell(withIdentifier: "MemberTableViewCell", for: indexPath) as! MemberTableViewCell
         cell.memberName.text = members[indexPath.row].userName
         cell.checkBtn.tag = indexPath.row
+        cell.checkBtn.isChecked = members[indexPath.row].ischecked
+        cell.checkBtn.checkBtnDelegate = self
         return cell
     }
     
-    // btn click event delegate
-//    func seletedInfoBtn(btn: UIButton, index: Int, chekced checked: Bool) {
-//
-//    }
+    func checkBtnClicked(btn: UIButton, ischecked: Bool) {
+        print("AddStudyMemberVC - checkBtnClicked() called / btn.tag: \(btn.tag), ischecked: \(ischecked)")
+        self.members[btn.tag].ischecked = ischecked
+        
+        // registerStudyBtn enable event
+        editingChange()
+    }
     
     // 아래로 스크롤시 event
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

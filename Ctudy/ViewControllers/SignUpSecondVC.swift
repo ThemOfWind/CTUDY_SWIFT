@@ -10,8 +10,9 @@ import UIKit
 import Toast_Swift
 import Alamofire
 
-class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, NaviBarItemDelegate {
+class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
    
+    // MARK: - 변수
     @IBOutlet weak var registerUserName: UITextField!
     @IBOutlet weak var registerPassword: UITextField!
     @IBOutlet weak var registerPasswordChk: UITextField!
@@ -19,7 +20,6 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
     @IBOutlet weak var passwordMsg: UILabel!
     @IBOutlet weak var passwordChkMsg: UILabel!
     @IBOutlet weak var signUpBtn: UIButton!
-    
     var keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
     var registerName: String?
     var memberName: String?
@@ -64,13 +64,13 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
     fileprivate func config() {
         // navigationbar item 설정
         self.leftItem = LeftItem.backGeneral
-        self.titleItem = TitleItem.titleGeneral(title: "회원가입")
-        self.rightItem = RightItem.anyCustoms(items: [.plus], title: nil, rightSpaceCloseToDefault: true)
+        self.titleItem = TitleItem.none
+        self.rightItem = RightItem.none
         
         // ui
         self.signUpBtn.layer.cornerRadius = 30
         self.signUpBtn.layer.borderWidth = 1
-        self.signUpBtn.layer.borderColor = UIColor(red: 180/255, green: 125/255, blue: 200/255, alpha: 1).cgColor
+        self.signUpBtn.layer.borderColor = COLOR.DISABLE_COLORL.cgColor
         self.signUpBtn.isEnabled = false
         self.registerPassword.isSecureTextEntry = true
         self.registerPasswordChk.isSecureTextEntry = true
@@ -130,9 +130,11 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
     fileprivate func signUpBtnAbleChecked() {
         print("SignUpSecondVC - signUpBtnAleChecked() called / usernameOKFlage: \(usernameOKFlag), passwordOKFlage: \(passwordOKFlag)")
         if usernameOKFlag && passwordOKFlag {
-            signUpBtn.isEnabled = true
+            self.signUpBtn.layer.borderColor = COLOR.SIGNATURE_COLOR.cgColor
+            self.signUpBtn.isEnabled = true
         } else {
-            signUpBtn.isEnabled = false
+            self.signUpBtn.layer.borderColor = COLOR.DISABLE_COLORL.cgColor
+            self.signUpBtn.isEnabled = false
         }
     }
     
@@ -244,11 +246,6 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
         passwordValueChecked()
         // 버튼 활성화 & 비활성화 체크
         signUpBtnAbleChecked()
-    }
-    
-    // MARK: - NavigationBarItem Delegate
-    func rightItemAction(items: [UIBarButtonItem]) {
-        print("rightItems click!!!")
     }
     
     // MARK: - textField Delegate

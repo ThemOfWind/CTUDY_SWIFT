@@ -15,7 +15,6 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
     @IBOutlet weak var nextBtn: UIButton!
     @IBOutlet weak var nameMsg: UILabel!
     @IBOutlet weak var goToStartBtn: UIButton!
-    
     var keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
     var memberName: String?
     var nameOKFlag: Bool = false
@@ -24,7 +23,6 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         print("SignUpFirstVC - viewDidLoad() called")
-        
         self.config()
     }
     
@@ -32,8 +30,6 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
         super.viewWillAppear(animated)
         print("SignUpFirstVC - viewWillAppear() called")
         
-        //
-        self.leftItem = LeftItem.none
         // keyboard 올라가는 이벤트를 받는 처리
         // keyboard 노티 등록
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShowHandle(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -59,14 +55,18 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
     
     // MARK: - fileprivate func
     fileprivate func config() {
-        // UI
+        // navigationBar item
         self.leftItem = LeftItem.none
+        self.titleItem = TitleItem.none
+        self.rightItem = RightItem.none
+        
+        // btn ui
         self.nextBtn.layer.cornerRadius = 30
         self.nextBtn.layer.borderWidth = 1
-        self.nextBtn.layer.borderColor = UIColor(red: 180/255, green: 125/255, blue: 200/255, alpha: 1).cgColor
+        self.nextBtn.layer.borderColor = COLOR.DISABLE_COLORL.cgColor
         self.nextBtn.isEnabled = false
         
-        // Btn event 연결
+        // btn event 연결
         self.goToStartBtn.addTarget(self, action: #selector(onGoToStartBtnClicked), for: .touchUpInside)
         
         // textField event 연결
@@ -89,9 +89,11 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
     // nextBtn 활성화 & 비활성화 event
     fileprivate func nextBtnAbleChecked() {
         if nameOKFlag {
-            nextBtn.isEnabled = true
+            self.nextBtn.layer.borderColor = COLOR.SIGNATURE_COLOR.cgColor
+            self.nextBtn.isEnabled = true
         } else {
-            nextBtn.isEnabled = false
+            self.nextBtn.layer.borderColor = COLOR.DISABLE_COLORL.cgColor
+            self.nextBtn.isEnabled = false
         }
     }
     
@@ -128,7 +130,7 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
         self.view.frame.origin.y = 0
     }
     
-    // textfield 변경할때 event
+    // textField 변경할 때 event
     @objc func textFieldEditingChanged(_ sender: UITextField) {
         print("SignUpFirstVC - textFieldEditingChanged() called / sender.text: \(sender.text)")
         
@@ -147,7 +149,7 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
         self.navigationController?.popViewController(animated: true)
     }
     
-    // MARK: - textField Delegate
+    // MARK: - textField delegate
     // textField에서 enter키 눌렀을때 event
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         print("SignUpFirstVC - textFieldShouldReturn() called")
@@ -193,7 +195,7 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
         return true
     }
     
-    // MARK: - UIGestureRecognizerDelegate
+    // MARK: - UIGestureRecognizer delegate
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         print("SignUpFirstVC - gestureRecognizer shouldReceive() called")
         

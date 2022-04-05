@@ -5,6 +5,10 @@
 //  Created by 김지은 on 2022/03/28.
 //
 
+protocol MemberCheckButtonDelegate: AnyObject {
+    func checkBtnClicked(btn: UIButton, ischecked: Bool)
+}
+
 import Foundation
 import UIKit
 
@@ -14,26 +18,28 @@ class MemberCheckButton: UIButton {
         didSet {
             if isChecked {
                 // btn check on 설정
-                self.setTitle("", for: .normal)
+                self.setTitle("초대됨", for: .normal)
                 self.tintColor = .white
-                self.setImage(UIImage(systemName: "checkmark")!, for: .normal)
+                //self.setImage(UIImage(systemName: "checkmark")!, for: .normal)
                 self.backgroundColor = COLOR.SIGNATURE_COLOR
             } else {
                 // btn check off 설정
                 self.setTitle("초대", for: .normal)
                 self.tintColor = COLOR.SIGNATURE_COLOR
-                self.setBackgroundImage(nil, for: .normal)
+                //self.setImage(nil, for: .normal)
                 self.backgroundColor = .white
             }
         }
     }
     
+    var checkBtnDelegate: MemberCheckButtonDelegate?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        
         self.layer.cornerRadius = 20
         self.layer.borderWidth = 1
         self.layer.borderColor = COLOR.SIGNATURE_COLOR.cgColor
+        self.setImage(nil, for: .normal)
         self.addTarget(self, action: #selector(btnClicked(sender:)), for: .touchUpInside)
         self.isChecked = false
     }
@@ -41,8 +47,9 @@ class MemberCheckButton: UIButton {
     // checkbtn click event
     @objc func btnClicked(sender: UIButton) {
         print("MemberCheckButton - btnClicked() called / sender.tag = \(sender.tag)")
-        if sender == self {
+        if sender.tag == self.tag {
             isChecked = !isChecked
+            self.checkBtnDelegate?.checkBtnClicked(btn: sender, ischecked: isChecked)
         }
     }
 }
