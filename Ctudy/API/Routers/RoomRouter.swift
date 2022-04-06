@@ -10,6 +10,7 @@ import Alamofire
 
 enum RoomRouter: URLRequestConvertible {
     case searchroom
+    case registerroom(name: String, member_list: Array<Int>)
     
     var baseURL: URL {
         return URL(string:API.BASE_URL + "study/")!
@@ -19,6 +20,8 @@ enum RoomRouter: URLRequestConvertible {
         switch self {
         case .searchroom:
             return .get
+        case .registerroom:
+            return .post
         }
     }
     
@@ -26,13 +29,8 @@ enum RoomRouter: URLRequestConvertible {
         switch self {
         case .searchroom:
             return "room/"
-        }
-    }
-    
-    var parameters: [String : String] {
-        switch self {
-        case .searchroom:
-            return ["" : ""]
+        case .registerroom:
+            return "room/"
         }
     }
     
@@ -41,7 +39,14 @@ enum RoomRouter: URLRequestConvertible {
         
         var request = URLRequest(url: url)
         request.method = method
-        request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
+        
+        switch self {
+        case .searchroom:
+            break
+        case .registerroom(let name, let member_list):
+            let parameters = RegisterRoomRequest(name: name, member_list: member_list)
+            request.httpBody = try? JSONEncoder().encode(parameters)
+        }
         
         return request
     }
