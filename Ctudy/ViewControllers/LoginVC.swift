@@ -155,8 +155,6 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
         }
     }
     
-    @IBAction func unwindLoginVC(_ segue: UIStoryboardSegue) {}
-    
     // MARK: - UIGestureRecognizer delegate
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         print("LoginVC - gestureRecognizer shouldReceive() called")

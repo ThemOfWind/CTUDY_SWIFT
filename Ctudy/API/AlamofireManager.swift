@@ -178,7 +178,7 @@ final class AlamofireManager {
     }
     
     // MARK: - 전체 멤버 조회
-    func getSearchMember(page: String, competion: @escaping(Result<JSON, MemberErrors>) -> Void) {
+    func getSearchMember(page: String, completion: @escaping(Result<JSON, MemberErrors>) -> Void) {
         self.session
             .request(MemberRouter.searchmember(page: page))
             .validate(statusCode: 200..<501)
@@ -204,14 +204,34 @@ final class AlamofireManager {
 //                    }
                     
                     if response.exists() {
-                        competion(.success(response))
+                        completion(.success(response))
                     }
                     else {
-                        competion(.failure(.noSearchMember))
+                        completion(.failure(.noSearchMember))
                     }
                 }
                 else {
-                    competion(.failure(.noSearchMember))
+                    completion(.failure(.noSearchMember))
+                }
+            })
+    }
+    
+    // MARK: - 스터디룸 등록
+    func postRegisterRoom(name: String, member_list: Array<Int>, completion: @escaping(Result<Bool, RoomErrors>) -> Void) {
+        self.session
+            .request(RoomRouter.registerroom(name: name, member_list: member_list))
+            .validate(statusCode: 200..<501)
+            .responseJSON(completionHandler: { response in
+                
+                guard let responseValue = response.value else { return }
+                let responseJson = JSON(responseValue)
+                guard let result = responseJson["result"].bool else { return }
+                
+                if result {
+                    completion(.success(result))
+                }
+                else {
+                    completion(.failure(.noRegisterRoom))
                 }
             })
     }

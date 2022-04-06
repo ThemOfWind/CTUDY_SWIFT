@@ -16,9 +16,15 @@ class MainVC: BasicVC {
     var rooms = [] as! Array<SearchRoomResponse>
     //var mainTabBarVC : UITabBarController = MainTabBarVC()
    
+    // MARK: - overrid func
     override func viewDidLoad() {
         super.viewDidLoad()
         self.config()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        // 스터디룸 조회
+        self.getSearchRoom()
     }
     
     // MARK: - fileprivate func

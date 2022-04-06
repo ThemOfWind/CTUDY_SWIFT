@@ -825,14 +825,21 @@
                                         <buttonConfiguration key="configuration" style="plain" title="등 록">
                                             <fontDescription key="titleFontDescription" type="boldSystem" pointSize="20"/>
                                         </buttonConfiguration>
+                                        <connections>
+                                            <action selector="onRegisterRoomBtnClicked:" destination="Flg-5U-kEK" eventType="touchUpInside" id="9dd-Ee-R6V"/>
+                                        </connections>
                                     </button>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="V4Q-Eg-CaR">
                                         <rect key="frame" x="0.0" y="78.5" width="374" height="506.5"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <searchBar key="tableHeaderView" contentMode="redraw" id="L9E-Tf-wxm">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
+                                        <searchBar key="tableHeaderView" contentMode="redraw" placeholder="검색" id="L9E-Tf-wxm">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="51"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                             <textInputTraits key="textInputTraits"/>
+                                            <scopeButtonTitles>
+                                                <string>Title</string>
+                                                <string>Title</string>
+                                            </scopeButtonTitles>
                                         </searchBar>
                                     </tableView>
                                 </subviews>
@@ -863,10 +870,12 @@
                     <connections>
                         <outlet property="memberSearchBar" destination="V4Q-Eg-CaR" id="fWP-ST-Z5h"/>
                         <outlet property="memberTableView" destination="V4Q-Eg-CaR" id="AkE-a2-zTO"/>
-                        <outlet property="registerStudyBtn" destination="07o-YI-uMg" id="mUh-Lk-Kiz"/>
+                        <outlet property="registerRoomBtn" destination="07o-YI-uMg" id="7kj-wk-nfH"/>
+                        <segue destination="G69-UU-zHa" kind="unwind" identifier="unwindMainTabBarVC" unwindAction="unwindMainTabBarVC:" id="vUA-Bo-Cur"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zt0-AA-G5a" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="G69-UU-zHa" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="4297" y="-1637"/>
         </scene>

@@ -29,7 +29,7 @@ enum MemberRouter: URLRequestConvertible {
         }
     }
     
-    var paramters: [String : String] {
+    var parameters: [String : String] {
         switch self {
         case let .searchmember(page):
             return ["page" : page]
@@ -41,7 +41,7 @@ enum MemberRouter: URLRequestConvertible {
         
         var request = URLRequest(url: url)
         request.method = method
-        request = try URLEncodedFormParameterEncoder().encode(paramters, into: request)
+        request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
 
         return request
     }

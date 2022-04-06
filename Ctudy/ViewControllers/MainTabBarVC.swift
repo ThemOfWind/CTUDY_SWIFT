@@ -38,6 +38,8 @@ class MainTabBarVC : UITabBarController, UITabBarControllerDelegate {
         performSegue(withIdentifier: "AddStudyNameVC", sender: nil)
     }
     
+    @IBAction func unwindMainTabBarVC(_ segue: UIStoryboardSegue) {}
+    
     // MARK: - tabBar delegate
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         if viewController is MainVC {
