@@ -13,7 +13,9 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegat
     @IBOutlet weak var userName: UITextField!
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var loginBtn: UIButton!
+    @IBOutlet weak var goToFindIdBtn: UIButton!
     @IBOutlet weak var goToSignUpBtn: UIButton!
+    @IBOutlet weak var actIndicator: UIActivityIndicatorView!
     var keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
     var distance: Double = 0
     var loginViewY: Double!
@@ -29,9 +31,9 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegat
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         print("LoginVC - viewWillAppear() called / animated: \(animated)")
-        // text refresh
-        self.userName.text = ""
-        self.password.text = ""
+        
+        // refresh
+        self.config()
         
         // 키보드 올라가는 이벤트를 받는 처리
         // 키보드 노티 등록
@@ -51,18 +53,32 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegat
     @objc func onLoginBtnClicked() {
         print("LoginVC - onLoginBtnClicked() called")
         
+        actIndicator.startAnimating()
+        if actIndicator.isAnimating {
+            actIndicator.hidesWhenStopped = false
+        }
+        
         AlamofireManager.shared.postSignIn(username: userName.text!, password: password.text!, completion: { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .success(let memberData):
                 print("LoginVC - postSignIn.success")
+                
                 self.performSegue(withIdentifier: "MainTabBarVC", sender: nil)
+                
+                /*
+                guard let mainVC = self.storyboard?.instantiateViewController(withIdentifier: "MainVC") as? MainVC else { return }
+                (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(mainVC, animated: false)
+                 */
                 
             case .failure(let error):
                 print("LoginVC - postSignIn.failure / error: \(error)")
                 self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
             }
         })
+        
+        actIndicator.stopAnimating()
+        actIndicator.hidesWhenStopped = true
     }
     
     @objc func keyboardWillShowHandle(notification: NSNotification) {
@@ -90,12 +106,16 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegat
         }
     }
     
+    // 기본 셋팅
     fileprivate func config() {
+        // text refresh
+        self.userName.text = ""
+        self.password.text = ""
+        
         // UI
         self.loginBtn.layer.cornerRadius = 5
         self.loginBtn.isEnabled = false
         self.loginViewY = self.loginView.frame.origin.y
-        print("loginViewY: \(self.loginViewY)")
         
         // add Btn methods
         self.loginBtn.addTarget(self, action: #selector(onLoginBtnClicked), for: .touchUpInside)
@@ -110,6 +130,7 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegat
     }
     
     // MARK: - @IBACiton methods
+    // 아이디&비밀번호 입력시 로그인 버튼 enable event
     @IBAction func editingChanged(_ sender: Any) {
         if userName.text!.isEmpty || password.text!.isEmpty {
             loginBtn.isEnabled = false
@@ -118,6 +139,7 @@ class LoginVC: UIViewController, UIGestureRecognizerDelegate, UITextFieldDelegat
         }
     }
     
+    //
     @IBAction func unwindLoginVC(_ segue: UIStoryboardSegue) {}
     
     // MARK: - UIGestureRecognizerDelegate

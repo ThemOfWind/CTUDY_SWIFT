@@ -57,7 +57,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelega
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let id = segue.identifier, id == "signUpSuccessVC" {
+        if let id = segue.identifier, id == "SignUpSuccessVC" {
             if let controller = segue.destination as? SignUpSuccessVC {
                 controller.memberName = self.memberName
                 controller.memberUserName = self.memberUserName
@@ -126,7 +126,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelega
         msgLabel.text = msgString
     }
     
-    // 회원가입 버튼 활성화 & 비활성화 체크
+    // 회원가입 버튼 활성화 & 비활성화 체크 이벤트
     fileprivate func signUpBtnAleChecked() {
         print("SignUpVC - signUpBtnAleChecked() called / nameOKFlage: \(nameOKFlag), usernameOKFlage: \(usernameOKFlag), passwordOKFlage: \(passwordOKFlag)")
         if nameOKFlag && usernameOKFlag && passwordOKFlag {
@@ -158,7 +158,7 @@ class SignUpVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelega
         return pred.evaluate(with: data)
     }
     
-    // 비밀번호와 비밀번호 확인 textfield 일치 여부
+    // 비밀번호와 비밀번호 확인 textfield 일치 여부 이벤트
     fileprivate func passwordValueChecked() {
         guard registerPassword.text != "" else {
             if registerPasswordChk.text != "" {
@@ -225,7 +225,6 @@ class SignUpVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelega
     
     
     // textfield editingChanged event
-    
     @objc func textFieldEditingChanged(_ sender: UITextField) {
         print("SignUpVC - textFieldEditingChanged() called / sender.text: \(sender.text)")
         

@@ -39,7 +39,7 @@ class BaseInterceptor: RequestInterceptor {
     }
     
     // 비정상작동 시 응답 methods
-    func retry(_ request: Request, for session: Session, dueTo error: Errors, completion: @escaping (RetryResult) -> Void) {
+    func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
         print("BaseInterceptor - retry() called")
         
         guard let statusCode = request.response?.statusCode else {

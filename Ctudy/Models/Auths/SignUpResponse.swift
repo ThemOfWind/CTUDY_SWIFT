@@ -8,7 +8,6 @@
 import Foundation
 
 struct SignUpResponse: Codable {
-    var result: Bool
-    var name: String
-    var username: String
+    var name: String // 이름
+    var username: String // 아이디(이메일)
 }

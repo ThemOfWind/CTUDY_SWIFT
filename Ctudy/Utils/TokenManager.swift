@@ -29,7 +29,7 @@ class TokenManager {
         if (status == errSecSuccess) {
             return true
         } else {
-            NSLog("status: \(Errors.noSaveToken)")
+            NSLog("status: \(AuthErrors.noSaveToken)")
             return false
         }
     }
@@ -74,7 +74,7 @@ class TokenManager {
         if (status == errSecSuccess) {
             return true
         } else {
-            NSLog("status: \(Errors.noDelToken)")
+            NSLog("status: \(AuthErrors.noDelToken)")
             return false
         }
     }
