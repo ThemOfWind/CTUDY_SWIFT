@@ -68,16 +68,19 @@ enum AuthRouter: URLRequestConvertible {
         var request = URLRequest(url: url)
         request.method = method
         
-        request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
-        
-//        switch self {
-//        case .signup:
-//            request = try JSONParameterEncoder().encode(parameters, into: request)
-//        case .idCheck:
-//            request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
-//        case .signin:
-//            request = try JSONParameterEncoder().encode(parameters, into: request)
-//        }
+        switch self {
+        case .signin(let username, let password):
+            let parameters = ["username" : username, "password" : password] as Dictionary
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
+        case .usernamecheck(let username):
+            let parameters = ["username" : username] as Dictionary
+            request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
+        case .signup(let name, let username, let password):
+            let parameters = ["name" : name, "username" : username, "password" : password] as Dictionary
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
+        case .logout:
+            break
+        }
         
         return request
     }

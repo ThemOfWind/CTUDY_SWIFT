@@ -13,7 +13,7 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, Me
     
     // MARK: - 변수
     @IBOutlet weak var memberTableView: UITableView!
-    @IBOutlet weak var registerStudyBtn: UIButton!
+    @IBOutlet weak var registerRoomBtn: UIButton!
     @IBOutlet weak var memberSearchBar: UITableView!
     var members : Array<SearchMemberResponse> = []
     var nextPage : String? = "1"
@@ -34,10 +34,11 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, Me
         self.rightItem = RightItem.none
         
         // btn
-        self.registerStudyBtn.layer.cornerRadius = 30
-        self.registerStudyBtn.layer.borderWidth = 1
-        self.registerStudyBtn.layer.borderColor = COLOR.DISABLE_COLORL.cgColor
-        self.registerStudyBtn.isEnabled = false
+        self.registerRoomBtn.layer.cornerRadius = 30
+        self.registerRoomBtn.layer.borderWidth = 1
+        self.registerRoomBtn.layer.borderColor = COLOR.SIGNATURE_COLOR.cgColor
+//        self.registerRoomBtn.layer.borderColor = COLOR.DISABLE_COLORL.cgColor
+//        self.registerRoomBtn.isEnabled = false
         
         // 셀 리소스 파일 가져오기
         let memberCell = UINib(nibName: String(describing: MemberTableViewCell.self), bundle: nil)
@@ -60,7 +61,7 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, Me
     
     // 전체 멤버 조회
     fileprivate func getSearchMember() {
-        AlamofireManager.shared.getSearchMember(page: nextPage ?? "0", competion: {
+        AlamofireManager.shared.getSearchMember(page: nextPage ?? "0", completion: {
             [weak self] result in
             guard let self = self else { return }
             
@@ -101,14 +102,36 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, Me
         // ischecked true 확인
         for index in 0..<members.count {
             if members[index].ischecked {
-                self.registerStudyBtn.layer.borderColor = COLOR.SIGNATURE_COLOR.cgColor
-                self.registerStudyBtn.isEnabled = true
+                self.registerRoomBtn.layer.borderColor = COLOR.SIGNATURE_COLOR.cgColor
+                self.registerRoomBtn.isEnabled = true
                 return
             }
         }
         
-        self.registerStudyBtn.layer.borderColor = COLOR.DISABLE_COLORL.cgColor
-        self.registerStudyBtn.isEnabled = false
+        self.registerRoomBtn.layer.borderColor = COLOR.DISABLE_COLORL.cgColor
+        self.registerRoomBtn.isEnabled = false
+    }
+    
+    // MARK: - @IBAction func
+    @IBAction func onRegisterRoomBtnClicked(_ sender: Any) {
+        var selectedMemeberList: Array<Int> = []
+        
+        for index in 0..<members.count {
+            if members[index].ischecked {
+                selectedMemeberList.append(members[index].id)
+            }
+        }
+        
+        AlamofireManager.shared.postRegisterRoom(name: self.studyName!, member_list: selectedMemeberList, completion: { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let result):
+                self.view.makeToast("스터디룸이 등록되었습니다.", duration: 1.0, position: .center)
+                self.performSegue(withIdentifier: "unwindMainTabBarVC", sender: self)
+            case .failure(let error):
+                self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
+            }
+        })
     }
     
     // MARK: - delegate
@@ -126,11 +149,11 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, Me
     }
     
     func checkBtnClicked(btn: UIButton, ischecked: Bool) {
-        print("AddStudyMemberVC - checkBtnClicked() called / btn.tag: \(btn.tag), ischecked: \(ischecked)")
+        print("AddStudyMemberVC - checkBtnClicked() called / btn.tag: \(btn.tag), btn.id: \(members[btn.tag].id) ischecked: \(ischecked)")
         self.members[btn.tag].ischecked = ischecked
         
         // registerStudyBtn enable event
-        editingChange()
+//        editingChange()
     }
     
     // 아래로 스크롤시 event

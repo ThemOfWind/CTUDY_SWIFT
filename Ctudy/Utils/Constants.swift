@@ -10,6 +10,7 @@ import UIKit
 
 enum API {
     static let BASE_URL: String = "https://api.ctudy.com/api/v1/"
+//    static let BASE_URL: String = "http://192.168.0.20:8000/api/v1/"
 //    static let BASE_URL : String = "http://172.30.1.52:8000/api/v1/"
     static let SERVICEID: String = "com.jinny.Ctudy"
 }
