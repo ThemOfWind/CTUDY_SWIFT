@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 enum MemberRouter: URLRequestConvertible {
-    case searchmember
+    case searchmember(page: String) // 전체 멤버 조회
     
     var baseURL: URL {
         return URL(string: API.BASE_URL + "study/")!
@@ -29,10 +29,10 @@ enum MemberRouter: URLRequestConvertible {
         }
     }
     
-    var paramters: [String : String] {
+    var parameters: [String : String] {
         switch self {
-        case .searchmember:
-            return ["" : ""]
+        case let .searchmember(page):
+            return ["page" : page]
         }
     }
     
@@ -41,7 +41,7 @@ enum MemberRouter: URLRequestConvertible {
         
         var request = URLRequest(url: url)
         request.method = method
-        request = try URLEncodedFormParameterEncoder().encode(paramters, into: request)
+        request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
 
         return request
     }

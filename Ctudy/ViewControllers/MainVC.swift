@@ -8,21 +8,28 @@
 import Foundation
 import UIKit
 
-class MainVC: UIViewController {
+class MainVC: BasicVC {
     
+    // MARK: - 변수
     @IBOutlet var studyCollectionView: UICollectionView!
     @IBOutlet var studyNavigationItem: UINavigationItem!
     var rooms = [] as! Array<SearchRoomResponse>
     //var mainTabBarVC : UITabBarController = MainTabBarVC()
    
+    // MARK: - overrid func
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.config()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        // 스터디룸 조회
+        self.getSearchRoom()
+    }
+    
+    // MARK: - fileprivate func
     fileprivate func config() {
-        // View에 delegate, datasource 연결
+        // view에 delegate, datasource 연결
         self.studyCollectionView.delegate = self
         self.studyCollectionView.dataSource = self
         
@@ -30,7 +37,12 @@ class MainVC: UIViewController {
         self.studyCollectionView.register(UINib(nibName: "StudyCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "cell")
         
         // 스터디룸 조회
-        getSearchRoom()
+        self.getSearchRoom()
+        
+        // 스터디룸 추가하라는 라벨을 레이아웃 가운데에 표기
+        if rooms.count <= 0 {
+            
+        }
         
         // 스터디룸 추가 셀
         //        var testList = [SearchRoomResponse(name: "바람의 녀석들", membercount: 4, mastername: "김밍구")]
@@ -38,6 +50,7 @@ class MainVC: UIViewController {
         //        self.rooms = testList
     }
     
+    // 스터디룸 조회 api 호출
     fileprivate func getSearchRoom() {
         AlamofireManager.shared.getSearchRoom(completion: {
             [weak self] result in
@@ -54,6 +67,7 @@ class MainVC: UIViewController {
     }
 }
 
+// MARK: - extension func
 extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print("MainVC - collectionView count : \(rooms.count)")
@@ -79,7 +93,6 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("MainVC - collectionView didSelectItemAt / selectedItem : \(rooms[indexPath.row].name) choose")
-        
         self.performSegue(withIdentifier: "MainDetailVC", sender: nil)
     }
 }
