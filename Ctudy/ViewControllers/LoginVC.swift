@@ -64,7 +64,7 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
         // btn ui
         self.loginBtn.layer.cornerRadius = 30
         self.loginBtn.layer.borderWidth = 1
-        self.loginBtn.layer.borderColor = COLOR.DISABLE_COLORL.cgColor
+        self.loginBtn.layer.borderColor = COLOR.DISABLE_COLOR.cgColor
         self.loginBtn.isEnabled = false
         self.loginViewY = self.loginView.frame.origin.y
         
@@ -148,7 +148,7 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
     @IBAction func editingChanged(_ sender: Any) {
         if userName.text!.isEmpty || password.text!.isEmpty {
             self.loginBtn.isEnabled = false
-            self.loginBtn.layer.borderColor = COLOR.DISABLE_COLORL.cgColor
+            self.loginBtn.layer.borderColor = COLOR.DISABLE_COLOR.cgColor
         } else {
             self.loginBtn.isEnabled = true
             self.loginBtn.layer.borderColor = COLOR.SIGNATURE_COLOR.cgColor

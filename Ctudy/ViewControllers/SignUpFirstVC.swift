@@ -63,7 +63,7 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
         // btn ui
         self.nextBtn.layer.cornerRadius = 30
         self.nextBtn.layer.borderWidth = 1
-        self.nextBtn.layer.borderColor = COLOR.DISABLE_COLORL.cgColor
+        self.nextBtn.layer.borderColor = COLOR.DISABLE_COLOR.cgColor
         self.nextBtn.isEnabled = false
         
         // btn event 연결
@@ -92,7 +92,7 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
             self.nextBtn.layer.borderColor = COLOR.SIGNATURE_COLOR.cgColor
             self.nextBtn.isEnabled = true
         } else {
-            self.nextBtn.layer.borderColor = COLOR.DISABLE_COLORL.cgColor
+            self.nextBtn.layer.borderColor = COLOR.DISABLE_COLOR.cgColor
             self.nextBtn.isEnabled = false
         }
     }
@@ -178,7 +178,7 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
         case registerName:
             nameOKFlag = isValidData(flag: "registerName", data: inputData)
             if nameOKFlag {
-                setMsgLabel(flag: nameOKFlag, msgLabel: msgLabel, msgString: "사용가능한 이름입니다.")
+                setMsgLabel(flag: nameOKFlag, msgLabel: msgLabel, msgString: "")
             } else {
                 setMsgLabel(flag: nameOKFlag, msgLabel: msgLabel, msgString: "이름이 옳바르지 않습니다.")
             }

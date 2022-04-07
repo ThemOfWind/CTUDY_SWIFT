@@ -108,7 +108,7 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, Me
             }
         }
         
-        self.registerRoomBtn.layer.borderColor = COLOR.DISABLE_COLORL.cgColor
+        self.registerRoomBtn.layer.borderColor = COLOR.DISABLE_COLOR.cgColor
         self.registerRoomBtn.isEnabled = false
     }
     

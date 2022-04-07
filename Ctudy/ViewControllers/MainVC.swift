@@ -14,6 +14,9 @@ class MainVC: BasicVC {
     @IBOutlet var studyCollectionView: UICollectionView!
     @IBOutlet var studyNavigationItem: UINavigationItem!
     var rooms = [] as! Array<SearchRoomResponse>
+    var userName: String?
+    var roomName: Int?
+    var roomNameString: String?
     //var mainTabBarVC : UITabBarController = MainTabBarVC()
    
     // MARK: - overrid func
@@ -26,6 +29,18 @@ class MainVC: BasicVC {
         // 스터디룸 조회
         self.getSearchRoom()
     }
+    
+    // 다음 화면 이동전 준비동작 (변수 연결)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let id = segue.identifier, id == "MainDetailVC" {
+            if let controller = segue.destination as? MainDetailVC {
+                controller.userName = self.userName
+                controller.roomName = self.roomName
+                controller.roomNameString = self.roomNameString
+            }
+        }
+    }
+
     
     // MARK: - fileprivate func
     fileprivate func config() {
@@ -93,6 +108,9 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("MainVC - collectionView didSelectItemAt / selectedItem : \(rooms[indexPath.row].name) choose")
+        self.userName = KeyChainManager().tokenLoad(API.SERVICEID, account: "userName")
+        self.roomName = 0
+        self.roomNameString = rooms[indexPath.row].name
         self.performSegue(withIdentifier: "MainDetailVC", sender: nil)
     }
 }

@@ -9,12 +9,16 @@ import Foundation
 import UIKit
 
 class MainDetailVC : BasicVC {
+    var userName: String? // 사용자 id
+    var roomName: Int? // 스터디룸 id
+    var roomNameString: String? // 스터디룸 name
     
     // MARK: - overrid func
     override func viewDidLoad() {
         super.viewDidLoad()
         self.config()
-        self.navigationItem.setRightBarButton(UIBarButtonItem(barButtonSystemItem: .edit, target: "", action: nil), animated: true)
+        
+        print("MainDetailVC - viewDidLoad() called / userName: \(self.userName), roomName: \(self.roomName), roomNameString: \(self.roomNameString)")
     }
     
     // MARK: - fileprivate func

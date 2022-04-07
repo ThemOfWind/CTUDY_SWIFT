@@ -33,7 +33,7 @@
 		5A8DC12B27EB5FA5008FA26E /* SignUpFirstVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8DC12A27EB5FA5008FA26E /* SignUpFirstVC.swift */; };
 		5A9D31BA277B17DD00DCEAEA /* UserInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9D31B9277B17DD00DCEAEA /* UserInfoVC.swift */; };
 		5A9D31BC277B18D100DCEAEA /* MainTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9D31BB277B18D100DCEAEA /* MainTabBarVC.swift */; };
-		5A9D31C0277C0B9900DCEAEA /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9D31BF277C0B9900DCEAEA /* TokenManager.swift */; };
+		5A9D31C0277C0B9900DCEAEA /* KeyChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9D31BF277C0B9900DCEAEA /* KeyChainManager.swift */; };
 		5A9D31C3277C71B900DCEAEA /* UserInfos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9D31C2277C71B900DCEAEA /* UserInfos.swift */; };
 		5A9EDD1427F0C89500ED3343 /* MemberCheckButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9EDD1327F0C89500ED3343 /* MemberCheckButton.swift */; };
 		5AA86D0B2761005D0067620C /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA86D0A2761005D0067620C /* MainVC.swift */; };
@@ -86,7 +86,7 @@
 		5A8DC12A27EB5FA5008FA26E /* SignUpFirstVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFirstVC.swift; sourceTree = "<group>"; };
 		5A9D31B9277B17DD00DCEAEA /* UserInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoVC.swift; sourceTree = "<group>"; };
 		5A9D31BB277B18D100DCEAEA /* MainTabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarVC.swift; sourceTree = "<group>"; };
-		5A9D31BF277C0B9900DCEAEA /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
+		5A9D31BF277C0B9900DCEAEA /* KeyChainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainManager.swift; sourceTree = "<group>"; };
 		5A9D31C2277C71B900DCEAEA /* UserInfos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfos.swift; sourceTree = "<group>"; };
 		5A9EDD1327F0C89500ED3343 /* MemberCheckButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCheckButton.swift; sourceTree = "<group>"; };
 		5AA86D0A2761005D0067620C /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
@@ -227,7 +227,7 @@
 			children = (
 				5AAE346C2761D2BE00EE6A5D /* Constants.swift */,
 				5AC1CE7D2765D6B7009586B2 /* Errors.swift */,
-				5A9D31BF277C0B9900DCEAEA /* TokenManager.swift */,
+				5A9D31BF277C0B9900DCEAEA /* KeyChainManager.swift */,
 				5A9D31C2277C71B900DCEAEA /* UserInfos.swift */,
 			);
 			path = Utils;
@@ -455,7 +455,7 @@
 				5AC1CE772765CB0D009586B2 /* CouponRouter.swift in Sources */,
 				5A9EDD1427F0C89500ED3343 /* MemberCheckButton.swift in Sources */,
 				5AAE518B27F7023400DDA555 /* BasicButton.swift in Sources */,
-				5A9D31C0277C0B9900DCEAEA /* TokenManager.swift in Sources */,
+				5A9D31C0277C0B9900DCEAEA /* KeyChainManager.swift in Sources */,
 				5A8BAB19278812AD00CFF908 /* SearchRoomResponse.swift in Sources */,
 				5A453AFE27E9B25B006F0A1D /* AddStudyNameVC.swift in Sources */,
 				5A4CD0DC27E8A09E00F6C829 /* AddBarButtonItem.swift in Sources */,

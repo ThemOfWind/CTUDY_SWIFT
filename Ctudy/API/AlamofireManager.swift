@@ -107,7 +107,7 @@ final class AlamofireManager {
                 
                 if result {
                     // 토큰 정보 저장
-                    if TokenManager().tokenSave(API.SERVICEID, account: "accessToken", value: accessToken) {
+                    if KeyChainManager().tokenSave(API.SERVICEID, account: "accessToken", value: accessToken), KeyChainManager().tokenSave(API.SERVICEID, account: "userName", value: username) {
                         completion(.success(jsonData))
                     } else {
                         completion(.failure(.noSaveToken))
@@ -132,7 +132,7 @@ final class AlamofireManager {
                 
                 if result {
                     // 토큰 정보 삭제
-                    if TokenManager().tokenDelete(API.SERVICEID, account: "accessToken") {
+                    if KeyChainManager().tokenDelete(API.SERVICEID, account: "accessToken") {
                         completion(.success(result))
                     } else {
                         completion(.failure(.noDelToken))

@@ -70,7 +70,7 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
         // ui
         self.signUpBtn.layer.cornerRadius = 30
         self.signUpBtn.layer.borderWidth = 1
-        self.signUpBtn.layer.borderColor = COLOR.DISABLE_COLORL.cgColor
+        self.signUpBtn.layer.borderColor = COLOR.DISABLE_COLOR.cgColor
         self.signUpBtn.isEnabled = false
         self.registerPassword.isSecureTextEntry = true
         self.registerPasswordChk.isSecureTextEntry = true
@@ -133,7 +133,7 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
             self.signUpBtn.layer.borderColor = COLOR.SIGNATURE_COLOR.cgColor
             self.signUpBtn.isEnabled = true
         } else {
-            self.signUpBtn.layer.borderColor = COLOR.DISABLE_COLORL.cgColor
+            self.signUpBtn.layer.borderColor = COLOR.DISABLE_COLOR.cgColor
             self.signUpBtn.isEnabled = false
         }
     }

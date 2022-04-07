@@ -10,7 +10,6 @@ import UIKit
 
 enum API {
     static let BASE_URL: String = "https://api.ctudy.com/api/v1/"
-//    static let BASE_URL: String = "http://192.168.0.20:8000/api/v1/"
 //    static let BASE_URL : String = "http://172.30.1.52:8000/api/v1/"
     static let SERVICEID: String = "com.jinny.Ctudy"
 }
@@ -23,5 +22,5 @@ enum REGEX {
 
 enum COLOR {
     static let SIGNATURE_COLOR: UIColor = UIColor(red: 180/255, green: 125/255, blue: 200/255, alpha: 1)
-    static let DISABLE_COLORL: UIColor = UIColor(red: 197/255, green: 197/255, blue: 197/255, alpha: 1)
+    static let DISABLE_COLOR: UIColor = UIColor(red: 197/255, green: 197/255, blue: 197/255, alpha: 1)
 }

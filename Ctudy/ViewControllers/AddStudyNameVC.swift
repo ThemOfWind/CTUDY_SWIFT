@@ -46,7 +46,7 @@ class AddStudyNameVC : BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate
         // btn
         self.nextBtn.layer.cornerRadius = 30
         self.nextBtn.layer.borderWidth = 1
-        self.nextBtn.layer.borderColor = COLOR.DISABLE_COLORL.cgColor
+        self.nextBtn.layer.borderColor = COLOR.DISABLE_COLOR.cgColor
         self.nextBtn.isEnabled = false
         self.nextBtn.addTarget(self, action: #selector(onNextBtnClicked(_:)), for: .touchUpInside)
         
@@ -58,7 +58,7 @@ class AddStudyNameVC : BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate
     // MARK: - action func
     @IBAction func editingChanged(_ sender: Any) {
         if self.registerStudyName.text!.isEmpty {
-            self.nextBtn.layer.borderColor = COLOR.DISABLE_COLORL.cgColor
+            self.nextBtn.layer.borderColor = COLOR.DISABLE_COLOR.cgColor
             self.nextBtn.isEnabled = false
         } else {
             self.nextBtn.layer.borderColor = COLOR.SIGNATURE_COLOR.cgColor

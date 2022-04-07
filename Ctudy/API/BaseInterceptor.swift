@@ -20,7 +20,7 @@ class BaseInterceptor: RequestInterceptor {
         request.addValue("application/json; charset=UTF-8", forHTTPHeaderField: "Accept")
         
         // tocken 추가
-        if let accessToken = TokenManager().tokenLoad(API.SERVICEID, account: "accessToken") {
+        if let accessToken = KeyChainManager().tokenLoad(API.SERVICEID, account: "accessToken") {
             request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         } else { print("accesToken is nil") }
         
