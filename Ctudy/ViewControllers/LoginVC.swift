@@ -62,9 +62,9 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
         self.rightItem = RightItem.none
         
         // btn ui
+        self.loginBtn.tintColor = .white
+        self.loginBtn.backgroundColor = COLOR.DISABLE_COLOR
         self.loginBtn.layer.cornerRadius = 30
-        self.loginBtn.layer.borderWidth = 1
-        self.loginBtn.layer.borderColor = COLOR.DISABLE_COLOR.cgColor
         self.loginBtn.isEnabled = false
         self.loginViewY = self.loginView.frame.origin.y
         
@@ -97,13 +97,7 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
             case .success(let memberData):
                 print("LoginVC - postSignIn.success")
                 
-                self.performSegue(withIdentifier: "MainTabBarVC", sender: nil)
-                
-                /*
-                guard let mainVC = self.storyboard?.instantiateViewController(withIdentifier: "MainVC") as? MainVC else { return }
-                (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(mainVC, animated: false)
-                 */
-                
+                self.getProfileInfo()
             case .failure(let error):
                 print("LoginVC - postSignIn.failure / error: \(error)")
                 self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
@@ -120,12 +114,12 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             print("keyboardSize.height: \(keyboardSize.height)")
             print("loginBtn.frame.origin.y: \(loginBtn.frame.origin.y)")
-
+            
             if (keyboardSize.height <= loginBtn.frame.origin.y) {
                 distance = keyboardSize.height - loginBtn.frame.origin.y
                 print("keyboard covered searchbtn / distance: \(distance)")
                 print("changed upvalue: \(distance - loginBtn.frame.height)")
-
+                
                 self.loginView.frame.origin.y = distance - loginBtn.frame.height + loginViewY
             }
         }
@@ -143,15 +137,30 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
         self.navigationController?.popViewController(animated: true)
     }
     
+    // 접속 회원정보 조회 후 keychain 저장
+    fileprivate func getProfileInfo() {
+        AlamofireManager.shared.getProfile(completion: { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let profile):
+                // 다음 화면으로 이동
+                self.performSegue(withIdentifier: "MainTabBarVC", sender: nil)
+            case .failure(let error):
+                print("LoginVC - getProfileInfo() called / error: \(error)")
+            }
+        })
+    }
+    
     // MARK: - @IBACiton func
     // loginBtn 활성화 & 비활성화 event
     @IBAction func editingChanged(_ sender: Any) {
         if userName.text!.isEmpty || password.text!.isEmpty {
+            self.loginBtn.backgroundColor = COLOR.DISABLE_COLOR
             self.loginBtn.isEnabled = false
-            self.loginBtn.layer.borderColor = COLOR.DISABLE_COLOR.cgColor
         } else {
+            self.loginBtn.backgroundColor = COLOR.SIGNATURE_COLOR
             self.loginBtn.isEnabled = true
-            self.loginBtn.layer.borderColor = COLOR.SIGNATURE_COLOR.cgColor
         }
     }
     

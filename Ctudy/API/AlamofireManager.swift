@@ -50,6 +50,7 @@ final class AlamofireManager {
                 if result {
                     guard let username = responseJson["response"]["username"].string else { return }
                     let jsonData = UserNameCheckResponse(username: username)
+                    
                     completion(.success(jsonData))
                 }
                 // 중복 아이디일때
@@ -73,9 +74,10 @@ final class AlamofireManager {
                 guard let result = responseJson["result"].bool,
                       let name = responseJson["response"]["name"].string,
                       let username = responseJson["response"]["username"].string else { return }
-                let jsonData = SignUpResponse(name: name, username: username)
                 
                 if result {
+                    let jsonData = SignUpResponse(name: name, username: username)
+                    
                     completion(.success(jsonData))
                 } else {
                     completion(.failure(.noSignUp))
@@ -103,11 +105,11 @@ final class AlamofireManager {
                     }
                 }
                 
-                let jsonData = SignInResponse(token: accessToken)
-                
                 if result {
                     // 토큰 정보 저장
-                    if KeyChainManager().tokenSave(API.SERVICEID, account: "accessToken", value: accessToken), KeyChainManager().tokenSave(API.SERVICEID, account: "userName", value: username) {
+                    if KeyChainManager().tokenSave(API.SERVICEID, account: "accessToken", value: accessToken) {
+                        let jsonData = SignInResponse(token: accessToken)
+                        
                         completion(.success(jsonData))
                     } else {
                         completion(.failure(.noSaveToken))
@@ -143,6 +145,36 @@ final class AlamofireManager {
             })
     }
     
+    // MARK: - 접속 회원정보 조회
+    func getProfile(completion: @escaping(Result<ProfileResponse, AuthErrors>) -> Void) {
+        self.session
+            .request(AuthRouter.profile)
+            .validate(statusCode: 200..<501)
+            .responseJSON(completionHandler: { response in
+                
+                guard let responseValue = response.value else { return }
+                let responseJson = JSON(responseValue)
+                guard let result = responseJson["result"].bool
+                    , let id = responseJson["response"]["id"].int
+                    , let userName = responseJson["response"]["user"]["username"].string
+                    , let name = responseJson["response"]["name"].string else { return }
+                
+                if result {
+                    if KeyChainManager().tokenSave(API.SERVICEID, account: "id", value: String(id))
+                     , KeyChainManager().tokenSave(API.SERVICEID, account: "userName", value: userName)
+                     , KeyChainManager().tokenSave(API.SERVICEID, account: "name", value: name) {
+                        let jsonData = ProfileResponse(id: id, username: userName, name: name)
+                        
+                        completion(.success(jsonData))
+                    } else {
+                        completion(.failure(.noProfile))
+                    }
+                } else {
+                    completion(.failure(.noProfile))
+                }
+            })
+    }
+    
     // MARK: - 전체 스터디 룸 조회
     func getSearchRoom(completion: @escaping(Result<[SearchRoomResponse], RoomErrors>) -> Void) {
         self.session
@@ -153,19 +185,20 @@ final class AlamofireManager {
                 guard let responseValue = response.value else { return }
                 let responseJson = JSON(responseValue)
                 guard let result = responseJson["result"].bool else { return }
-                let response = responseJson["response"]
-                var rooms = [SearchRoomResponse]()
-                
-                for (index, subJson) : (String, JSON) in response {
-                    guard let name = subJson["name"].string
-                            , let membercount = subJson["member_count"].int
-                            , let mastername = subJson["master_name"].string else { return }
-                    
-                    let roomItem = SearchRoomResponse(name: name, membercount: membercount, mastername: mastername)
-                    rooms.append(roomItem)
-                }
                 
                 if result {
+                    let response = responseJson["response"]
+                    var rooms = [SearchRoomResponse]()
+                    
+                    for (index, subJson) : (String, JSON) in response {
+                        guard let name = subJson["name"].string
+                                , let membercount = subJson["member_count"].int
+                                , let mastername = subJson["master_name"].string else { return }
+                        
+                        let roomItem = SearchRoomResponse(name: name, membercount: membercount, mastername: mastername)
+                        rooms.append(roomItem)
+                    }
+                    
                     if rooms.count > 0 {
                         completion(.success(rooms))
                     } else {
@@ -187,21 +220,9 @@ final class AlamofireManager {
                 guard let responseValue = response.value else { return }
                 let responseJson = JSON(responseValue)
                 guard let result = responseJson["result"].bool else { return }
-                let response = responseJson["response"]
-                //let list = response["list"]
-//                let nextPage = response["next"]
-                
-                //var members = [SearchMemberResponse]()
                 
                 if result {
-//                    for (index, subJson) : (String, JSON) in list {
-//                        guard let id = subJson["id"].int
-//                             ,let username = subJson["username"].string
-//                        else { return }
-//
-//                        let memberItem = SearchMemberResponse(id: id, userName: username)
-//                        members.append(memberItem)
-//                    }
+                    let response = responseJson["response"]
                     
                     if response.exists() {
                         completion(.success(response))

@@ -20,6 +20,8 @@ class MainTabBarVC : UITabBarController, UITabBarControllerDelegate {
     
     // MARK: - fileprivate func
     fileprivate func config() {
+        // tabBarButton ui
+        self.tabBar.tintColor = COLOR.SIGNATURE_COLOR
         // navigationBar item
         self.navigationController?.isNavigationBarHidden = false
         self.navigationItem.hidesBackButton = true

@@ -61,9 +61,9 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
         self.rightItem = RightItem.none
         
         // btn ui
+        self.nextBtn.tintColor = .white
+        self.nextBtn.backgroundColor = COLOR.DISABLE_COLOR
         self.nextBtn.layer.cornerRadius = 30
-        self.nextBtn.layer.borderWidth = 1
-        self.nextBtn.layer.borderColor = COLOR.DISABLE_COLOR.cgColor
         self.nextBtn.isEnabled = false
         
         // btn event 연결
@@ -89,10 +89,10 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
     // nextBtn 활성화 & 비활성화 event
     fileprivate func nextBtnAbleChecked() {
         if nameOKFlag {
-            self.nextBtn.layer.borderColor = COLOR.SIGNATURE_COLOR.cgColor
+            self.nextBtn.backgroundColor = COLOR.SIGNATURE_COLOR
             self.nextBtn.isEnabled = true
         } else {
-            self.nextBtn.layer.borderColor = COLOR.DISABLE_COLOR.cgColor
+            self.nextBtn.backgroundColor = COLOR.DISABLE_COLOR
             self.nextBtn.isEnabled = false
         }
     }

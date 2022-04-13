@@ -12,5 +12,6 @@ class AddBarButtonItem : UIButton {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.tintColor = COLOR.SIGNATURE_COLOR
     }
 }

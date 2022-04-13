@@ -12,6 +12,7 @@ class BarButtonItem: UIBarButtonItem {
     private var leftActionHandler: (() -> ())?
     private var rightActionHandler: (([UIBarButtonItem]) -> ())?
     
+    // MARK: - leftBarButtnoItem
     convenience init(title: String?, actionHandler: (() -> ())?) {
         self.init(title: title, style: UIBarButtonItem.Style.plain, target: nil, action: nil)
         self.tintColor = COLOR.SIGNATURE_COLOR
@@ -54,6 +55,7 @@ class BarButtonItem: UIBarButtonItem {
         self.leftActionHandler = actionHandler
     }
     
+    // MARK: - rightBarButtonItem
     convenience init(image: UIImage?, actionHandler: (([UIBarButtonItem]) -> ())?) {
         self.init(image: image, style: UIBarButtonItem.Style.plain, target: nil, action: nil)
         self.tintColor = COLOR.SIGNATURE_COLOR

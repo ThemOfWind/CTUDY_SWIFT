@@ -27,9 +27,9 @@ class SignUpSuccessVC : BasicVC {
         self.rightItem = RightItem.none
         
         // btn ui
+        self.goToLoginBtn.tintColor = .white
+        self.goToLoginBtn.backgroundColor = COLOR.SIGNATURE_COLOR
         self.goToLoginBtn.layer.cornerRadius = 30
-        self.goToLoginBtn.layer.borderWidth = 1
-        self.goToLoginBtn.layer.borderColor = COLOR.SIGNATURE_COLOR.cgColor
         
         // label ui
         self.enterName.text = memberName

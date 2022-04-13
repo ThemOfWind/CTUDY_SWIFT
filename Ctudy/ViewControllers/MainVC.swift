@@ -14,11 +14,10 @@ class MainVC: BasicVC {
     @IBOutlet var studyCollectionView: UICollectionView!
     @IBOutlet var studyNavigationItem: UINavigationItem!
     var rooms = [] as! Array<SearchRoomResponse>
-    var userName: String?
     var roomName: Int?
     var roomNameString: String?
     //var mainTabBarVC : UITabBarController = MainTabBarVC()
-   
+    
     // MARK: - overrid func
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,16 +33,21 @@ class MainVC: BasicVC {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let id = segue.identifier, id == "MainDetailVC" {
             if let controller = segue.destination as? MainDetailVC {
-                controller.userName = self.userName
                 controller.roomName = self.roomName
                 controller.roomNameString = self.roomNameString
             }
         }
     }
-
+    
     
     // MARK: - fileprivate func
     fileprivate func config() {
+//        let flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+//        let width = self.view.frame.width
+//        let height = self.view.frame.height
+//        flowLayout.itemSize = CGSize(width: width - 20, height: height)
+//        self.studyCollectionView.collectionViewLayout = flowLayout
+        
         // view에 delegate, datasource 연결
         self.studyCollectionView.delegate = self
         self.studyCollectionView.dataSource = self
@@ -102,13 +106,14 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let cell = CGSize(width: self.studyCollectionView.bounds.width - 100, height: self.studyCollectionView.bounds.height / 6)
+        let cell = CGSize(width: self.studyCollectionView.bounds.width - 20, height: self.studyCollectionView.bounds.height / 2.05)
+//        let cell = CGSize(width: self.studyCollectionView.bounds.width - 100, height: self.studyCollectionView.bounds.height / 6)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("MainVC - collectionView didSelectItemAt / selectedItem : \(rooms[indexPath.row].name) choose")
-        self.userName = KeyChainManager().tokenLoad(API.SERVICEID, account: "userName")
+        //        self.userName = KeyChainManager().tokenLoad(API.SERVICEID, account: "userName")
         self.roomName = 0
         self.roomNameString = rooms[indexPath.row].name
         self.performSegue(withIdentifier: "MainDetailVC", sender: nil)

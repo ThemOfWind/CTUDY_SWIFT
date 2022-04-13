@@ -68,9 +68,9 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
         self.rightItem = RightItem.none
         
         // ui
+        self.signUpBtn.tintColor = .white
+        self.signUpBtn.backgroundColor = COLOR.DISABLE_COLOR
         self.signUpBtn.layer.cornerRadius = 30
-        self.signUpBtn.layer.borderWidth = 1
-        self.signUpBtn.layer.borderColor = COLOR.DISABLE_COLOR.cgColor
         self.signUpBtn.isEnabled = false
         self.registerPassword.isSecureTextEntry = true
         self.registerPasswordChk.isSecureTextEntry = true
@@ -130,10 +130,10 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
     fileprivate func signUpBtnAbleChecked() {
         print("SignUpSecondVC - signUpBtnAleChecked() called / usernameOKFlage: \(usernameOKFlag), passwordOKFlage: \(passwordOKFlag)")
         if usernameOKFlag && passwordOKFlag {
-            self.signUpBtn.layer.borderColor = COLOR.SIGNATURE_COLOR.cgColor
+            self.signUpBtn.backgroundColor = COLOR.SIGNATURE_COLOR
             self.signUpBtn.isEnabled = true
         } else {
-            self.signUpBtn.layer.borderColor = COLOR.DISABLE_COLOR.cgColor
+            self.signUpBtn.backgroundColor = COLOR.DISABLE_COLOR
             self.signUpBtn.isEnabled = false
         }
     }

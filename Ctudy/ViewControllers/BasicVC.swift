@@ -36,8 +36,8 @@ class BasicVC: UIViewController {
     enum RightItem {
         case none // nil
         case anyCustoms(items: [Items]?, title: String?, rightSpaceCloseToDefault: Bool)
-        case anyFn(visibilityFn:(() -> Bool), anyFn:(() -> ()))
-        case anyCustomFn(image: UIImage?, title: String?, rightSpaceCloseToDefault: Bool, visibilityFn:(() -> Bool), anyFn:(() -> ())) // custom anyItem func
+        case anyFn(visibilityFn:(() -> Bool), anyFn:(([UIBarButtonItem]) -> ()))
+        case anyCustomFn(image: UIImage?, title: String?, rightSpaceCloseToDefault: Bool, visibilityFn:(() -> Bool), anyFn:(([UIBarButtonItem]) -> ())) // custom anyItem func
         case customView(view: UIView)
     }
     
@@ -45,6 +45,7 @@ class BasicVC: UIViewController {
     enum Items {
         case plus
         case camera
+        case setting
     }
     
     // right naviagtionBar item
@@ -75,7 +76,7 @@ class BasicVC: UIViewController {
     lazy var backButtonImage = UIImage(systemName: "chevron.backward")
     
     // rightItem image
-    lazy var anyButtonImages: Array = [UIImage(systemName: "plus")]
+    lazy var anyButtonImages: Array = [UIImage(systemName: "plus"), UIImage(systemName: "camera"), UIImage(systemName: "gearshape")]
     
     // navigationController pop event
     func navigationControllerPop() {
@@ -136,22 +137,33 @@ class BasicVC: UIViewController {
     
         if let list = items {
             for item: Items in list {
-                if item == Items.plus {
+                switch item {
+                case .plus:
                     if let title = title {
-                        let button = BarButtonItem(image: UIImage(systemName: "plus"), title: title, actionHandler: anyFn)
+                        let button = BarButtonItem(image: anyButtonImages[0], title: title, actionHandler: anyFn)
                         arr.append(button)
                     } else {
-                        let button = BarButtonItem(image: UIImage(systemName: "plus"), actionHandler: anyFn)
+                        let button = BarButtonItem(image: anyButtonImages[0], actionHandler: anyFn)
                         arr.append(button)
                     }
-                } else if item == Items.camera {
+                case .camera:
                     if let title = title {
-                        let button = BarButtonItem(image: UIImage(systemName: "camera"), title: title, actionHandler: anyFn)
+                        let button = BarButtonItem(image: anyButtonImages[1], title: title, actionHandler: anyFn)
                         arr.append(button)
                     } else {
-                        let imageButton = BarButtonItem(image: UIImage(systemName: "camera"), actionHandler: anyFn)
-                        imageButton.title = title
-                        arr.append(imageButton)
+                        let button = BarButtonItem(image: anyButtonImages[1], actionHandler: anyFn)
+                        button.title = title
+                        arr.append(button)
+                    }
+                case .setting:
+                    if let title = title {
+                        let button = BarButtonItem(image: anyButtonImages[2], title: title, actionHandler: anyFn)
+                        button.title = title
+                        arr.append(button)
+                    } else {
+                        let button = BarButtonItem(image: anyButtonImages[2], actionHandler: anyFn)
+                        button.title = title
+                        arr.append(button)
                     }
                 }
             }
@@ -227,8 +239,8 @@ class BasicVC: UIViewController {
         //case .anyCustoms(items:, title: let title, rightSpaceCloseToDefault: let rightSpaceCloseToDefault):
         case .anyCustoms(items: let items, title: let title, rightSpaceCloseToDefault: let rightSpaceCloseToDefault):
             if (self.navigationController?.viewControllers.count ?? 0 > 1) {
-//                self.navigationItem.setRightBarButtonItems(createCustomAnyButton(items: items, title: title, rightSpaceCloseToDefault: rightSpaceCloseToDefault, anyFn: AnyItemAction(sender:)), animated: true)
-                self.navigationItem.rightBarButtonItems = createCustomAnyButton(items: items, title: title, rightSpaceCloseToDefault: rightSpaceCloseToDefault, anyFn: AnyItemAction(sender:))
+                self.navigationItem.setRightBarButtonItems(createAnyButtons(items: items, title: title, rightSpaceCloseToDefault: rightSpaceCloseToDefault, anyFn: AnyItemAction(sender:)), animated: true)
+//                self.navigationItem.rightBarButtonItems = createAnyButtons(items: items, title: title, rightSpaceCloseToDefault: rightSpaceCloseToDefault, anyFn: AnyItemAction(sender:))
             }
         case .customView(view: let view):
             self.navigationItem.setRightBarButton(UIBarButtonItem(customView: view), animated: true)

@@ -14,6 +14,7 @@ enum AuthErrors: String, Error {
     case noLogout = "로그아웃에 실패하였습니다. (token 인증처리 실패)"
     case noSaveToken = "토큰 값 저장에 실패했습니다."
     case noDelToken = "토큰 값 삭제에 실패했습니다."
+    case noProfile = "회원정보를 가져오지 못했습니다."
 }
 
 enum RoomErrors: String, Error {

@@ -30,15 +30,13 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, Me
     fileprivate func config() {
         // navigationBar item 설정
         self.leftItem = LeftItem.backGeneral
-        self.titleItem = TitleItem.titleGeneral(title: "스터디멤버 등록")
+        self.titleItem = TitleItem.none
         self.rightItem = RightItem.none
         
         // btn
-        self.registerRoomBtn.layer.cornerRadius = 30
-        self.registerRoomBtn.layer.borderWidth = 1
-        self.registerRoomBtn.layer.borderColor = COLOR.SIGNATURE_COLOR.cgColor
-//        self.registerRoomBtn.layer.borderColor = COLOR.DISABLE_COLORL.cgColor
-//        self.registerRoomBtn.isEnabled = false
+        self.registerRoomBtn.tintColor = .white
+        self.registerRoomBtn.backgroundColor = COLOR.SIGNATURE_COLOR
+        self.registerRoomBtn.layer.cornerRadius = self.registerRoomBtn.bounds.height / 2
         
         // 셀 리소스 파일 가져오기
         let memberCell = UINib(nibName: String(describing: MemberTableViewCell.self), bundle: nil)
@@ -73,10 +71,9 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, Me
                 let list = response["list"]
                 for (index, subJson) : (String, JSON) in list {
                     guard let id = subJson["id"].int
-                            ,let username = subJson["username"].string
-                    else { return }
-                    
-                    let memberItem = SearchMemberResponse(id: id, userName: username, ischecked: false)
+                         ,let username = subJson["username"].string
+                         ,let name = subJson["name"].string else { return }
+                    let memberItem = SearchMemberResponse(id: id, name: name, userName: username, ischecked: false)
                     self.members.append(memberItem)
                 }
                 // view reload
@@ -95,21 +92,6 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, Me
         footerView.addSubview(spinner)
         spinner.startAnimating()
         return footerView
-    }
-    
-    // ischecked 값에 따라 registerStudyBtn enable event
-    fileprivate func editingChange() {
-        // ischecked true 확인
-        for index in 0..<members.count {
-            if members[index].ischecked {
-                self.registerRoomBtn.layer.borderColor = COLOR.SIGNATURE_COLOR.cgColor
-                self.registerRoomBtn.isEnabled = true
-                return
-            }
-        }
-        
-        self.registerRoomBtn.layer.borderColor = COLOR.DISABLE_COLOR.cgColor
-        self.registerRoomBtn.isEnabled = false
     }
     
     // MARK: - @IBAction func
@@ -141,6 +123,7 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, Me
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = memberTableView.dequeueReusableCell(withIdentifier: "MemberTableViewCell", for: indexPath) as! MemberTableViewCell
+        cell.member.text = members[indexPath.row].name
         cell.memberName.text = members[indexPath.row].userName
         cell.checkBtn.tag = indexPath.row
         cell.checkBtn.isChecked = members[indexPath.row].ischecked
@@ -151,9 +134,6 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, Me
     func checkBtnClicked(btn: UIButton, ischecked: Bool) {
         print("AddStudyMemberVC - checkBtnClicked() called / btn.tag: \(btn.tag), btn.id: \(members[btn.tag].id) ischecked: \(ischecked)")
         self.members[btn.tag].ischecked = ischecked
-        
-        // registerStudyBtn enable event
-//        editingChange()
     }
     
     // 아래로 스크롤시 event

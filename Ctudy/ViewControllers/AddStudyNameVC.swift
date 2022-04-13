@@ -12,6 +12,7 @@ class AddStudyNameVC : BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate
     
     // MARK: - 변수
     @IBOutlet weak var StudyNameView: UIView!
+    @IBOutlet weak var roomImg: UIImageView!
     @IBOutlet weak var registerStudyName: UITextField!
     @IBOutlet weak var nextBtn: UIButton!
     var keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
@@ -37,16 +38,21 @@ class AddStudyNameVC : BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate
     fileprivate func config() {
         // navigationBar item 설정
         self.leftItem = LeftItem.backGeneral
-        self.titleItem = TitleItem.titleGeneral(title: "스터디룸 등록")
+        self.titleItem = TitleItem.none
         self.rightItem = RightItem.none
         
-        // refresh
-        self.registerStudyName.text = ""
+        // lmg
+        self.roomImg.layer.cornerRadius = self.roomImg.bounds.height / 10
+        self.roomImg.layer.borderWidth = 1
+        self.roomImg.layer.borderColor = COLOR.DISABLE_COLOR.cgColor
+        
+        // textfield
+//        self.registerStudyName.layer.cornerRadius = self.registerStudyName.bounds.height / 2
         
         // btn
-        self.nextBtn.layer.cornerRadius = 30
-        self.nextBtn.layer.borderWidth = 1
-        self.nextBtn.layer.borderColor = COLOR.DISABLE_COLOR.cgColor
+        self.nextBtn.tintColor = .white
+        self.nextBtn.backgroundColor = COLOR.DISABLE_COLOR
+        self.nextBtn.layer.cornerRadius = self.nextBtn.bounds.height / 2
         self.nextBtn.isEnabled = false
         self.nextBtn.addTarget(self, action: #selector(onNextBtnClicked(_:)), for: .touchUpInside)
         
@@ -58,10 +64,10 @@ class AddStudyNameVC : BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate
     // MARK: - action func
     @IBAction func editingChanged(_ sender: Any) {
         if self.registerStudyName.text!.isEmpty {
-            self.nextBtn.layer.borderColor = COLOR.DISABLE_COLOR.cgColor
+            self.nextBtn.backgroundColor = COLOR.DISABLE_COLOR
             self.nextBtn.isEnabled = false
         } else {
-            self.nextBtn.layer.borderColor = COLOR.SIGNATURE_COLOR.cgColor
+            self.nextBtn.backgroundColor = COLOR.SIGNATURE_COLOR
             self.nextBtn.isEnabled = true
         }
     }

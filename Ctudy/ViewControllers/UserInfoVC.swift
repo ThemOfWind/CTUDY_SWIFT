@@ -26,6 +26,10 @@ class UserInfoVC: BasicVC {
         self.titleItem = TitleItem.none
         self.rightItem = RightItem.none
         
+        // btn ui
+        self.logoutBtn.tintColor = .white
+        self.logoutBtn.backgroundColor = COLOR.SIGNATURE_COLOR
+        
         // btn 연결 event
         self.logoutBtn.addTarget(self, action: #selector(onLogoutBtnClicked), for: .touchUpInside)
     }

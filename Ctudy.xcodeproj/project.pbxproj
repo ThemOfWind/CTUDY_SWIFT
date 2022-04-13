@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5A0AD87727EC3D250038FD07 /* BasicVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0AD87627EC3D250038FD07 /* BasicVC.swift */; };
+		5A1C2FFB28000B1100487A16 /* ProfileResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1C2FFA28000B1100487A16 /* ProfileResponse.swift */; };
 		5A24494327EA17280082EC88 /* AddStudyMemberVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A24494227EA17280082EC88 /* AddStudyMemberVC.swift */; };
 		5A2D86C027EAE8A9000BF69B /* MemberTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A2D86BF27EAE8A9000BF69B /* MemberTableViewCell.xib */; };
 		5A2D86C227EAEBB8000BF69B /* MemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2D86C127EAEBB8000BF69B /* MemberTableViewCell.swift */; };
@@ -59,6 +60,7 @@
 		068A07C8F4FE2B4F18CB7A99 /* Pods-Ctudy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ctudy.release.xcconfig"; path = "Target Support Files/Pods-Ctudy/Pods-Ctudy.release.xcconfig"; sourceTree = "<group>"; };
 		2B69261F1FB25B4F48561F6E /* Pods-Ctudy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ctudy.debug.xcconfig"; path = "Target Support Files/Pods-Ctudy/Pods-Ctudy.debug.xcconfig"; sourceTree = "<group>"; };
 		5A0AD87627EC3D250038FD07 /* BasicVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicVC.swift; sourceTree = "<group>"; };
+		5A1C2FFA28000B1100487A16 /* ProfileResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResponse.swift; sourceTree = "<group>"; };
 		5A24494227EA17280082EC88 /* AddStudyMemberVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStudyMemberVC.swift; sourceTree = "<group>"; };
 		5A2D86BF27EAE8A9000BF69B /* MemberTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MemberTableViewCell.xib; sourceTree = "<group>"; };
 		5A2D86C127EAEBB8000BF69B /* MemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberTableViewCell.swift; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 				5AC1CE7B2765D5E8009586B2 /* SignUpResponse.swift */,
 				5ACF0C95276733F7003907E9 /* UserNameCheckResponse.swift */,
 				5ACF0C9227673065003907E9 /* SignInResponse.swift */,
+				5A1C2FFA28000B1100487A16 /* ProfileResponse.swift */,
 			);
 			path = Auths;
 			sourceTree = "<group>";
@@ -438,6 +441,7 @@
 				5AA86D0B2761005D0067620C /* MainVC.swift in Sources */,
 				5ACF0C96276733F7003907E9 /* UserNameCheckResponse.swift in Sources */,
 				5A8DC12B27EB5FA5008FA26E /* SignUpFirstVC.swift in Sources */,
+				5A1C2FFB28000B1100487A16 /* ProfileResponse.swift in Sources */,
 				5ADDFC7B2765BED9001291DD /* BaseInterceptor.swift in Sources */,
 				5A3BBBEC27EB4F6C00BA9E3F /* StartVC.swift in Sources */,
 				5AC1CE7C2765D5E8009586B2 /* SignUpResponse.swift in Sources */,
