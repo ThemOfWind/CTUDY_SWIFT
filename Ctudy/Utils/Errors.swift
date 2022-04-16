@@ -18,10 +18,11 @@ enum AuthErrors: String, Error {
 }
 
 enum RoomErrors: String, Error {
-    case noSearchRoom = "등록된 스터디룸 정보가 없습니다."
+    case noSearchRoom = "스터디룸 조회에 실패했습니다."
     case noRegisterRoom = "스터디룸 등록에 실패했습니다."
+    case noSearchMemeber = "스터디룸 회원 조회에 실패했습니다."
 }
 
 enum MemberErrors: String, Error {
-    case noSearchMember = "등록된 사용자 정보가 없습니다."
+    case noSearchMember = "전체 회원 조회에 실패했습니다."
 }

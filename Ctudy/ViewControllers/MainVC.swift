@@ -114,7 +114,7 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("MainVC - collectionView didSelectItemAt / selectedItem : \(rooms[indexPath.row].name) choose")
         //        self.userName = KeyChainManager().tokenLoad(API.SERVICEID, account: "userName")
-        self.roomName = 0
+        self.roomName = rooms[indexPath.row].id
         self.roomNameString = rooms[indexPath.row].name
         self.performSegue(withIdentifier: "MainDetailVC", sender: nil)
     }

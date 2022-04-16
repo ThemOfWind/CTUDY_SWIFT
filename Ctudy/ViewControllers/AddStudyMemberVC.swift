@@ -15,10 +15,10 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, Me
     @IBOutlet weak var memberTableView: UITableView!
     @IBOutlet weak var registerRoomBtn: UIButton!
     @IBOutlet weak var memberSearchBar: UITableView!
-    var members : Array<SearchMemberResponse> = []
-    var nextPage : String? = "1"
+    var members: Array<SearchMemberResponse> = []
+    var nextPage: String? = "1"
     var fetchingMore = false
-    var studyName : String?
+    var studyName: String?
     
     // MARK: - overrid func
     override func viewDidLoad() {
@@ -79,7 +79,7 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, Me
                 // view reload
                 self.memberTableView.reloadData()
             case .failure(let error):
-                print("AddStudyMemberVC - getSearchMember.failure / error: \(error)")
+                print("AddStudyMemberVC - getSearchMember.failure / error: \(error.rawValue)")
             }
         })
     }

@@ -51,6 +51,9 @@
 		5AC4471F2774620F00077242 /* MyStatusLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4471E2774620F00077242 /* MyStatusLogger.swift */; };
 		5ACF0C9327673065003907E9 /* SignInResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACF0C9227673065003907E9 /* SignInResponse.swift */; };
 		5ACF0C96276733F7003907E9 /* UserNameCheckResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACF0C95276733F7003907E9 /* UserNameCheckResponse.swift */; };
+		5AD9515C280870100038048F /* StudyMemberTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AD9515B280870100038048F /* StudyMemberTableViewCell.xib */; };
+		5AD9515E280870330038048F /* StudyMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD9515D280870330038048F /* StudyMemberTableViewCell.swift */; };
+		5AD95160280A8D570038048F /* SearchStudyMemberResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD9515F280A8D570038048F /* SearchStudyMemberResponse.swift */; };
 		5ADDFC792765B983001291DD /* AlamofireManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADDFC782765B983001291DD /* AlamofireManager.swift */; };
 		5ADDFC7B2765BED9001291DD /* BaseInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADDFC7A2765BED9001291DD /* BaseInterceptor.swift */; };
 		5E8F0DACD2EAF7F0B8D95D57 /* Pods_Ctudy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AEB34C08528B3EDE17B79DD /* Pods_Ctudy.framework */; };
@@ -105,6 +108,9 @@
 		5AC4471E2774620F00077242 /* MyStatusLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStatusLogger.swift; sourceTree = "<group>"; };
 		5ACF0C9227673065003907E9 /* SignInResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInResponse.swift; sourceTree = "<group>"; };
 		5ACF0C95276733F7003907E9 /* UserNameCheckResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameCheckResponse.swift; sourceTree = "<group>"; };
+		5AD9515B280870100038048F /* StudyMemberTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StudyMemberTableViewCell.xib; sourceTree = "<group>"; };
+		5AD9515D280870330038048F /* StudyMemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberTableViewCell.swift; sourceTree = "<group>"; };
+		5AD9515F280A8D570038048F /* SearchStudyMemberResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStudyMemberResponse.swift; sourceTree = "<group>"; };
 		5ADDFC782765B983001291DD /* AlamofireManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireManager.swift; sourceTree = "<group>"; };
 		5ADDFC7A2765BED9001291DD /* BaseInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseInterceptor.swift; sourceTree = "<group>"; };
 		7AEB34C08528B3EDE17B79DD /* Pods_Ctudy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ctudy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -135,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				5A3BBBE827EAF31300BA9E3F /* SearhMemberResponse.swift */,
+				5AD9515F280A8D570038048F /* SearchStudyMemberResponse.swift */,
 			);
 			path = Members;
 			sourceTree = "<group>";
@@ -242,6 +249,8 @@
 				5A8BAB152786F79200CFF908 /* StudyCollectionViewCell.swift */,
 				5A2D86BF27EAE8A9000BF69B /* MemberTableViewCell.xib */,
 				5A2D86C127EAEBB8000BF69B /* MemberTableViewCell.swift */,
+				5AD9515B280870100038048F /* StudyMemberTableViewCell.xib */,
+				5AD9515D280870330038048F /* StudyMemberTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -375,6 +384,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5AD9515C280870100038048F /* StudyMemberTableViewCell.xib in Resources */,
 				5A8BAB142786E94100CFF908 /* StudyCollectionViewCell.xib in Resources */,
 				5A2D86C027EAE8A9000BF69B /* MemberTableViewCell.xib in Resources */,
 				5A4CD0D927E86F1F00F6C829 /* AddBarButtonItem.xib in Resources */,
@@ -442,6 +452,7 @@
 				5ACF0C96276733F7003907E9 /* UserNameCheckResponse.swift in Sources */,
 				5A8DC12B27EB5FA5008FA26E /* SignUpFirstVC.swift in Sources */,
 				5A1C2FFB28000B1100487A16 /* ProfileResponse.swift in Sources */,
+				5AD9515E280870330038048F /* StudyMemberTableViewCell.swift in Sources */,
 				5ADDFC7B2765BED9001291DD /* BaseInterceptor.swift in Sources */,
 				5A3BBBEC27EB4F6C00BA9E3F /* StartVC.swift in Sources */,
 				5AC1CE7C2765D5E8009586B2 /* SignUpResponse.swift in Sources */,
@@ -462,6 +473,7 @@
 				5A9D31C0277C0B9900DCEAEA /* KeyChainManager.swift in Sources */,
 				5A8BAB19278812AD00CFF908 /* SearchRoomResponse.swift in Sources */,
 				5A453AFE27E9B25B006F0A1D /* AddStudyNameVC.swift in Sources */,
+				5AD95160280A8D570038048F /* SearchStudyMemberResponse.swift in Sources */,
 				5A4CD0DC27E8A09E00F6C829 /* AddBarButtonItem.swift in Sources */,
 				5A24494327EA17280082EC88 /* AddStudyMemberVC.swift in Sources */,
 				5A4AC44C27FD2A09002D55CD /* RegisterRoomRequest.swift in Sources */,
