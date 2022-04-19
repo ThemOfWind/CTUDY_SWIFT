@@ -10,7 +10,6 @@ import UIKit
 import SwiftyJSON
 
 class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
-
     // MARK: - 변수
     @IBOutlet weak var studyRoom: UILabel!
     @IBOutlet weak var profileUserImg: UIImageView!
@@ -30,7 +29,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         super.viewDidLoad()
         self.config()
         
-        print("MainDetailVC - viewDidLoad() called / roomName: \(self.roomName), roomNameString: \(self.roomNameString)")
+        print("MainDetailVC - viewDidLoad() called / roomName: \(String(describing: self.roomName)), roomNameString: \(String(describing: self.roomNameString))")
     }
     
     // MARK: - fileprivate func
@@ -39,7 +38,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         self.leftItem = LeftItem.backGeneral
         self.titleItem = TitleItem.none
         self.rightItem = RightItem.anyCustoms(items: [.setting], title: nil, rightSpaceCloseToDefault: false)
-    
+        
         // label
         self.studyRoom.text = roomNameString
         
@@ -70,8 +69,8 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         self.memberTableView.register(memberCell, forCellReuseIdentifier: "StudyMemberTableViewCell")
         
         // 셀 설정
-        self.memberTableView.rowHeight = UITableView.automaticDimension
-        self.memberTableView.estimatedRowHeight = 50
+        self.memberTableView.rowHeight = 90
+        //        self.memberTableView.estimatedRowHeight = 50
         
         // delegete
         self.memberTableView.delegate = self
@@ -94,8 +93,8 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
                 // 마스터 정보
                 let masterList = response["master"]
                 guard let id = masterList["id"].int
-                    , let username = masterList["username"].string
-                    , let name = masterList["name"].string else { return }
+                        , let username = masterList["username"].string
+                        , let name = masterList["name"].string else { return }
                 
                 let masterItem = SearchStudyMemberResponse(id: id, name: name + "⭐️", userName: username)
                 self.members.append(masterItem)
@@ -104,8 +103,8 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
                 let memberList = response["members"]
                 for (index, subJson) : (String, JSON) in memberList {
                     guard let id = subJson["id"].int
-                         ,let username = subJson["username"].string
-                         ,let name = subJson["name"].string else { return }
+                            ,let username = subJson["username"].string
+                            ,let name = subJson["name"].string else { return }
                     let memberItem = SearchStudyMemberResponse(id: id, name: name, userName: username)
                     self.members.append(memberItem)
                 }
@@ -119,11 +118,12 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     // MARK: - btn action func
-    func rightItemAction(items: [UIBarButtonItem]) {
-        print("오잉")
+    override func AnyItemAction(sender: UIBarButtonItem) {
+        // setting btn
+        print("setting btn click!!")
     }
-    // MARK: - delegate
     
+    // MARK: - delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return members.count
     }

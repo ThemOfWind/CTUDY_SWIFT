@@ -99,7 +99,7 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
                 
                 self.getProfileInfo()
             case .failure(let error):
-                print("LoginVC - postSignIn.failure / error: \(error)")
+                print("LoginVC - postSignIn.failure / error: \(error.rawValue)")
                 self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
             }
         })
@@ -147,7 +147,7 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
                 // 다음 화면으로 이동
                 self.performSegue(withIdentifier: "MainTabBarVC", sender: nil)
             case .failure(let error):
-                print("LoginVC - getProfileInfo() called / error: \(error)")
+                print("LoginVC - getProfileInfo() called / error: \(error.rawValue)")
             }
         })
     }

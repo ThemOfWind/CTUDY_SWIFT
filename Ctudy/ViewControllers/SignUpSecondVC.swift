@@ -200,7 +200,7 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
                 self.memberUserName = memberData.username
                 self.performSegue(withIdentifier: "SignUpSuccessVC", sender: nil)
             case .failure(let error):
-                print("SignUpSecondVC - postSignUp.failure / error: \(error)")
+                print("SignUpSecondVC - postSignUp.failure / error: \(error.rawValue)")
                 self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
             }
         })

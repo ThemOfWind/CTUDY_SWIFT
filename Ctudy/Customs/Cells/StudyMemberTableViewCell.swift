@@ -17,6 +17,11 @@ class StudyMemberTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
+        // image
+        self.memberImg.backgroundColor = COLOR.DISABLE_COLOR
+        self.memberImg.layer.cornerRadius = self.memberImg.bounds.height / 3
+        
+        // 쿠폰 label
         self.couponCnt.textColor = COLOR.SIGNATURE_COLOR
         self.couponCnt.text = "쿠폰 "
     }

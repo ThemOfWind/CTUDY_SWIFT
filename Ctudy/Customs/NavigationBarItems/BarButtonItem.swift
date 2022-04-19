@@ -10,7 +10,7 @@ import UIKit
 
 class BarButtonItem: UIBarButtonItem {
     private var leftActionHandler: (() -> ())?
-    private var rightActionHandler: (([UIBarButtonItem]) -> ())?
+    private var rightActionHandler: ((UIBarButtonItem) -> ())?
     
     // MARK: - leftBarButtnoItem
     convenience init(title: String?, actionHandler: (() -> ())?) {
@@ -56,7 +56,7 @@ class BarButtonItem: UIBarButtonItem {
     }
     
     // MARK: - rightBarButtonItem
-    convenience init(image: UIImage?, actionHandler: (([UIBarButtonItem]) -> ())?) {
+    convenience init(image: UIImage?, actionHandler: ((UIBarButtonItem) -> ())?) {
         self.init(image: image, style: UIBarButtonItem.Style.plain, target: nil, action: nil)
         self.tintColor = COLOR.SIGNATURE_COLOR
         self.target = self
@@ -64,7 +64,7 @@ class BarButtonItem: UIBarButtonItem {
         self.rightActionHandler = actionHandler
     }
     
-    convenience init(image: UIImage?, title: String?, actionHandler: (([UIBarButtonItem]) -> ())?) {
+    convenience init(image: UIImage?, title: String?, actionHandler: ((UIBarButtonItem) -> ())?) {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 80, height: 31))
         
         let button = UIButton(frame: CGRect(x: 0, y: 0, width: 80, height: 31))
@@ -96,7 +96,7 @@ class BarButtonItem: UIBarButtonItem {
         }
     }
     
-    @objc func rightBarButtonItemPressed(sender: [UIBarButtonItem]) {
+    @objc func rightBarButtonItemPressed(sender: UIBarButtonItem) {
         if let actionHandler = self.rightActionHandler {
             actionHandler(sender)
         }

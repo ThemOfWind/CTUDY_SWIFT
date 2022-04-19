@@ -45,8 +45,8 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, Me
         self.memberTableView.register(memberCell, forCellReuseIdentifier: "MemberTableViewCell")
         
         // 셀 설정
-        self.memberTableView.rowHeight = UITableView.automaticDimension
-        self.memberTableView.estimatedRowHeight = 50
+        self.memberTableView.rowHeight = 90
+//        self.memberTableView.estimatedRowHeight = 100
 //        self.memberTableView.mar
         
         // delegate 연결

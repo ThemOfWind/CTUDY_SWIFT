@@ -5,11 +5,6 @@
 //  Created by 김지은 on 2022/03/24.
 //
 
-protocol NaviBarItemDelegate: AnyObject {
-    // 위임해줄 기능
-    func rightItemAction(items: [UIBarButtonItem])
-}
-
 import Foundation
 import UIKit
 
@@ -36,8 +31,8 @@ class BasicVC: UIViewController {
     enum RightItem {
         case none // nil
         case anyCustoms(items: [Items]?, title: String?, rightSpaceCloseToDefault: Bool)
-        case anyFn(visibilityFn:(() -> Bool), anyFn:(([UIBarButtonItem]) -> ()))
-        case anyCustomFn(image: UIImage?, title: String?, rightSpaceCloseToDefault: Bool, visibilityFn:(() -> Bool), anyFn:(([UIBarButtonItem]) -> ())) // custom anyItem func
+        case anyFn(visibilityFn:(() -> Bool), anyFn:(() -> ()))
+        case anyCustomFn(image: UIImage?, title: String?, rightSpaceCloseToDefault: Bool, visibilityFn:(() -> Bool), anyFn:(() -> ())) // custom anyItem func
         case customView(view: UIView)
     }
     
@@ -47,9 +42,6 @@ class BasicVC: UIViewController {
         case camera
         case setting
     }
-    
-    // right naviagtionBar item
-    var rightItemDelegate: NaviBarItemDelegate?
     
     // leftItem 생성
     var leftItem: LeftItem = LeftItem.backGeneral {
@@ -75,7 +67,7 @@ class BasicVC: UIViewController {
     // leftItem image
     lazy var backButtonImage = UIImage(systemName: "chevron.backward")
     
-    // rightItem image
+    // rightItem image (추가, 사진, 설정)
     lazy var anyButtonImages: Array = [UIImage(systemName: "plus"), UIImage(systemName: "camera"), UIImage(systemName: "gearshape")]
     
     // navigationController pop event
@@ -89,8 +81,7 @@ class BasicVC: UIViewController {
     }
     
     // anyItem click event
-    func AnyItemAction(sender: [UIBarButtonItem]) {
-        rightItemDelegate?.rightItemAction(items: sender)
+    func AnyItemAction(sender: UIBarButtonItem) {
     }
     
     // MARK: - leftItem func
@@ -132,7 +123,7 @@ class BasicVC: UIViewController {
     }
     
     // MARK: - rightBtn func
-    func createCustomAnyButton(items: [Items]?, title: String?, rightSpaceCloseToDefault: Bool, anyFn: @escaping (([UIBarButtonItem]) -> ())) -> [UIBarButtonItem] {
+    func createCustomAnyButton(items: [Items]?, title: String?, rightSpaceCloseToDefault: Bool, anyFn: @escaping ((UIBarButtonItem) -> ())) -> [UIBarButtonItem] {
         var arr: [UIBarButtonItem] = []
     
         if let list = items {
@@ -179,8 +170,8 @@ class BasicVC: UIViewController {
     }
     
     // createAnyBtn + custom action
-    func createAnyButtons(items: [Items]?, title: String?, rightSpaceCloseToDefault: Bool, anyFn: @escaping (([UIBarButtonItem]) -> ())) -> [UIBarButtonItem] {
-        return createCustomAnyButton(items: items, title: title, rightSpaceCloseToDefault: rightSpaceCloseToDefault, anyFn: AnyItemAction(sender:))
+    func createAnyButtons(items: [Items]?, title: String?, rightSpaceCloseToDefault: Bool, anyFn: @escaping ((UIBarButtonItem) -> ())) -> [UIBarButtonItem] {
+        return createCustomAnyButton(items: items, title: title, rightSpaceCloseToDefault: rightSpaceCloseToDefault, anyFn: anyFn)
     }
     // MARK: - init func
     
@@ -240,6 +231,7 @@ class BasicVC: UIViewController {
         case .anyCustoms(items: let items, title: let title, rightSpaceCloseToDefault: let rightSpaceCloseToDefault):
             if (self.navigationController?.viewControllers.count ?? 0 > 1) {
                 self.navigationItem.setRightBarButtonItems(createAnyButtons(items: items, title: title, rightSpaceCloseToDefault: rightSpaceCloseToDefault, anyFn: AnyItemAction(sender:)), animated: true)
+//                self.navigationItem.setRightBarButtonItems(createAnyButtons(items: items, title: title, rightSpaceCloseToDefault: rightSpaceCloseToDefault, anyFn: AnyItemAction(sender: items ?? [])), animated: true)
 //                self.navigationItem.rightBarButtonItems = createAnyButtons(items: items, title: title, rightSpaceCloseToDefault: rightSpaceCloseToDefault, anyFn: AnyItemAction(sender:))
             }
         case .customView(view: let view):
@@ -257,12 +249,12 @@ class BasicVC: UIViewController {
         self.updateNavigationBarRightUI()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        self.reset()
-        self.updateNavigationBarLeftUI()
-        self.updateNavigationBarTitleUI()
-        self.updateNavigationBarRightUI()
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        self.reset()
+//        self.updateNavigationBarLeftUI()
+//        self.updateNavigationBarTitleUI()
+//        self.updateNavigationBarRightUI()
+//    }
     
     fileprivate func reset() {
         self.navigationItem.backBarButtonItem = createEmptyButton()

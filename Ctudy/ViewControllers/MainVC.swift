@@ -24,10 +24,10 @@ class MainVC: BasicVC {
         self.config()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        // 스터디룸 조회
-        self.getSearchRoom()
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        // 스터디룸 조회
+//        self.getSearchRoom()
+//    }
     
     // 다음 화면 이동전 준비동작 (변수 연결)
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -80,7 +80,7 @@ class MainVC: BasicVC {
                 self.rooms = roomList
                 self.studyCollectionView.reloadData()
             case .failure(let error):
-                print("MainVC - getSearchRoom.failure / error: \(error)")
+                print("MainVC - getSearchRoom.failure / error: \(error.rawValue)")
             }
         })
     }

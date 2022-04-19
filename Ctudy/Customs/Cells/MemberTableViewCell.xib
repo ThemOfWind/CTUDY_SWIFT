@@ -23,7 +23,6 @@
                         <color key="tintColor" systemColor="systemGrayColor"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="80" id="HJx-tP-rdX"/>
-                            <constraint firstAttribute="height" constant="80" id="x9d-ej-0zn"/>
                         </constraints>
                         <imageReference key="image" image="person" catalog="system" symbolScale="large"/>
                     </imageView>

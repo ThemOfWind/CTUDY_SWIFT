@@ -19,9 +19,9 @@ class MemberTableViewCell : UITableViewCell {
         super.awakeFromNib()
         print("MemeberTableViewCell - awakeFromNib() called")
     
+        // image
         self.memberImg.backgroundColor = COLOR.DISABLE_COLOR
         self.memberImg.layer.cornerRadius = self.memberImg.bounds.height / 3
-        //self.checkBtn.awakeFromNib()
     }
     
     // cell간 간격 띄우기 (수정해야돼)

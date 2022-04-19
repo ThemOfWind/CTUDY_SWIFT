@@ -22,7 +22,6 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" systemColor="systemGrayColor"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="80" id="2Ha-bU-4Wz"/>
                             <constraint firstAttribute="width" constant="80" id="CZR-Nv-2Vg"/>
                         </constraints>
                         <imageReference key="image" image="person" catalog="system" symbolScale="large"/>
