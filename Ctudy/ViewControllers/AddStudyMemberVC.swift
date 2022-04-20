@@ -30,8 +30,7 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, Me
     fileprivate func config() {
         // navigationBar item 설정
         self.leftItem = LeftItem.backGeneral
-        self.titleItem = TitleItem.none
-        self.rightItem = RightItem.none
+        self.titleItem = TitleItem.titleGeneral(title: "멤버 등록", isLargeTitles: true)
         
         // btn
         self.registerRoomBtn.tintColor = .white

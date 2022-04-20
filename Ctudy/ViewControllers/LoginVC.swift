@@ -57,9 +57,7 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
         self.password.text = ""
         
         // navigationBar item
-        self.leftItem = LeftItem.none
-        self.titleItem = TitleItem.none
-        self.rightItem = RightItem.none
+        self.titleItem = TitleItem.titleGeneral(title: "로그인", isLargeTitles: true)
         
         // btn ui
         self.loginBtn.tintColor = .white

@@ -24,7 +24,7 @@ class BasicVC: UIViewController {
     // titleView
     enum TitleItem {
         case none
-        case titleGeneral(title: String?)
+        case titleGeneral(title: String?, isLargeTitles: Bool)
     }
     
     // right navigationBar item
@@ -44,7 +44,7 @@ class BasicVC: UIViewController {
     }
     
     // leftItem 생성
-    var leftItem: LeftItem = LeftItem.backGeneral {
+    var leftItem: LeftItem = LeftItem.none {
         didSet {
             self.updateNavigationBarLeftUI()
         }
@@ -82,6 +82,7 @@ class BasicVC: UIViewController {
     
     // anyItem click event
     func AnyItemAction(sender: UIBarButtonItem) {
+        // custom action event
     }
     
     // MARK: - leftItem func
@@ -125,7 +126,7 @@ class BasicVC: UIViewController {
     // MARK: - rightBtn func
     func createCustomAnyButton(items: [Items]?, title: String?, rightSpaceCloseToDefault: Bool, anyFn: @escaping ((UIBarButtonItem) -> ())) -> [UIBarButtonItem] {
         var arr: [UIBarButtonItem] = []
-    
+        
         if let list = items {
             for item: Items in list {
                 switch item {
@@ -174,7 +175,6 @@ class BasicVC: UIViewController {
         return createCustomAnyButton(items: items, title: title, rightSpaceCloseToDefault: rightSpaceCloseToDefault, anyFn: anyFn)
     }
     // MARK: - init func
-    
     // leftItem setting
     func updateNavigationBarLeftUI() {
         print("BasicVC - updateNavigationBarUI() called")
@@ -210,12 +210,12 @@ class BasicVC: UIViewController {
         switch self.titleItem {
         case .none:
             break
-        case .titleGeneral(title: let title):
-            let label = UILabel()
-            label.text = title
-            label.adjustsFontSizeToFitWidth = true
-            self.navigationItem.titleView = label
-            self.navigationItem.largeTitleDisplayMode = .always
+        case .titleGeneral(title: let title, isLargeTitles: let isLargeTitles):
+            if (self.navigationController?.viewControllers.count ?? 0 > 1) {
+                self.navigationItem.title = title
+                self.navigationController?.navigationBar.prefersLargeTitles = isLargeTitles
+                self.navigationItem.largeTitleDisplayMode = .always
+            }
         default:
             break
         }
@@ -227,12 +227,12 @@ class BasicVC: UIViewController {
         switch self.rightItem {
         case .none:
             break
-        //case .anyCustoms(items:, title: let title, rightSpaceCloseToDefault: let rightSpaceCloseToDefault):
+            //case .anyCustoms(items:, title: let title, rightSpaceCloseToDefault: let rightSpaceCloseToDefault):
         case .anyCustoms(items: let items, title: let title, rightSpaceCloseToDefault: let rightSpaceCloseToDefault):
             if (self.navigationController?.viewControllers.count ?? 0 > 1) {
                 self.navigationItem.setRightBarButtonItems(createAnyButtons(items: items, title: title, rightSpaceCloseToDefault: rightSpaceCloseToDefault, anyFn: AnyItemAction(sender:)), animated: true)
-//                self.navigationItem.setRightBarButtonItems(createAnyButtons(items: items, title: title, rightSpaceCloseToDefault: rightSpaceCloseToDefault, anyFn: AnyItemAction(sender: items ?? [])), animated: true)
-//                self.navigationItem.rightBarButtonItems = createAnyButtons(items: items, title: title, rightSpaceCloseToDefault: rightSpaceCloseToDefault, anyFn: AnyItemAction(sender:))
+                //                self.navigationItem.setRightBarButtonItems(createAnyButtons(items: items, title: title, rightSpaceCloseToDefault: rightSpaceCloseToDefault, anyFn: AnyItemAction(sender: items ?? [])), animated: true)
+                //                self.navigationItem.rightBarButtonItems = createAnyButtons(items: items, title: title, rightSpaceCloseToDefault: rightSpaceCloseToDefault, anyFn: AnyItemAction(sender:))
             }
         case .customView(view: let view):
             self.navigationItem.setRightBarButton(UIBarButtonItem(customView: view), animated: true)
@@ -257,11 +257,11 @@ class BasicVC: UIViewController {
 //    }
     
     fileprivate func reset() {
+        self.navigationItem.title = ""
+        self.navigationController?.navigationBar.prefersLargeTitles = false
         self.navigationItem.backBarButtonItem = createEmptyButton()
         self.navigationItem.leftBarButtonItem = nil
-        self.navigationItem.leftBarButtonItems = nil
         self.navigationItem.hidesBackButton = true
         self.navigationItem.rightBarButtonItem = nil
-        self.navigationItem.titleView = nil
     }
 }

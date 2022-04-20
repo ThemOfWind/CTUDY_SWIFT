@@ -38,8 +38,7 @@ class AddStudyNameVC : BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate
     fileprivate func config() {
         // navigationBar item 설정
         self.leftItem = LeftItem.backGeneral
-        self.titleItem = TitleItem.none
-        self.rightItem = RightItem.none
+        self.titleItem = TitleItem.titleGeneral(title: "스터디룸 등록", isLargeTitles: true)
         
         // lmg
         self.roomImg.layer.cornerRadius = self.roomImg.bounds.height / 10

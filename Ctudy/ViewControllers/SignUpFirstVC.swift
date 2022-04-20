@@ -56,9 +56,7 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
     // MARK: - fileprivate func
     fileprivate func config() {
         // navigationBar item
-        self.leftItem = LeftItem.none
-        self.titleItem = TitleItem.none
-        self.rightItem = RightItem.none
+        self.titleItem = TitleItem.titleGeneral(title: "회원가입", isLargeTitles: true)
         
         // btn ui
         self.nextBtn.tintColor = .white
@@ -190,7 +188,6 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
 //        textFeild.text!.removeAll()
         nameOKFlag = false
-        
         nextBtnAbleChecked()
         return true
     }

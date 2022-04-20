@@ -11,7 +11,7 @@ import SwiftyJSON
 
 class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
     // MARK: - 변수
-    @IBOutlet weak var studyRoom: UILabel!
+//    @IBOutlet weak var studyRoom: UILabel!
     @IBOutlet weak var profileUserImg: UIImageView!
     @IBOutlet weak var profileName: UILabel!
     @IBOutlet weak var profileUserName: UILabel!
@@ -31,16 +31,16 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         
         print("MainDetailVC - viewDidLoad() called / roomName: \(String(describing: self.roomName)), roomNameString: \(String(describing: self.roomNameString))")
     }
-    
+     
     // MARK: - fileprivate func
     fileprivate func config() {
         // navigationbar item 설정
         self.leftItem = LeftItem.backGeneral
-        self.titleItem = TitleItem.none
+        self.titleItem = TitleItem.titleGeneral(title: roomNameString, isLargeTitles: true)
         self.rightItem = RightItem.anyCustoms(items: [.setting], title: nil, rightSpaceCloseToDefault: false)
         
         // label
-        self.studyRoom.text = roomNameString
+//        self.studyRoom.text = roomNameString
         
         // profile
         self.profileUserImg.layer.cornerRadius = self.profileUserImg.bounds.height / 2
@@ -132,7 +132,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         let cell = memberTableView.dequeueReusableCell(withIdentifier: "StudyMemberTableViewCell", for: indexPath) as! StudyMemberTableViewCell
         cell.member.text = members[indexPath.row].name
         cell.memberName.text = members[indexPath.row].userName
-        cell.couponCnt.text = cell.couponCnt.text! + "00"
+        cell.couponCnt.text = cell.couponCnt.text!
         return cell
     }
 }

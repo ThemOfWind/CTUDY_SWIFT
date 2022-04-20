@@ -21,6 +21,11 @@ class StartVC : BasicVC {
     }
     
     fileprivate func config() {
+//        // navigationbar
+        self.leftItem = LeftItem.none
+        self.titleItem = TitleItem.none
+        self.rightItem = RightItem.none
+        
         // logo ui
         signatureImg.tintColor = COLOR.SIGNATURE_COLOR
         

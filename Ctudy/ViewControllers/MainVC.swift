@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class MainVC: BasicVC {
+class MainVC: UIViewController {
     
     // MARK: - 변수
     @IBOutlet var studyCollectionView: UICollectionView!
@@ -24,10 +24,10 @@ class MainVC: BasicVC {
         self.config()
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        // 스터디룸 조회
-//        self.getSearchRoom()
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        // 스터디룸 조회
+        self.getSearchRoom()
+    }
     
     // 다음 화면 이동전 준비동작 (변수 연결)
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -48,6 +48,10 @@ class MainVC: BasicVC {
 //        flowLayout.itemSize = CGSize(width: width - 20, height: height)
 //        self.studyCollectionView.collectionViewLayout = flowLayout
         
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationItem.largeTitleDisplayMode = .always
+//        self.titleItem = TitleItem.titleGeneral(title: "스터디룸", isLargeTitles: true)
+        
         // view에 delegate, datasource 연결
         self.studyCollectionView.delegate = self
         self.studyCollectionView.dataSource = self
@@ -62,11 +66,6 @@ class MainVC: BasicVC {
         if rooms.count <= 0 {
             
         }
-        
-        // 스터디룸 추가 셀
-        //        var testList = [SearchRoomResponse(name: "바람의 녀석들", membercount: 4, mastername: "김밍구")]
-        //        testList.append(contentsOf: [SearchRoomResponse(name: "", membercount: 2, mastername: "김지니")])
-        //        self.rooms = testList
     }
     
     // 스터디룸 조회 api 호출

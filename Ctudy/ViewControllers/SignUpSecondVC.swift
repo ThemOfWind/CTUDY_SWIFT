@@ -64,8 +64,7 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
     fileprivate func config() {
         // navigationbar item 설정
         self.leftItem = LeftItem.backGeneral
-        self.titleItem = TitleItem.none
-        self.rightItem = RightItem.none
+        self.titleItem = TitleItem.titleGeneral(title: "회원가입", isLargeTitles: true)
         
         // ui
         self.signUpBtn.tintColor = .white
@@ -90,10 +89,6 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
         
         // 제스처
         self.view.addGestureRecognizer(keyboardDismissTabGesture)
-    }
-    
-    func btnItemAction(btn: UIButton) {
-        self.navigationController?.popViewController(animated: true)
     }
     
     // 아이디 중복체크 api 호출 event

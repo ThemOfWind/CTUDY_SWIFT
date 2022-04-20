@@ -23,7 +23,7 @@ class StudyMemberTableViewCell: UITableViewCell {
         
         // 쿠폰 label
         self.couponCnt.textColor = COLOR.SIGNATURE_COLOR
-        self.couponCnt.text = "쿠폰 "
+        self.couponCnt.text = "쿠폰 00"
     }
     
     override func layoutSubviews() {

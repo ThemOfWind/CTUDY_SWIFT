@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class UserInfoVC: BasicVC {
+class UserInfoVC: UIViewController {
     
     // MARK: - 변수
     @IBOutlet weak var logoutBtn: UIButton!
@@ -21,11 +21,6 @@ class UserInfoVC: BasicVC {
     
     // MARK: - fileprivate func
     fileprivate func config() {
-        // navigationBar item
-        self.leftItem = LeftItem.none
-        self.titleItem = TitleItem.none
-        self.rightItem = RightItem.none
-        
         // btn ui
         self.logoutBtn.tintColor = .white
         self.logoutBtn.backgroundColor = COLOR.SIGNATURE_COLOR
