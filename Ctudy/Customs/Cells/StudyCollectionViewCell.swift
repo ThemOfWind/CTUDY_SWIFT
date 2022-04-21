@@ -25,12 +25,13 @@ class StudyCollectionViewCell: UICollectionViewCell {
         // room Cell
         self.roomStackViewCell.layer.cornerRadius = 10
         self.roomStackViewCell.layer.borderWidth = 1
-        self.roomStackViewCell.layer.borderColor = COLOR.DISABLE_COLOR.cgColor
+        self.roomStackViewCell.layer.borderColor = COLOR.SUBTITLE_COLOR.cgColor
         
         // room lmg
-        self.roomImg.backgroundColor = .lightGray
-        self.roomImg.image = UIImage(systemName: "pencil")
-        self.roomImg.preferredSymbolConfiguration = UIImage.SymbolConfiguration(pointSize: 50)
+        self.roomImg.backgroundColor = COLOR.SUBTITLE_COLOR
+        self.roomImg.tintColor = COLOR.DISABLE_COLOR
+        self.roomImg.image = UIImage(systemName: "pencil", withConfiguration: UIImage.SymbolConfiguration(pointSize: 45, weight: .regular, scale: .large))
+        self.roomImg.contentMode = .center
         self.roomImg.translatesAutoresizingMaskIntoConstraints = false
         
         // roomName label

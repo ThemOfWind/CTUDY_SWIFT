@@ -20,6 +20,12 @@ class SignUpSuccessVC: BasicVC {
         super.viewDidLoad()
         print("SignUpSuccessVC - viewDidLoad() calld")
         
+        // navigationBar setting
+//        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+        // navigationBar left item
+//        self.navigationItem.leftBarButtonItem = nil
+//        self.navigationItem.hidesBackButton = true
+        
         // btn ui
         self.goToLoginBtn.tintColor = .white
         self.goToLoginBtn.backgroundColor = COLOR.SIGNATURE_COLOR

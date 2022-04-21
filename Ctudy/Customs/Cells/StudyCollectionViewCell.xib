@@ -20,23 +20,11 @@
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="9Zw-jL-hFo">
                         <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J7j-B6-hDJ">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VsK-Kl-S7f">
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="210"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VsK-Kl-S7f">
-                                        <rect key="frame" x="0.0" y="0.0" width="300" height="210"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <color key="tintColor" systemColor="systemGray5Color"/>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="VsK-Kl-S7f" secondAttribute="trailing" id="8w8-H3-d53"/>
-                                    <constraint firstAttribute="bottom" secondItem="VsK-Kl-S7f" secondAttribute="bottom" id="gbx-ao-do2"/>
-                                    <constraint firstItem="VsK-Kl-S7f" firstAttribute="leading" secondItem="J7j-B6-hDJ" secondAttribute="leading" id="kJq-CZ-i4W"/>
-                                    <constraint firstItem="VsK-Kl-S7f" firstAttribute="top" secondItem="J7j-B6-hDJ" secondAttribute="top" id="pJq-4g-gqd"/>
-                                </constraints>
-                            </view>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kRH-4Q-9E4">
                                 <rect key="frame" x="0.0" y="210" width="300" height="90"/>
                                 <subviews>
@@ -112,14 +100,13 @@
                             </view>
                         </subviews>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="VsK-Kl-S7f" secondAttribute="trailing" id="Act-s0-p17"/>
+                            <constraint firstItem="VsK-Kl-S7f" firstAttribute="leading" secondItem="9Zw-jL-hFo" secondAttribute="leading" id="CHI-gg-shN"/>
                             <constraint firstAttribute="trailing" secondItem="kRH-4Q-9E4" secondAttribute="trailing" id="K9H-pt-hTe"/>
                             <constraint firstItem="kRH-4Q-9E4" firstAttribute="leading" secondItem="9Zw-jL-hFo" secondAttribute="leading" id="Lch-VX-w9u"/>
-                            <constraint firstItem="kRH-4Q-9E4" firstAttribute="top" secondItem="J7j-B6-hDJ" secondAttribute="bottom" id="Tof-0f-Lcv"/>
-                            <constraint firstItem="kRH-4Q-9E4" firstAttribute="top" secondItem="J7j-B6-hDJ" secondAttribute="bottom" id="WfG-rE-t2z"/>
+                            <constraint firstItem="VsK-Kl-S7f" firstAttribute="top" secondItem="9Zw-jL-hFo" secondAttribute="top" id="P8z-cu-TOA"/>
                             <constraint firstAttribute="bottom" secondItem="kRH-4Q-9E4" secondAttribute="bottom" id="cIl-g9-ASP"/>
-                            <constraint firstAttribute="trailing" secondItem="J7j-B6-hDJ" secondAttribute="trailing" id="pXD-NL-hgR"/>
-                            <constraint firstItem="J7j-B6-hDJ" firstAttribute="leading" secondItem="9Zw-jL-hFo" secondAttribute="leading" id="qXA-ur-vdJ"/>
-                            <constraint firstItem="J7j-B6-hDJ" firstAttribute="top" secondItem="9Zw-jL-hFo" secondAttribute="top" id="wii-Nb-ASs"/>
+                            <constraint firstItem="kRH-4Q-9E4" firstAttribute="top" secondItem="VsK-Kl-S7f" secondAttribute="bottom" id="k4E-Ez-a0H"/>
                         </constraints>
                     </stackView>
                 </subviews>
@@ -152,9 +139,6 @@
         </systemColor>
         <systemColor name="systemGray3Color">
             <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemGray5Color">
-            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

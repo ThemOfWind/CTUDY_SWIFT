@@ -44,7 +44,11 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         
         // profile
         self.profileUserImg.layer.cornerRadius = self.profileUserImg.bounds.height / 2
-        self.profileUserImg = nil
+        self.profileUserImg.backgroundColor = COLOR.DISABLE_COLOR
+        self.profileUserImg.tintColor = COLOR.SUBTITLE_COLOR
+        self.profileUserImg.image = UIImage(systemName: "person", withConfiguration: UIImage.SymbolConfiguration(pointSize: 20, weight: .regular, scale: .large))
+        self.profileUserImg.contentMode = .center
+        
         self.profileId = Int(KeyChainManager().tokenLoad(API.SERVICEID, account: "id")!)
         self.profileName.text = KeyChainManager().tokenLoad(API.SERVICEID, account: "name")
         self.profileUserName.text = KeyChainManager().tokenLoad(API.SERVICEID, account: "userName")

@@ -65,7 +65,7 @@ class BasicVC: UIViewController {
     }
     
     // leftItem image
-    lazy var backButtonImage = UIImage(systemName: "chevron.backward")
+    lazy var backButtonImage = UIImage(systemName: "arrow.left")
     
     // rightItem image (추가, 사진, 설정)
     lazy var anyButtonImages: Array = [UIImage(systemName: "plus"), UIImage(systemName: "camera"), UIImage(systemName: "gearshape")]
@@ -177,8 +177,6 @@ class BasicVC: UIViewController {
     // MARK: - init func
     // leftItem setting
     func updateNavigationBarLeftUI() {
-        print("BasicVC - updateNavigationBarUI() called")
-        
         // leftItem
         switch self.leftItem {
         case .none:

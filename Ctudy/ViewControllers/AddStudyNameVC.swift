@@ -42,11 +42,12 @@ class AddStudyNameVC : BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate
         
         // lmg
         self.roomImg.layer.cornerRadius = self.roomImg.bounds.height / 10
-        self.roomImg.layer.borderWidth = 1
-        self.roomImg.layer.borderColor = COLOR.DISABLE_COLOR.cgColor
-        
-        // textfield
-//        self.registerStudyName.layer.cornerRadius = self.registerStudyName.bounds.height / 2
+//        self.roomImg.layer.borderWidth = 1
+//        self.roomImg.layer.borderColor = COLOR.DISABLE_COLOR.cgColor
+        self.roomImg.backgroundColor = COLOR.SUBTITLE_COLOR
+        self.roomImg.tintColor = COLOR.DISABLE_COLOR
+        self.roomImg.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30, weight: .regular, scale: .large))
+        self.roomImg.contentMode = .center
         
         // btn
         self.nextBtn.tintColor = .white

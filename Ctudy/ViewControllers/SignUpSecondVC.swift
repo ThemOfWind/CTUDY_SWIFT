@@ -11,7 +11,7 @@ import Toast_Swift
 import Alamofire
 
 class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
-   
+    
     // MARK: - 변수
     @IBOutlet weak var registerUserName: UITextField!
     @IBOutlet weak var registerPassword: UITextField!
