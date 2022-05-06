@@ -15,7 +15,7 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
     @IBOutlet weak var nextBtn: UIButton!
     @IBOutlet weak var nameMsg: UILabel!
     @IBOutlet weak var goToStartBtn: UIButton!
-    var keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
+    let keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
     var memberName: String?
     var nameOKFlag: Bool = false
     
@@ -24,24 +24,6 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
         super.viewDidLoad()
         print("SignUpFirstVC - viewDidLoad() called")
         self.config()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        print("SignUpFirstVC - viewWillAppear() called")
-        
-        // keyboard 올라가는 이벤트를 받는 처리
-        // keyboard 노티 등록
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShowHandle(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHideHandle), name: UIResponder.keyboardDidHideNotification, object: nil)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        print("SignUpFirstVC - viewWillDisappear() called")
-        // keyboard 노티 해제
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
     }
     
     // 다음 화면 이동 시 입력받은 이름정보 넘기기
@@ -56,27 +38,28 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
     // MARK: - fileprivate func
     fileprivate func config() {
         // navigationBar item
-        self.leftItem = LeftItem.none
-        self.titleItem = TitleItem.none
-        self.rightItem = RightItem.none
+        self.titleItem = TitleItem.titleGeneral(title: "회원가입", isLargeTitles: true)
         
         // btn ui
+        self.nextBtn.tintColor = .white
+        self.nextBtn.backgroundColor = COLOR.DISABLE_COLOR
         self.nextBtn.layer.cornerRadius = 30
-        self.nextBtn.layer.borderWidth = 1
-        self.nextBtn.layer.borderColor = COLOR.DISABLE_COLORL.cgColor
         self.nextBtn.isEnabled = false
         
         // btn event 연결
         self.goToStartBtn.addTarget(self, action: #selector(onGoToStartBtnClicked), for: .touchUpInside)
-        
         // textField event 연결
         self.registerName.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
         
-        // delegate
+        // delegate 연결
         self.registerName.delegate = self
+        self.keyboardDismissTabGesture.delegate = self
+        
+        // gesture 연결
+        self.view.addGestureRecognizer(keyboardDismissTabGesture)
     }
     
-    // msgLabel 셋팅
+    // messageLabel 셋팅
     fileprivate func setMsgLabel(flag: Bool, msgLabel: UILabel, msgString: String) {
         if flag {
             msgLabel.textColor = .systemGreen
@@ -86,13 +69,13 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
         msgLabel.text = msgString
     }
     
-    // nextBtn 활성화 & 비활성화 event
+    // nextButton 활성화 & 비활성화 event
     fileprivate func nextBtnAbleChecked() {
         if nameOKFlag {
-            self.nextBtn.layer.borderColor = COLOR.SIGNATURE_COLOR.cgColor
+            self.nextBtn.backgroundColor = COLOR.SIGNATURE_COLOR
             self.nextBtn.isEnabled = true
         } else {
-            self.nextBtn.layer.borderColor = COLOR.DISABLE_COLORL.cgColor
+            self.nextBtn.backgroundColor = COLOR.DISABLE_COLOR
             self.nextBtn.isEnabled = false
         }
     }
@@ -117,17 +100,13 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
     
     // MARK: - @objc func
     // keyboard event
-    @objc func keyboardWillShowHandle(notification: NSNotification) {
-        print("SignUpFirstVC - keyboardWillShowHandle() called")
-        // 키보드 사이즈 가져오기
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-        }
+    @objc func keyboardWillShowHandle(noti: NSNotification) {
     }
     
-    @objc func keyboardWillHideHandle() {
-        print("SignUpFirstVC - keyboardWillHideHandle() called")
-        
-        self.view.frame.origin.y = 0
+    @objc func keyboardWillHideHandle(noti: NSNotification) {
+        UIView.animate(withDuration: noti.userInfo![UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval) {
+//            self.view.frame.origin.y = 0
+        }
     }
     
     // textField 변경할 때 event
@@ -178,7 +157,7 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
         case registerName:
             nameOKFlag = isValidData(flag: "registerName", data: inputData)
             if nameOKFlag {
-                setMsgLabel(flag: nameOKFlag, msgLabel: msgLabel, msgString: "사용가능한 이름입니다.")
+                setMsgLabel(flag: nameOKFlag, msgLabel: msgLabel, msgString: "")
             } else {
                 setMsgLabel(flag: nameOKFlag, msgLabel: msgLabel, msgString: "이름이 옳바르지 않습니다.")
             }
@@ -188,21 +167,16 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
-//        textFeild.text!.removeAll()
         nameOKFlag = false
-        
         nextBtnAbleChecked()
         return true
     }
     
     // MARK: - UIGestureRecognizer delegate
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        print("SignUpFirstVC - gestureRecognizer shouldReceive() called")
-        
         if touch.view?.isDescendant(of: registerName) == true {
             return false
-        }
-        else {
+        } else {
             view.endEditing(true)
             return true
         }

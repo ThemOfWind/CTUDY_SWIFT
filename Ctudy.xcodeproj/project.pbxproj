@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5A0AD87727EC3D250038FD07 /* BasicVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0AD87627EC3D250038FD07 /* BasicVC.swift */; };
+		5A1C2FFB28000B1100487A16 /* ProfileResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1C2FFA28000B1100487A16 /* ProfileResponse.swift */; };
 		5A24494327EA17280082EC88 /* AddStudyMemberVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A24494227EA17280082EC88 /* AddStudyMemberVC.swift */; };
 		5A2D86C027EAE8A9000BF69B /* MemberTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A2D86BF27EAE8A9000BF69B /* MemberTableViewCell.xib */; };
 		5A2D86C227EAEBB8000BF69B /* MemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2D86C127EAEBB8000BF69B /* MemberTableViewCell.swift */; };
@@ -33,7 +34,7 @@
 		5A8DC12B27EB5FA5008FA26E /* SignUpFirstVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8DC12A27EB5FA5008FA26E /* SignUpFirstVC.swift */; };
 		5A9D31BA277B17DD00DCEAEA /* UserInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9D31B9277B17DD00DCEAEA /* UserInfoVC.swift */; };
 		5A9D31BC277B18D100DCEAEA /* MainTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9D31BB277B18D100DCEAEA /* MainTabBarVC.swift */; };
-		5A9D31C0277C0B9900DCEAEA /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9D31BF277C0B9900DCEAEA /* TokenManager.swift */; };
+		5A9D31C0277C0B9900DCEAEA /* KeyChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9D31BF277C0B9900DCEAEA /* KeyChainManager.swift */; };
 		5A9D31C3277C71B900DCEAEA /* UserInfos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9D31C2277C71B900DCEAEA /* UserInfos.swift */; };
 		5A9EDD1427F0C89500ED3343 /* MemberCheckButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9EDD1327F0C89500ED3343 /* MemberCheckButton.swift */; };
 		5AA86D0B2761005D0067620C /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA86D0A2761005D0067620C /* MainVC.swift */; };
@@ -50,6 +51,9 @@
 		5AC4471F2774620F00077242 /* MyStatusLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC4471E2774620F00077242 /* MyStatusLogger.swift */; };
 		5ACF0C9327673065003907E9 /* SignInResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACF0C9227673065003907E9 /* SignInResponse.swift */; };
 		5ACF0C96276733F7003907E9 /* UserNameCheckResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACF0C95276733F7003907E9 /* UserNameCheckResponse.swift */; };
+		5AD9515C280870100038048F /* StudyMemberTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AD9515B280870100038048F /* StudyMemberTableViewCell.xib */; };
+		5AD9515E280870330038048F /* StudyMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD9515D280870330038048F /* StudyMemberTableViewCell.swift */; };
+		5AD95160280A8D570038048F /* SearchStudyMemberResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD9515F280A8D570038048F /* SearchStudyMemberResponse.swift */; };
 		5ADDFC792765B983001291DD /* AlamofireManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADDFC782765B983001291DD /* AlamofireManager.swift */; };
 		5ADDFC7B2765BED9001291DD /* BaseInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADDFC7A2765BED9001291DD /* BaseInterceptor.swift */; };
 		5E8F0DACD2EAF7F0B8D95D57 /* Pods_Ctudy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AEB34C08528B3EDE17B79DD /* Pods_Ctudy.framework */; };
@@ -59,6 +63,7 @@
 		068A07C8F4FE2B4F18CB7A99 /* Pods-Ctudy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ctudy.release.xcconfig"; path = "Target Support Files/Pods-Ctudy/Pods-Ctudy.release.xcconfig"; sourceTree = "<group>"; };
 		2B69261F1FB25B4F48561F6E /* Pods-Ctudy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ctudy.debug.xcconfig"; path = "Target Support Files/Pods-Ctudy/Pods-Ctudy.debug.xcconfig"; sourceTree = "<group>"; };
 		5A0AD87627EC3D250038FD07 /* BasicVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicVC.swift; sourceTree = "<group>"; };
+		5A1C2FFA28000B1100487A16 /* ProfileResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResponse.swift; sourceTree = "<group>"; };
 		5A24494227EA17280082EC88 /* AddStudyMemberVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStudyMemberVC.swift; sourceTree = "<group>"; };
 		5A2D86BF27EAE8A9000BF69B /* MemberTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MemberTableViewCell.xib; sourceTree = "<group>"; };
 		5A2D86C127EAEBB8000BF69B /* MemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberTableViewCell.swift; sourceTree = "<group>"; };
@@ -86,7 +91,7 @@
 		5A8DC12A27EB5FA5008FA26E /* SignUpFirstVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFirstVC.swift; sourceTree = "<group>"; };
 		5A9D31B9277B17DD00DCEAEA /* UserInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoVC.swift; sourceTree = "<group>"; };
 		5A9D31BB277B18D100DCEAEA /* MainTabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarVC.swift; sourceTree = "<group>"; };
-		5A9D31BF277C0B9900DCEAEA /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
+		5A9D31BF277C0B9900DCEAEA /* KeyChainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainManager.swift; sourceTree = "<group>"; };
 		5A9D31C2277C71B900DCEAEA /* UserInfos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfos.swift; sourceTree = "<group>"; };
 		5A9EDD1327F0C89500ED3343 /* MemberCheckButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberCheckButton.swift; sourceTree = "<group>"; };
 		5AA86D0A2761005D0067620C /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
@@ -103,6 +108,9 @@
 		5AC4471E2774620F00077242 /* MyStatusLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyStatusLogger.swift; sourceTree = "<group>"; };
 		5ACF0C9227673065003907E9 /* SignInResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInResponse.swift; sourceTree = "<group>"; };
 		5ACF0C95276733F7003907E9 /* UserNameCheckResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameCheckResponse.swift; sourceTree = "<group>"; };
+		5AD9515B280870100038048F /* StudyMemberTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StudyMemberTableViewCell.xib; sourceTree = "<group>"; };
+		5AD9515D280870330038048F /* StudyMemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberTableViewCell.swift; sourceTree = "<group>"; };
+		5AD9515F280A8D570038048F /* SearchStudyMemberResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStudyMemberResponse.swift; sourceTree = "<group>"; };
 		5ADDFC782765B983001291DD /* AlamofireManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireManager.swift; sourceTree = "<group>"; };
 		5ADDFC7A2765BED9001291DD /* BaseInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseInterceptor.swift; sourceTree = "<group>"; };
 		7AEB34C08528B3EDE17B79DD /* Pods_Ctudy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ctudy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				5A3BBBE827EAF31300BA9E3F /* SearhMemberResponse.swift */,
+				5AD9515F280A8D570038048F /* SearchStudyMemberResponse.swift */,
 			);
 			path = Members;
 			sourceTree = "<group>";
@@ -227,7 +236,7 @@
 			children = (
 				5AAE346C2761D2BE00EE6A5D /* Constants.swift */,
 				5AC1CE7D2765D6B7009586B2 /* Errors.swift */,
-				5A9D31BF277C0B9900DCEAEA /* TokenManager.swift */,
+				5A9D31BF277C0B9900DCEAEA /* KeyChainManager.swift */,
 				5A9D31C2277C71B900DCEAEA /* UserInfos.swift */,
 			);
 			path = Utils;
@@ -240,6 +249,8 @@
 				5A8BAB152786F79200CFF908 /* StudyCollectionViewCell.swift */,
 				5A2D86BF27EAE8A9000BF69B /* MemberTableViewCell.xib */,
 				5A2D86C127EAEBB8000BF69B /* MemberTableViewCell.swift */,
+				5AD9515B280870100038048F /* StudyMemberTableViewCell.xib */,
+				5AD9515D280870330038048F /* StudyMemberTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -289,6 +300,7 @@
 				5AC1CE7B2765D5E8009586B2 /* SignUpResponse.swift */,
 				5ACF0C95276733F7003907E9 /* UserNameCheckResponse.swift */,
 				5ACF0C9227673065003907E9 /* SignInResponse.swift */,
+				5A1C2FFA28000B1100487A16 /* ProfileResponse.swift */,
 			);
 			path = Auths;
 			sourceTree = "<group>";
@@ -372,6 +384,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5AD9515C280870100038048F /* StudyMemberTableViewCell.xib in Resources */,
 				5A8BAB142786E94100CFF908 /* StudyCollectionViewCell.xib in Resources */,
 				5A2D86C027EAE8A9000BF69B /* MemberTableViewCell.xib in Resources */,
 				5A4CD0D927E86F1F00F6C829 /* AddBarButtonItem.xib in Resources */,
@@ -438,6 +451,8 @@
 				5AA86D0B2761005D0067620C /* MainVC.swift in Sources */,
 				5ACF0C96276733F7003907E9 /* UserNameCheckResponse.swift in Sources */,
 				5A8DC12B27EB5FA5008FA26E /* SignUpFirstVC.swift in Sources */,
+				5A1C2FFB28000B1100487A16 /* ProfileResponse.swift in Sources */,
+				5AD9515E280870330038048F /* StudyMemberTableViewCell.swift in Sources */,
 				5ADDFC7B2765BED9001291DD /* BaseInterceptor.swift in Sources */,
 				5A3BBBEC27EB4F6C00BA9E3F /* StartVC.swift in Sources */,
 				5AC1CE7C2765D5E8009586B2 /* SignUpResponse.swift in Sources */,
@@ -455,9 +470,10 @@
 				5AC1CE772765CB0D009586B2 /* CouponRouter.swift in Sources */,
 				5A9EDD1427F0C89500ED3343 /* MemberCheckButton.swift in Sources */,
 				5AAE518B27F7023400DDA555 /* BasicButton.swift in Sources */,
-				5A9D31C0277C0B9900DCEAEA /* TokenManager.swift in Sources */,
+				5A9D31C0277C0B9900DCEAEA /* KeyChainManager.swift in Sources */,
 				5A8BAB19278812AD00CFF908 /* SearchRoomResponse.swift in Sources */,
 				5A453AFE27E9B25B006F0A1D /* AddStudyNameVC.swift in Sources */,
+				5AD95160280A8D570038048F /* SearchStudyMemberResponse.swift in Sources */,
 				5A4CD0DC27E8A09E00F6C829 /* AddBarButtonItem.swift in Sources */,
 				5A24494327EA17280082EC88 /* AddStudyMemberVC.swift in Sources */,
 				5A4AC44C27FD2A09002D55CD /* RegisterRoomRequest.swift in Sources */,
@@ -616,23 +632,28 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = CYS4W9265H;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Ctudy/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "📷 카메라 사용을 허용해주세요!";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "🏞 사진앨범 사용을 허용해주세요!";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jinny.Ctudy;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jinny.ctudy.v1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -650,17 +671,20 @@
 				DEVELOPMENT_TEAM = CYS4W9265H;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Ctudy/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "📷 카메라 사용을 허용해주세요!";
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "🏞 사진앨범 사용을 허용해주세요!";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jinny.Ctudy;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jinny.ctudy.v1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

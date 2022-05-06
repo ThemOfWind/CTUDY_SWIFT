@@ -4,7 +4,7 @@
 //
 //  Created by 김지은 on 2022/03/28.
 //
-
+// 범용성을 위해 class가 아닌 Anyobject로 선언
 protocol MemberCheckButtonDelegate: AnyObject {
     func checkBtnClicked(btn: UIButton, ischecked: Bool)
 }
@@ -32,11 +32,12 @@ class MemberCheckButton: UIButton {
         }
     }
     
+    //delegate(위임자) 생성
     var checkBtnDelegate: MemberCheckButtonDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.layer.cornerRadius = 20
+        self.layer.cornerRadius = self.bounds.height / 3
         self.layer.borderWidth = 1
         self.layer.borderColor = COLOR.SIGNATURE_COLOR.cgColor
         self.setImage(nil, for: .normal)

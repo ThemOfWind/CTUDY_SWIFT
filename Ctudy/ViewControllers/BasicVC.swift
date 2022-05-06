@@ -5,11 +5,6 @@
 //  Created by 김지은 on 2022/03/24.
 //
 
-protocol NaviBarItemDelegate: AnyObject {
-    // 위임해줄 기능
-    func rightItemAction(items: [UIBarButtonItem])
-}
-
 import Foundation
 import UIKit
 
@@ -29,7 +24,7 @@ class BasicVC: UIViewController {
     // titleView
     enum TitleItem {
         case none
-        case titleGeneral(title: String?)
+        case titleGeneral(title: String?, isLargeTitles: Bool)
     }
     
     // right navigationBar item
@@ -45,13 +40,11 @@ class BasicVC: UIViewController {
     enum Items {
         case plus
         case camera
+        case setting
     }
     
-    // right naviagtionBar item
-    var rightItemDelegate: NaviBarItemDelegate?
-    
     // leftItem 생성
-    var leftItem: LeftItem = LeftItem.backGeneral {
+    var leftItem: LeftItem = LeftItem.none {
         didSet {
             self.updateNavigationBarLeftUI()
         }
@@ -72,10 +65,10 @@ class BasicVC: UIViewController {
     }
     
     // leftItem image
-    lazy var backButtonImage = UIImage(systemName: "chevron.backward")
+    lazy var backButtonImage = UIImage(systemName: "arrow.left")
     
-    // rightItem image
-    lazy var anyButtonImages: Array = [UIImage(systemName: "plus")]
+    // rightItem image (추가, 사진, 설정)
+    lazy var anyButtonImages: Array = [UIImage(systemName: "plus"), UIImage(systemName: "camera"), UIImage(systemName: "gearshape")]
     
     // navigationController pop event
     func navigationControllerPop() {
@@ -88,8 +81,8 @@ class BasicVC: UIViewController {
     }
     
     // anyItem click event
-    func AnyItemAction(sender: [UIBarButtonItem]) {
-        rightItemDelegate?.rightItemAction(items: sender)
+    func AnyItemAction(sender: UIBarButtonItem) {
+        // custom action event
     }
     
     // MARK: - leftItem func
@@ -131,27 +124,38 @@ class BasicVC: UIViewController {
     }
     
     // MARK: - rightBtn func
-    func createCustomAnyButton(items: [Items]?, title: String?, rightSpaceCloseToDefault: Bool, anyFn: @escaping (([UIBarButtonItem]) -> ())) -> [UIBarButtonItem] {
+    func createCustomAnyButton(items: [Items]?, title: String?, rightSpaceCloseToDefault: Bool, anyFn: @escaping ((UIBarButtonItem) -> ())) -> [UIBarButtonItem] {
         var arr: [UIBarButtonItem] = []
-    
+        
         if let list = items {
             for item: Items in list {
-                if item == Items.plus {
+                switch item {
+                case .plus:
                     if let title = title {
-                        let button = BarButtonItem(image: UIImage(systemName: "plus"), title: title, actionHandler: anyFn)
+                        let button = BarButtonItem(image: anyButtonImages[0], title: title, actionHandler: anyFn)
                         arr.append(button)
                     } else {
-                        let button = BarButtonItem(image: UIImage(systemName: "plus"), actionHandler: anyFn)
+                        let button = BarButtonItem(image: anyButtonImages[0], actionHandler: anyFn)
                         arr.append(button)
                     }
-                } else if item == Items.camera {
+                case .camera:
                     if let title = title {
-                        let button = BarButtonItem(image: UIImage(systemName: "camera"), title: title, actionHandler: anyFn)
+                        let button = BarButtonItem(image: anyButtonImages[1], title: title, actionHandler: anyFn)
                         arr.append(button)
                     } else {
-                        let imageButton = BarButtonItem(image: UIImage(systemName: "camera"), actionHandler: anyFn)
-                        imageButton.title = title
-                        arr.append(imageButton)
+                        let button = BarButtonItem(image: anyButtonImages[1], actionHandler: anyFn)
+                        button.title = title
+                        arr.append(button)
+                    }
+                case .setting:
+                    if let title = title {
+                        let button = BarButtonItem(image: anyButtonImages[2], title: title, actionHandler: anyFn)
+                        button.title = title
+                        arr.append(button)
+                    } else {
+                        let button = BarButtonItem(image: anyButtonImages[2], actionHandler: anyFn)
+                        button.title = title
+                        arr.append(button)
                     }
                 }
             }
@@ -167,15 +171,12 @@ class BasicVC: UIViewController {
     }
     
     // createAnyBtn + custom action
-    func createAnyButtons(items: [Items]?, title: String?, rightSpaceCloseToDefault: Bool, anyFn: @escaping (([UIBarButtonItem]) -> ())) -> [UIBarButtonItem] {
-        return createCustomAnyButton(items: items, title: title, rightSpaceCloseToDefault: rightSpaceCloseToDefault, anyFn: AnyItemAction(sender:))
+    func createAnyButtons(items: [Items]?, title: String?, rightSpaceCloseToDefault: Bool, anyFn: @escaping ((UIBarButtonItem) -> ())) -> [UIBarButtonItem] {
+        return createCustomAnyButton(items: items, title: title, rightSpaceCloseToDefault: rightSpaceCloseToDefault, anyFn: anyFn)
     }
     // MARK: - init func
-    
     // leftItem setting
     func updateNavigationBarLeftUI() {
-        print("BasicVC - updateNavigationBarUI() called")
-        
         // leftItem
         switch self.leftItem {
         case .none:
@@ -207,12 +208,12 @@ class BasicVC: UIViewController {
         switch self.titleItem {
         case .none:
             break
-        case .titleGeneral(title: let title):
-            let label = UILabel()
-            label.text = title
-            label.adjustsFontSizeToFitWidth = true
-            self.navigationItem.titleView = label
-            self.navigationItem.largeTitleDisplayMode = .always
+        case .titleGeneral(title: let title, isLargeTitles: let isLargeTitles):
+            if (self.navigationController?.viewControllers.count ?? 0 > 1) {
+                self.navigationItem.title = title
+                self.navigationController?.navigationBar.prefersLargeTitles = isLargeTitles
+                self.navigationItem.largeTitleDisplayMode = .always
+            }
         default:
             break
         }
@@ -224,11 +225,12 @@ class BasicVC: UIViewController {
         switch self.rightItem {
         case .none:
             break
-        //case .anyCustoms(items:, title: let title, rightSpaceCloseToDefault: let rightSpaceCloseToDefault):
+            //case .anyCustoms(items:, title: let title, rightSpaceCloseToDefault: let rightSpaceCloseToDefault):
         case .anyCustoms(items: let items, title: let title, rightSpaceCloseToDefault: let rightSpaceCloseToDefault):
             if (self.navigationController?.viewControllers.count ?? 0 > 1) {
-//                self.navigationItem.setRightBarButtonItems(createCustomAnyButton(items: items, title: title, rightSpaceCloseToDefault: rightSpaceCloseToDefault, anyFn: AnyItemAction(sender:)), animated: true)
-                self.navigationItem.rightBarButtonItems = createCustomAnyButton(items: items, title: title, rightSpaceCloseToDefault: rightSpaceCloseToDefault, anyFn: AnyItemAction(sender:))
+                self.navigationItem.setRightBarButtonItems(createAnyButtons(items: items, title: title, rightSpaceCloseToDefault: rightSpaceCloseToDefault, anyFn: AnyItemAction(sender:)), animated: true)
+                //                self.navigationItem.setRightBarButtonItems(createAnyButtons(items: items, title: title, rightSpaceCloseToDefault: rightSpaceCloseToDefault, anyFn: AnyItemAction(sender: items ?? [])), animated: true)
+                //                self.navigationItem.rightBarButtonItems = createAnyButtons(items: items, title: title, rightSpaceCloseToDefault: rightSpaceCloseToDefault, anyFn: AnyItemAction(sender:))
             }
         case .customView(view: let view):
             self.navigationItem.setRightBarButton(UIBarButtonItem(customView: view), animated: true)
@@ -245,19 +247,19 @@ class BasicVC: UIViewController {
         self.updateNavigationBarRightUI()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        self.reset()
-        self.updateNavigationBarLeftUI()
-        self.updateNavigationBarTitleUI()
-        self.updateNavigationBarRightUI()
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        self.reset()
+//        self.updateNavigationBarLeftUI()
+//        self.updateNavigationBarTitleUI()
+//        self.updateNavigationBarRightUI()
+//    }
     
     fileprivate func reset() {
+        self.navigationItem.title = ""
+        self.navigationController?.navigationBar.prefersLargeTitles = false
         self.navigationItem.backBarButtonItem = createEmptyButton()
         self.navigationItem.leftBarButtonItem = nil
-        self.navigationItem.leftBarButtonItems = nil
         self.navigationItem.hidesBackButton = true
         self.navigationItem.rightBarButtonItem = nil
-        self.navigationItem.titleView = nil
     }
 }

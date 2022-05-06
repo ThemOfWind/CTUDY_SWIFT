@@ -8,17 +8,40 @@
 import Foundation
 import UIKit
 import SwiftyJSON
+import NVActivityIndicatorView
 
-class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, MemberCheckButtonDelegate {
+class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, MemberCheckButtonDelegate {
     
     // MARK: - 변수
     @IBOutlet weak var memberTableView: UITableView!
     @IBOutlet weak var registerRoomBtn: UIButton!
-    @IBOutlet weak var memberSearchBar: UITableView!
-    var members : Array<SearchMemberResponse> = []
-    var nextPage : String? = "1"
+    @IBOutlet weak var memberSearchBar: UISearchBar!
+    let keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
+    lazy var indicatorView: UIView = {
+        let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+        indicatorView.backgroundColor = COLOR.INDICATOR_BACKGROUND_COLOR
+        return indicatorView
+    }()
+    lazy var indicator: NVActivityIndicatorView = {
+        let indicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40),
+                                                type: .pacman,
+                                                color: COLOR.DISABLE_COLOR,
+                                                padding: 0)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+    lazy var loading: UILabel = {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 10))
+        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.text = "loading..."
+        label.textColor = COLOR.DISABLE_COLOR
+        label.translatesAutoresizingMaskIntoConstraints = false
+       return label
+    }()
+    var members: Array<SearchMemberResponse> = []
+    var nextPage: String? = "1"
     var fetchingMore = false
-    var studyName : String?
+    var studyName: String?
     
     // MARK: - overrid func
     override func viewDidLoad() {
@@ -30,15 +53,12 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, Me
     fileprivate func config() {
         // navigationBar item 설정
         self.leftItem = LeftItem.backGeneral
-        self.titleItem = TitleItem.titleGeneral(title: "스터디멤버 등록")
-        self.rightItem = RightItem.none
+        self.titleItem = TitleItem.titleGeneral(title: "멤버 등록", isLargeTitles: true)
         
         // btn
-        self.registerRoomBtn.layer.cornerRadius = 30
-        self.registerRoomBtn.layer.borderWidth = 1
-        self.registerRoomBtn.layer.borderColor = COLOR.SIGNATURE_COLOR.cgColor
-//        self.registerRoomBtn.layer.borderColor = COLOR.DISABLE_COLORL.cgColor
-//        self.registerRoomBtn.isEnabled = false
+        self.registerRoomBtn.tintColor = .white
+        self.registerRoomBtn.backgroundColor = COLOR.SIGNATURE_COLOR
+        self.registerRoomBtn.layer.cornerRadius = self.registerRoomBtn.bounds.height / 2
         
         // 셀 리소스 파일 가져오기
         let memberCell = UINib(nibName: String(describing: MemberTableViewCell.self), bundle: nil)
@@ -47,13 +67,17 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, Me
         self.memberTableView.register(memberCell, forCellReuseIdentifier: "MemberTableViewCell")
         
         // 셀 설정
-        self.memberTableView.rowHeight = UITableView.automaticDimension
-        self.memberTableView.estimatedRowHeight = 50
+        self.memberTableView.rowHeight = 90
+//        self.memberTableView.estimatedRowHeight = 100
 //        self.memberTableView.mar
         
         // delegate 연결
         self.memberTableView.delegate = self
         self.memberTableView.dataSource = self
+        self.keyboardDismissTabGesture.delegate = self
+        
+        // gesture 연결
+        self.view.addGestureRecognizer(keyboardDismissTabGesture)
         
         // 전체 멤버 조회
         self.getSearchMember()
@@ -61,9 +85,14 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, Me
     
     // 전체 멤버 조회
     fileprivate func getSearchMember() {
+        
+        self.onStartActivityIndicator()
+        
         AlamofireManager.shared.getSearchMember(page: nextPage ?? "0", completion: {
             [weak self] result in
             guard let self = self else { return }
+            
+            self.onStopActivityIndicator()
             
             switch result {
             case .success(let response):
@@ -73,18 +102,21 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, Me
                 let list = response["list"]
                 for (index, subJson) : (String, JSON) in list {
                     guard let id = subJson["id"].int
-                            ,let username = subJson["username"].string
-                    else { return }
-                    
-                    let memberItem = SearchMemberResponse(id: id, userName: username, ischecked: false)
+                         ,let username = subJson["username"].string
+                         ,let name = subJson["name"].string else { return }
+                    let memberItem = SearchMemberResponse(id: id, name: name, userName: username, ischecked: false)
                     self.members.append(memberItem)
                 }
                 // view reload
                 self.memberTableView.reloadData()
             case .failure(let error):
-                print("AddStudyMemberVC - getSearchMember.failure / error: \(error)")
+                print("AddStudyMemberVC - getSearchMember.failure / error: \(error.rawValue)")
             }
         })
+        
+        if self.indicator.isAnimating {
+            self.onStopActivityIndicator()
+        }
     }
     
     // 로딩 그리기
@@ -97,19 +129,33 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, Me
         return footerView
     }
     
-    // ischecked 값에 따라 registerStudyBtn enable event
-    fileprivate func editingChange() {
-        // ischecked true 확인
-        for index in 0..<members.count {
-            if members[index].ischecked {
-                self.registerRoomBtn.layer.borderColor = COLOR.SIGNATURE_COLOR.cgColor
-                self.registerRoomBtn.isEnabled = true
-                return
-            }
+    fileprivate func onStartActivityIndicator() {
+        DispatchQueue.main.async {
+            // 불투명 뷰 추가
+            self.view.addSubview(self.indicatorView)
+            // activity indicator 추가
+            self.indicatorView.addSubview(self.indicator)
+            self.indicatorView.addSubview(self.loading)
+            
+            NSLayoutConstraint.activate([
+                self.indicator.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+                self.indicator.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+                self.loading.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+                self.loading.centerYAnchor.constraint(equalTo: self.indicator.bottomAnchor, constant: 5)
+            ])
+            
+            // 애니메이션 시작
+            self.indicator.startAnimating()
         }
-        
-        self.registerRoomBtn.layer.borderColor = COLOR.DISABLE_COLORL.cgColor
-        self.registerRoomBtn.isEnabled = false
+    }
+    
+    fileprivate func onStopActivityIndicator() {
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            // 애니메이션 정지.
+            // 서버 통신 완료 후 다음의 메서드를 실행해서 통신의 끝나는 느낌을 줄 수 있다.
+            self.indicator.stopAnimating()
+            self.indicatorView.removeFromSuperview()
+        }
     }
     
     // MARK: - @IBAction func
@@ -122,6 +168,10 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, Me
             }
         }
         
+        DispatchQueue.main.async {
+                self.onStartActivityIndicator()
+        }
+        
         AlamofireManager.shared.postRegisterRoom(name: self.studyName!, member_list: selectedMemeberList, completion: { [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -132,15 +182,23 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, Me
                 self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
             }
         })
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            // 애니메이션 정지.
+            // 서버 통신 완료 후 다음의 메서드를 실행해서 통신의 끝나는 느낌을 줄 수 있다.
+            self.indicator.stopAnimating()
+            self.indicatorView.removeFromSuperview()
+        }
     }
     
-    // MARK: - delegate
+    // MARK: - tableView delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return members.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = memberTableView.dequeueReusableCell(withIdentifier: "MemberTableViewCell", for: indexPath) as! MemberTableViewCell
+        cell.member.text = members[indexPath.row].name
         cell.memberName.text = members[indexPath.row].userName
         cell.checkBtn.tag = indexPath.row
         cell.checkBtn.isChecked = members[indexPath.row].ischecked
@@ -151,9 +209,6 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, Me
     func checkBtnClicked(btn: UIButton, ischecked: Bool) {
         print("AddStudyMemberVC - checkBtnClicked() called / btn.tag: \(btn.tag), btn.id: \(members[btn.tag].id) ischecked: \(ischecked)")
         self.members[btn.tag].ischecked = ischecked
-        
-        // registerStudyBtn enable event
-//        editingChange()
     }
     
     // 아래로 스크롤시 event
@@ -181,6 +236,16 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, Me
                     }
                 }
             }
+        }
+    }
+    
+    // MARK: - UIGestureRecognizerDelegate
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if touch.view?.isDescendant(of: memberSearchBar) == true {
+            return false
+        } else {
+            view.endEditing(true)
+            return true
         }
     }
 }

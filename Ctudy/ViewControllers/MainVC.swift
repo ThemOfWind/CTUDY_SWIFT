@@ -8,14 +8,17 @@
 import Foundation
 import UIKit
 
-class MainVC: BasicVC {
+class MainVC: UIViewController {
     
     // MARK: - 변수
     @IBOutlet var studyCollectionView: UICollectionView!
-    @IBOutlet var studyNavigationItem: UINavigationItem!
     var rooms = [] as! Array<SearchRoomResponse>
+    var roomName: Int?
+    var roomNameString: String?
+    var cellWidth: Double = 0.0
+    var cellHeigth: Double = 0.0
     //var mainTabBarVC : UITabBarController = MainTabBarVC()
-   
+    
     // MARK: - overrid func
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +29,20 @@ class MainVC: BasicVC {
         // 스터디룸 조회
         self.getSearchRoom()
     }
+    
+    // 다음 화면 이동전 준비동작 (변수 연결)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let id = segue.identifier, id == "MainDetailVC" {
+            if let controller = segue.destination as? MainDetailVC {
+                controller.roomName = self.roomName
+                controller.roomNameString = self.roomNameString
+            }
+        } else if let id = segue.identifier, id == "AddStudyNameVC" {
+            if let controller = segue.destination as? AddStudyNameVC {
+            }
+        }
+    }
+    
     
     // MARK: - fileprivate func
     fileprivate func config() {
@@ -39,15 +56,9 @@ class MainVC: BasicVC {
         // 스터디룸 조회
         self.getSearchRoom()
         
-        // 스터디룸 추가하라는 라벨을 레이아웃 가운데에 표기
-        if rooms.count <= 0 {
-            
-        }
-        
-        // 스터디룸 추가 셀
-        //        var testList = [SearchRoomResponse(name: "바람의 녀석들", membercount: 4, mastername: "김밍구")]
-        //        testList.append(contentsOf: [SearchRoomResponse(name: "", membercount: 2, mastername: "김지니")])
-        //        self.rooms = testList
+//        // 스터디룸 추가하라는 라벨을 레이아웃 가운데에 표기
+//        if rooms.count <= 0 {
+//        }
     }
     
     // 스터디룸 조회 api 호출
@@ -61,7 +72,7 @@ class MainVC: BasicVC {
                 self.rooms = roomList
                 self.studyCollectionView.reloadData()
             case .failure(let error):
-                print("MainVC - getSearchRoom.failure / error: \(error)")
+                print("MainVC - getSearchRoom.failure / error: \(error.rawValue)")
             }
         })
     }
@@ -70,13 +81,13 @@ class MainVC: BasicVC {
 // MARK: - extension func
 extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("MainVC - collectionView count : \(rooms.count)")
+//        print("MainVC - collectionView count : \(rooms.count)")
         // 셀의 갯수 지정
         return rooms.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("MainVC - collectionView cellForItemAt / indexPath : \(indexPath.row)")
+//        print("MainVC - collectionView cellForItemAt / indexPath : \(indexPath.row)")
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! StudyCollectionViewCell
         cell.layer.cornerRadius = 10
@@ -87,12 +98,15 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let cell = CGSize(width: self.studyCollectionView.bounds.width - 100, height: self.studyCollectionView.bounds.height / 6)
+        let cell = CGSize(width: self.studyCollectionView.layer.bounds.width, height: self.studyCollectionView.layer.bounds.height / 2.0)
+//        let cell = CGSize(width: self.studyCollectionView.bounds.width - 100, height: self.studyCollectionView.bounds.height / 6)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("MainVC - collectionView didSelectItemAt / selectedItem : \(rooms[indexPath.row].name) choose")
+        self.roomName = rooms[indexPath.row].id
+        self.roomNameString = rooms[indexPath.row].name
         self.performSegue(withIdentifier: "MainDetailVC", sender: nil)
     }
 }

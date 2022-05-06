@@ -9,7 +9,7 @@ import Foundation
 import Security
 import Alamofire
 
-class TokenManager {
+class KeyChainManager {
     // 키 체인에 값 저장
     func tokenSave(_ service: String, account: String, value: String) -> Bool {
         // 키 체인 쿼리
@@ -79,12 +79,12 @@ class TokenManager {
         }
     }
     
-    // 키 체인에 저장된 엑세스 토큰을 이용해 헤더를 만듬 -> 사용 안할듯?
-    func getAuthorizationHeader() -> HTTPHeaders? {
-        if let accessToken = self.tokenLoad(API.SERVICEID, account: "accessToken") {
-            return ["Authorization": "Bearer \(accessToken)"] as HTTPHeaders
-        } else {
-            return nil
-        }
-    }
+//    // 키 체인에 저장된 엑세스 토큰을 이용해 헤더를 만듬 -> 사용 안할듯?
+//    func getAuthorizationHeader() -> HTTPHeaders? {
+//        if let accessToken = self.tokenLoad(API.SERVICEID, account: "accessToken") {
+//            return ["Authorization": "Bearer \(accessToken)"] as HTTPHeaders
+//        } else {
+//            return nil
+//        }
+//    }
 }

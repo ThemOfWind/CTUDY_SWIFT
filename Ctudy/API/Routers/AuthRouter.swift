@@ -15,6 +15,7 @@ enum AuthRouter: URLRequestConvertible {
     case usernamecheck(username: String) // 아이디 중복체크
     case signup(name: String, username: String, password: String) // 회원가입
     case logout // 로그아웃
+    case profile // 접속 회원정보
     
     var baseURL: URL {
         return URL(string: API.BASE_URL + "account/")!
@@ -30,6 +31,8 @@ enum AuthRouter: URLRequestConvertible {
             return .post
         case .logout:
             return .get
+        case .profile:
+            return .get
         }
     }
     
@@ -43,22 +46,24 @@ enum AuthRouter: URLRequestConvertible {
             return "signup/"
         case .logout:
             return "logout/"
+        case .profile:
+            return "profile/"
         }
     }
     
-    var parameters: [String : String] {
-        switch self {
-        case let .signin(username, password):
-            return ["username" : username, "password" : password]
-        case let .usernamecheck(username):
-            return ["username" : username]
-        case let .signup(name, username, password):
-            return ["name" : name, "username" : username, "password" : password]
-        case .logout:
-            return ["" : ""]
-            
-        }
-    }
+//    var parameters: [String : String] {
+//        switch self {
+//        case let .signin(username, password):
+//            return ["username" : username, "password" : password]
+//        case let .usernamecheck(username):
+//            return ["username" : username]
+//        case let .signup(name, username, password):
+//            return ["name" : name, "username" : username, "password" : password]
+//        case .logout:
+//            return ["" : ""]
+//
+//        }
+//    }
     
     func asURLRequest() throws -> URLRequest {
         let url = baseURL.appendingPathComponent(path)
@@ -79,6 +84,8 @@ enum AuthRouter: URLRequestConvertible {
             let parameters = ["name" : name, "username" : username, "password" : password] as Dictionary
             request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
         case .logout:
+            break
+        case .profile:
             break
         }
         
