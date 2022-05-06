@@ -24,7 +24,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="OCY-CU-2o3">
                                         <rect key="frame" x="0.0" y="197.5" width="374" height="230"/>
                                         <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="아이디(이메일)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="V9M-Ia-TKE">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="아이디(이메일)" textAlignment="natural" minimumFontSize="20" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="V9M-Ia-TKE">
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="60"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="60" id="eWL-D5-sYB"/>
@@ -35,7 +35,7 @@
                                                     <action selector="editingChanged:" destination="BYZ-38-t0r" eventType="editingChanged" id="NI3-9D-coR"/>
                                                 </connections>
                                             </textField>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="비밀번호" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Iok-Yw-mY2">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="비밀번호" textAlignment="natural" minimumFontSize="20" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Iok-Yw-mY2">
                                                 <rect key="frame" x="0.0" y="85" width="374" height="60"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="60" id="Lv5-q6-cuU"/>
@@ -55,66 +55,57 @@
                                                 <color key="tintColor" red="0.70588235294117641" green="0.49019607843137253" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="로  그  인">
-                                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="18"/>
                                                 </buttonConfiguration>
                                             </button>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="5lr-em-bvt">
-                                        <rect key="frame" x="94" y="596" width="186" height="89"/>
+                                        <rect key="frame" x="70.5" y="594" width="233.5" height="91"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="8BB-fK-i33">
-                                                <rect key="frame" x="0.0" y="0.0" width="186" height="34.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="233.5" height="35.5"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="753" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RfC-Uk-m0Z">
-                                                        <rect key="frame" x="0.0" y="0.0" width="68.5" height="34.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="106.5" height="35.5"/>
                                                         <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <state key="normal" title="Button"/>
-                                                        <buttonConfiguration key="configuration" style="plain" title="아이디">
-                                                            <fontDescription key="titleFontDescription" type="boldSystem" pointSize="17"/>
+                                                        <buttonConfiguration key="configuration" style="plain" title="아이디 찾기">
+                                                            <fontDescription key="titleFontDescription" type="boldSystem" pointSize="18"/>
                                                         </buttonConfiguration>
                                                         <connections>
                                                             <segue destination="A3u-fN-GL3" kind="show" id="fjh-X7-bZe"/>
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" text="/" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L33-KX-ESn">
-                                                        <rect key="frame" x="68.5" y="0.0" width="5" height="34.5"/>
+                                                        <rect key="frame" x="106.5" y="0.0" width="5" height="35.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" systemColor="systemGray4Color"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5By-6I-A6U">
-                                                        <rect key="frame" x="73.5" y="0.0" width="83" height="34.5"/>
+                                                        <rect key="frame" x="111.5" y="0.0" width="122" height="35.5"/>
                                                         <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <state key="normal" title="Button"/>
-                                                        <buttonConfiguration key="configuration" style="plain" title="비밀번호">
-                                                            <fontDescription key="titleFontDescription" type="boldSystem" pointSize="17"/>
+                                                        <buttonConfiguration key="configuration" style="plain" title="비밀번호 찾기">
+                                                            <fontDescription key="titleFontDescription" type="boldSystem" pointSize="18"/>
                                                         </buttonConfiguration>
                                                         <connections>
                                                             <segue destination="E6H-aD-loQ" kind="show" id="55R-Ht-6r7"/>
                                                         </connections>
                                                     </button>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="찾기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nl0-rG-r7B">
-                                                        <rect key="frame" x="156.5" y="0.0" width="29.5" height="34.5"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <color key="textColor" systemColor="systemGray4Color"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
                                                 </subviews>
                                             </stackView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qwd-rq-ub6">
-                                                <rect key="frame" x="35" y="54.5" width="116.5" height="34.5"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qwd-rq-ub6">
+                                                <rect key="frame" x="55.5" y="55.5" width="122" height="35.5"/>
                                                 <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="이전 화면으로">
-                                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="18"/>
                                                 </buttonConfiguration>
                                             </button>
                                         </subviews>
                                     </stackView>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="OMF-6O-nxL">
-                                        <rect key="frame" x="177" y="332.5" width="20" height="20"/>
-                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -123,8 +114,6 @@
                                     <constraint firstAttribute="bottom" secondItem="5lr-em-bvt" secondAttribute="bottom" id="NBo-zv-LB5"/>
                                     <constraint firstItem="OCY-CU-2o3" firstAttribute="centerY" secondItem="wb7-r3-eqr" secondAttribute="centerY" constant="-30" id="QxD-rF-PEk"/>
                                     <constraint firstAttribute="trailing" secondItem="OCY-CU-2o3" secondAttribute="trailing" id="muB-BR-Spc"/>
-                                    <constraint firstItem="OMF-6O-nxL" firstAttribute="centerY" secondItem="wb7-r3-eqr" secondAttribute="centerY" id="wn9-HH-ZLA"/>
-                                    <constraint firstItem="OMF-6O-nxL" firstAttribute="centerX" secondItem="wb7-r3-eqr" secondAttribute="centerX" id="xvQ-Y3-HuR"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -141,7 +130,6 @@
                     <navigationItem key="navigationItem" id="CRI-UQ-fRc"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="actIndicator" destination="OMF-6O-nxL" id="0qU-Uu-jOt"/>
                         <outlet property="goToFindIdBtn" destination="RfC-Uk-m0Z" id="jf1-u8-e6V"/>
                         <outlet property="goToFindPwBtn" destination="5By-6I-A6U" id="66V-pF-qBO"/>
                         <outlet property="goToStartBtn" destination="Qwd-rq-ub6" id="Uyf-2d-LoX"/>
@@ -182,7 +170,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hwn-XE-pO0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1438" y="668"/>
+            <point key="canvasLocation" x="1437.68115942029" y="667.63392857142856"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="y6V-Rs-xne">
@@ -522,7 +510,7 @@
                                         <color key="tintColor" red="0.70588235290000001" green="0.49019607840000001" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="로 그 인 하 러 가 기">
-                                            <fontDescription key="titleFontDescription" type="boldSystem" pointSize="17"/>
+                                            <fontDescription key="titleFontDescription" type="boldSystem" pointSize="18"/>
                                         </buttonConfiguration>
                                         <connections>
                                             <action selector="onGoToLoginBtnClicked:" destination="W7c-w3-KJQ" eventType="touchUpInside" id="TMm-TP-lxl"/>
@@ -751,20 +739,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MNb-KL-eqs">
-                                <rect key="frame" x="20" y="108" width="374" height="725"/>
+                                <rect key="frame" x="20" y="108" width="374" height="685"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BfA-Jx-rKx">
-                                        <rect key="frame" x="0.0" y="645" width="374" height="60"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="KRZ-Mq-EJ8"/>
-                                        </constraints>
-                                        <color key="tintColor" red="0.70588235290000001" green="0.49019607840000001" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="다 음">
-                                            <fontDescription key="titleFontDescription" type="boldSystem" pointSize="20"/>
-                                        </buttonConfiguration>
-                                    </button>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EKv-dY-0wD">
                                         <rect key="frame" x="0.0" y="10" width="374" height="160"/>
                                         <color key="backgroundColor" systemColor="systemGray6Color"/>
@@ -775,17 +751,29 @@
                                             <constraint firstAttribute="height" constant="160" id="Sxd-DE-4ew"/>
                                         </constraints>
                                     </imageView>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="이름" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="XIs-uK-S5r">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="스터디룸 이름" textAlignment="natural" minimumFontSize="20" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="XIs-uK-S5r">
                                         <rect key="frame" x="0.0" y="190" width="374" height="60"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="ix1-YM-V9M"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
                                             <action selector="editingChanged:" destination="hIW-26-vf3" eventType="editingChanged" id="7wC-wH-XF0"/>
                                         </connections>
                                     </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BfA-Jx-rKx">
+                                        <rect key="frame" x="0.0" y="605" width="374" height="60"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="KRZ-Mq-EJ8"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.70588235290000001" green="0.49019607840000001" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="다 음">
+                                            <fontDescription key="titleFontDescription" type="boldSystem" pointSize="20"/>
+                                        </buttonConfiguration>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
@@ -806,8 +794,8 @@
                         <constraints>
                             <constraint firstItem="MNb-KL-eqs" firstAttribute="leading" secondItem="6H2-3S-h4h" secondAttribute="leading" constant="20" id="Fn2-o9-32E"/>
                             <constraint firstItem="6H2-3S-h4h" firstAttribute="trailing" secondItem="MNb-KL-eqs" secondAttribute="trailing" constant="20" id="G4m-Us-415"/>
-                            <constraint firstItem="MNb-KL-eqs" firstAttribute="bottom" secondItem="6H2-3S-h4h" secondAttribute="bottom" constant="20" id="Kfo-eH-4q7"/>
-                            <constraint firstItem="MNb-KL-eqs" firstAttribute="top" secondItem="6H2-3S-h4h" secondAttribute="top" constant="20" id="p2p-V9-UUW"/>
+                            <constraint firstItem="MNb-KL-eqs" firstAttribute="top" secondItem="6H2-3S-h4h" secondAttribute="top" constant="20" id="NXM-L3-eib"/>
+                            <constraint firstItem="6H2-3S-h4h" firstAttribute="bottom" secondItem="MNb-KL-eqs" secondAttribute="bottom" constant="20" id="fnm-TM-dDk"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Fkj-7h-Dbb"/>
@@ -886,7 +874,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="vcK-5L-jfr"/>
                     <connections>
-                        <outlet property="memberSearchBar" destination="V4Q-Eg-CaR" id="fWP-ST-Z5h"/>
+                        <outlet property="memberSearchBar" destination="L9E-Tf-wxm" id="fIY-Hi-nGc"/>
                         <outlet property="memberTableView" destination="V4Q-Eg-CaR" id="AkE-a2-zTO"/>
                         <outlet property="registerRoomBtn" destination="07o-YI-uMg" id="7kj-wk-nfH"/>
                         <segue destination="G69-UU-zHa" kind="unwind" identifier="unwindMainTabBarVC" unwindAction="unwindMainTabBarVC:" id="vUA-Bo-Cur"/>
@@ -928,7 +916,7 @@
                                                 <color key="tintColor" red="0.70588235290000001" green="0.49019607840000001" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="회 원 가 입">
-                                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="18"/>
                                                 </buttonConfiguration>
                                                 <connections>
                                                     <segue destination="xb7-X3-7Tb" kind="show" id="41H-C0-XRf"/>
@@ -943,7 +931,7 @@
                                                 <color key="tintColor" red="0.70588235290000001" green="0.49019607840000001" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="로 그 인">
-                                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="18"/>
                                                 </buttonConfiguration>
                                                 <connections>
                                                     <segue destination="BYZ-38-t0r" kind="show" id="Pxc-1W-DTC"/>
@@ -1001,12 +989,12 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6oF-OY-URR">
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="90"/>
                                                 <subviews>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="이름" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="oc8-a7-08H">
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="이름" textAlignment="natural" minimumFontSize="20" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="oc8-a7-08H">
                                                         <rect key="frame" x="0.0" y="0.0" width="374" height="60"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="60" id="vQc-6h-exF"/>
                                                         </constraints>
-                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                                         <textInputTraits key="textInputTraits" textContentType="name"/>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XHQ-fd-c2w" userLabel="NameMsg">
@@ -1031,7 +1019,7 @@
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" title="다 음"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="다 음">
-                                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="17"/>
+                                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="18"/>
                                                 </buttonConfiguration>
                                                 <connections>
                                                     <segue destination="84B-3l-WYf" kind="show" identifier="SignUpSecondVC" id="08N-qb-uZR"/>
@@ -1040,11 +1028,11 @@
                                         </subviews>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O0Q-39-Ulg">
-                                        <rect key="frame" x="129" y="640.5" width="116.5" height="34.5"/>
+                                        <rect key="frame" x="126" y="649.5" width="122" height="35.5"/>
                                         <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="이전 화면으로">
-                                            <fontDescription key="titleFontDescription" type="boldSystem" pointSize="17"/>
+                                            <fontDescription key="titleFontDescription" type="boldSystem" pointSize="18"/>
                                         </buttonConfiguration>
                                     </button>
                                 </subviews>
@@ -1053,7 +1041,7 @@
                                     <constraint firstItem="O0Q-39-Ulg" firstAttribute="centerX" secondItem="IFH-dO-Kbd" secondAttribute="centerX" id="4g5-TS-rid"/>
                                     <constraint firstAttribute="trailing" secondItem="soA-cP-p1s" secondAttribute="trailing" id="GSx-cn-1il"/>
                                     <constraint firstItem="soA-cP-p1s" firstAttribute="top" secondItem="IFH-dO-Kbd" secondAttribute="top" constant="40" id="Hlk-F4-FwP"/>
-                                    <constraint firstAttribute="bottom" secondItem="O0Q-39-Ulg" secondAttribute="bottom" constant="10" id="Q6P-j5-n54"/>
+                                    <constraint firstAttribute="bottom" secondItem="O0Q-39-Ulg" secondAttribute="bottom" id="Q6P-j5-n54"/>
                                     <constraint firstItem="soA-cP-p1s" firstAttribute="leading" secondItem="IFH-dO-Kbd" secondAttribute="leading" id="rsj-fI-Ekg"/>
                                 </constraints>
                             </view>
@@ -1101,12 +1089,12 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="C7M-Ug-o0N">
                                                         <rect key="frame" x="0.0" y="0.0" width="374" height="90"/>
                                                         <subviews>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="아이디(이메일)" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="iQ5-eP-UqK">
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="아이디(이메일)" textAlignment="natural" minimumFontSize="20" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="iQ5-eP-UqK">
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="60"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="60" id="TZX-Sz-JOG"/>
                                                                 </constraints>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                                                 <textInputTraits key="textInputTraits" textContentType="username"/>
                                                             </textField>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N9p-OH-lQ1">
@@ -1123,12 +1111,12 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="1b9-wo-gAb">
                                                         <rect key="frame" x="0.0" y="115" width="374" height="91"/>
                                                         <subviews>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder=" 비밀번호(영문+숫자+특수문자 8자이상)" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="tMN-Ii-WBK">
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder=" 비밀번호(영문+숫자+특수문자 8자이상)" textAlignment="natural" minimumFontSize="20" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="tMN-Ii-WBK">
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="60"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="60" id="lWF-9V-dp2"/>
                                                                 </constraints>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                                                 <textInputTraits key="textInputTraits" textContentType="password"/>
                                                             </textField>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eki-Qq-sxv">
@@ -1145,7 +1133,7 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="fhv-Vy-QrS">
                                                         <rect key="frame" x="0.0" y="231" width="374" height="98"/>
                                                         <subviews>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder=" 비밀번호 확인" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="DzJ-p8-idu">
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder=" 비밀번호 확인" textAlignment="natural" minimumFontSize="20" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="DzJ-p8-idu">
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="60"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="60" id="ukk-76-AkE"/>
@@ -1173,7 +1161,7 @@
                                                         <color key="tintColor" red="0.70588235290000001" green="0.49019607840000001" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                         <state key="normal" title="Button"/>
                                                         <buttonConfiguration key="configuration" style="plain" title="회 원 가 입">
-                                                            <fontDescription key="titleFontDescription" type="boldSystem" pointSize="17"/>
+                                                            <fontDescription key="titleFontDescription" type="boldSystem" pointSize="18"/>
                                                         </buttonConfiguration>
                                                     </button>
                                                 </subviews>

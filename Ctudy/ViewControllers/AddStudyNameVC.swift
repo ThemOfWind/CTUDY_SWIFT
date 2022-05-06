@@ -7,17 +7,26 @@
 
 import Foundation
 import UIKit
+//import YPImagePicker
 
-class AddStudyNameVC : BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
-    
+class AddStudyNameVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    // UIImagePickerControllerDelegate - 이미지를 선택하고 카메라를 찍었을때 다양한 동작을 도와줌
+    // UINavigationControllerDelegate - 앨범사진을 선택했을때 화면전환을 네비게이션으로 이동함
     // MARK: - 변수
     @IBOutlet weak var StudyNameView: UIView!
     @IBOutlet weak var roomImg: UIImageView!
     @IBOutlet weak var registerStudyName: UITextField!
     @IBOutlet weak var nextBtn: UIButton!
-    var keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
+    let TabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
     var distance: Double = 0
     var studyNameViewY: Double!
+    
+    //    let imagePicker: UIImagePickerController = {
+    //        let picker = UIImagePickerController()
+    //        picker.sourceType = .photoLibrary // 앨범열기 설정
+    //        picker.allowsEditing = true // 수정 가능 여부
+    //        return picker
+    //    }()
     
     // MARK: - override func
     override func viewDidLoad() {
@@ -41,13 +50,14 @@ class AddStudyNameVC : BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate
         self.titleItem = TitleItem.titleGeneral(title: "스터디룸 등록", isLargeTitles: true)
         
         // lmg
-        self.roomImg.layer.cornerRadius = self.roomImg.bounds.height / 10
-//        self.roomImg.layer.borderWidth = 1
-//        self.roomImg.layer.borderColor = COLOR.DISABLE_COLOR.cgColor
+        self.roomImg.layer.borderWidth = 1
+        self.roomImg.layer.borderColor = COLOR.SUBTITLE_COLOR.cgColor
+        self.roomImg.layer.cornerRadius = self.roomImg.layer.bounds.height / 10
         self.roomImg.backgroundColor = COLOR.SUBTITLE_COLOR
         self.roomImg.tintColor = COLOR.DISABLE_COLOR
         self.roomImg.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30, weight: .regular, scale: .large))
         self.roomImg.contentMode = .center
+        self.roomImg.isUserInteractionEnabled = true
         
         // btn
         self.nextBtn.tintColor = .white
@@ -58,7 +68,78 @@ class AddStudyNameVC : BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate
         
         // delegate
         self.registerStudyName.delegate = self
-        self.keyboardDismissTabGesture.delegate = self
+        self.TabGesture.delegate = self
+        
+        // gesture
+        self.view.addGestureRecognizer(TabGesture)
+    }
+    
+    fileprivate func actionSheetAlert() {
+        let alert = UIAlertController(title: "스터디룸 이미지 설정", message: nil, preferredStyle: .actionSheet)
+        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        let camera = UIAlertAction(title: "카메라", style: .default, handler: { [weak self] (_) in
+            self?.presentCamera()
+        })
+        let album = UIAlertAction(title: "앨범", style: .default, handler: { [weak self] (_) in
+            self?.presentAlbum()
+        })
+        
+        alert.addAction(cancel)
+        alert.addAction(camera)
+        alert.addAction(album)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    // 카메라 picker setting
+    fileprivate func presentCamera() {
+        let vc = UIImagePickerController()
+        vc.sourceType = .camera
+        vc.delegate = self
+        vc.allowsEditing = true
+        vc.cameraFlashMode = .off
+        vc.modalPresentationStyle = .fullScreen
+        //        vc.cameraOverlayView?.addSubview(customOverlayView())
+        present(vc, animated: true, completion: nil)
+    }
+    
+    // 앨범 picker setting
+    fileprivate func presentAlbum() {
+        let vc = UIImagePickerController()
+        vc.sourceType = .photoLibrary
+        vc.delegate = self
+        vc.allowsEditing = true
+        vc.modalPresentationStyle = .fullScreen
+        //        vc.showsCameraControls = false
+        //        vc.cameraOverlayView?.addSubview(customOverlayView())
+        present(vc, animated: true, completion: nil)
+    }
+    
+    // 취소버튼 click event
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    // 카메라 촬영 or 앨범에서 사용하기 버튼 click event
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        // update image
+        var newImage: UIImage? = nil
+        
+        // 수정된 image가 있을 경우
+        if let possibleImage = info[.editedImage] as? UIImage {
+            newImage = possibleImage
+        } else if let possibleImage = info[.originalImage] as? UIImage {
+            newImage = possibleImage
+        }
+        
+        self.roomImg.contentMode = .scaleAspectFit
+        self.roomImg.image = newImage
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func customOverlayView() -> UIView {
+        let overlayView = UIView()
+        overlayView.frame = self.roomImg.frame
+        return overlayView
     }
     
     // MARK: - action func
@@ -72,33 +153,33 @@ class AddStudyNameVC : BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate
         }
     }
     
-    @objc func onNextBtnClicked(_ sender: Any) {
-        print("onNextBtnClicked() called")
+    @objc fileprivate func onProfileImageClicked() {
+        actionSheetAlert()
+    }
+    
+    @objc fileprivate func onNextBtnClicked(_ sender: Any) {
         self.performSegue(withIdentifier: "AddStudyMemberVC", sender: nil)
     }
     
-    @objc func keyboardWillShowHandle(notification: NSNotification) {
-        print("AddStudyNameVC - keyboardWillShowHandle() called")
-        // keyboard 사이즈 가져오기
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            print("keyboardSize.height: \(keyboardSize.height)")
-            print("nextBtn.frame.origin.y: \(nextBtn.frame.origin.y)")
-
-            if (keyboardSize.height <= nextBtn.frame.origin.y) {
-                distance = keyboardSize.height - nextBtn.frame.origin.y
-                print("keyboard covered searchbtn / distance: \(distance)")
-                print("changed upvalue: \(distance - nextBtn.frame.height)")
-
-                self.StudyNameView.frame.origin.y = distance - nextBtn.frame.height + studyNameViewY
-            }
+    // MARK: - UIGestureRecognizer delegate
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if touch.view?.isDescendant(of: registerStudyName) == true {
+            return false
+        } else if touch.view?.isDescendant(of: roomImg) == true {
+            view.endEditing(true)
+            onProfileImageClicked()
+            return true
+        } else {
+            view.endEditing(true)
+            return true
         }
+        
     }
     
-    @objc func keyboardWillHideHandle(noti: Notification) {
-        print("AddStudyNameVC - keyboardWillHideHandle() called / studyViewY: \(StudyNameView)")
-        UIView.animate(withDuration: noti.userInfo![UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval) {
-            // focusing 해제
-            self.StudyNameView.frame.origin.y = self.studyNameViewY
-        }
+    // MARK: - textField delegate
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        self.dismiss(animated: true, completion: nil)
+        return true
     }
 }

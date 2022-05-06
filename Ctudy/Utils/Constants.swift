@@ -25,5 +25,5 @@ enum COLOR {
     static let SIGNATURE_COLOR_TRANSPARENCY_10: UIColor = UIColor(red: 128/255, green: 192/255, blue: 0/255, alpha: 0.1)
     static let DISABLE_COLOR: UIColor = UIColor(red: 229/255, green: 229/255, blue: 234/255, alpha: 1)
     static let SUBTITLE_COLOR: UIColor = UIColor(red: 185/255, green: 185/255, blue: 185/255, alpha: 1)
-    
+    static let INDICATOR_BACKGROUND_COLOR: UIColor = UIColor(red: 185/255, green: 185/255, blue: 185/255, alpha: 50)
 }

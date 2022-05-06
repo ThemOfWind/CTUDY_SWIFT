@@ -6,7 +6,10 @@ target 'Ctudy' do
   use_frameworks!
 
   # Pods for Ctudy
+  pod 'Alamofire'
   pod 'Alamofire', '~> 5.4'
   pod 'SwiftyJSON', '~> 4.0'
   pod 'Toast-Swift', '~> 5.0.1'
+  pod 'AlamofireNetworkActivityIndicator', '~> 3.1'
+  pod 'NVActivityIndicatorView'
 end

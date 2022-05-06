@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import NVActivityIndicatorView
+import AlamofireNetworkActivityIndicator
 
 class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
     
@@ -17,8 +19,28 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
     @IBOutlet weak var goToFindIdBtn: UIButton!
     @IBOutlet weak var goToFindPwBtn: UIButton!
     @IBOutlet weak var goToStartBtn: UIButton!
-    @IBOutlet weak var actIndicator: UIActivityIndicatorView!
-    var keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
+    lazy var indicatorView: UIView = {
+        let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+        indicatorView.backgroundColor = COLOR.INDICATOR_BACKGROUND_COLOR
+        return indicatorView
+    }()
+    lazy var indicator: NVActivityIndicatorView = {
+        let indicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40),
+                                                type: .pacman,
+                                                color: COLOR.DISABLE_COLOR,
+                                                padding: 0)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+    lazy var loading: UILabel = {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 10))
+        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.text = "loading..."
+        label.textColor = COLOR.DISABLE_COLOR
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    let keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
     var distance: Double = 0
     var loginViewY: Double!
     
@@ -30,7 +52,6 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("LoginVC - viewWillAppear() called / animated: \(animated)")
         
         // refresh
         self.config()
@@ -43,7 +64,6 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        print("LoginVC - viewWillDisappear() called / animated: \(animated)")
         // keyboard 노티 해제
         //NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         //NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
@@ -70,13 +90,42 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
         self.loginBtn.addTarget(self, action: #selector(onLoginBtnClicked), for: .touchUpInside)
         self.goToStartBtn.addTarget(self, action: #selector(onGoToStartBtnClicked), for: .touchUpInside)
         
-        // delegate
+        // delegate 연결
         self.keyboardDismissTabGesture.delegate = self
         self.userName.delegate = self
         self.password.delegate = self
         
-        // gesture
+        // gesture 연결
         self.view.addGestureRecognizer(keyboardDismissTabGesture)
+    }
+    
+    fileprivate func onStartActivityIndicator() {
+        DispatchQueue.main.async {
+            // 불투명 뷰 추가
+            self.view.addSubview(self.indicatorView)
+            // activity indicator 추가
+            self.indicatorView.addSubview(self.indicator)
+            self.indicatorView.addSubview(self.loading)
+            
+            NSLayoutConstraint.activate([
+                self.indicator.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+                self.indicator.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+                self.loading.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+                self.loading.centerYAnchor.constraint(equalTo: self.indicator.bottomAnchor, constant: 5)
+            ])
+            
+            // 애니메이션 시작
+            self.indicator.startAnimating()
+        }
+    }
+    
+    fileprivate func onStopActivityIndicator() {
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            // 애니메이션 정지.
+            // 서버 통신 완료 후 다음의 메서드를 실행해서 통신의 끝나는 느낌을 줄 수 있다.
+            self.indicator.stopAnimating()
+            self.indicatorView.removeFromSuperview()
+        }
     }
     
     // MARK: - @objc func
@@ -84,32 +133,32 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
     @objc func onLoginBtnClicked() {
         print("LoginVC - onLoginBtnClicked() called")
         
-        actIndicator.startAnimating()
-        if actIndicator.isAnimating {
-            actIndicator.hidesWhenStopped = false
-        }
+        self.onStartActivityIndicator()
         
         AlamofireManager.shared.postSignIn(username: userName.text!, password: password.text!, completion: { [weak self] result in
             guard let self = self else { return }
+            
+            self.onStopActivityIndicator()
+            
             switch result {
             case .success(let memberData):
                 print("LoginVC - postSignIn.success")
-                
                 self.getProfileInfo()
             case .failure(let error):
                 print("LoginVC - postSignIn.failure / error: \(error.rawValue)")
-                self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
+                self.view.makeToast(error.rawValue, duration: 0.5, position: .center)
             }
         })
         
-        actIndicator.stopAnimating()
-        actIndicator.hidesWhenStopped = true
+        if self.indicator.isAnimating {
+            self.onStopActivityIndicator()
+        }
     }
     
-    @objc func keyboardWillShowHandle(notification: NSNotification) {
-        print("LoginVC - keyboardWillShowHandle() called")
+    @objc func keyboardWillShowHandle(noti: NSNotification) {
+        //        print("LoginVC - keyboardWillShowHandle() called")
         // keyboard 사이즈 가져오기
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+        if let keyboardSize = (noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             print("keyboardSize.height: \(keyboardSize.height)")
             print("loginBtn.frame.origin.y: \(loginBtn.frame.origin.y)")
             
@@ -124,7 +173,7 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
     }
     
     @objc func keyboardWillHideHandle(noti: Notification) {
-        print("LoginVC - keyboardWillHideHandle() called / loginViewY: \(loginViewY)")
+        //        print("LoginVC - keyboardWillHideHandle() called / loginViewY: \(loginViewY)")
         UIView.animate(withDuration: noti.userInfo![UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval) {
             // focusing 해제
             self.loginView.frame.origin.y = self.loginViewY
@@ -137,8 +186,13 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
     
     // 접속 회원정보 조회 후 keychain 저장
     fileprivate func getProfileInfo() {
+        
+        self.onStartActivityIndicator()
+        
         AlamofireManager.shared.getProfile(completion: { [weak self] result in
             guard let self = self else { return }
+            
+            self.onStopActivityIndicator()
             
             switch result {
             case .success(let profile):
@@ -148,6 +202,10 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
                 print("LoginVC - getProfileInfo() called / error: \(error.rawValue)")
             }
         })
+        
+        if indicator.isAnimating {
+            self.onStopActivityIndicator()
+        }
     }
     
     // MARK: - @IBACiton func
@@ -164,13 +222,9 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
     
     // MARK: - UIGestureRecognizer delegate
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        print("LoginVC - gestureRecognizer shouldReceive() called")
-        
         if touch.view?.isDescendant(of: userName) == true {
-            print("registerName touched!")
             return false
         } else if touch.view?.isDescendant(of: password) == true {
-            print("registerUserName touched!")
             return false
         } else {
             view.endEditing(true)

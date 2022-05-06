@@ -156,7 +156,7 @@ final class AlamofireManager {
                 let responseJson = JSON(responseValue)
                 guard let result = responseJson["result"].bool
                         , let id = responseJson["response"]["id"].int
-                        , let userName = responseJson["response"]["user"]["username"].string
+                        , let userName = responseJson["response"]["username"].string
                         , let name = responseJson["response"]["name"].string else { return }
                 
                 if result {

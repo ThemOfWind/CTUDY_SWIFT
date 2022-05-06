@@ -23,11 +23,23 @@ class MainTabBarVC: UITabBarController, UITabBarControllerDelegate {
     
     // MARK: - fileprivate func
     fileprivate func config() {
-        // tabBarButton ui
+        // proxy객체 사용 : for문으로 접근하지 않아도 가능
+        // 탭바 아이템에 일일이 할 필요 없이, 일괄적 적용
+        let tabBarItemProxy = UITabBarItem.appearance()
+//        tabBarItemProxy.setTitleTextAttributes([NSAttributedString.Key.foregroundColor:COLOR.SIGNATURE_COLOR], for: .selected)
+//        tabBarItemProxy.setTitleTextAttributes([NSAttributedString.Key.foregroundColor:COLOR.DISABLE_COLOR], for: .disabled)
+        tabBarItemProxy.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 12)], for: .normal)
+        
+        // tabBar ui
         self.tabBar.tintColor = COLOR.SIGNATURE_COLOR
+        self.tabBar.layer.borderWidth = 0
+        self.tabBar.clipsToBounds = true // 큰 이미지 자르기: 이미지가 tabBar보다 큰 경우 밖으로 튀어나옴
+        self.tabBar.barTintColor = .white
+        self.tabBar.standardAppearance.backgroundColor = .white
+        self.tabBar.standardAppearance.shadowColor = .white
         
         // navigationBar reset
-        navigationBarReset()
+        self.navigationItem.hidesBackButton = true
         
         // navigationBar title item
         self.navigationItem.title = "스터디룸"
@@ -42,13 +54,13 @@ class MainTabBarVC: UITabBarController, UITabBarControllerDelegate {
         self.delegate = self
     }
     
-    fileprivate func navigationBarReset() {
-        // navigationBar setting
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-        // navigationBar left item
-        self.navigationItem.leftBarButtonItem = nil
-        self.navigationItem.hidesBackButton = true
-    }
+    //    fileprivate func navigationBarReset() {
+    //        // navigationBar setting
+    //        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+    //        // navigationBar left item
+    //        self.navigationItem.leftBarButtonItem = nil
+    //        self.navigationItem.hidesBackButton = true
+    //    }
     
     // MARK: - action func
     // navigationBar item customBtn event
@@ -61,17 +73,11 @@ class MainTabBarVC: UITabBarController, UITabBarControllerDelegate {
     // MARK: - tabBar delegate
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         if viewController is MainVC {
-//            navigationBarReset()
             self.navigationItem.title = "스터디룸"
-            self.navigationController?.navigationBar.prefersLargeTitles = true
-            self.navigationItem.largeTitleDisplayMode = .always
             self.navigationItem.setRightBarButton(UIBarButtonItem(customView: addBtn), animated: true)
-        }
-        else {
+        } else {
             if self.navigationItem.rightBarButtonItem != nil {
-//                navigationBarReset()
                 self.navigationItem.title = ""
-//                self.navigationController?.navigationBar.prefersLargeTitles = false
                 self.navigationItem.rightBarButtonItem = nil
             }
         }

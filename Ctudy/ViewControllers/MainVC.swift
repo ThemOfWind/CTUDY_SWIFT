@@ -12,10 +12,11 @@ class MainVC: UIViewController {
     
     // MARK: - 변수
     @IBOutlet var studyCollectionView: UICollectionView!
-    @IBOutlet var studyNavigationItem: UINavigationItem!
     var rooms = [] as! Array<SearchRoomResponse>
     var roomName: Int?
     var roomNameString: String?
+    var cellWidth: Double = 0.0
+    var cellHeigth: Double = 0.0
     //var mainTabBarVC : UITabBarController = MainTabBarVC()
     
     // MARK: - overrid func
@@ -36,22 +37,15 @@ class MainVC: UIViewController {
                 controller.roomName = self.roomName
                 controller.roomNameString = self.roomNameString
             }
+        } else if let id = segue.identifier, id == "AddStudyNameVC" {
+            if let controller = segue.destination as? AddStudyNameVC {
+            }
         }
     }
     
     
     // MARK: - fileprivate func
     fileprivate func config() {
-//        let flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-//        let width = self.view.frame.width
-//        let height = self.view.frame.height
-//        flowLayout.itemSize = CGSize(width: width - 20, height: height)
-//        self.studyCollectionView.collectionViewLayout = flowLayout
-        
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationItem.largeTitleDisplayMode = .always
-//        self.titleItem = TitleItem.titleGeneral(title: "스터디룸", isLargeTitles: true)
-        
         // view에 delegate, datasource 연결
         self.studyCollectionView.delegate = self
         self.studyCollectionView.dataSource = self
@@ -62,10 +56,9 @@ class MainVC: UIViewController {
         // 스터디룸 조회
         self.getSearchRoom()
         
-        // 스터디룸 추가하라는 라벨을 레이아웃 가운데에 표기
-        if rooms.count <= 0 {
-            
-        }
+//        // 스터디룸 추가하라는 라벨을 레이아웃 가운데에 표기
+//        if rooms.count <= 0 {
+//        }
     }
     
     // 스터디룸 조회 api 호출
@@ -88,13 +81,13 @@ class MainVC: UIViewController {
 // MARK: - extension func
 extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("MainVC - collectionView count : \(rooms.count)")
+//        print("MainVC - collectionView count : \(rooms.count)")
         // 셀의 갯수 지정
         return rooms.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("MainVC - collectionView cellForItemAt / indexPath : \(indexPath.row)")
+//        print("MainVC - collectionView cellForItemAt / indexPath : \(indexPath.row)")
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! StudyCollectionViewCell
         cell.layer.cornerRadius = 10
@@ -105,14 +98,13 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let cell = CGSize(width: self.studyCollectionView.bounds.width - 20, height: self.studyCollectionView.bounds.height / 2.05)
+        let cell = CGSize(width: self.studyCollectionView.layer.bounds.width, height: self.studyCollectionView.layer.bounds.height / 2.0)
 //        let cell = CGSize(width: self.studyCollectionView.bounds.width - 100, height: self.studyCollectionView.bounds.height / 6)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("MainVC - collectionView didSelectItemAt / selectedItem : \(rooms[indexPath.row].name) choose")
-        //        self.userName = KeyChainManager().tokenLoad(API.SERVICEID, account: "userName")
         self.roomName = rooms[indexPath.row].id
         self.roomNameString = rooms[indexPath.row].name
         self.performSegue(withIdentifier: "MainDetailVC", sender: nil)

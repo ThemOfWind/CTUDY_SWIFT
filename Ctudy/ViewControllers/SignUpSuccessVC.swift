@@ -35,7 +35,6 @@ class SignUpSuccessVC: BasicVC {
         self.enterName.text = memberName
     }
     
-
     // MARK: - action func
     // start 화면으로 이동
     @IBAction func onGoToLoginBtnClicked(_ sender: Any) {
