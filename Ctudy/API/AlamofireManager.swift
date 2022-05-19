@@ -15,7 +15,7 @@ final class AlamofireManager {
     static let shared = AlamofireManager()
     
     // 인터셉터
-    let interceptors = Interceptor(interceptors: [BaseInterceptor()])
+    let baseInterceptors = Interceptor(interceptors: [BaseInterceptor()])
     
     // 로거 설정
     let monitors = [
@@ -23,12 +23,11 @@ final class AlamofireManager {
     ] as [EventMonitor]
     
     // 세션 설정
-    var session : Session
-    
+    var session: Session
     
     private init() {
         session = Session(
-            interceptor: interceptors
+            interceptor: baseInterceptors
             , eventMonitors: monitors
         )
     }
@@ -42,19 +41,17 @@ final class AlamofireManager {
             .validate(statusCode: 200..<501)
             .responseJSON(completionHandler: { response in
                 
-                guard let responseValue = response.value else { return }
+                guard let responseValue = response.value
+                    , let statusCode = response.response?.statusCode else { return }
                 let responseJson = JSON(responseValue)
-                guard let result = responseJson["result"].bool else { return }
                 
-                // 사용가능한 아이디일때
-                if result {
+                switch statusCode {
+                case 200:
                     guard let username = responseJson["response"]["username"].string else { return }
                     let jsonData = UserNameCheckResponse(username: username)
-                    
                     completion(.success(jsonData))
-                }
-                // 중복 아이디일때
-                else {
+                default:
+                    print("getUserNameCheck() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
                     completion(.failure(.duplicatedUserName))
                 }
             })
@@ -69,17 +66,18 @@ final class AlamofireManager {
             .validate(statusCode: 200..<501)
             .responseJSON(completionHandler: { response in
                 
-                guard let responseValue = response.value else { return }
+                guard let responseValue = response.value
+                    , let statusCode = response.response?.statusCode else { return }
                 let responseJson = JSON(responseValue)
-                guard let result = responseJson["result"].bool,
-                      let name = responseJson["response"]["name"].string,
-                      let username = responseJson["response"]["username"].string else { return }
+                guard let name = responseJson["response"]["name"].string
+                    , let username = responseJson["response"]["username"].string else { return }
                 
-                if result {
+                switch statusCode {
+                case 200:
                     let jsonData = SignUpResponse(name: name, username: username)
-                    
                     completion(.success(jsonData))
-                } else {
+                default:
+                    print("postSignUp() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
                     completion(.failure(.noSignUp))
                 }
             })
@@ -94,18 +92,17 @@ final class AlamofireManager {
             .validate(statusCode: 200..<501)
             .responseJSON(completionHandler: { response in
                 
-                guard let responseValue = response.value else { return }
+                guard let responseValue = response.value
+                    , let statusCode = response.response?.statusCode else { return }
                 let responseJson = JSON(responseValue)
-                guard let result = responseJson["result"].bool else { return }
                 var accessToken : String = ""
                 
-                if result {
+                switch statusCode {
+                case 200:
                     if let jtoken = responseJson["response"]["access_token"].string {
                         accessToken = jtoken
                     }
-                }
-                
-                if result {
+                    
                     // 토큰 정보 저장
                     if KeyChainManager().tokenSave(API.SERVICEID, account: "accessToken", value: accessToken) {
                         let jsonData = SignInResponse(token: accessToken)
@@ -114,10 +111,10 @@ final class AlamofireManager {
                     } else {
                         completion(.failure(.noSaveToken))
                     }
-                } else {
+                default:
+                    print("postSignIn() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
                     completion(.failure(.noSignIn))
                 }
-                
             })
     }
     
@@ -128,18 +125,20 @@ final class AlamofireManager {
             .validate(statusCode: 200..<501)
             .responseJSON(completionHandler: { response in
                 
-                guard let responseValue = response.value else { return }
+                guard let responseValue = response.value
+                    , let statusCode = response.response?.statusCode else { return }
                 let responseJson = JSON(responseValue)
-                guard let result = responseJson["result"].bool else { return }
                 
-                if result {
+                switch statusCode {
+                case 200:
                     // 토큰 정보 삭제
                     if KeyChainManager().tokenDelete(API.SERVICEID, account: "accessToken") {
-                        completion(.success(result))
+                        completion(.success(true))
                     } else {
                         completion(.failure(.noDelToken))
                     }
-                } else {
+                default:
+                    print("getLogout() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
                     completion(.failure(.noLogout))
                 }
             })
@@ -152,14 +151,15 @@ final class AlamofireManager {
             .validate(statusCode: 200..<501)
             .responseJSON(completionHandler: { response in
                 
-                guard let responseValue = response.value else { return }
+                guard let responseValue = response.value
+                    , let statusCode = response.response?.statusCode else { return }
                 let responseJson = JSON(responseValue)
-                guard let result = responseJson["result"].bool
-                        , let id = responseJson["response"]["id"].int
-                        , let userName = responseJson["response"]["username"].string
-                        , let name = responseJson["response"]["name"].string else { return }
+                guard let id = responseJson["response"]["id"].int
+                    , let userName = responseJson["response"]["username"].string
+                    , let name = responseJson["response"]["name"].string else { return }
                 
-                if result {
+                switch statusCode {
+                case 200:
                     if KeyChainManager().tokenSave(API.SERVICEID, account: "id", value: String(id))
                         , KeyChainManager().tokenSave(API.SERVICEID, account: "userName", value: userName)
                         , KeyChainManager().tokenSave(API.SERVICEID, account: "name", value: name) {
@@ -169,7 +169,8 @@ final class AlamofireManager {
                     } else {
                         completion(.failure(.noProfile))
                     }
-                } else {
+                default:
+                    print("getProfile() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
                     completion(.failure(.noProfile))
                 }
             })
@@ -182,11 +183,12 @@ final class AlamofireManager {
             .validate(statusCode: 200..<501)
             .responseJSON(completionHandler: { response in
                 
-                guard let responseValue = response.value else { return }
+                guard let responseValue = response.value
+                    , let statusCode = response.response?.statusCode else { return }
                 let responseJson = JSON(responseValue)
-                guard let result = responseJson["result"].bool else { return }
                 
-                if result {
+                switch statusCode {
+                case 200:
                     let response = responseJson["response"]
                     var rooms = [SearchRoomResponse]()
                     
@@ -195,17 +197,15 @@ final class AlamofireManager {
                             , let name = subJson["name"].string
                             , let membercount = subJson["member_count"].int
                             , let mastername = subJson["master_name"].string else { return }
+                        let banner = subJson["banner"].string ?? ""
                         
-                        let roomItem = SearchRoomResponse(id: id, name: name, membercount: membercount, mastername: mastername)
+                        let roomItem = SearchRoomResponse(id: id, name: name, membercount: membercount, mastername: mastername, banner: banner)
                         rooms.append(roomItem)
                     }
                     
-                    if rooms.count > 0 {
-                        completion(.success(rooms))
-                    } else {
-                        completion(.failure(.noSearchRoom))
-                    }
-                } else {
+                    completion(.success(rooms))
+                default:
+                    print("getSearchRoom() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
                     completion(.failure(.noSearchRoom))
                 }
             })
@@ -218,19 +218,17 @@ final class AlamofireManager {
             .validate(statusCode: 200..<501)
             .response(completionHandler: { response in
                 
-                guard let responseValue = response.value else { return }
+                guard let responseValue = response.value
+                    , let statusCode = response.response?.statusCode else { return }
                 let responseJson = JSON(responseValue)
-                guard let result = responseJson["result"].bool else { return }
                 
-                if result {
+                switch statusCode {
+                case 200:
                     let response = responseJson["response"]
-                    
-                    if response.exists() {
-                        completion(.success(response))
-                    } else {
-                        completion(.failure(.noSearchMemeber))
-                    }
-                } else {
+//                    if response.exists() {
+                    completion(.success(response))
+                default:
+                    print("getSearchStudyMember() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
                     completion(.failure(.noSearchMemeber))
                 }
             })
@@ -244,43 +242,52 @@ final class AlamofireManager {
             .validate(statusCode: 200..<501)
             .responseJSON(completionHandler: { response in
                 
-                guard let responseValue = response.value else { return }
+                guard let responseValue = response.value
+                    , let statusCode = response.response?.statusCode else { return }
                 let responseJson = JSON(responseValue)
-                guard let result = responseJson["result"].bool else { return }
                 
-                if result {
+                switch statusCode {
+                case 200:
                     let response = responseJson["response"]
-                    
-                    if response.exists() {
-                        completion(.success(response))
-                    }
-                    else {
-                        completion(.failure(.noSearchMember))
-                    }
-                }
-                else {
+//                    if response.exists() {
+                    completion(.success(response))
+                default:
+                    print("getSearchMember() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
                     completion(.failure(.noSearchMember))
                 }
             })
     }
     
     // MARK: - 스터디룸 등록
-    func postRegisterRoom(name: String, member_list: Array<Int>, completion: @escaping(Result<Bool, RoomErrors>) -> Void) {
-        self.session
-            .request(RoomRouter.registerroom(name: name, member_list: member_list))
-            .validate(statusCode: 200..<501)
-            .responseJSON(completionHandler: { response in
+    func postRegisterRoom(name: String, member_list: Array<Int>, image: Data, completion: @escaping(Result<Bool, RoomErrors>) -> Void) {
+        let url = URL(string: API.BASE_URL + "study/room/")!
+        let token = KeyChainManager().tokenLoad(API.SERVICEID, account: "accessToken")
+        let header: HTTPHeaders = [
+            "Content-Type" : "multipart/form-data"
+            , "Authorization" : "Bearer " + String(token!)
+        ]
+        
+        print("postRegisterRoom() - token: \(token), url: \(url)")
+        print("postRegisterRoom() - header: Content-Type(\(header["Content-Type"])), Authorization(\(header["Authorization"])")
+        
+        AF.upload(multipartFormData: { multipartFormData in
+            let mpfData = RegisterRoomRequest(name: name, member_list: member_list)
+            multipartFormData.append(try! JSONEncoder().encode(mpfData), withName: "payload")
+            multipartFormData.append(image, withName: "file", fileName: "default.png", mimeType: "image/png")
+        }, to: url, usingThreshold: UInt64.init(), method: .post, headers: header).response (completionHandler: { response in
+            
+            guard let responseValue = response.value
+                , let statusCode = response.response?.statusCode else { return }
+            let responseJson = JSON(responseValue)
+            
+            switch statusCode {
+            case 200:
+                completion(.success(true))
+            default:
+                print("postRegisterRoom() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
+                completion(.failure(.noRegisterRoom))
                 
-                guard let responseValue = response.value else { return }
-                let responseJson = JSON(responseValue)
-                guard let result = responseJson["result"].bool else { return }
-                
-                if result {
-                    completion(.success(result))
-                }
-                else {
-                    completion(.failure(.noRegisterRoom))
-                }
-            })
+            }
+        })
     }
 }

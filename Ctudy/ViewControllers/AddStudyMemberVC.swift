@@ -42,6 +42,7 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
     var nextPage: String? = "1"
     var fetchingMore = false
     var studyName: String?
+    var studyImage: Data?
     
     // MARK: - overrid func
     override func viewDidLoad() {
@@ -98,8 +99,9 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
             case .success(let response):
                 // 다음 페이지 값
                 self.nextPage = response["next"].string
+                
                 // 1~ 10 멤버 데이터
-                let list = response["list"]
+                let list = response["items"]
                 for (index, subJson) : (String, JSON) in list {
                     guard let id = subJson["id"].int
                          ,let username = subJson["username"].string
@@ -168,12 +170,13 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
             }
         }
         
-        DispatchQueue.main.async {
-                self.onStartActivityIndicator()
-        }
+        self.onStartActivityIndicator()
         
-        AlamofireManager.shared.postRegisterRoom(name: self.studyName!, member_list: selectedMemeberList, completion: { [weak self] result in
+        AlamofireManager.shared.postRegisterRoom(name: self.studyName!, member_list: selectedMemeberList, image: self.studyImage!, completion: { [weak self] result in
             guard let self = self else { return }
+            
+            self.onStopActivityIndicator()
+            
             switch result {
             case .success(let result):
                 self.view.makeToast("스터디룸이 등록되었습니다.", duration: 1.0, position: .center)
@@ -183,11 +186,8 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
             }
         })
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            // 애니메이션 정지.
-            // 서버 통신 완료 후 다음의 메서드를 실행해서 통신의 끝나는 느낌을 줄 수 있다.
-            self.indicator.stopAnimating()
-            self.indicatorView.removeFromSuperview()
+        if self.indicator.isAnimating {
+            self.onStopActivityIndicator()
         }
     }
     

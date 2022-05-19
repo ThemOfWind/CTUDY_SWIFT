@@ -17,7 +17,6 @@ class MemberTableViewCell : UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        print("MemeberTableViewCell - awakeFromNib() called")
     
         // image
         self.memberImg.layer.cornerRadius = self.memberImg.bounds.height / 3

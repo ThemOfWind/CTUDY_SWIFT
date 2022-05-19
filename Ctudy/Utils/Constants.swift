@@ -9,8 +9,10 @@ import Foundation
 import UIKit
 
 enum API {
-    static let BASE_URL: String = "https://api.ctudy.com/api/v1/"
-//    static let BASE_URL : String = "http://172.30.1.52:8000/api/v1/"
+    static let BASE_URL: String = "https://api.ctudy.com/api/v2/"
+//    static let BASE_URL: String = "http://192.168.219.115:8000/api/v2/"
+//    static let BASE_URL: String = "http://192.168.0.20:8000/api/v2/"
+    static let IMAGE_DEFAULT_URL: String = "https://api.ctudy.com/media/public/room/864b172ba4d74a5ea6946f58c0233c29.png"
     static let SERVICEID: String = "com.jinny.Ctudy"
 }
 

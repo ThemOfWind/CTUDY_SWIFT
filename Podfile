@@ -12,4 +12,5 @@ target 'Ctudy' do
   pod 'Toast-Swift', '~> 5.0.1'
   pod 'AlamofireNetworkActivityIndicator', '~> 3.1'
   pod 'NVActivityIndicatorView'
+  pod 'Kingfisher'
 end

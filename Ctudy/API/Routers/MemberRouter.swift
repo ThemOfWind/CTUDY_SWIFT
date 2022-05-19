@@ -25,24 +25,24 @@ enum MemberRouter: URLRequestConvertible {
     var path: String {
         switch self {
         case .searchmember:
-            return "member/"
-        }
-    }
-    
-    var parameters: [String : String] {
-        switch self {
-        case let .searchmember(page):
-            return ["page" : page]
+            return "room/member/"
         }
     }
     
     func asURLRequest() throws -> URLRequest {
         let url = baseURL.appendingPathComponent(path)
         
+        print("MemeberRouter - asURLRequest() called / url: \(url)")
+        
         var request = URLRequest(url: url)
         request.method = method
-        request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
-
+        
+        switch self {
+        case .searchmember(page: let page):
+            let parameters = ["page" : page, "max_page" : "10"] as Dictionary
+            request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
+        }
+        
         return request
     }
 }

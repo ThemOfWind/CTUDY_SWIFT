@@ -15,7 +15,7 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
     @IBOutlet weak var nextBtn: UIButton!
     @IBOutlet weak var nameMsg: UILabel!
     @IBOutlet weak var goToStartBtn: UIButton!
-    let keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
+    let keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: SignUpFirstVC.self, action: nil)
     var memberName: String?
     var nameOKFlag: Bool = false
     

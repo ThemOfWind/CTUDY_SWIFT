@@ -11,7 +11,7 @@ import Alamofire
 class BaseInterceptor: RequestInterceptor {
     // 정상작동 시 응답 methods
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
-        print("BaseInterceptor - adapt() called")
+//        print("BaseInterceptor - adapt() called")
 
         var request = urlRequest
         
@@ -24,22 +24,13 @@ class BaseInterceptor: RequestInterceptor {
             request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         } else { print("accesToken is nil") }
         
-        // 공통 파라미터 추가
-//        var dictionary = [String:String]()
-//        dictionary.updateValue("", forKey: "")
-        
-//        do {
-//            request = try URLEncodedrFormParameterEncoder().encode(dictionary, into: request)
-//        } catch {
-//            print("error")
-//        }
-        print("Authorization value: \(request.headers.value(for: "Authorization"))")
+//        print("Authorization value: \(request.headers.value(for: "Authorization"))")
         completion(.success(request))
     }
     
     // 비정상작동 시 응답 methods
     func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
-        print("BaseInterceptor - retry() called")
+//        print("BaseInterceptor - retry() called")
         
         guard let statusCode = request.response?.statusCode else {
             completion(.doNotRetry)

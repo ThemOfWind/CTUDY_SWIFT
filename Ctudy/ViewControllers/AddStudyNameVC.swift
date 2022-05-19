@@ -39,6 +39,7 @@ class AddStudyNameVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
         if let id = segue.identifier, id == "AddStudyMemberVC" {
             if let controller = segue.destination as? AddStudyMemberVC {
                 controller.studyName = self.registerStudyName.text
+                controller.studyImage = self.roomImg.image?.pngData()
             }
         }
     }

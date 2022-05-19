@@ -12,6 +12,5 @@ struct SearchRoomResponse: Codable {
     var name: String // 스터디룸 이름
     var membercount: Int // 스터디룸 인원수
     var mastername: String // 스터디룸 방장이름
-//    var lmgWidth: Double // 스터디룸 image width
-//    var lmgHeigth: Double // 스터디룸 image height
+    var banner: String // 스터디룸 image
 }
