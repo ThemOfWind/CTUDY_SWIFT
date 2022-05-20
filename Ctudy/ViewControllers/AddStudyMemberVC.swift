@@ -176,7 +176,7 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
         
         self.onStartActivityIndicator()
         
-        AlamofireManager.shared.postRegisterRoom(name: studyName!, member_list: selectedMemeberList, image: nil, completion: { [weak self] result in
+        AlamofireManager.shared.postRegisterRoom(name: studyName!, member_list: selectedMemeberList, image: studyImage, completion: { [weak self] result in
             guard let self = self else { return }
             
             self.onStopActivityIndicator()
