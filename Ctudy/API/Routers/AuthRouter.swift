@@ -13,7 +13,7 @@ enum AuthRouter: URLRequestConvertible {
     
     case signin(username: String, password: String) // 로그인
     case usernamecheck(username: String) // 아이디 중복체크
-    case signup(name: String, username: String, password: String) // 회원가입
+//    case signup(name: String, username: String, password: String) // 회원가입
     case logout // 로그아웃
     case profile // 접속 회원정보
     
@@ -27,8 +27,8 @@ enum AuthRouter: URLRequestConvertible {
             return .post
         case .usernamecheck:
             return .get
-        case .signup:
-            return .post
+//        case .signup:
+//            return .post
         case .logout:
             return .get
         case .profile:
@@ -42,8 +42,8 @@ enum AuthRouter: URLRequestConvertible {
             return "signin/"
         case .usernamecheck:
             return "signup/"
-        case .signup:
-            return "signup/"
+//        case .signup:
+//            return "signup/"
         case .logout:
             return "logout/"
         case .profile:
@@ -80,9 +80,9 @@ enum AuthRouter: URLRequestConvertible {
         case .usernamecheck(let username):
             let parameters = ["username" : username] as Dictionary
             request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
-        case .signup(let name, let username, let password):
-            let parameters = ["name" : name, "username" : username, "password" : password] as Dictionary
-            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
+//        case .signup(let name, let username, let password):
+//            let parameters = ["name" : name, "username" : username, "password" : password] as Dictionary
+//            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
         case .logout:
             break
         case .profile:

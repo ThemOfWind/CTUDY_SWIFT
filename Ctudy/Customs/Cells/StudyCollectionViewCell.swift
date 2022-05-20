@@ -9,8 +9,6 @@ import Foundation
 import UIKit
 
 class StudyCollectionViewCell: UICollectionViewCell {
-    
-    
     @IBOutlet weak var roomStackViewCell: UIStackView!
     @IBOutlet weak var roomImg: UIImageView!
     @IBOutlet weak var roomName: UILabel!

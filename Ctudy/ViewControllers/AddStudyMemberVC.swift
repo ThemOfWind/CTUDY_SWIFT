@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import SwiftyJSON
 import NVActivityIndicatorView
+import Kingfisher
 
 class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, MemberCheckButtonDelegate {
     
@@ -16,7 +17,7 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
     @IBOutlet weak var memberTableView: UITableView!
     @IBOutlet weak var registerRoomBtn: UIButton!
     @IBOutlet weak var memberSearchBar: UISearchBar!
-    let keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
+    let keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: AddStudyMemberVC.self, action: nil)
     lazy var indicatorView: UIView = {
         let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         indicatorView.backgroundColor = COLOR.INDICATOR_BACKGROUND_COLOR
@@ -38,11 +39,13 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
         label.translatesAutoresizingMaskIntoConstraints = false
        return label
     }()
+    // 이전 화면에서 데이터 전달
+    var studyImage: Data?
+    var studyName: String?
+    
     var members: Array<SearchMemberResponse> = []
     var nextPage: String? = "1"
     var fetchingMore = false
-    var studyName: String?
-    var studyImage: Data?
     
     // MARK: - overrid func
     override func viewDidLoad() {
@@ -102,11 +105,12 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
                 
                 // 1~ 10 멤버 데이터
                 let list = response["items"]
-                for (index, subJson) : (String, JSON) in list {
+                for (_, subJson) : (String, JSON) in list {
                     guard let id = subJson["id"].int
-                         ,let username = subJson["username"].string
-                         ,let name = subJson["name"].string else { return }
-                    let memberItem = SearchMemberResponse(id: id, name: name, userName: username, ischecked: false)
+                        , let username = subJson["username"].string
+                        , let name = subJson["name"].string else { return }
+                    let image = subJson["image"].string ?? ""
+                    let memberItem = SearchMemberResponse(id: id, name: name, userName: username, image: image, ischecked: false)
                     self.members.append(memberItem)
                 }
                 // view reload
@@ -172,13 +176,13 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
         
         self.onStartActivityIndicator()
         
-        AlamofireManager.shared.postRegisterRoom(name: self.studyName!, member_list: selectedMemeberList, image: self.studyImage!, completion: { [weak self] result in
+        AlamofireManager.shared.postRegisterRoom(name: studyName!, member_list: selectedMemeberList, image: studyImage!, completion: { [weak self] result in
             guard let self = self else { return }
             
             self.onStopActivityIndicator()
             
             switch result {
-            case .success(let result):
+            case .success(_):
                 self.view.makeToast("스터디룸이 등록되었습니다.", duration: 1.0, position: .center)
                 self.performSegue(withIdentifier: "unwindMainTabBarVC", sender: self)
             case .failure(let error):
@@ -198,6 +202,11 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = memberTableView.dequeueReusableCell(withIdentifier: "MemberTableViewCell", for: indexPath) as! MemberTableViewCell
+        if members[indexPath.row].image != "" {
+            cell.memberImg.kf.setImage(with: URL(string: "https://api.ctudy.com\(members[indexPath.row].image)")!)
+        } else {
+            cell.memberImg.image = UIImage(named: "user_default.png")
+        }
         cell.member.text = members[indexPath.row].name
         cell.memberName.text = members[indexPath.row].userName
         cell.checkBtn.tag = indexPath.row

@@ -18,7 +18,8 @@ enum API {
 
 enum REGEX {
     static let NAME_REGEX: String = "[가-힣]{2,}"
-    static let USERNAME_REGEX: String = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+    static let EMAIL_REGEX: String = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+    static let USERNAME_REGEX: String = "[A-Z0-9a-z]{8,15}"
     static let PASSWORD_REGEX: String = "^(?=.*[A-Za-z])(?=.*[!@#$%^])(?=.*[0-9]).{8,20}"
 }
 

@@ -40,9 +40,8 @@ final class AlamofireManager {
             .request(AuthRouter.usernamecheck(username: username))
             .validate(statusCode: 200..<501)
             .responseJSON(completionHandler: { response in
-                
                 guard let responseValue = response.value
-                    , let statusCode = response.response?.statusCode else { return }
+                        , let statusCode = response.response?.statusCode else { return }
                 let responseJson = JSON(responseValue)
                 
                 switch statusCode {
@@ -58,29 +57,32 @@ final class AlamofireManager {
     }
     
     // MARK: - 회원가입
-    func postSignUp(name name: String, username username: String, password password: String, completion: @escaping (Result<SignUpResponse, AuthErrors>) -> Void) {
-        print("AlamofireManager - postSignUp() called / parameters = [name: \(name), username: \(username), password: \(password)]")
+    func postSignUp(name name: String, email: String, username username: String, password password: String, image: Data, completion: @escaping (Result<SignUpResponse, AuthErrors>) -> Void) {
+        let url = URL(string: API.BASE_URL + "account/signup/")!
+        let header: HTTPHeaders = [ "Content-Type" : "multipart/form-data" ]
         
-        self.session
-            .request(AuthRouter.signup(name: name, username: username, password: password))
-            .validate(statusCode: 200..<501)
-            .responseJSON(completionHandler: { response in
-                
-                guard let responseValue = response.value
+        AF.upload(multipartFormData: { multipartFormData in
+            multipartFormData.append(Data(name.utf8), withName: "name")
+            multipartFormData.append(Data(email.utf8), withName: "email")
+            multipartFormData.append(Data(username.utf8), withName: "username")
+            multipartFormData.append(Data(password.utf8), withName: "password")
+            multipartFormData.append(image, withName: "file", fileName: "default.png", mimeType: "image/png")
+        }, to: url, usingThreshold: UInt64.init(), method: .post, headers: header).response(completionHandler: { response in
+            guard let responseValue = response.value
                     , let statusCode = response.response?.statusCode else { return }
-                let responseJson = JSON(responseValue)
-                guard let name = responseJson["response"]["name"].string
-                    , let username = responseJson["response"]["username"].string else { return }
-                
-                switch statusCode {
-                case 200:
-                    let jsonData = SignUpResponse(name: name, username: username)
-                    completion(.success(jsonData))
-                default:
-                    print("postSignUp() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
-                    completion(.failure(.noSignUp))
-                }
-            })
+            let responseJson = JSON(responseValue)
+            
+            switch statusCode {
+            case 200:
+                let name = responseJson["response"]["name"].string ?? ""
+                let username = responseJson["response"]["username"].string ?? ""
+                let jsonData = SignUpResponse(name: name, username: username)
+                completion(.success(jsonData))
+            default:
+                print("postSignUp() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
+                completion(.failure(.noSignUp))
+            }
+        })
     }
     
     // MARK: - 로그인
@@ -91,9 +93,8 @@ final class AlamofireManager {
             .request(AuthRouter.signin(username: username, password: password))
             .validate(statusCode: 200..<501)
             .responseJSON(completionHandler: { response in
-                
                 guard let responseValue = response.value
-                    , let statusCode = response.response?.statusCode else { return }
+                        , let statusCode = response.response?.statusCode else { return }
                 let responseJson = JSON(responseValue)
                 var accessToken : String = ""
                 
@@ -124,9 +125,8 @@ final class AlamofireManager {
             .request(AuthRouter.logout)
             .validate(statusCode: 200..<501)
             .responseJSON(completionHandler: { response in
-                
                 guard let responseValue = response.value
-                    , let statusCode = response.response?.statusCode else { return }
+                        , let statusCode = response.response?.statusCode else { return }
                 let responseJson = JSON(responseValue)
                 
                 switch statusCode {
@@ -152,11 +152,11 @@ final class AlamofireManager {
             .responseJSON(completionHandler: { response in
                 
                 guard let responseValue = response.value
-                    , let statusCode = response.response?.statusCode else { return }
+                        , let statusCode = response.response?.statusCode else { return }
                 let responseJson = JSON(responseValue)
                 guard let id = responseJson["response"]["id"].int
-                    , let userName = responseJson["response"]["username"].string
-                    , let name = responseJson["response"]["name"].string else { return }
+                        , let userName = responseJson["response"]["username"].string
+                        , let name = responseJson["response"]["name"].string else { return }
                 
                 switch statusCode {
                 case 200:
@@ -184,7 +184,7 @@ final class AlamofireManager {
             .responseJSON(completionHandler: { response in
                 
                 guard let responseValue = response.value
-                    , let statusCode = response.response?.statusCode else { return }
+                        , let statusCode = response.response?.statusCode else { return }
                 let responseJson = JSON(responseValue)
                 
                 switch statusCode {
@@ -194,9 +194,9 @@ final class AlamofireManager {
                     
                     for (index, subJson) : (String, JSON) in response {
                         guard let id = subJson["id"].int
-                            , let name = subJson["name"].string
-                            , let membercount = subJson["member_count"].int
-                            , let mastername = subJson["master_name"].string else { return }
+                                , let name = subJson["name"].string
+                                , let membercount = subJson["member_count"].int
+                                , let mastername = subJson["master_name"].string else { return }
                         let banner = subJson["banner"].string ?? ""
                         
                         let roomItem = SearchRoomResponse(id: id, name: name, membercount: membercount, mastername: mastername, banner: banner)
@@ -219,13 +219,13 @@ final class AlamofireManager {
             .response(completionHandler: { response in
                 
                 guard let responseValue = response.value
-                    , let statusCode = response.response?.statusCode else { return }
+                        , let statusCode = response.response?.statusCode else { return }
                 let responseJson = JSON(responseValue)
                 
                 switch statusCode {
                 case 200:
                     let response = responseJson["response"]
-//                    if response.exists() {
+                    //                    if response.exists() {
                     completion(.success(response))
                 default:
                     print("getSearchStudyMember() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
@@ -243,13 +243,13 @@ final class AlamofireManager {
             .responseJSON(completionHandler: { response in
                 
                 guard let responseValue = response.value
-                    , let statusCode = response.response?.statusCode else { return }
+                        , let statusCode = response.response?.statusCode else { return }
                 let responseJson = JSON(responseValue)
                 
                 switch statusCode {
                 case 200:
                     let response = responseJson["response"]
-//                    if response.exists() {
+                    //                    if response.exists() {
                     completion(.success(response))
                 default:
                     print("getSearchMember() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
@@ -267,17 +267,18 @@ final class AlamofireManager {
             , "Authorization" : "Bearer " + String(token!)
         ]
         
-        print("postRegisterRoom() - token: \(token), url: \(url)")
-        print("postRegisterRoom() - header: Content-Type(\(header["Content-Type"])), Authorization(\(header["Authorization"])")
+        //        print("postRegisterRoom() - token: \(token), url: \(url)")
+        //        print("postRegisterRoom() - header: Content-Type(\(header["Content-Type"])), Authorization(\(header["Authorization"])")
         
         AF.upload(multipartFormData: { multipartFormData in
             let mpfData = RegisterRoomRequest(name: name, member_list: member_list)
             multipartFormData.append(try! JSONEncoder().encode(mpfData), withName: "payload")
-            multipartFormData.append(image, withName: "file", fileName: "default.png", mimeType: "image/png")
-        }, to: url, usingThreshold: UInt64.init(), method: .post, headers: header).response (completionHandler: { response in
-            
+            if image != nil {
+                multipartFormData.append(image, withName: "file", fileName: "default.png", mimeType: "image/png")
+            }
+        }, to: url, usingThreshold: UInt64.init(), method: .post, headers: header).response(completionHandler: { response in
             guard let responseValue = response.value
-                , let statusCode = response.response?.statusCode else { return }
+                    , let statusCode = response.response?.statusCode else { return }
             let responseJson = JSON(responseValue)
             
             switch statusCode {
