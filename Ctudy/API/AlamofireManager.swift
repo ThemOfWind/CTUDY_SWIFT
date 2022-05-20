@@ -259,7 +259,7 @@ final class AlamofireManager {
     }
     
     // MARK: - 스터디룸 등록
-    func postRegisterRoom(name: String, member_list: Array<Int>, image: Data, completion: @escaping(Result<Bool, RoomErrors>) -> Void) {
+    func postRegisterRoom(name: String, member_list: Array<Int>, image: Data? = nil, completion: @escaping(Result<Bool, RoomErrors>) -> Void) {
         let url = URL(string: API.BASE_URL + "study/room/")!
         let token = KeyChainManager().tokenLoad(API.SERVICEID, account: "accessToken")
         let header: HTTPHeaders = [
@@ -274,7 +274,7 @@ final class AlamofireManager {
             let mpfData = RegisterRoomRequest(name: name, member_list: member_list)
             multipartFormData.append(try! JSONEncoder().encode(mpfData), withName: "payload")
             if image != nil {
-                multipartFormData.append(image, withName: "file", fileName: "default.png", mimeType: "image/png")
+                multipartFormData.append(image!, withName: "file", fileName: "default.png", mimeType: "image/png")
             }
         }, to: url, usingThreshold: UInt64.init(), method: .post, headers: header).response(completionHandler: { response in
             guard let responseValue = response.value
