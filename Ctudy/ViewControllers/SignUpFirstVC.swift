@@ -54,7 +54,7 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
         
         // lmageView ui
         self.userImg.layer.borderWidth = 1
-        self.userImg.layer.borderColor = COLOR.SUBTITLE_COLOR.cgColor
+        self.userImg.layer.borderColor = COLOR.BORDER_COLOR.cgColor
         self.userImg.layer.cornerRadius = self.userImg.layer.bounds.height / 2
         self.userImg.backgroundColor = COLOR.SUBTITLE_COLOR
         self.userImg.tintColor = COLOR.DISABLE_COLOR

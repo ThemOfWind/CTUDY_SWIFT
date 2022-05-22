@@ -23,7 +23,7 @@ class StudyCollectionViewCell: UICollectionViewCell {
         // room Cell
         self.roomStackViewCell.layer.cornerRadius = 10
         self.roomStackViewCell.layer.borderWidth = 1
-        self.roomStackViewCell.layer.borderColor = COLOR.SUBTITLE_COLOR.cgColor
+        self.roomStackViewCell.layer.borderColor = COLOR.BORDER_COLOR.cgColor
         
         // room lmg
         self.roomImg.backgroundColor = COLOR.SUBTITLE_COLOR

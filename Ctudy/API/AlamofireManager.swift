@@ -152,18 +152,20 @@ final class AlamofireManager {
             .responseJSON(completionHandler: { response in
                 
                 guard let responseValue = response.value
-                        , let statusCode = response.response?.statusCode else { return }
+                    , let statusCode = response.response?.statusCode else { return }
                 let responseJson = JSON(responseValue)
                 guard let id = responseJson["response"]["id"].int
-                        , let userName = responseJson["response"]["username"].string
-                        , let name = responseJson["response"]["name"].string else { return }
+                    , let userName = responseJson["response"]["username"].string
+                    , let name = responseJson["response"]["name"].string else { return }
+                let image = responseJson["response"]["image"].string ?? ""
                 
                 switch statusCode {
                 case 200:
                     if KeyChainManager().tokenSave(API.SERVICEID, account: "id", value: String(id))
-                        , KeyChainManager().tokenSave(API.SERVICEID, account: "userName", value: userName)
-                        , KeyChainManager().tokenSave(API.SERVICEID, account: "name", value: name) {
-                        let jsonData = ProfileResponse(id: id, username: userName, name: name)
+                     , KeyChainManager().tokenSave(API.SERVICEID, account: "userName", value: userName)
+                     , KeyChainManager().tokenSave(API.SERVICEID, account: "name", value: name)
+                     , KeyChainManager().tokenSave(API.SERVICEID, account: "image", value: image) {
+                        let jsonData = ProfileResponse(id: id, username: userName, name: name, image: image)
                         
                         completion(.success(jsonData))
                     } else {

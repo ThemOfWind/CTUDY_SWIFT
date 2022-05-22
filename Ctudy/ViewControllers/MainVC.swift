@@ -36,10 +36,11 @@ class MainVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
                 controller.roomName = self.roomName
                 controller.roomNameString = self.roomNameString
             }
-        } else if let id = segue.identifier, id == "AddStudyNameVC" {
-            if let controller = segue.destination as? AddStudyNameVC {
-            }
         }
+//        } else if let id = segue.identifier, id == "AddStudyNameVC" {
+//            if let controller = segue.destination as? AddStudyNameVC {
+//            }
+//        }
     }
     
     
@@ -101,7 +102,7 @@ class MainVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         cell.roomMasterName.text = rooms[indexPath.row].mastername
 //        cell.roomImg.imageLoad(urlString: "https://api.ctudy.com\(rooms[indexPath.row].banner)", size: cell.roomImg.image!.size)
         if rooms[indexPath.row].banner != "" {
-            cell.roomImg.kf.setImage(with: URL(string: "https://api.ctudy.com\(rooms[indexPath.row].banner)")!)
+            cell.roomImg.kf.setImage(with: URL(string: API.IMAGE_URL + rooms[indexPath.row].banner)!)
         } else {
             cell.roomImg.image = UIImage(named: "studyroom_default.png")
         }
