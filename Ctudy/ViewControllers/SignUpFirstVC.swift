@@ -22,6 +22,7 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
     var memberName: String?
     var nameOKFlag: Bool = false
     var emailOKFlag: Bool = false
+    var imageFlag: Bool = false // image 초기화 flag
     
     // MARK: - override func
     override func viewDidLoad() {
@@ -34,7 +35,7 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let id = segue.identifier, id == "SignUpSecondVC" {
             if let controller = segue.destination as? SignUpSecondVC {
-                controller.userImage = self.userImg.image?.pngData()
+                controller.userImage = imageFlag ? self.userImg.image?.pngData() : nil
                 controller.registerName = self.registerName.text
                 controller.registerEmail = self.registerEmail.text
             }
@@ -49,7 +50,7 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
         // button ui
         self.nextBtn.tintColor = .white
         self.nextBtn.backgroundColor = COLOR.DISABLE_COLOR
-        self.nextBtn.layer.cornerRadius = 30
+        self.nextBtn.layer.cornerRadius = 10
         self.nextBtn.isEnabled = false
         
         // lmageView ui
@@ -119,7 +120,9 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
     
     fileprivate func actionSheetAlert() {
         let alert = UIAlertController(title: "스터디룸 이미지 설정", message: nil, preferredStyle: .actionSheet)
-        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        let cancel = UIAlertAction(title: "초기화", style: .cancel, handler: { [weak self] (_) in
+            self?.presentCancel()
+        })
         let camera = UIAlertAction(title: "카메라", style: .default, handler: { [weak self] (_) in
             self?.presentCamera()
         })
@@ -131,6 +134,13 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
         alert.addAction(camera)
         alert.addAction(album)
         present(alert, animated: true, completion: nil)
+    }
+    
+    // 초기화 picker setting
+    fileprivate func presentCancel() {
+        self.imageFlag = false
+        self.userImg.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30, weight: .regular, scale: .large))
+        self.userImg.contentMode = .center
     }
     
     // 카메라 picker setting
@@ -176,6 +186,7 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
         
         self.userImg.contentMode = .scaleAspectFit
         self.userImg.image = newImage
+        self.imageFlag = true
         picker.dismiss(animated: true, completion: nil)
     }
     

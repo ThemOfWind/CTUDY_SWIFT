@@ -82,7 +82,7 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
         // btn ui
         self.loginBtn.tintColor = .white
         self.loginBtn.backgroundColor = COLOR.DISABLE_COLOR
-        self.loginBtn.layer.cornerRadius = 30
+        self.loginBtn.layer.cornerRadius = 10
         self.loginBtn.isEnabled = false
         self.loginViewY = self.loginView.frame.origin.y
         

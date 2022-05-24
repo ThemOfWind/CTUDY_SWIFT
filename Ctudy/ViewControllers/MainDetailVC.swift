@@ -25,7 +25,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
     var roomName: Int? // 스터디룸 id
     var roomNameString: String? // 스터디룸 name
     
-    // MARK: - overrid func
+    // MARK: - override func
     override func viewDidLoad() {
         super.viewDidLoad()
         self.config()
@@ -55,7 +55,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
             self.profileUserImg.image = UIImage(named: "user_default.png")
 //            self.profileUserImg.image = UIImage(systemName: "person", withConfiguration: UIImage.SymbolConfiguration(pointSize: 20, weight: .regular, scale: .large))
         }
-        self.profileUserImg.contentMode = .center
+        self.profileUserImg.contentMode = .scaleAspectFill
         
         self.profileId = Int(KeyChainManager().tokenLoad(API.SERVICEID, account: "id")!)
         self.profileName.text = KeyChainManager().tokenLoad(API.SERVICEID, account: "name")
@@ -147,7 +147,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = memberTableView.dequeueReusableCell(withIdentifier: "StudyMemberTableViewCell", for: indexPath) as! StudyMemberTableViewCell
         cell.member.text = members[indexPath.row].name
-        cell.memberName.text = members[indexPath.row].userName
+        cell.memberName.text = "@\(members[indexPath.row].userName)"
         cell.couponCnt.text = cell.couponCnt.text!
         if members[indexPath.row].image != "" {
             cell.memberImg.kf.setImage(with: URL(string: API.IMAGE_URL + members[indexPath.row].image)!)

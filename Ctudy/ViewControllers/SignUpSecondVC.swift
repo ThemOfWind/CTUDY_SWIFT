@@ -78,7 +78,7 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
         // ui
         self.signUpBtn.tintColor = .white
         self.signUpBtn.backgroundColor = COLOR.DISABLE_COLOR
-        self.signUpBtn.layer.cornerRadius = 30
+        self.signUpBtn.layer.cornerRadius = 10
         self.signUpBtn.isEnabled = false
         self.registerPassword.isSecureTextEntry = true
         self.registerPasswordChk.isSecureTextEntry = true
@@ -219,7 +219,7 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
         
         self.onStartActivityIndicator()
         
-        AlamofireManager.shared.postSignUp(name: registerName!, email: registerEmail!, username: registerUserName.text!, password: registerPassword.text!, image: userImage!, completion: { [weak self] result in
+        AlamofireManager.shared.postSignUp(name: registerName!, email: registerEmail!, username: registerUserName.text!, password: registerPassword.text!, image: userImage, completion: { [weak self] result in
             guard let self = self else { return }
             
             self.onStopActivityIndicator()

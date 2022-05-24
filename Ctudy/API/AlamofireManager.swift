@@ -57,7 +57,7 @@ final class AlamofireManager {
     }
     
     // MARK: - 회원가입
-    func postSignUp(name name: String, email: String, username username: String, password password: String, image: Data, completion: @escaping (Result<SignUpResponse, AuthErrors>) -> Void) {
+    func postSignUp(name name: String, email: String, username username: String, password password: String, image: Data? = nil, completion: @escaping (Result<SignUpResponse, AuthErrors>) -> Void) {
         let url = URL(string: API.BASE_URL + "account/signup/")!
         let header: HTTPHeaders = [ "Content-Type" : "multipart/form-data" ]
         
@@ -66,7 +66,9 @@ final class AlamofireManager {
             multipartFormData.append(Data(email.utf8), withName: "email")
             multipartFormData.append(Data(username.utf8), withName: "username")
             multipartFormData.append(Data(password.utf8), withName: "password")
-            multipartFormData.append(image, withName: "file", fileName: "default.png", mimeType: "image/png")
+            if image != nil {
+                multipartFormData.append(image!, withName: "file", fileName: "default.png", mimeType: "image/png")
+            }
         }, to: url, usingThreshold: UInt64.init(), method: .post, headers: header).response(completionHandler: { response in
             guard let responseValue = response.value
                     , let statusCode = response.response?.statusCode else { return }

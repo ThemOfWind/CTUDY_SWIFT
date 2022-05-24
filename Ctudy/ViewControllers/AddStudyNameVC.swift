@@ -51,7 +51,7 @@ class AddStudyNameVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
         self.titleItem = TitleItem.titleGeneral(title: "스터디룸 등록", isLargeTitles: true)
         
         // lmageView ui
-        self.roomImg.layer.cornerRadius = self.roomImg.layer.bounds.height / 10
+        self.roomImg.layer.cornerRadius = 10
         self.roomImg.layer.borderWidth = 1
         self.roomImg.layer.borderColor = COLOR.SUBTITLE_COLOR.cgColor
         self.roomImg.backgroundColor = COLOR.SUBTITLE_COLOR
@@ -63,7 +63,7 @@ class AddStudyNameVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
         // button ui, event 연결
         self.nextBtn.tintColor = .white
         self.nextBtn.backgroundColor = COLOR.DISABLE_COLOR
-        self.nextBtn.layer.cornerRadius = self.nextBtn.bounds.height / 2
+        self.nextBtn.layer.cornerRadius = 10
         self.nextBtn.isEnabled = false
         self.nextBtn.addTarget(self, action: #selector(onNextBtnClicked(_:)), for: .touchUpInside)
         

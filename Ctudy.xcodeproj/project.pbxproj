@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A07BBAC283CD9C3006FD4B1 /* CouponHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A07BBAB283CD9C3006FD4B1 /* CouponHistoryTableViewCell.swift */; };
+		5A07BBAE283CD9F2006FD4B1 /* CouponHistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A07BBAD283CD9F2006FD4B1 /* CouponHistoryTableViewCell.xib */; };
 		5A0AD87727EC3D250038FD07 /* BasicVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0AD87627EC3D250038FD07 /* BasicVC.swift */; };
 		5A1C2FFB28000B1100487A16 /* ProfileResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1C2FFA28000B1100487A16 /* ProfileResponse.swift */; };
 		5A24494327EA17280082EC88 /* AddStudyMemberVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A24494227EA17280082EC88 /* AddStudyMemberVC.swift */; };
@@ -28,6 +30,7 @@
 		5A58EEA6275F7E84000A1A39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A58EEA5275F7E84000A1A39 /* Assets.xcassets */; };
 		5A58EEA9275F7E84000A1A39 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A58EEA7275F7E84000A1A39 /* LaunchScreen.storyboard */; };
 		5A741B3B27F4090B005E1D11 /* BarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A741B3A27F4090B005E1D11 /* BarButtonItem.swift */; };
+		5A846FD3283D39BB00DAC734 /* CouponVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A846FD2283D39BB00DAC734 /* CouponVC.swift */; };
 		5A8BAB142786E94100CFF908 /* StudyCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A8BAB132786E94100CFF908 /* StudyCollectionViewCell.xib */; };
 		5A8BAB162786F79200CFF908 /* StudyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8BAB152786F79200CFF908 /* StudyCollectionViewCell.swift */; };
 		5A8BAB19278812AD00CFF908 /* SearchRoomResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8BAB18278812AD00CFF908 /* SearchRoomResponse.swift */; };
@@ -41,6 +44,7 @@
 		5AA86D0B2761005D0067620C /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA86D0A2761005D0067620C /* MainVC.swift */; };
 		5AAE346D2761D2BE00EE6A5D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAE346C2761D2BE00EE6A5D /* Constants.swift */; };
 		5AAE518B27F7023400DDA555 /* BasicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAE518A27F7023400DDA555 /* BasicButton.swift */; };
+		5ABA13F2283CBBFE007AE4F0 /* CouponHistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABA13F1283CBBFE007AE4F0 /* CouponHistoryVC.swift */; };
 		5ABB95C22760F697003B4764 /* SignUpSecondVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABB95C12760F697003B4764 /* SignUpSecondVC.swift */; };
 		5AC1CE702765C9E0009586B2 /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC1CE6F2765C9E0009586B2 /* AuthRouter.swift */; };
 		5AC1CE732765CADC009586B2 /* RoomRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC1CE722765CADC009586B2 /* RoomRouter.swift */; };
@@ -63,6 +67,8 @@
 /* Begin PBXFileReference section */
 		068A07C8F4FE2B4F18CB7A99 /* Pods-Ctudy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ctudy.release.xcconfig"; path = "Target Support Files/Pods-Ctudy/Pods-Ctudy.release.xcconfig"; sourceTree = "<group>"; };
 		2B69261F1FB25B4F48561F6E /* Pods-Ctudy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ctudy.debug.xcconfig"; path = "Target Support Files/Pods-Ctudy/Pods-Ctudy.debug.xcconfig"; sourceTree = "<group>"; };
+		5A07BBAB283CD9C3006FD4B1 /* CouponHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponHistoryTableViewCell.swift; sourceTree = "<group>"; };
+		5A07BBAD283CD9F2006FD4B1 /* CouponHistoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CouponHistoryTableViewCell.xib; sourceTree = "<group>"; };
 		5A0AD87627EC3D250038FD07 /* BasicVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicVC.swift; sourceTree = "<group>"; };
 		5A1C2FFA28000B1100487A16 /* ProfileResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileResponse.swift; sourceTree = "<group>"; };
 		5A24494227EA17280082EC88 /* AddStudyMemberVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStudyMemberVC.swift; sourceTree = "<group>"; };
@@ -86,6 +92,7 @@
 		5A58EEA8275F7E84000A1A39 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5A58EEAA275F7E84000A1A39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5A741B3A27F4090B005E1D11 /* BarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarButtonItem.swift; sourceTree = "<group>"; };
+		5A846FD2283D39BB00DAC734 /* CouponVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponVC.swift; sourceTree = "<group>"; };
 		5A8BAB132786E94100CFF908 /* StudyCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StudyCollectionViewCell.xib; sourceTree = "<group>"; };
 		5A8BAB152786F79200CFF908 /* StudyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyCollectionViewCell.swift; sourceTree = "<group>"; };
 		5A8BAB18278812AD00CFF908 /* SearchRoomResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRoomResponse.swift; sourceTree = "<group>"; };
@@ -99,6 +106,7 @@
 		5AA86D0A2761005D0067620C /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		5AAE346C2761D2BE00EE6A5D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		5AAE518A27F7023400DDA555 /* BasicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicButton.swift; sourceTree = "<group>"; };
+		5ABA13F1283CBBFE007AE4F0 /* CouponHistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponHistoryVC.swift; sourceTree = "<group>"; };
 		5ABB95C12760F697003B4764 /* SignUpSecondVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpSecondVC.swift; sourceTree = "<group>"; };
 		5AC1CE6F2765C9E0009586B2 /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
 		5AC1CE722765CADC009586B2 /* RoomRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomRouter.swift; sourceTree = "<group>"; };
@@ -220,6 +228,8 @@
 				5A453AFD27E9B25B006F0A1D /* AddStudyNameVC.swift */,
 				5A24494227EA17280082EC88 /* AddStudyMemberVC.swift */,
 				5A9D31B9277B17DD00DCEAEA /* UserInfoVC.swift */,
+				5ABA13F1283CBBFE007AE4F0 /* CouponHistoryVC.swift */,
+				5A846FD2283D39BB00DAC734 /* CouponVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -253,6 +263,8 @@
 				5A2D86C127EAEBB8000BF69B /* MemberTableViewCell.swift */,
 				5AD9515B280870100038048F /* StudyMemberTableViewCell.xib */,
 				5AD9515D280870330038048F /* StudyMemberTableViewCell.swift */,
+				5A07BBAB283CD9C3006FD4B1 /* CouponHistoryTableViewCell.swift */,
+				5A07BBAD283CD9F2006FD4B1 /* CouponHistoryTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -387,6 +399,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A07BBAE283CD9F2006FD4B1 /* CouponHistoryTableViewCell.xib in Resources */,
 				5AD9515C280870100038048F /* StudyMemberTableViewCell.xib in Resources */,
 				5A8BAB142786E94100CFF908 /* StudyCollectionViewCell.xib in Resources */,
 				5A2D86C027EAE8A9000BF69B /* MemberTableViewCell.xib in Resources */,
@@ -465,6 +478,7 @@
 				5A0AD87727EC3D250038FD07 /* BasicVC.swift in Sources */,
 				5A9D31BA277B17DD00DCEAEA /* UserInfoVC.swift in Sources */,
 				5ABB95C22760F697003B4764 /* SignUpSecondVC.swift in Sources */,
+				5ABA13F2283CBBFE007AE4F0 /* CouponHistoryVC.swift in Sources */,
 				5A3BBBE927EAF31300BA9E3F /* SearhMemberResponse.swift in Sources */,
 				5ACF0C9327673065003907E9 /* SignInResponse.swift in Sources */,
 				5A741B3B27F4090B005E1D11 /* BarButtonItem.swift in Sources */,
@@ -474,8 +488,10 @@
 				5A9EDD1427F0C89500ED3343 /* MemberCheckButton.swift in Sources */,
 				5AAE518B27F7023400DDA555 /* BasicButton.swift in Sources */,
 				5A8D9FF92836890B008FBD9F /* SignUpRequest.swift in Sources */,
+				5A07BBAC283CD9C3006FD4B1 /* CouponHistoryTableViewCell.swift in Sources */,
 				5A9D31C0277C0B9900DCEAEA /* KeyChainManager.swift in Sources */,
 				5A8BAB19278812AD00CFF908 /* SearchRoomResponse.swift in Sources */,
+				5A846FD3283D39BB00DAC734 /* CouponVC.swift in Sources */,
 				5A453AFE27E9B25B006F0A1D /* AddStudyNameVC.swift in Sources */,
 				5AD95160280A8D570038048F /* SearchStudyMemberResponse.swift in Sources */,
 				5A4CD0DC27E8A09E00F6C829 /* AddBarButtonItem.swift in Sources */,

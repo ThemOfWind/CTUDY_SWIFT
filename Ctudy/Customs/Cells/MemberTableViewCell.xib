@@ -61,6 +61,7 @@
                     <constraint firstItem="mwp-Mw-KRN" firstAttribute="top" secondItem="Fxo-kQ-vYJ" secondAttribute="top" constant="20" id="s7P-sm-ZyO"/>
                 </constraints>
             </tableViewCellContentView>
+            <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="checkBtn" destination="mwp-Mw-KRN" id="FOH-q2-5XS"/>
                 <outlet property="member" destination="UzR-6x-7Jr" id="vLt-DL-AAc"/>

@@ -47,7 +47,7 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
     var nextPage: String? = "1"
     var fetchingMore = false
     
-    // MARK: - overrid func
+    // MARK: - override func
     override func viewDidLoad() {
         super.viewDidLoad()
         self.config()
@@ -62,7 +62,8 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
         // btn
         self.registerRoomBtn.tintColor = .white
         self.registerRoomBtn.backgroundColor = COLOR.SIGNATURE_COLOR
-        self.registerRoomBtn.layer.cornerRadius = self.registerRoomBtn.bounds.height / 2
+        self.registerRoomBtn.layer.cornerRadius = 10
+        
         
         // 셀 리소스 파일 가져오기
         let memberCell = UINib(nibName: String(describing: MemberTableViewCell.self), bundle: nil)
@@ -91,13 +92,13 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
     // 전체 멤버 조회
     fileprivate func getSearchMember() {
         
-        self.onStartActivityIndicator()
+//        self.onStartActivityIndicator()
         
         AlamofireManager.shared.getSearchMember(page: nextPage ?? "0", completion: {
             [weak self] result in
             guard let self = self else { return }
             
-            self.onStopActivityIndicator()
+//            self.onStopActivityIndicator()
             
             switch result {
             case .success(let response):
@@ -121,9 +122,9 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
             }
         })
         
-        if self.indicator.isAnimating {
-            self.onStopActivityIndicator()
-        }
+//        if self.indicator.isAnimating {
+//            self.onStopActivityIndicator()
+//        }
     }
     
     // 로딩 그리기
@@ -209,7 +210,7 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
             cell.memberImg.image = UIImage(named: "user_default.png")
         }
         cell.member.text = members[indexPath.row].name
-        cell.memberName.text = members[indexPath.row].userName
+        cell.memberName.text = "@\(members[indexPath.row].userName)"
         cell.checkBtn.tag = indexPath.row
         cell.checkBtn.isChecked = members[indexPath.row].ischecked
         cell.checkBtn.checkBtnDelegate = self

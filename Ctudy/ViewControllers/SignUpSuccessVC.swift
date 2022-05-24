@@ -21,6 +21,7 @@ class SignUpSuccessVC: BasicVC {
         print("SignUpSuccessVC - viewDidLoad() calld")
         
         // navigationBar setting
+        self.leftItem = LeftItem.none
 //        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         // navigationBar left item
 //        self.navigationItem.leftBarButtonItem = nil
@@ -29,7 +30,7 @@ class SignUpSuccessVC: BasicVC {
         // btn ui
         self.goToLoginBtn.tintColor = .white
         self.goToLoginBtn.backgroundColor = COLOR.SIGNATURE_COLOR
-        self.goToLoginBtn.layer.cornerRadius = 30
+        self.goToLoginBtn.layer.cornerRadius = 10
         
         // label ui
         self.enterName.text = memberName
