@@ -2,6 +2,7 @@ PODS:
   - Alamofire (5.4.4)
   - AlamofireNetworkActivityIndicator (3.1.0):
     - Alamofire (~> 5.1)
+  - Kingfisher (7.2.2)
   - NVActivityIndicatorView (5.1.1):
     - NVActivityIndicatorView/Base (= 5.1.1)
   - NVActivityIndicatorView/Base (5.1.1)
@@ -12,6 +13,7 @@ DEPENDENCIES:
   - Alamofire
   - Alamofire (~> 5.4)
   - AlamofireNetworkActivityIndicator (~> 3.1)
+  - Kingfisher
   - NVActivityIndicatorView
   - SwiftyJSON (~> 4.0)
   - Toast-Swift (~> 5.0.1)
@@ -20,6 +22,7 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - AlamofireNetworkActivityIndicator
+    - Kingfisher
     - NVActivityIndicatorView
     - SwiftyJSON
     - Toast-Swift
@@ -27,10 +30,11 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: f3b09a368f1582ab751b3fff5460276e0d2cf5c9
   AlamofireNetworkActivityIndicator: 6564782bd7b9e6c430ae67d9277af01907b01ca4
+  Kingfisher: 184d4d1a8c36666e663caf8e08abe87898595c53
   NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
 
-PODFILE CHECKSUM: ef231ca96dfeae8f6a642190b3745dfc71211b11
+PODFILE CHECKSUM: e46ddb5463c2f2f50f477d633818797773a886c9
 
 COCOAPODS: 1.11.2

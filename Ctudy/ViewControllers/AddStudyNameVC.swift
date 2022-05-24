@@ -17,9 +17,7 @@ class AddStudyNameVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
     @IBOutlet weak var roomImg: UIImageView!
     @IBOutlet weak var registerStudyName: UITextField!
     @IBOutlet weak var nextBtn: UIButton!
-    let TabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
-    var distance: Double = 0
-    var studyNameViewY: Double!
+    let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: AddStudyNameVC.self, action: nil)
     
     //    let imagePicker: UIImagePickerController = {
     //        let picker = UIImagePickerController()
@@ -27,6 +25,8 @@ class AddStudyNameVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
     //        picker.allowsEditing = true // 수정 가능 여부
     //        return picker
     //    }()
+    
+    var imageFlag: Bool = false
     
     // MARK: - override func
     override func viewDidLoad() {
@@ -39,6 +39,7 @@ class AddStudyNameVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
         if let id = segue.identifier, id == "AddStudyMemberVC" {
             if let controller = segue.destination as? AddStudyMemberVC {
                 controller.studyName = self.registerStudyName.text
+                controller.studyImage = imageFlag ? self.roomImg.image?.pngData() : nil
             }
         }
     }
@@ -49,34 +50,36 @@ class AddStudyNameVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
         self.leftItem = LeftItem.backGeneral
         self.titleItem = TitleItem.titleGeneral(title: "스터디룸 등록", isLargeTitles: true)
         
-        // lmg
+        // lmageView ui
+        self.roomImg.layer.cornerRadius = 10
         self.roomImg.layer.borderWidth = 1
         self.roomImg.layer.borderColor = COLOR.SUBTITLE_COLOR.cgColor
-        self.roomImg.layer.cornerRadius = self.roomImg.layer.bounds.height / 10
         self.roomImg.backgroundColor = COLOR.SUBTITLE_COLOR
         self.roomImg.tintColor = COLOR.DISABLE_COLOR
         self.roomImg.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30, weight: .regular, scale: .large))
         self.roomImg.contentMode = .center
         self.roomImg.isUserInteractionEnabled = true
         
-        // btn
+        // button ui, event 연결
         self.nextBtn.tintColor = .white
         self.nextBtn.backgroundColor = COLOR.DISABLE_COLOR
-        self.nextBtn.layer.cornerRadius = self.nextBtn.bounds.height / 2
+        self.nextBtn.layer.cornerRadius = 10
         self.nextBtn.isEnabled = false
         self.nextBtn.addTarget(self, action: #selector(onNextBtnClicked(_:)), for: .touchUpInside)
         
-        // delegate
+        // delegate 연결
         self.registerStudyName.delegate = self
-        self.TabGesture.delegate = self
+        self.tabGesture.delegate = self
         
-        // gesture
-        self.view.addGestureRecognizer(TabGesture)
+        // gesture 연결
+        self.view.addGestureRecognizer(tabGesture)
     }
     
     fileprivate func actionSheetAlert() {
         let alert = UIAlertController(title: "스터디룸 이미지 설정", message: nil, preferredStyle: .actionSheet)
-        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        let cancel = UIAlertAction(title: "초기화", style: .cancel, handler: { [weak self] (_) in
+            self?.presentCancel()
+        })
         let camera = UIAlertAction(title: "카메라", style: .default, handler: { [weak self] (_) in
             self?.presentCamera()
         })
@@ -88,6 +91,13 @@ class AddStudyNameVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
         alert.addAction(camera)
         alert.addAction(album)
         present(alert, animated: true, completion: nil)
+    }
+    
+    // 초기화 picker setting
+    fileprivate func presentCancel() {
+        self.imageFlag = false
+        self.roomImg.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30, weight: .regular, scale: .large))
+        self.roomImg.contentMode = .center
     }
     
     // 카메라 picker setting
@@ -112,9 +122,10 @@ class AddStudyNameVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
         //        vc.showsCameraControls = false
         //        vc.cameraOverlayView?.addSubview(customOverlayView())
         present(vc, animated: true, completion: nil)
+        
     }
     
-    // 취소버튼 click event
+    // 취소 버튼 click event
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
     }
@@ -131,8 +142,9 @@ class AddStudyNameVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
             newImage = possibleImage
         }
         
-        self.roomImg.contentMode = .scaleAspectFit
+        self.roomImg.contentMode = .scaleAspectFill
         self.roomImg.image = newImage
+        self.imageFlag = true
         picker.dismiss(animated: true, completion: nil)
     }
     

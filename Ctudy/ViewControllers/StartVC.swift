@@ -32,10 +32,12 @@ class StartVC : BasicVC {
         // btn ui
         self.signUpBtn.tintColor = .white
         self.signUpBtn.backgroundColor = COLOR.SIGNATURE_COLOR
-        self.signUpBtn.layer.cornerRadius = 30
-        self.loginBtn.tintColor = .white
-        self.loginBtn.backgroundColor = COLOR.SIGNATURE_COLOR
-        self.loginBtn.layer.cornerRadius = 30
+        self.signUpBtn.layer.cornerRadius = 10
+        self.loginBtn.layer.borderWidth = 1
+        self.loginBtn.layer.borderColor = COLOR.SIGNATURE_COLOR.cgColor
+        self.loginBtn.tintColor = COLOR.SIGNATURE_COLOR
+        self.loginBtn.backgroundColor = .white
+        self.loginBtn.layer.cornerRadius = 10
     }
     
     // MARK: - pop func

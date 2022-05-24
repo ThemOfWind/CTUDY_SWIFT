@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import SwiftyJSON
+import Kingfisher
 
 class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
     // MARK: - 변수
@@ -24,7 +25,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
     var roomName: Int? // 스터디룸 id
     var roomNameString: String? // 스터디룸 name
     
-    // MARK: - overrid func
+    // MARK: - override func
     override func viewDidLoad() {
         super.viewDidLoad()
         self.config()
@@ -44,10 +45,17 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         
         // profile
         self.profileUserImg.layer.cornerRadius = self.profileUserImg.bounds.height / 2
+        self.profileUserImg.layer.borderWidth = 1
+        self.profileUserImg.layer.borderColor = COLOR.BORDER_COLOR.cgColor
         self.profileUserImg.backgroundColor = COLOR.DISABLE_COLOR
         self.profileUserImg.tintColor = COLOR.SUBTITLE_COLOR
-        self.profileUserImg.image = UIImage(systemName: "person", withConfiguration: UIImage.SymbolConfiguration(pointSize: 20, weight: .regular, scale: .large))
-        self.profileUserImg.contentMode = .center
+        if let userImg = KeyChainManager().tokenLoad(API.SERVICEID, account: "image"), userImg != "" {
+            self.profileUserImg.kf.setImage(with: URL(string: API.IMAGE_URL + userImg)!)
+        } else {
+            self.profileUserImg.image = UIImage(named: "user_default.png")
+//            self.profileUserImg.image = UIImage(systemName: "person", withConfiguration: UIImage.SymbolConfiguration(pointSize: 20, weight: .regular, scale: .large))
+        }
+        self.profileUserImg.contentMode = .scaleAspectFill
         
         self.profileId = Int(KeyChainManager().tokenLoad(API.SERVICEID, account: "id")!)
         self.profileName.text = KeyChainManager().tokenLoad(API.SERVICEID, account: "name")
@@ -74,6 +82,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         
         // 셀 설정
         self.memberTableView.rowHeight = 90
+        self.memberTableView.allowsSelection = false
         //        self.memberTableView.estimatedRowHeight = 50
         
         // delegete
@@ -97,19 +106,22 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
                 // 마스터 정보
                 let masterList = response["master"]
                 guard let id = masterList["id"].int
-                        , let username = masterList["username"].string
-                        , let name = masterList["name"].string else { return }
+                    , let username = masterList["username"].string
+                    , let name = masterList["name"].string else { return }
+                let image = masterList["image"].string ?? ""
                 
-                let masterItem = SearchStudyMemberResponse(id: id, name: name + "⭐️", userName: username)
+                let masterItem = SearchStudyMemberResponse(id: id, name: name + "⭐️", userName: username, image: image)
                 self.members.append(masterItem)
                 
                 // 멤버 정보
                 let memberList = response["members"]
-                for (index, subJson) : (String, JSON) in memberList {
+                for (_, subJson) : (String, JSON) in memberList {
                     guard let id = subJson["id"].int
-                            ,let username = subJson["username"].string
-                            ,let name = subJson["name"].string else { return }
-                    let memberItem = SearchStudyMemberResponse(id: id, name: name, userName: username)
+                        , let username = subJson["username"].string
+                        , let name = subJson["name"].string else { return }
+                    let image = subJson["image"].string ?? ""
+                    
+                    let memberItem = SearchStudyMemberResponse(id: id, name: name, userName: username, image: image)
                     self.members.append(memberItem)
                 }
                 
@@ -135,8 +147,13 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = memberTableView.dequeueReusableCell(withIdentifier: "StudyMemberTableViewCell", for: indexPath) as! StudyMemberTableViewCell
         cell.member.text = members[indexPath.row].name
-        cell.memberName.text = members[indexPath.row].userName
+        cell.memberName.text = "@\(members[indexPath.row].userName)"
         cell.couponCnt.text = cell.couponCnt.text!
+        if members[indexPath.row].image != "" {
+            cell.memberImg.kf.setImage(with: URL(string: API.IMAGE_URL + members[indexPath.row].image)!)
+        } else {
+            cell.memberImg.image = UIImage(named: "user_default.png")
+        }
         return cell
     }
 }

@@ -40,7 +40,7 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    let keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
+    let keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: LoginVC.self, action: nil)
     var distance: Double = 0
     var loginViewY: Double!
     
@@ -82,7 +82,7 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
         // btn ui
         self.loginBtn.tintColor = .white
         self.loginBtn.backgroundColor = COLOR.DISABLE_COLOR
-        self.loginBtn.layer.cornerRadius = 30
+        self.loginBtn.layer.cornerRadius = 10
         self.loginBtn.isEnabled = false
         self.loginViewY = self.loginView.frame.origin.y
         
@@ -141,7 +141,7 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
             self.onStopActivityIndicator()
             
             switch result {
-            case .success(let memberData):
+            case .success(_):
                 print("LoginVC - postSignIn.success")
                 self.getProfileInfo()
             case .failure(let error):
@@ -195,7 +195,7 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
             self.onStopActivityIndicator()
             
             switch result {
-            case .success(let profile):
+            case .success(_):
                 // 다음 화면으로 이동
                 self.performSegue(withIdentifier: "MainTabBarVC", sender: nil)
             case .failure(let error):

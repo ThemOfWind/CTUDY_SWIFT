@@ -8,6 +8,7 @@
 import Foundation
 
 struct RegisterRoomRequest: Codable {
-    var name: String
-    var member_list: Array<Int>
+    var name: String    // 스터디룸 이름
+    var member_list: Array<Int> // 멤버 pk 리스트
+//    var image: [Data]?
 }

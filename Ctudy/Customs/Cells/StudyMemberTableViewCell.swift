@@ -19,10 +19,13 @@ class StudyMemberTableViewCell: UITableViewCell {
         
         // image
         self.memberImg.layer.cornerRadius = self.memberImg.bounds.height / 3
+        self.memberImg.layer.borderWidth = 1
+        self.memberImg.layer.borderColor = COLOR.BORDER_COLOR.cgColor
         self.memberImg.backgroundColor = COLOR.DISABLE_COLOR
         self.memberImg.tintColor = COLOR.SUBTITLE_COLOR
-        self.memberImg.image = UIImage(systemName: "person", withConfiguration: UIImage.SymbolConfiguration(pointSize: 15, weight: .regular, scale: .large))
-        self.memberImg.contentMode = .center
+        self.memberImg.image = UIImage(named: "user_default.png")
+        self.memberImg.contentMode = .scaleAspectFill
+        self.memberImg.translatesAutoresizingMaskIntoConstraints = false
         
         // 쿠폰 label
         self.couponCnt.textColor = COLOR.SIGNATURE_COLOR

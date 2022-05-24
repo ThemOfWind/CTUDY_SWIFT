@@ -9,8 +9,6 @@ import Foundation
 import UIKit
 
 class StudyCollectionViewCell: UICollectionViewCell {
-    
-   
     @IBOutlet weak var roomStackViewCell: UIStackView!
     @IBOutlet weak var roomImg: UIImageView!
     @IBOutlet weak var roomName: UILabel!
@@ -25,13 +23,15 @@ class StudyCollectionViewCell: UICollectionViewCell {
         // room Cell
         self.roomStackViewCell.layer.cornerRadius = 10
         self.roomStackViewCell.layer.borderWidth = 1
-        self.roomStackViewCell.layer.borderColor = COLOR.SUBTITLE_COLOR.cgColor
+        self.roomStackViewCell.layer.borderColor = COLOR.BORDER_COLOR.cgColor
         
         // room lmg
         self.roomImg.backgroundColor = COLOR.SUBTITLE_COLOR
-        self.roomImg.tintColor = COLOR.DISABLE_COLOR
-        self.roomImg.image = UIImage(systemName: "pencil", withConfiguration: UIImage.SymbolConfiguration(pointSize: 45, weight: .regular, scale: .large))
-        self.roomImg.contentMode = .center
+        self.roomImg.tintColor = COLOR.SUBTITLE_COLOR
+        //        self.roomImg.image = UIImage(systemName: "pencil", withConfiguration: UIImage.SymbolConfiguration(pointSize: 45, weight: .regular, scale: .large))
+        //        self.roomImg.imageLoad(urlString: API.IMAGE_DEFAULT_URL, size: CGSize(width: self.roomStackViewCell.layer.bounds.width, height: roomImg.layer.bounds.height))
+        self.roomImg.image = UIImage(named: "studyroom_default.png")
+        self.roomImg.contentMode = .scaleAspectFill
         self.roomImg.translatesAutoresizingMaskIntoConstraints = false
         
         // roomName label
@@ -46,3 +46,55 @@ class StudyCollectionViewCell: UICollectionViewCell {
         self.roomMembers.textColor = COLOR.SIGNATURE_COLOR
     }
 }
+
+//extension UIImageView {
+//    func imageLoad(urlString: String, size: CGSize) {
+//        let url = URL(string: urlString)!
+//        
+//        DispatchQueue.global().async { [weak self] in
+//            if let data = try? Data(contentsOf: url) {
+//                if let image = UIImage(data: data) {
+//                    DispatchQueue.main.async {
+//                        self?.image = image.imageResize(size: size, scale: UIScreen.main.scale)
+//                    }
+//                }
+//            } 
+//        }
+//    }
+//}
+//
+//extension UIImage {
+//    //    // 원하는 해상도에 맞게 조절
+//    //    func resize(scale: CGFloat) -> UIImage {
+//    //        let imageSourceOption = [ kCGImageSourceShouldCache: false ] as CFDictionary
+//    //        let data = self.pngData()! as CFData
+//    //        let imageSource = CGImageSourceCreateWithData(data, nil)!
+//    //        let maxPixel = max(self.size.width, self.size.height) * scale
+//    //        let downSampleOptions = [ kCGImageSourceCreateThumbnailFromImageAlways: true
+//    //                                  , kCGImageSourceShouldCacheImmediately: true
+//    //                                  , kCGImageSourceCreateThumbnailWithTransform: true
+//    //                                  , kCGImageSourceThumbnailMaxPixelSize: maxPixel
+//    //                                ] as CFDictionary
+//    //        let downSampledImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, downSampleOptions)!
+//    //        let newImage = UIImage(cgImage: downSampledImage)
+//    //
+//    //        return newImage
+//    //    }
+//    
+//    // 이미지뷰 크기에 맞게 조절
+//    func imageResize(size: CGSize, scale: CGFloat = UIScreen.main.scale) -> UIImage {
+//        let imageSourceOption = [ kCGImageSourceShouldCache: false ] as CFDictionary
+//        let data = self.pngData()! as CFData
+//        let imageSource = CGImageSourceCreateWithData(data, imageSourceOption)!
+//        let maxPixel = max(size.width, size.height) * scale
+//        let downSampleOptions = [ kCGImageSourceCreateThumbnailFromImageAlways: true
+//                                  , kCGImageSourceShouldCacheImmediately: true
+//                                  , kCGImageSourceCreateThumbnailWithTransform: true
+//                                  , kCGImageSourceThumbnailMaxPixelSize: maxPixel
+//        ] as CFDictionary
+//        let downSampledImage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, downSampleOptions)!
+//        let newImage = UIImage(cgImage: downSampledImage)
+//        
+//        return newImage
+//    }
+//}

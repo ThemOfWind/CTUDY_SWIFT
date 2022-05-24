@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import SwiftyJSON
 import NVActivityIndicatorView
+import Kingfisher
 
 class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, MemberCheckButtonDelegate {
     
@@ -16,7 +17,7 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
     @IBOutlet weak var memberTableView: UITableView!
     @IBOutlet weak var registerRoomBtn: UIButton!
     @IBOutlet weak var memberSearchBar: UISearchBar!
-    let keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
+    let keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: AddStudyMemberVC.self, action: nil)
     lazy var indicatorView: UIView = {
         let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         indicatorView.backgroundColor = COLOR.INDICATOR_BACKGROUND_COLOR
@@ -38,12 +39,15 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
         label.translatesAutoresizingMaskIntoConstraints = false
        return label
     }()
+    // 이전 화면에서 데이터 전달
+    var studyImage: Data?
+    var studyName: String?
+    
     var members: Array<SearchMemberResponse> = []
     var nextPage: String? = "1"
     var fetchingMore = false
-    var studyName: String?
     
-    // MARK: - overrid func
+    // MARK: - override func
     override func viewDidLoad() {
         super.viewDidLoad()
         self.config()
@@ -58,7 +62,8 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
         // btn
         self.registerRoomBtn.tintColor = .white
         self.registerRoomBtn.backgroundColor = COLOR.SIGNATURE_COLOR
-        self.registerRoomBtn.layer.cornerRadius = self.registerRoomBtn.bounds.height / 2
+        self.registerRoomBtn.layer.cornerRadius = 10
+        
         
         // 셀 리소스 파일 가져오기
         let memberCell = UINib(nibName: String(describing: MemberTableViewCell.self), bundle: nil)
@@ -68,6 +73,7 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
         
         // 셀 설정
         self.memberTableView.rowHeight = 90
+        self.memberTableView.allowsSelection = false
 //        self.memberTableView.estimatedRowHeight = 100
 //        self.memberTableView.mar
         
@@ -86,25 +92,27 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
     // 전체 멤버 조회
     fileprivate func getSearchMember() {
         
-        self.onStartActivityIndicator()
+//        self.onStartActivityIndicator()
         
         AlamofireManager.shared.getSearchMember(page: nextPage ?? "0", completion: {
             [weak self] result in
             guard let self = self else { return }
             
-            self.onStopActivityIndicator()
+//            self.onStopActivityIndicator()
             
             switch result {
             case .success(let response):
                 // 다음 페이지 값
                 self.nextPage = response["next"].string
+                
                 // 1~ 10 멤버 데이터
-                let list = response["list"]
-                for (index, subJson) : (String, JSON) in list {
+                let list = response["items"]
+                for (_, subJson) : (String, JSON) in list {
                     guard let id = subJson["id"].int
-                         ,let username = subJson["username"].string
-                         ,let name = subJson["name"].string else { return }
-                    let memberItem = SearchMemberResponse(id: id, name: name, userName: username, ischecked: false)
+                        , let username = subJson["username"].string
+                        , let name = subJson["name"].string else { return }
+                    let image = subJson["image"].string ?? ""
+                    let memberItem = SearchMemberResponse(id: id, name: name, userName: username, image: image, ischecked: false)
                     self.members.append(memberItem)
                 }
                 // view reload
@@ -114,9 +122,9 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
             }
         })
         
-        if self.indicator.isAnimating {
-            self.onStopActivityIndicator()
-        }
+//        if self.indicator.isAnimating {
+//            self.onStopActivityIndicator()
+//        }
     }
     
     // 로딩 그리기
@@ -168,14 +176,15 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
             }
         }
         
-        DispatchQueue.main.async {
-                self.onStartActivityIndicator()
-        }
+        self.onStartActivityIndicator()
         
-        AlamofireManager.shared.postRegisterRoom(name: self.studyName!, member_list: selectedMemeberList, completion: { [weak self] result in
+        AlamofireManager.shared.postRegisterRoom(name: studyName!, member_list: selectedMemeberList, image: studyImage, completion: { [weak self] result in
             guard let self = self else { return }
+            
+            self.onStopActivityIndicator()
+            
             switch result {
-            case .success(let result):
+            case .success(_):
                 self.view.makeToast("스터디룸이 등록되었습니다.", duration: 1.0, position: .center)
                 self.performSegue(withIdentifier: "unwindMainTabBarVC", sender: self)
             case .failure(let error):
@@ -183,11 +192,8 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
             }
         })
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            // 애니메이션 정지.
-            // 서버 통신 완료 후 다음의 메서드를 실행해서 통신의 끝나는 느낌을 줄 수 있다.
-            self.indicator.stopAnimating()
-            self.indicatorView.removeFromSuperview()
+        if self.indicator.isAnimating {
+            self.onStopActivityIndicator()
         }
     }
     
@@ -198,8 +204,13 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = memberTableView.dequeueReusableCell(withIdentifier: "MemberTableViewCell", for: indexPath) as! MemberTableViewCell
+        if members[indexPath.row].image != "" {
+            cell.memberImg.kf.setImage(with: URL(string: API.IMAGE_URL + members[indexPath.row].image)!)
+        } else {
+            cell.memberImg.image = UIImage(named: "user_default.png")
+        }
         cell.member.text = members[indexPath.row].name
-        cell.memberName.text = members[indexPath.row].userName
+        cell.memberName.text = "@\(members[indexPath.row].userName)"
         cell.checkBtn.tag = indexPath.row
         cell.checkBtn.isChecked = members[indexPath.row].ischecked
         cell.checkBtn.checkBtnDelegate = self
