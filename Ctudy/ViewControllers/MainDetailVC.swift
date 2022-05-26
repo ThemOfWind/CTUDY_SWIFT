@@ -83,7 +83,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         // 셀 설정
         self.memberTableView.rowHeight = 90
         self.memberTableView.allowsSelection = false
-        //        self.memberTableView.estimatedRowHeight = 50
+        self.memberTableView.showsVerticalScrollIndicator = false // scroll 제거
         
         // delegete
         self.memberTableView.delegate = self

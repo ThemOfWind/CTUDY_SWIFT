@@ -44,7 +44,7 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
     
     // MARK: - fileprivate func
     fileprivate func config() {
-        // navigationBar item
+        // navigationbar item
         self.titleItem = TitleItem.titleGeneral(title: "회원가입", isLargeTitles: true)
         
         // button ui
@@ -280,6 +280,7 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
         default:
             break
         }
+        
         nextBtnAbleChecked()
         return true
     }

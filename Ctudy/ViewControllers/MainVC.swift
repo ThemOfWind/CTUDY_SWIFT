@@ -55,7 +55,7 @@ class MainVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         
         //  셀 리소스 파일 가져와서 등록하기
         self.studyCollectionView.register(UINib(nibName: "StudyCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "cell")
-        self.studyCollectionView.showsVerticalScrollIndicator = false
+        self.studyCollectionView.showsVerticalScrollIndicator = false // scroll 제거
         self.studyCollectionView.clearsContextBeforeDrawing = true
     }
     

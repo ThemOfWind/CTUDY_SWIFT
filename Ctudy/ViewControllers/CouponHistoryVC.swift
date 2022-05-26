@@ -58,10 +58,10 @@ class CouponHistoryVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         self.couponHistoryTableView.register(couponHistoryCell, forCellReuseIdentifier: "CouponHistoryTableViewCell")
         
         // 셀 설정
-        self.couponHistoryTableView.rowHeight = 50
+        self.couponHistoryTableView.rowHeight = 80
         self.couponHistoryTableView.allowsSelection = false
-        self.couponHistoryTableView.layer.borderWidth = 1
-        self.couponHistoryTableView.layer.borderColor = COLOR.BORDER_COLOR.cgColor
+//        self.couponHistoryTableView.layer.borderWidth = 1
+//        self.couponHistoryTableView.layer.borderColor = COLOR.BORDER_COLOR.cgColor
         
         // delegate 연결
         self.couponHistoryTableView.delegate = self

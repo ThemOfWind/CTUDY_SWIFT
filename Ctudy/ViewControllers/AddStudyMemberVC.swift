@@ -74,8 +74,8 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
         // 셀 설정
         self.memberTableView.rowHeight = 90
         self.memberTableView.allowsSelection = false
+        self.memberTableView.showsVerticalScrollIndicator = false // scroll 제거
 //        self.memberTableView.estimatedRowHeight = 100
-//        self.memberTableView.mar
         
         // delegate 연결
         self.memberTableView.delegate = self

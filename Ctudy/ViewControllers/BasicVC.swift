@@ -263,3 +263,14 @@ class BasicVC: UIViewController {
         self.navigationItem.rightBarButtonItem = nil
     }
 }
+
+//extension UINavigationController: ObservableObject, UIGestureRecognizerDelegate {
+//    open override func viewDidLoad() {
+//        super.viewDidLoad()
+//        interactivePopGestureRecognizer?.delegate = self
+//    }
+//
+//    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+//        return viewControllers.count > 1 && BasicVC.LeftItem.self != .none
+//    }
+//}

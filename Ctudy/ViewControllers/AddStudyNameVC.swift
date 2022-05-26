@@ -13,7 +13,7 @@ class AddStudyNameVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
     // UIImagePickerControllerDelegate - 이미지를 선택하고 카메라를 찍었을때 다양한 동작을 도와줌
     // UINavigationControllerDelegate - 앨범사진을 선택했을때 화면전환을 네비게이션으로 이동함
     // MARK: - 변수
-    @IBOutlet weak var StudyNameView: UIView!
+    @IBOutlet weak var studyNameView: UIView!
     @IBOutlet weak var roomImg: UIImageView!
     @IBOutlet weak var registerStudyName: UITextField!
     @IBOutlet weak var nextBtn: UIButton!

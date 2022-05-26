@@ -61,6 +61,7 @@
                     <constraint firstItem="IC2-dS-Sot" firstAttribute="leading" secondItem="SPj-gr-Dgm" secondAttribute="leading" constant="5" id="xg3-d5-jvi"/>
                 </constraints>
             </tableViewCellContentView>
+            <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="couponCnt" destination="qwM-zI-g7Y" id="J3z-sb-xwP"/>
                 <outlet property="member" destination="v67-QD-gXM" id="Rh9-42-LeK"/>

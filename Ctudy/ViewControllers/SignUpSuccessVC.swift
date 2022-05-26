@@ -39,6 +39,6 @@ class SignUpSuccessVC: BasicVC {
     // MARK: - action func
     // start 화면으로 이동
     @IBAction func onGoToLoginBtnClicked(_ sender: Any) {
-        performSegue(withIdentifier: "unwindLoginVC", sender: self)
+        performSegue(withIdentifier: "unwindStartVC", sender: self)
     }
 }
