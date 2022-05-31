@@ -53,17 +53,17 @@ class AddStudyNameVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
         // lmageView ui
         self.roomImg.layer.cornerRadius = 10
         self.roomImg.layer.borderWidth = 1
-        self.roomImg.layer.borderColor = COLOR.SUBTITLE_COLOR.cgColor
-        self.roomImg.backgroundColor = COLOR.SUBTITLE_COLOR
-        self.roomImg.tintColor = COLOR.DISABLE_COLOR
-        self.roomImg.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30, weight: .regular, scale: .large))
+        self.roomImg.layer.borderColor = COLOR.BASIC_BACKGROUD_COLOR.cgColor
+        self.roomImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
+        self.roomImg.tintColor = COLOR.BASIC_TINT_COLOR
+        self.roomImg.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: self.roomImg.bounds.height / 5, weight: .regular, scale: .large))
         self.roomImg.contentMode = .center
         self.roomImg.isUserInteractionEnabled = true
         
         // button ui, event 연결
+        self.nextBtn.layer.cornerRadius = 10
         self.nextBtn.tintColor = .white
         self.nextBtn.backgroundColor = COLOR.DISABLE_COLOR
-        self.nextBtn.layer.cornerRadius = 10
         self.nextBtn.isEnabled = false
         self.nextBtn.addTarget(self, action: #selector(onNextBtnClicked(_:)), for: .touchUpInside)
         
@@ -96,7 +96,7 @@ class AddStudyNameVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
     // 초기화 picker setting
     fileprivate func presentCancel() {
         self.imageFlag = false
-        self.roomImg.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30, weight: .regular, scale: .large))
+        self.roomImg.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: self.roomImg.bounds.height / 5, weight: .regular, scale: .large))
         self.roomImg.contentMode = .center
     }
     

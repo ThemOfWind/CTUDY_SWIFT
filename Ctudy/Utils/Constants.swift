@@ -30,5 +30,7 @@ enum COLOR {
     static let BORDER_COLOR: UIColor = UIColor(red: 229/255, green: 229/255, blue: 234/255, alpha: 0.5)
     static let DISABLE_COLOR: UIColor = UIColor(red: 229/255, green: 229/255, blue: 234/255, alpha: 1)
     static let SUBTITLE_COLOR: UIColor = UIColor(red: 185/255, green: 185/255, blue: 185/255, alpha: 1)
+    static let BASIC_BACKGROUD_COLOR: UIColor = UIColor(red: 185/255, green: 185/255, blue: 185/255, alpha: 1)
+    static let BASIC_TINT_COLOR: UIColor = UIColor(red: 229/255, green: 229/255, blue: 234/255, alpha: 1)
     static let INDICATOR_BACKGROUND_COLOR: UIColor = UIColor(red: 185/255, green: 185/255, blue: 185/255, alpha: 50)
 }

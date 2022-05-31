@@ -26,8 +26,8 @@ class StudyCollectionViewCell: UICollectionViewCell {
         self.roomStackViewCell.layer.borderColor = COLOR.BORDER_COLOR.cgColor
         
         // room lmg
-        self.roomImg.backgroundColor = COLOR.SUBTITLE_COLOR
-        self.roomImg.tintColor = COLOR.SUBTITLE_COLOR
+        self.roomImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
+        self.roomImg.tintColor = COLOR.BASIC_TINT_COLOR
         //        self.roomImg.image = UIImage(systemName: "pencil", withConfiguration: UIImage.SymbolConfiguration(pointSize: 45, weight: .regular, scale: .large))
         //        self.roomImg.imageLoad(urlString: API.IMAGE_DEFAULT_URL, size: CGSize(width: self.roomStackViewCell.layer.bounds.width, height: roomImg.layer.bounds.height))
         self.roomImg.image = UIImage(named: "studyroom_default.png")

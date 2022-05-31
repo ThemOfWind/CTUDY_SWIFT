@@ -53,13 +53,13 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
         self.nextBtn.layer.cornerRadius = 10
         self.nextBtn.isEnabled = false
         
-        // lmageView ui
+        // imageView ui
+        self.userImg.layer.cornerRadius = self.userImg.layer.bounds.height / 2
         self.userImg.layer.borderWidth = 1
         self.userImg.layer.borderColor = COLOR.BORDER_COLOR.cgColor
-        self.userImg.layer.cornerRadius = self.userImg.layer.bounds.height / 2
-        self.userImg.backgroundColor = COLOR.SUBTITLE_COLOR
-        self.userImg.tintColor = COLOR.DISABLE_COLOR
-        self.userImg.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30, weight: .regular, scale: .large))
+        self.userImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
+        self.userImg.tintColor = COLOR.BASIC_TINT_COLOR
+        self.userImg.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: self.userImg.bounds.height / 5, weight: .regular, scale: .large))
         self.userImg.contentMode = .center
         self.userImg.isUserInteractionEnabled = true
         
@@ -139,7 +139,7 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
     // 초기화 picker setting
     fileprivate func presentCancel() {
         self.imageFlag = false
-        self.userImg.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30, weight: .regular, scale: .large))
+        self.userImg.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: self.userImg.bounds.height / 5, weight: .regular, scale: .large))
         self.userImg.contentMode = .center
     }
     
@@ -184,7 +184,7 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
             newImage = possibleImage
         }
         
-        self.userImg.contentMode = .scaleAspectFit
+        self.userImg.contentMode = .scaleAspectFill
         self.userImg.image = newImage
         self.imageFlag = true
         picker.dismiss(animated: true, completion: nil)

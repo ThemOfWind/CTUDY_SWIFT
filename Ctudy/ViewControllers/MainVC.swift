@@ -15,14 +15,15 @@ class MainVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     // MARK: - 변수
     @IBOutlet var studyCollectionView: UICollectionView!
     var rooms = [] as! Array<SearchRoomResponse>
-    var roomName: Int?
-    var roomNameString: String?
+    var roomId: Int?
+    var roomName: String?
     
     // MARK: - overrid func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.config()
     }
+    
     override func viewDidDisappear(_ animated: Bool) {
         self.rooms.removeAll()
         super.viewDidDisappear(animated)
@@ -33,8 +34,8 @@ class MainVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let id = segue.identifier, id == "MainDetailVC" {
             if let controller = segue.destination as? MainDetailVC {
+                controller.roomId = self.roomId
                 controller.roomName = self.roomName
-                controller.roomNameString = self.roomNameString
             }
         }
 //        } else if let id = segue.identifier, id == "AddStudyNameVC" {
@@ -117,8 +118,8 @@ class MainVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("MainVC - collectionView didSelectItemAt / selectedItem : \(rooms[indexPath.row].name) choose")
-        self.roomName = rooms[indexPath.row].id
-        self.roomNameString = rooms[indexPath.row].name
+        self.roomId = rooms[indexPath.row].id
+        self.roomName = rooms[indexPath.row].name
         self.performSegue(withIdentifier: "MainDetailVC", sender: nil)
     }
 }

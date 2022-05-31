@@ -26,7 +26,7 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
     lazy var indicator: NVActivityIndicatorView = {
         let indicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40),
                                                 type: .pacman,
-                                                color: COLOR.DISABLE_COLOR,
+                                                color: COLOR.BASIC_TINT_COLOR,
                                                 padding: 0)
         indicator.translatesAutoresizingMaskIntoConstraints = false
         return indicator
@@ -35,17 +35,16 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 10))
         label.font = UIFont.boldSystemFont(ofSize: 15)
         label.text = "loading..."
-        label.textColor = COLOR.DISABLE_COLOR
+        label.textColor = COLOR.BASIC_TINT_COLOR
         label.translatesAutoresizingMaskIntoConstraints = false
        return label
     }()
-    // 이전 화면에서 데이터 전달
-    var studyImage: Data?
-    var studyName: String?
-    
     var members: Array<SearchMemberResponse> = []
     var nextPage: String? = "1"
     var fetchingMore = false
+    // 이전 화면에서 데이터 전달
+    var studyImage: Data?
+    var studyName: String?
     
     // MARK: - override func
     override func viewDidLoad() {
@@ -91,14 +90,9 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
     
     // 전체 멤버 조회
     fileprivate func getSearchMember() {
-        
-//        self.onStartActivityIndicator()
-        
         AlamofireManager.shared.getSearchMember(page: nextPage ?? "0", completion: {
             [weak self] result in
             guard let self = self else { return }
-            
-//            self.onStopActivityIndicator()
             
             switch result {
             case .success(let response):
@@ -121,10 +115,6 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
                 print("AddStudyMemberVC - getSearchMember.failure / error: \(error.rawValue)")
             }
         })
-        
-//        if self.indicator.isAnimating {
-//            self.onStopActivityIndicator()
-//        }
     }
     
     // 로딩 그리기

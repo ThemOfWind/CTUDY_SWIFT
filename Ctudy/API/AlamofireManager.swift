@@ -164,7 +164,7 @@ final class AlamofireManager {
                 switch statusCode {
                 case 200:
                     if KeyChainManager().tokenSave(API.SERVICEID, account: "id", value: String(id))
-                     , KeyChainManager().tokenSave(API.SERVICEID, account: "userName", value: userName)
+                     , KeyChainManager().tokenSave(API.SERVICEID, account: "username", value: userName)
                      , KeyChainManager().tokenSave(API.SERVICEID, account: "name", value: name)
                      , KeyChainManager().tokenSave(API.SERVICEID, account: "image", value: image) {
                         let jsonData = ProfileResponse(id: id, username: userName, name: name, image: image)
@@ -291,6 +291,40 @@ final class AlamofireManager {
             default:
                 print("postRegisterRoom() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
                 completion(.failure(.noRegisterRoom))
+                
+            }
+        })
+    }
+    
+    // MARK: - 쿠폰등록
+    func postCreateCoupon(name: String, roomId: Int, receiverId: Int, startDate: String, endData: String, image: Data? = nil, completion: @escaping(Result<Bool, CouponErrors>) -> Void) {
+        let url = URL(string: API.BASE_URL + "coupon/")!
+        let token = KeyChainManager().tokenLoad(API.SERVICEID, account: "accessToken")
+        let header: HTTPHeaders = [
+            "Content-Type" : "multipart/form-data"
+            , "Authorization" : "Bearer " + String(token!)
+        ]
+        
+        //        print("postRegisterRoom() - token: \(token), url: \(url)")
+        //        print("postRegisterRoom() - header: Content-Type(\(header["Content-Type"])), Authorization(\(header["Authorization"])")
+        
+        AF.upload(multipartFormData: { multipartFormData in
+            let mpfData = CreateCouponResponse(name: name, roomId: roomId, receiverId: receiverId, startDate: startDate, endDate: endData)
+            multipartFormData.append(try! JSONEncoder().encode(mpfData), withName: "payload")
+            if image != nil {
+                multipartFormData.append(image!, withName: "file", fileName: "default.png", mimeType: "image/png")
+            }
+        }, to: url, usingThreshold: UInt64.init(), method: .post, headers: header).response(completionHandler: { response in
+            guard let responseValue = response.value
+                    , let statusCode = response.response?.statusCode else { return }
+            let responseJson = JSON(responseValue)
+            
+            switch statusCode {
+            case 200:
+                completion(.success(true))
+            default:
+                print("postCreateCoupon() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
+                completion(.failure(.noCreateCoupon))
                 
             }
         })

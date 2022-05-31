@@ -14,10 +14,10 @@ import NVActivityIndicatorView
 class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
     
     // MARK: - 변수
-    @IBOutlet weak var registerUserName: UITextField!
+    @IBOutlet weak var registerUsername: UITextField!
     @IBOutlet weak var registerPassword: UITextField!
     @IBOutlet weak var registerPasswordChk: UITextField!
-    @IBOutlet weak var userNameMsg: UILabel!
+    @IBOutlet weak var usernameMsg: UILabel!
     @IBOutlet weak var passwordMsg: UILabel!
     @IBOutlet weak var passwordChkMsg: UILabel!
     @IBOutlet weak var signUpBtn: UIButton!
@@ -30,7 +30,7 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
     lazy var indicator: NVActivityIndicatorView = {
         let indicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40),
                                                 type: .pacman,
-                                                color: COLOR.DISABLE_COLOR,
+                                                color: COLOR.BASIC_TINT_COLOR,
                                                 padding: 0)
         indicator.translatesAutoresizingMaskIntoConstraints = false
         return indicator
@@ -39,7 +39,7 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 10))
         label.font = UIFont.boldSystemFont(ofSize: 15)
         label.text = "loading..."
-        label.textColor = COLOR.DISABLE_COLOR
+        label.textColor = COLOR.BASIC_TINT_COLOR
         label.translatesAutoresizingMaskIntoConstraints = false
        return label
     }()
@@ -49,7 +49,7 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
     var registerEmail: String?
     
     var memberName: String?
-    var memberUserName: String?
+    var memberUsername: String?
     var usernameOKFlag: Bool = false
     var passwordOKFlag: Bool = false
     
@@ -64,7 +64,7 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
         if let id = segue.identifier, id == "SignUpSuccessVC" {
             if let controller = segue.destination as? SignUpSuccessVC {
                 controller.memberName = self.memberName
-                controller.memberUserName = self.memberUserName
+                controller.memberUserName = self.memberUsername
             }
         }
     }
@@ -87,12 +87,12 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
         self.signUpBtn.addTarget(self, action: #selector(onSignUpBtnClicked), for: .touchUpInside)
         
         // textField event 연결
-        self.registerUserName.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
+        self.registerUsername.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
         self.registerPassword.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
         self.registerPasswordChk.addTarget(self, action: #selector(passwordChkEditingChanged(_:)), for: .editingChanged)
         
         // delegate 연결
-        self.registerUserName.delegate = self
+        self.registerUsername.delegate = self
         self.registerPassword.delegate = self
         self.registerPasswordChk.delegate = self
         self.keyboardDismissTabGesture.delegate = self
@@ -111,12 +111,12 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
                 print("SignUpSecondVC - getUserNameCheck.success")
                 // 사용가능 문구 띄우기
                 //self.view.makeToast("사용가능한 아이디(이메일)입니다.", duration: 1.0, position: .center)
-                self.setMsgLabel(flag: true, msgLabel: self.userNameMsg, msgString: "사용가능한 아이디입니다.")
+                self.setMsgLabel(flag: true, msgLabel: self.usernameMsg, msgString: "사용가능한 아이디입니다.")
             case .failure(let error):
                 print("SignUpSecondVC - getUserNameCheck.failure / error: \(error)")
                 // 중복사용 문구 띄우기
                 //self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
-                self.setMsgLabel(flag: false, msgLabel: self.userNameMsg, msgString: error.rawValue)
+                self.setMsgLabel(flag: false, msgLabel: self.usernameMsg, msgString: error.rawValue)
             }
         })
     }
@@ -148,7 +148,7 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
         let pred : NSPredicate
         
         switch flag {
-        case "registerUserName":
+        case "registerUsername":
             pred = NSPredicate(format: "SELF MATCHES %@", REGEX.USERNAME_REGEX)
         case "registerPassword":
             pred = NSPredicate(format: "SELF MATCHES %@", REGEX.PASSWORD_REGEX)
@@ -219,7 +219,7 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
         
         self.onStartActivityIndicator()
         
-        AlamofireManager.shared.postSignUp(name: registerName!, email: registerEmail!, username: registerUserName.text!, password: registerPassword.text!, image: userImage, completion: { [weak self] result in
+        AlamofireManager.shared.postSignUp(name: registerName!, email: registerEmail!, username: registerUsername.text!, password: registerPassword.text!, image: userImage, completion: { [weak self] result in
             guard let self = self else { return }
             
             self.onStopActivityIndicator()
@@ -228,7 +228,7 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
             case .success(let memberData):
                 // 회원가입 완료 페이지 띄우기
                 self.memberName = memberData.name
-                self.memberUserName = memberData.username
+                self.memberUsername = memberData.username
                 self.performSegue(withIdentifier: "SignUpSuccessVC", sender: nil)
             case .failure(let error):
                 print("SignUpSecondVC - postSignUp.failure / error: \(error.rawValue)")
@@ -244,9 +244,9 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
     // textfield 변경할때 event
     @objc func textFieldEditingChanged(_ textField: UITextField) {
         switch textField {
-        case registerUserName:
+        case registerUsername:
             // @email 형식 체크
-            textFieldCheck(textField: textField, msgLabel: userNameMsg, inputData: registerUserName.text ?? "")
+            textFieldCheck(textField: textField, msgLabel: usernameMsg, inputData: registerUsername.text ?? "")
         case registerPassword:
             // 비밀번호 정규식
             textFieldCheck(textField: textField, msgLabel: passwordMsg, inputData: registerPassword.text ?? "")
@@ -269,9 +269,9 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
     // textField에서 enter키 눌렀을때 event
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         switch textField {
-        case registerUserName:
-            // @email 형식 체크
-            textFieldCheck(textField: textField, msgLabel: userNameMsg, inputData: registerUserName.text ?? "")
+        case registerUsername:
+            // 아이디 형식 체크
+            textFieldCheck(textField: textField, msgLabel: usernameMsg, inputData: registerUsername.text ?? "")
         case registerPassword:
             // 비밀번호 정규식
             textFieldCheck(textField: textField, msgLabel: passwordMsg, inputData: registerPassword.text ?? "")
@@ -295,19 +295,19 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
         }
         
         switch textField {
-        case registerUserName:
-            usernameOKFlag = isValidData(flag: "registerUserName", data: inputData)
+        case registerUsername:
+            usernameOKFlag = isValidData(flag: "registerUsername", data: inputData)
             if usernameOKFlag {
                 userNameChecked(inputUserName: inputData)
             } else {
                 setMsgLabel(flag: usernameOKFlag, msgLabel: msgLabel, msgString: "아이디가 옳바르지 않습니다.")
             }
         case registerPassword:
-            let OKFlag = isValidData(flag: "registerPassword", data: inputData)
-            if OKFlag {
-                setMsgLabel(flag: OKFlag, msgLabel: msgLabel, msgString: "사용가능한 비밀번호 입니다.")
+            let flag = isValidData(flag: "registerPassword", data: inputData)
+            if flag {
+                setMsgLabel(flag: flag, msgLabel: msgLabel, msgString: "사용가능한 비밀번호 입니다.")
             } else {
-                setMsgLabel(flag: OKFlag, msgLabel: msgLabel, msgString: "비밀번호가 옳바르지 않습니다.")
+                setMsgLabel(flag: flag, msgLabel: msgLabel, msgString: "비밀번호가 옳바르지 않습니다.")
             }
             
             // 비밀번호 & 비밀번호확인 일치 체크
@@ -320,7 +320,7 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
     // textField clearBtn event
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         switch textField {
-        case registerUserName:
+        case registerUsername:
             usernameOKFlag = false
         case registerPassword:
             passwordValueChecked()
@@ -336,7 +336,7 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
     
     // MARK: - UIGestureRecognizerDelegate
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        if touch.view?.isDescendant(of: registerUserName) == true {
+        if touch.view?.isDescendant(of: registerUsername) == true {
             return false
         } else if touch.view?.isDescendant(of: registerPassword) == true {
             return false

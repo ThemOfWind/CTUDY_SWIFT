@@ -21,8 +21,8 @@ class MemberTableViewCell : UITableViewCell {
         self.memberImg.layer.cornerRadius = self.memberImg.bounds.height / 3
         self.memberImg.layer.borderWidth = 1
         self.memberImg.layer.borderColor = COLOR.BORDER_COLOR.cgColor
-        self.memberImg.backgroundColor = COLOR.DISABLE_COLOR
-        self.memberImg.tintColor = COLOR.SUBTITLE_COLOR
+        self.memberImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
+        self.memberImg.tintColor = COLOR.BASIC_TINT_COLOR
         self.memberImg.image = UIImage(named: "user_default.png")
         self.memberImg.contentMode = .scaleAspectFill
         self.memberImg.translatesAutoresizingMaskIntoConstraints = false

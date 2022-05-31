@@ -21,7 +21,7 @@ class CouponHistoryVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     lazy var indicator: NVActivityIndicatorView = {
         let indicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40),
                                                 type: .pacman,
-                                                color: COLOR.DISABLE_COLOR,
+                                                color: COLOR.BASIC_TINT_COLOR,
                                                 padding: 0)
         indicator.translatesAutoresizingMaskIntoConstraints = false
         return indicator
@@ -30,7 +30,7 @@ class CouponHistoryVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 10))
         label.font = UIFont.boldSystemFont(ofSize: 15)
         label.text = "loading..."
-        label.textColor = COLOR.DISABLE_COLOR
+        label.textColor = COLOR.BASIC_TINT_COLOR
         label.translatesAutoresizingMaskIntoConstraints = false
        return label
     }()

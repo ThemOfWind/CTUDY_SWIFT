@@ -8,13 +8,15 @@
 import Foundation
 import UIKit
 
-class SearchIdSecondVC: BasicVC {
+class SearchIdSuccessVC: BasicVC {
     // MARK: - 변수
     @IBOutlet weak var homeBtn: UIButton!
+    @IBOutlet weak var uesrName: UILabel!
     
     // MARK: - override func
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("SearchIdSuccessVC - viewDidLoad() called")
         self.config()
     }
     

@@ -29,7 +29,10 @@
 		5A58EEA4275F7E83000A1A39 /* Ctudy.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5A58EEA2275F7E83000A1A39 /* Ctudy.xcdatamodeld */; };
 		5A58EEA6275F7E84000A1A39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A58EEA5275F7E84000A1A39 /* Assets.xcassets */; };
 		5A58EEA9275F7E84000A1A39 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A58EEA7275F7E84000A1A39 /* LaunchScreen.storyboard */; };
-		5A5FCD36283F9C6900C9C3C4 /* SearchIdSecondVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5FCD35283F9C6900C9C3C4 /* SearchIdSecondVC.swift */; };
+		5A5FCD36283F9C6900C9C3C4 /* SearchIdSuccessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5FCD35283F9C6900C9C3C4 /* SearchIdSuccessVC.swift */; };
+		5A6FEEB42840845E007C7751 /* SearchPwSecondVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6FEEB32840845E007C7751 /* SearchPwSecondVC.swift */; };
+		5A6FEEB628408498007C7751 /* SearchPwThirdVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6FEEB528408498007C7751 /* SearchPwThirdVC.swift */; };
+		5A6FEEB8284084EA007C7751 /* SearchPwSuccessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6FEEB7284084EA007C7751 /* SearchPwSuccessVC.swift */; };
 		5A741B3B27F4090B005E1D11 /* BarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A741B3A27F4090B005E1D11 /* BarButtonItem.swift */; };
 		5A846FD3283D39BB00DAC734 /* CouponVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A846FD2283D39BB00DAC734 /* CouponVC.swift */; };
 		5A8BAB142786E94100CFF908 /* StudyCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A8BAB132786E94100CFF908 /* StudyCollectionViewCell.xib */; };
@@ -37,6 +40,9 @@
 		5A8BAB19278812AD00CFF908 /* SearchRoomResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8BAB18278812AD00CFF908 /* SearchRoomResponse.swift */; };
 		5A8D9FF92836890B008FBD9F /* SignUpRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8D9FF82836890B008FBD9F /* SignUpRequest.swift */; };
 		5A8DC12B27EB5FA5008FA26E /* SignUpFirstVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8DC12A27EB5FA5008FA26E /* SignUpFirstVC.swift */; };
+		5A8DF8F528449BE200AFF41F /* AddCouponReciverVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A8DF8F428449BE200AFF41F /* AddCouponReciverVC.swift */; };
+		5A98550E28450BCA0078B72C /* CouponReciverRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A98550D28450BCA0078B72C /* CouponReciverRequest.swift */; };
+		5A98551028465DAF0078B72C /* CreateCouponResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A98550F28465DAF0078B72C /* CreateCouponResponse.swift */; };
 		5A9D31BA277B17DD00DCEAEA /* UserInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9D31B9277B17DD00DCEAEA /* UserInfoVC.swift */; };
 		5A9D31BC277B18D100DCEAEA /* MainTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9D31BB277B18D100DCEAEA /* MainTabBarVC.swift */; };
 		5A9D31C0277C0B9900DCEAEA /* KeyChainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9D31BF277C0B9900DCEAEA /* KeyChainManager.swift */; };
@@ -49,6 +55,7 @@
 		5AAE518B27F7023400DDA555 /* BasicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAE518A27F7023400DDA555 /* BasicButton.swift */; };
 		5ABA13F2283CBBFE007AE4F0 /* CouponHistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABA13F1283CBBFE007AE4F0 /* CouponHistoryVC.swift */; };
 		5ABB95C22760F697003B4764 /* SignUpSecondVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABB95C12760F697003B4764 /* SignUpSecondVC.swift */; };
+		5AC0E3B52840B6F200E99943 /* CreateCouponVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC0E3B42840B6F200E99943 /* CreateCouponVC.swift */; };
 		5AC1CE702765C9E0009586B2 /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC1CE6F2765C9E0009586B2 /* AuthRouter.swift */; };
 		5AC1CE732765CADC009586B2 /* RoomRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC1CE722765CADC009586B2 /* RoomRouter.swift */; };
 		5AC1CE772765CB0D009586B2 /* CouponRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC1CE762765CB0D009586B2 /* CouponRouter.swift */; };
@@ -94,7 +101,10 @@
 		5A58EEA5275F7E84000A1A39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5A58EEA8275F7E84000A1A39 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5A58EEAA275F7E84000A1A39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5A5FCD35283F9C6900C9C3C4 /* SearchIdSecondVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchIdSecondVC.swift; sourceTree = "<group>"; };
+		5A5FCD35283F9C6900C9C3C4 /* SearchIdSuccessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchIdSuccessVC.swift; sourceTree = "<group>"; };
+		5A6FEEB32840845E007C7751 /* SearchPwSecondVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPwSecondVC.swift; sourceTree = "<group>"; };
+		5A6FEEB528408498007C7751 /* SearchPwThirdVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPwThirdVC.swift; sourceTree = "<group>"; };
+		5A6FEEB7284084EA007C7751 /* SearchPwSuccessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPwSuccessVC.swift; sourceTree = "<group>"; };
 		5A741B3A27F4090B005E1D11 /* BarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarButtonItem.swift; sourceTree = "<group>"; };
 		5A846FD2283D39BB00DAC734 /* CouponVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponVC.swift; sourceTree = "<group>"; };
 		5A8BAB132786E94100CFF908 /* StudyCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StudyCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -102,6 +112,9 @@
 		5A8BAB18278812AD00CFF908 /* SearchRoomResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRoomResponse.swift; sourceTree = "<group>"; };
 		5A8D9FF82836890B008FBD9F /* SignUpRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpRequest.swift; sourceTree = "<group>"; };
 		5A8DC12A27EB5FA5008FA26E /* SignUpFirstVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFirstVC.swift; sourceTree = "<group>"; };
+		5A8DF8F428449BE200AFF41F /* AddCouponReciverVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCouponReciverVC.swift; sourceTree = "<group>"; };
+		5A98550D28450BCA0078B72C /* CouponReciverRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponReciverRequest.swift; sourceTree = "<group>"; };
+		5A98550F28465DAF0078B72C /* CreateCouponResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCouponResponse.swift; sourceTree = "<group>"; };
 		5A9D31B9277B17DD00DCEAEA /* UserInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoVC.swift; sourceTree = "<group>"; };
 		5A9D31BB277B18D100DCEAEA /* MainTabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarVC.swift; sourceTree = "<group>"; };
 		5A9D31BF277C0B9900DCEAEA /* KeyChainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChainManager.swift; sourceTree = "<group>"; };
@@ -114,6 +127,7 @@
 		5AAE518A27F7023400DDA555 /* BasicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicButton.swift; sourceTree = "<group>"; };
 		5ABA13F1283CBBFE007AE4F0 /* CouponHistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponHistoryVC.swift; sourceTree = "<group>"; };
 		5ABB95C12760F697003B4764 /* SignUpSecondVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpSecondVC.swift; sourceTree = "<group>"; };
+		5AC0E3B42840B6F200E99943 /* CreateCouponVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCouponVC.swift; sourceTree = "<group>"; };
 		5AC1CE6F2765C9E0009586B2 /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
 		5AC1CE722765CADC009586B2 /* RoomRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomRouter.swift; sourceTree = "<group>"; };
 		5AC1CE762765CB0D009586B2 /* CouponRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponRouter.swift; sourceTree = "<group>"; };
@@ -237,8 +251,13 @@
 				5ABA13F1283CBBFE007AE4F0 /* CouponHistoryVC.swift */,
 				5A846FD2283D39BB00DAC734 /* CouponVC.swift */,
 				5AA84FE0283F60240090C4E6 /* SearchIdFirstVC.swift */,
-				5A5FCD35283F9C6900C9C3C4 /* SearchIdSecondVC.swift */,
+				5A5FCD35283F9C6900C9C3C4 /* SearchIdSuccessVC.swift */,
 				5AA84FE2283F604E0090C4E6 /* SearchPwFirstVC.swift */,
+				5A6FEEB32840845E007C7751 /* SearchPwSecondVC.swift */,
+				5A6FEEB528408498007C7751 /* SearchPwThirdVC.swift */,
+				5A6FEEB7284084EA007C7751 /* SearchPwSuccessVC.swift */,
+				5AC0E3B42840B6F200E99943 /* CreateCouponVC.swift */,
+				5A8DF8F428449BE200AFF41F /* AddCouponReciverVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -250,6 +269,15 @@
 				5A4AC44B27FD2A09002D55CD /* RegisterRoomRequest.swift */,
 			);
 			path = Rooms;
+			sourceTree = "<group>";
+		};
+		5A98550C28450B8D0078B72C /* Coupons */ = {
+			isa = PBXGroup;
+			children = (
+				5A98550D28450BCA0078B72C /* CouponReciverRequest.swift */,
+				5A98550F28465DAF0078B72C /* CreateCouponResponse.swift */,
+			);
+			path = Coupons;
 			sourceTree = "<group>";
 		};
 		5AAE346B2761D2AE00EE6A5D /* Utils */ = {
@@ -304,6 +332,7 @@
 				5ACF0C942767338D003907E9 /* Auths */,
 				5A8BAB172788125300CFF908 /* Rooms */,
 				5A3BBBEA27EAFB4B00BA9E3F /* Members */,
+				5A98550C28450B8D0078B72C /* Coupons */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -481,12 +510,16 @@
 				5ADDFC7B2765BED9001291DD /* BaseInterceptor.swift in Sources */,
 				5A3BBBEC27EB4F6C00BA9E3F /* StartVC.swift in Sources */,
 				5AC1CE7C2765D5E8009586B2 /* SignUpResponse.swift in Sources */,
+				5A98550E28450BCA0078B72C /* CouponReciverRequest.swift in Sources */,
 				5A8BAB162786F79200CFF908 /* StudyCollectionViewCell.swift in Sources */,
 				5A31966E2766045D007400EE /* SignUpSuccessVC.swift in Sources */,
 				5A58EE9A275F7E83000A1A39 /* AppDelegate.swift in Sources */,
+				5A6FEEB628408498007C7751 /* SearchPwThirdVC.swift in Sources */,
 				5A0AD87727EC3D250038FD07 /* BasicVC.swift in Sources */,
-				5A5FCD36283F9C6900C9C3C4 /* SearchIdSecondVC.swift in Sources */,
+				5A5FCD36283F9C6900C9C3C4 /* SearchIdSuccessVC.swift in Sources */,
 				5A9D31BA277B17DD00DCEAEA /* UserInfoVC.swift in Sources */,
+				5AC0E3B52840B6F200E99943 /* CreateCouponVC.swift in Sources */,
+				5A6FEEB42840845E007C7751 /* SearchPwSecondVC.swift in Sources */,
 				5ABB95C22760F697003B4764 /* SignUpSecondVC.swift in Sources */,
 				5ABA13F2283CBBFE007AE4F0 /* CouponHistoryVC.swift in Sources */,
 				5A3BBBE927EAF31300BA9E3F /* SearhMemberResponse.swift in Sources */,
@@ -495,17 +528,20 @@
 				5ADDFC792765B983001291DD /* AlamofireManager.swift in Sources */,
 				5A58EE9C275F7E83000A1A39 /* SceneDelegate.swift in Sources */,
 				5AC1CE772765CB0D009586B2 /* CouponRouter.swift in Sources */,
+				5A6FEEB8284084EA007C7751 /* SearchPwSuccessVC.swift in Sources */,
 				5A9EDD1427F0C89500ED3343 /* MemberCheckButton.swift in Sources */,
 				5AAE518B27F7023400DDA555 /* BasicButton.swift in Sources */,
 				5A8D9FF92836890B008FBD9F /* SignUpRequest.swift in Sources */,
 				5AA84FE1283F60240090C4E6 /* SearchIdFirstVC.swift in Sources */,
 				5A07BBAC283CD9C3006FD4B1 /* CouponHistoryTableViewCell.swift in Sources */,
 				5A9D31C0277C0B9900DCEAEA /* KeyChainManager.swift in Sources */,
+				5A8DF8F528449BE200AFF41F /* AddCouponReciverVC.swift in Sources */,
 				5A8BAB19278812AD00CFF908 /* SearchRoomResponse.swift in Sources */,
 				5A846FD3283D39BB00DAC734 /* CouponVC.swift in Sources */,
 				5A453AFE27E9B25B006F0A1D /* AddStudyNameVC.swift in Sources */,
 				5AA84FE3283F604E0090C4E6 /* SearchPwFirstVC.swift in Sources */,
 				5AD95160280A8D570038048F /* SearchStudyMemberResponse.swift in Sources */,
+				5A98551028465DAF0078B72C /* CreateCouponResponse.swift in Sources */,
 				5A4CD0DC27E8A09E00F6C829 /* AddBarButtonItem.swift in Sources */,
 				5A24494327EA17280082EC88 /* AddStudyMemberVC.swift in Sources */,
 				5A4AC44C27FD2A09002D55CD /* RegisterRoomRequest.swift in Sources */,

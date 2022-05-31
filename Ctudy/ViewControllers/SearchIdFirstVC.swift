@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class SearchIdFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
+class SearchIdFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
     // MARK: - 변수
     @IBOutlet weak var inputEmail: UITextField!
     @IBOutlet weak var emailMsg: UILabel!
@@ -36,7 +36,7 @@ class SearchIdFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate
         self.searchBtn.isEnabled = false
         
         // button & textField event 연결
-//        self.searchBtn.addTarget(self, action: #selector(onSearchIdBtnClicked), for: .touchUpInside)
+//        self.searchBtn.addTarget(self, action: #selector(onSearchBtnClicked), for: .touchUpInside)
         self.inputEmail.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
         
         // delegate 연결
@@ -84,7 +84,7 @@ class SearchIdFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate
     }
     
     // MARK: - @objc func
-//    @objc fileprivate func onSearchIdBtnClicked() {
+//    @objc fileprivate func onSearchBtnClicked() {
 //        print("ID Search Button click!")
 //    }
     
