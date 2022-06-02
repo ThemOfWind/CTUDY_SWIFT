@@ -185,7 +185,6 @@ class AddStudyNameVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
             view.endEditing(true)
             return true
         }
-        
     }
     
     // MARK: - textField delegate

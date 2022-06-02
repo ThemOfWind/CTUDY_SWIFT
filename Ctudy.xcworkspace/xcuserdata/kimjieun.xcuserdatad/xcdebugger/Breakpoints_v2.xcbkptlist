@@ -132,5 +132,85 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "11C80793-5519-4AF0-B64C-0A4C820DDB3C"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Ctudy/API/AlamofireManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "301"
+            endingLineNumber = "301"
+            landmarkName = "postCreateCoupon(name:roomId:receiverId:startDate:endData:image:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "13745F26-CCFF-40D1-9B8E-3916BE697510"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Ctudy/API/AlamofireManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "311"
+            endingLineNumber = "311"
+            landmarkName = "postCreateCoupon(name:roomId:receiverId:startDate:endData:image:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A44DAE39-BAFC-4403-A675-81FDEDE2CB5E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Ctudy/API/AlamofireManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "318"
+            endingLineNumber = "318"
+            landmarkName = "postCreateCoupon(name:roomId:receiverId:startDate:endData:image:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "A44DAE39-BAFC-4403-A675-81FDEDE2CB5E - 8dfc99c2aa42b60c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Alamofire.DataResponse&lt;Swift.Optional&lt;Foundation.Data&gt;, Alamofire.AFError&gt;) -&gt; () in Ctudy.AlamofireManager.postCreateCoupon(name: Swift.String, roomId: Swift.Int, receiverId: Swift.Int, startDate: Swift.String, endData: Swift.String, image: Swift.Optional&lt;Foundation.Data&gt;, completion: (Swift.Result&lt;Swift.Bool, Ctudy.CouponErrors&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Ctudy"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kimjieun/Documents/Ctudy_Swift/Ctudy/API/AlamofireManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "318"
+                  endingLineNumber = "318"
+                  offsetFromSymbolStart = "192">
+               </Location>
+               <Location
+                  uuid = "A44DAE39-BAFC-4403-A675-81FDEDE2CB5E - 8dfc99c2aa42b60c"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Alamofire.DataResponse&lt;Swift.Optional&lt;Foundation.Data&gt;, Alamofire.AFError&gt;) -&gt; () in Ctudy.AlamofireManager.postCreateCoupon(name: Swift.String, roomId: Swift.Int, receiverId: Swift.Int, startDate: Swift.String, endData: Swift.String, image: Swift.Optional&lt;Foundation.Data&gt;, completion: (Swift.Result&lt;Swift.Bool, Ctudy.CouponErrors&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "Ctudy"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/kimjieun/Documents/Ctudy_Swift/Ctudy/API/AlamofireManager.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "318"
+                  endingLineNumber = "318"
+                  offsetFromSymbolStart = "276">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

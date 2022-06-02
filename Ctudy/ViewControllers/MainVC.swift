@@ -92,9 +92,9 @@ class MainVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        print("MainVC - collectionView cellForItemAt / indexPath : \(indexPath.row)")
-//        print("MainVC - collectionView cellForItemAt / roomName : \(rooms[indexPath.row].name)")
-//        print("MainVC - collectionView cellForItemAt / banner : \(rooms[indexPath.row].banner)")
+        print("MainVC - collectionView cellForItemAt / indexPath : \(indexPath.row)")
+        print("MainVC - collectionView cellForItemAt / roomName : \(rooms[indexPath.row].name)")
+        print("MainVC - collectionView cellForItemAt / banner : \(rooms[indexPath.row].banner)")
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! StudyCollectionViewCell
         cell.layer.cornerRadius = 10

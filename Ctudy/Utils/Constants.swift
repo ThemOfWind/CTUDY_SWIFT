@@ -19,9 +19,11 @@ enum API {
 
 enum REGEX {
     static let NAME_REGEX: String = "[가-힣]{2,}"
+    static let CTUDYNAME_REGEX: String = "[^ ]+"
     static let EMAIL_REGEX: String = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
     static let USERNAME_REGEX: String = "[A-Z0-9a-z]{8,15}"
     static let PASSWORD_REGEX: String = "^(?=.*[A-Za-z])(?=.*[!@#$%^])(?=.*[0-9]).{8,20}"
+    static let DATE_REGEX: String = "(19|20)[0-9]{2}-(0[1-9]|1[0-2])-(0[1-9]|1[0-9]|2[0-9]|3[0-1])"
 }
 
 enum COLOR {

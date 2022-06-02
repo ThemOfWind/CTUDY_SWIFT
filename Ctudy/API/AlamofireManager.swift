@@ -309,7 +309,7 @@ final class AlamofireManager {
         //        print("postRegisterRoom() - header: Content-Type(\(header["Content-Type"])), Authorization(\(header["Authorization"])")
         
         AF.upload(multipartFormData: { multipartFormData in
-            let mpfData = CreateCouponResponse(name: name, roomId: roomId, receiverId: receiverId, startDate: startDate, endDate: endData)
+            let mpfData = CreateCouponResponse(name: name, room_id: roomId, receiver_id: receiverId, start_date: startDate, end_date: endData)
             multipartFormData.append(try! JSONEncoder().encode(mpfData), withName: "payload")
             if image != nil {
                 multipartFormData.append(image!, withName: "file", fileName: "default.png", mimeType: "image/png")

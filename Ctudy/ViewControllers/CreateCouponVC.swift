@@ -10,11 +10,12 @@ import UIKit
 import Kingfisher
 import NVActivityIndicatorView
 
+// receiver 목록 view에서 선택 event 연결 protocol
 protocol CouponSendDelegate: AnyObject {
     func onMemberViewClicked(reciver: CouponReciverRequest)
 }
 
-class CreateCouponVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CouponSendDelegate {
+class CreateCouponVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CouponSendDelegate {
     
     // MARK: - 변수
     @IBOutlet weak var senderImg: UIImageView!
@@ -25,6 +26,9 @@ class CreateCouponVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerControl
     @IBOutlet weak var receiverName: UILabel!
     @IBOutlet weak var receiverUsername: UILabel!
     @IBOutlet weak var couponName: UITextField!
+    @IBOutlet weak var couponNameMsg: UILabel!
+    @IBOutlet weak var endDate: UITextField!
+    @IBOutlet weak var endDateMsg: UILabel!
     @IBOutlet weak var couponImg: UIImageView!
     @IBOutlet weak var createBtn: UIButton!
     let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: CreateCouponVC.self, action: nil)
@@ -50,14 +54,24 @@ class CreateCouponVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerControl
        return label
     }()
     var members: Array<SearchStudyMemberResponse>? // 멤버 리스트
-    var roomId: Int!
+    var roomId: Int! // 넘겨받은 studyroom pk
     var selectedReceiver: CouponReciverRequest!
+    var startDate: String?
+    let datePicker = UIDatePicker() // 날짜 피커
+    let formatter = DateFormatter() // 날짜 포맷
+    var nameOKFlag: Bool = false
+    var dateOKFlag: Bool = false
     var imageFlag: Bool = false
     
     // MARK: - override func
     override func viewDidLoad() {
         super.viewDidLoad()
         self.config()
+    }
+    
+    // modalView 실행에서 이미지처리 또는 많은 가상메모리를 소비하는 액션을 진행할때 메모리 경고를 받게 되어 modal 창이 죽게 되는 경우를 대비
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
     }
     
     // MARK: - fileprivate func
@@ -116,11 +130,65 @@ class CreateCouponVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerControl
         self.createBtn.backgroundColor = COLOR.DISABLE_COLOR
         self.createBtn.isEnabled = false
         
+        // date format, startDate 셋팅
+        formatter.timeStyle = .none
+//        formatter.dateStyle = .short
+        formatter.dateFormat = "yyyy-MM-dd"
+        self.startDate = formatter.string(from: Date())
+        
+        // event 연결
+        self.createBtn.addTarget(self, action: #selector(onCreateBtnClicked), for: .touchUpInside)
+        self.couponName.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
+        self.endDate.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
+        
         // delegate 연결
+        self.couponName.delegate = self
+        self.endDate.delegate = self
         self.tabGesture.delegate = self
         
         // gesture 연결
         self.view.addGestureRecognizer(tabGesture)
+    }
+    
+    // messageLabel 셋팅
+    fileprivate func setMsgLabel(flag: Bool, msgLabel: UILabel, msgString: String) {
+        if flag {
+            msgLabel.textColor = .systemGreen
+        } else {
+            msgLabel.textColor = .systemRed
+        }
+        msgLabel.text = msgString
+    }
+    
+    // createButton 활성화 & 비활성화 event
+    fileprivate func createBtnAbleChecked() {
+        print("nameOKFlag: \(nameOKFlag), dateOKFlag: \(dateOKFlag), receiver_isSelected: \(selectedReceiver != nil)")
+        if nameOKFlag && dateOKFlag && (selectedReceiver != nil) {
+            self.createBtn.backgroundColor = COLOR.SIGNATURE_COLOR
+            self.createBtn.isEnabled = true
+        } else {
+            self.createBtn.backgroundColor = COLOR.DISABLE_COLOR
+            self.createBtn.isEnabled = false
+        }
+    }
+    
+    // 이름 정규식 체크 event
+    fileprivate func isValidData(flag: String, data: String) -> Bool {
+        //        print("SignUpFirstVC - isValidData() called / data: \(data), flag: \(flag)")
+        
+        guard data != "" else { return false }
+        let pred : NSPredicate
+        
+        switch flag {
+        case "couponName":
+            pred = NSPredicate(format: "SELF MATCHES %@", REGEX.CTUDYNAME_REGEX)
+        case "endDate":
+            pred = NSPredicate(format: "SELF MATCHES %@", REGEX.DATE_REGEX)
+        default:
+            pred = NSPredicate(format: "SELF MATCHES %@", "")
+        }
+        
+        return pred.evaluate(with: data)
     }
     
     // 쿠폰 수신자 imageView event
@@ -188,11 +256,11 @@ class CreateCouponVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerControl
     }
     
     // 쿠폰등록 button event
-    fileprivate func onCreateBtnClicked() {
+    @objc fileprivate func onCreateBtnClicked() {
         
         self.onStartActivityIndicator()
         
-        AlamofireManager.shared.postCreateCoupon(name: couponName.text!, roomId: roomId, receiverId: selectedReceiver.id, startDate: "", endData: "", image: imageFlag ? self.couponImg.image?.pngData() : nil, completion: { [weak self] result in
+        AlamofireManager.shared.postCreateCoupon(name: couponName.text!, roomId: roomId, receiverId: selectedReceiver.id, startDate: startDate!, endData: endDate.text!, image: imageFlag ? self.couponImg.image?.pngData() : nil, completion: { [weak self] result in
             guard let self = self else { return }
             
             self.onStopActivityIndicator()
@@ -269,6 +337,48 @@ class CreateCouponVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerControl
         return overlayView
     }
     
+    // MARK: - UIDatePicker func
+    fileprivate func actionDatePicker() {
+        let toolbar = UIToolbar()
+        toolbar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: nil, action: #selector(onDoneBtnClicked))
+        toolbar.setItems([doneButton], animated: false)
+        datePicker.preferredDatePickerStyle = .wheels
+        datePicker.locale = NSLocale(localeIdentifier: "ko_KO") as Locale
+        datePicker.datePickerMode = .date
+        
+        endDate.inputAccessoryView = toolbar
+        endDate.inputView = datePicker
+        
+        textFieldCheck(textField: endDate, msgLabel: endDateMsg, inputData: endDate.text ?? "")
+    }
+    
+    @objc func onDoneBtnClicked() {
+        print("CreateCouponVC - onDoneBtnClicked() / endDate: \(datePicker.date)")
+        endDate.text = formatter.string(from: datePicker.date)
+        self.view.endEditing(true)
+        
+        textFieldCheck(textField: endDate, msgLabel: endDateMsg, inputData: endDate.text ?? "")
+    }
+    
+    // textField 변경할 때 event
+    @objc func textFieldEditingChanged(_ textField: UITextField) {
+        //        print("CreateCouponVC - textFieldEditingChanged() called / sender.text: \(sender.text)")
+        switch textField {
+        case couponName:
+            // 이름 형식 체크 (모든 문자 1글자 이상, 공백만 X)
+            textFieldCheck(textField: textField, msgLabel: couponNameMsg, inputData: couponName.text ?? "" )
+        case endDate:
+            // 날짜 형식 체크 (yyyy-MM-dd)
+            textFieldCheck(textField: textField, msgLabel: endDateMsg, inputData: endDate.text ?? "")
+        default:
+            break
+        }
+        
+//        createBtnAbleChecked()
+    }
+    
     // MARK: - protocol delegate
     func onMemberViewClicked(reciver: CouponReciverRequest) {
         self.selectedReceiver = reciver
@@ -285,6 +395,71 @@ class CreateCouponVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerControl
             self.receiverUsername.text = "@\(receiver.username)"
             self.receiverUsername.textColor = COLOR.SUBTITLE_COLOR
         }
+        
+        createBtnAbleChecked()
+    }
+    
+    // MARK: - textField delegate
+    // textField에서 enter키 눌렀을때 event
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        //        print("CreateCouponVC - textFieldShouldReturn() called")
+        switch textField {
+        case couponName:
+            // 이름 형식 체크 (모든 문자 1글자 이상, 공백만 X)
+            textFieldCheck(textField: textField, msgLabel: couponNameMsg, inputData: couponName.text ?? "" )
+        case endDate:
+            // 날짜 형식 체크 (yyyy-MM-dd)
+            textFieldCheck(textField: textField, msgLabel: endDateMsg, inputData: endDate.text ?? "")
+        default:
+            break
+        }
+        
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldCheck(textField: UITextField, msgLabel: UILabel, inputData: String) {
+        print("CreateCouponVC - textFieldCheck() called / msgLabel: \(msgLabel), inputData: \(inputData)")
+        
+        guard inputData != "" else {
+            msgLabel.text = ""
+            return
+        }
+        
+        switch textField {
+        case couponName:
+            nameOKFlag = isValidData(flag: "couponName", data: inputData)
+            if nameOKFlag {
+                setMsgLabel(flag: nameOKFlag, msgLabel: msgLabel, msgString: "")
+            } else {
+                setMsgLabel(flag: nameOKFlag, msgLabel: msgLabel, msgString: "이름이 옳바르지 않습니다. (공백X)")
+            }
+        case endDate:
+            dateOKFlag = isValidData(flag: "endDate", data: inputData)
+            if dateOKFlag {
+                setMsgLabel(flag: dateOKFlag, msgLabel: msgLabel, msgString: "")
+            } else {
+                setMsgLabel(flag: dateOKFlag, msgLabel: msgLabel, msgString: "일자가 옳바르지 않습니다. (yyyy-MM-dd)")
+            }
+        default:
+            break
+        }
+        
+        createBtnAbleChecked()
+    }
+    
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        switch textField {
+        case couponName:
+            nameOKFlag = false
+        case endDate:
+            dateOKFlag = false
+        default:
+            break
+        }
+        
+        createBtnAbleChecked()
+        return true
     }
     
     // MARK: - UIGestureRecognizer delegate
@@ -292,6 +467,10 @@ class CreateCouponVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerControl
         if touch.view?.isDescendant(of: receiverImg) == true {
             view.endEditing(true)
             onReciverImageClicked()
+            return true
+        } else if touch.view?.isDescendant(of: endDate) == true {
+            view.endEditing(true)
+            actionDatePicker()
             return true
         } else if touch.view?.isDescendant(of: couponImg) == true {
             view.endEditing(true)
