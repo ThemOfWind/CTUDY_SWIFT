@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SEttingStudyRoomRequest: Codable {
+struct SettingStudyRoomRequest: Codable {
     var id: Int // 스터디룸 pk id
     var name: String // 스터디룸 이름
     var membercount: Int // 스터디룸 인원수
