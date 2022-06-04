@@ -13,7 +13,7 @@ class AddStudyNameVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
     // UIImagePickerControllerDelegate - 이미지를 선택하고 카메라를 찍었을때 다양한 동작을 도와줌
     // UINavigationControllerDelegate - 앨범사진을 선택했을때 화면전환을 네비게이션으로 이동함
     // MARK: - 변수
-    @IBOutlet weak var StudyNameView: UIView!
+    @IBOutlet weak var studyNameView: UIView!
     @IBOutlet weak var roomImg: UIImageView!
     @IBOutlet weak var registerStudyName: UITextField!
     @IBOutlet weak var nextBtn: UIButton!
@@ -53,17 +53,17 @@ class AddStudyNameVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
         // lmageView ui
         self.roomImg.layer.cornerRadius = 10
         self.roomImg.layer.borderWidth = 1
-        self.roomImg.layer.borderColor = COLOR.SUBTITLE_COLOR.cgColor
-        self.roomImg.backgroundColor = COLOR.SUBTITLE_COLOR
-        self.roomImg.tintColor = COLOR.DISABLE_COLOR
-        self.roomImg.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30, weight: .regular, scale: .large))
+        self.roomImg.layer.borderColor = COLOR.BASIC_BACKGROUD_COLOR.cgColor
+        self.roomImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
+        self.roomImg.tintColor = COLOR.BASIC_TINT_COLOR
+        self.roomImg.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: self.roomImg.bounds.height / 5, weight: .regular, scale: .large))
         self.roomImg.contentMode = .center
         self.roomImg.isUserInteractionEnabled = true
         
         // button ui, event 연결
+        self.nextBtn.layer.cornerRadius = 10
         self.nextBtn.tintColor = .white
         self.nextBtn.backgroundColor = COLOR.DISABLE_COLOR
-        self.nextBtn.layer.cornerRadius = 10
         self.nextBtn.isEnabled = false
         self.nextBtn.addTarget(self, action: #selector(onNextBtnClicked(_:)), for: .touchUpInside)
         
@@ -96,7 +96,7 @@ class AddStudyNameVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
     // 초기화 picker setting
     fileprivate func presentCancel() {
         self.imageFlag = false
-        self.roomImg.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: 30, weight: .regular, scale: .large))
+        self.roomImg.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: self.roomImg.bounds.height / 5, weight: .regular, scale: .large))
         self.roomImg.contentMode = .center
     }
     
@@ -185,7 +185,6 @@ class AddStudyNameVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
             view.endEditing(true)
             return true
         }
-        
     }
     
     // MARK: - textField delegate

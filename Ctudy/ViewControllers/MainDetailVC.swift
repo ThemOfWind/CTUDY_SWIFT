@@ -22,33 +22,64 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var memberTableView: UITableView!
     var members: Array<SearchStudyMemberResponse> = [] // 멤버 리스트
     var profileId: Int? // 접속 회원 id
-    var roomName: Int? // 스터디룸 id
-    var roomNameString: String? // 스터디룸 name
+    var roomId: Int? // 스터디룸 id
+    var roomName: String? // 스터디룸 name
     
     // MARK: - override func
     override func viewDidLoad() {
         super.viewDidLoad()
+        //print("MainDetailVC - viewDidLoad() called / roomId: \(String(describing: self.roomId)), roomName: \(String(describing: self.roomName))")
         self.config()
-        
-        print("MainDetailVC - viewDidLoad() called / roomName: \(String(describing: self.roomName)), roomNameString: \(String(describing: self.roomNameString))")
+    }
+    
+    // 다음 화면 이동 시 입력받은 이름정보 넘기기
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let id = segue.identifier, id == "CreateCouponVC" {
+            if let controller = segue.destination as? CreateCouponVC {
+                let master = KeyChainManager().tokenLoad(API.SERVICEID, account: "username")
+                var memberList = [SearchStudyMemberResponse]()
+                
+                for index in 0..<members.count {
+                    if master != members[index].username {
+                        let member = SearchStudyMemberResponse(id: members[index].id, name: members[index].name, username: members[index].username, image: members[index].image)
+                        memberList.append(member)
+                    }
+                }
+                
+                controller.members = memberList
+                controller.roomId = roomId
+            }
+        } else if let id = segue.identifier, id == "SettingStudyRoomVC" {
+            if let controller = segue.destination as? SettingStudyRoomVC {
+                let master = KeyChainManager().tokenLoad(API.SERVICEID, account: "username")
+                var memberList = [SearchStudyMemberResponse]()
+                
+                for index in 0..<members.count {
+                    if master != members[index].username {
+                        let member = SearchStudyMemberResponse(id: members[index].id, name: members[index].name, username: members[index].username, image: members[index].image)
+                        memberList.append(member)
+                    }
+                }
+                
+                controller.members = memberList
+                // room 정보 (SettingMasterRequest model 사용)
+            }
+        }
     }
      
     // MARK: - fileprivate func
     fileprivate func config() {
         // navigationbar item 설정
         self.leftItem = LeftItem.backGeneral
-        self.titleItem = TitleItem.titleGeneral(title: roomNameString, isLargeTitles: true)
+        self.titleItem = TitleItem.titleGeneral(title: roomName, isLargeTitles: true)
         self.rightItem = RightItem.anyCustoms(items: [.setting], title: nil, rightSpaceCloseToDefault: false)
-        
-        // label
-//        self.studyRoom.text = roomNameString
         
         // profile
         self.profileUserImg.layer.cornerRadius = self.profileUserImg.bounds.height / 2
         self.profileUserImg.layer.borderWidth = 1
         self.profileUserImg.layer.borderColor = COLOR.BORDER_COLOR.cgColor
-        self.profileUserImg.backgroundColor = COLOR.DISABLE_COLOR
-        self.profileUserImg.tintColor = COLOR.SUBTITLE_COLOR
+        self.profileUserImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
+        self.profileUserImg.tintColor = COLOR.BASIC_TINT_COLOR
         if let userImg = KeyChainManager().tokenLoad(API.SERVICEID, account: "image"), userImg != "" {
             self.profileUserImg.kf.setImage(with: URL(string: API.IMAGE_URL + userImg)!)
         } else {
@@ -56,10 +87,11 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
 //            self.profileUserImg.image = UIImage(systemName: "person", withConfiguration: UIImage.SymbolConfiguration(pointSize: 20, weight: .regular, scale: .large))
         }
         self.profileUserImg.contentMode = .scaleAspectFill
+        self.profileUserImg.translatesAutoresizingMaskIntoConstraints = false
         
         self.profileId = Int(KeyChainManager().tokenLoad(API.SERVICEID, account: "id")!)
         self.profileName.text = KeyChainManager().tokenLoad(API.SERVICEID, account: "name")
-        self.profileUserName.text = KeyChainManager().tokenLoad(API.SERVICEID, account: "userName")
+        self.profileUserName.text = "@\(KeyChainManager().tokenLoad(API.SERVICEID, account: "username")!)"
         self.profileUserName.textColor = COLOR.SUBTITLE_COLOR
         
         // btn
@@ -83,14 +115,14 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         // 셀 설정
         self.memberTableView.rowHeight = 90
         self.memberTableView.allowsSelection = false
-        //        self.memberTableView.estimatedRowHeight = 50
+        self.memberTableView.showsVerticalScrollIndicator = false // scroll 제거
         
         // delegete
         self.memberTableView.delegate = self
         self.memberTableView.dataSource = self
         
         // 스터디룸 멤버 조회
-        if let id = roomName {
+        if let id = roomId {
             getSearchStudyMemeber(id: String(id))
         }
     }
@@ -110,7 +142,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
                     , let name = masterList["name"].string else { return }
                 let image = masterList["image"].string ?? ""
                 
-                let masterItem = SearchStudyMemberResponse(id: id, name: name + "⭐️", userName: username, image: image)
+                let masterItem = SearchStudyMemberResponse(id: id, name: name + "⭐️", username: username, image: image)
                 self.members.append(masterItem)
                 
                 // 멤버 정보
@@ -121,7 +153,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
                         , let name = subJson["name"].string else { return }
                     let image = subJson["image"].string ?? ""
                     
-                    let memberItem = SearchStudyMemberResponse(id: id, name: name, userName: username, image: image)
+                    let memberItem = SearchStudyMemberResponse(id: id, name: name, username: username, image: image)
                     self.members.append(memberItem)
                 }
                 
@@ -147,13 +179,14 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = memberTableView.dequeueReusableCell(withIdentifier: "StudyMemberTableViewCell", for: indexPath) as! StudyMemberTableViewCell
         cell.member.text = members[indexPath.row].name
-        cell.memberName.text = "@\(members[indexPath.row].userName)"
-        cell.couponCnt.text = cell.couponCnt.text!
+        cell.memberName.text = "@\(members[indexPath.row].username)"
+        cell.couponCnt.text = "쿠폰 00"
         if members[indexPath.row].image != "" {
             cell.memberImg.kf.setImage(with: URL(string: API.IMAGE_URL + members[indexPath.row].image)!)
         } else {
             cell.memberImg.image = UIImage(named: "user_default.png")
         }
+
         return cell
     }
 }

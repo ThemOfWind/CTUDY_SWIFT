@@ -21,8 +21,8 @@ class MemberTableViewCell : UITableViewCell {
         self.memberImg.layer.cornerRadius = self.memberImg.bounds.height / 3
         self.memberImg.layer.borderWidth = 1
         self.memberImg.layer.borderColor = COLOR.BORDER_COLOR.cgColor
-        self.memberImg.backgroundColor = COLOR.DISABLE_COLOR
-        self.memberImg.tintColor = COLOR.SUBTITLE_COLOR
+        self.memberImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
+        self.memberImg.tintColor = COLOR.BASIC_TINT_COLOR
         self.memberImg.image = UIImage(named: "user_default.png")
         self.memberImg.contentMode = .scaleAspectFill
         self.memberImg.translatesAutoresizingMaskIntoConstraints = false
@@ -31,6 +31,6 @@ class MemberTableViewCell : UITableViewCell {
     // cell간 간격 띄우기 (수정해야돼)
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 5))
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
     }
 }

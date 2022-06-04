@@ -26,3 +26,7 @@ enum RoomErrors: String, Error {
 enum MemberErrors: String, Error {
     case noSearchMember = "전체 회원 조회에 실패했습니다."
 }
+
+enum CouponErrors: String, Error {
+    case noCreateCoupon = "쿠폰 등록에 실패했습니다."
+}

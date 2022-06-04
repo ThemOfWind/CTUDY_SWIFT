@@ -41,5 +41,5 @@ class StartVC : BasicVC {
     }
     
     // MARK: - pop func
-    @IBAction func unwindLoginVC(_ segue: UIStoryboardSegue) {}
+    @IBAction func unwindStartVC(_ segue: UIStoryboardSegue) {}
 }
