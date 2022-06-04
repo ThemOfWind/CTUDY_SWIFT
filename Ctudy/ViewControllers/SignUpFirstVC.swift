@@ -119,7 +119,7 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
     }
     
     fileprivate func actionSheetAlert() {
-        let alert = UIAlertController(title: "스터디룸 이미지 설정", message: nil, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "내 이미지 설정", message: nil, preferredStyle: .actionSheet)
         let cancel = UIAlertAction(title: "초기화", style: .cancel, handler: { [weak self] (_) in
             self?.presentCancel()
         })

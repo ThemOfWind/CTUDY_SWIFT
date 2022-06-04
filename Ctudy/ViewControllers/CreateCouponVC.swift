@@ -12,7 +12,7 @@ import NVActivityIndicatorView
 
 // receiver 목록 view에서 선택 event 연결 protocol
 protocol CouponSendDelegate: AnyObject {
-    func onMemberViewClicked(reciver: CouponReciverRequest)
+    func onMemberViewClicked(receiver: CouponReciverRequest)
 }
 
 class CreateCouponVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CouponSendDelegate {
@@ -51,17 +51,17 @@ class CreateCouponVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
         label.text = "loading..."
         label.textColor = COLOR.BASIC_TINT_COLOR
         label.translatesAutoresizingMaskIntoConstraints = false
-       return label
+        return label
     }()
-    var members: Array<SearchStudyMemberResponse>? // 멤버 리스트
-    var roomId: Int! // 넘겨받은 studyroom pk
-    var selectedReceiver: CouponReciverRequest!
-    var startDate: String?
+    var members: Array<SearchStudyMemberResponse>? // 전달받은 멤버 리스트
+    var roomId: Int! // 전달받은 studyroom pk
+    var selectedReceiver: CouponReciverRequest! // 선택한 쿠폰 수신자
+    var startDate: String? // 오늘 날짜
     let datePicker = UIDatePicker() // 날짜 피커
     let formatter = DateFormatter() // 날짜 포맷
-    var nameOKFlag: Bool = false
-    var dateOKFlag: Bool = false
-    var imageFlag: Bool = false
+    var nameOKFlag: Bool = false // 이름 입력 flag
+    var dateOKFlag: Bool = false // 날짜 입력 flag
+    var imageFlag: Bool = false // 쿠폰이미지 입력 flag
     
     // MARK: - override func
     override func viewDidLoad() {
@@ -132,7 +132,7 @@ class CreateCouponVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
         
         // date format, startDate 셋팅
         formatter.timeStyle = .none
-//        formatter.dateStyle = .short
+        //        formatter.dateStyle = .short
         formatter.dateFormat = "yyyy-MM-dd"
         self.startDate = formatter.string(from: Date())
         
@@ -207,7 +207,7 @@ class CreateCouponVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
     }
     
     fileprivate func actionSheetAlert() {
-        let alert = UIAlertController(title: "스터디룸 이미지 설정", message: nil, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "쿠폰 이미지 설정", message: nil, preferredStyle: .actionSheet)
         let cancel = UIAlertAction(title: "초기화", style: .cancel, handler: { [weak self] (_) in
             self?.presentCancel()
         })
@@ -376,25 +376,23 @@ class CreateCouponVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
             break
         }
         
-//        createBtnAbleChecked()
+        //        createBtnAbleChecked()
     }
     
     // MARK: - protocol delegate
-    func onMemberViewClicked(reciver: CouponReciverRequest) {
-        self.selectedReceiver = reciver
+    func onMemberViewClicked(receiver: CouponReciverRequest) {
+        self.selectedReceiver = receiver
         
         // reciver를 선택했을때
-        if let receiver = selectedReceiver {
-            if receiver.image != "" {
-                self.receiverImg.kf.setImage(with: URL(string: API.IMAGE_URL + receiver.image)!)
-            } else {
-                self.receiverImg.image = UIImage(named: "user_default.png")
-            }
-            self.receiverImg.contentMode = .scaleAspectFill
-            self.receiverName.text = reciver.name
-            self.receiverUsername.text = "@\(receiver.username)"
-            self.receiverUsername.textColor = COLOR.SUBTITLE_COLOR
+        if selectedReceiver.image != "" {
+            self.receiverImg.kf.setImage(with: URL(string: API.IMAGE_URL + selectedReceiver.image)!)
+        } else {
+            self.receiverImg.image = UIImage(named: "user_default.png")
         }
+        self.receiverImg.contentMode = .scaleAspectFill
+        self.receiverName.text = selectedReceiver.name
+        self.receiverUsername.text = "@\(selectedReceiver.username)"
+        self.receiverUsername.textColor = COLOR.SUBTITLE_COLOR
         
         createBtnAbleChecked()
     }

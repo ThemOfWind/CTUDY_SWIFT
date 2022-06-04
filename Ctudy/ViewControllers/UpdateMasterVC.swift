@@ -1,25 +1,23 @@
 //
-//  AddCouponReciverVC.swift
+//  File.swift
 //  Ctudy
 //
-//  Created by 김지은 on 2022/05/30.
+//  Created by 김지은 on 2022/06/04.
 //
 
 import Foundation
 import UIKit
-import SwiftyJSON
-import Kingfisher
 
-class AddCouponReciverVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
+class UpdateMasterVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     // MARK: - 변수
     @IBOutlet weak var memberTableView: UITableView!
     var members: Array<SearchStudyMemberResponse>? // 전달받은 스터디룸 멤버 리스트
-    weak var delegate: CouponSendDelegate?
+    weak var delegate: SettingSendDelegate?
     
     // MARK: - override func
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("AddCouponReciverVC - viewDidLoad() called")
+        print("UpdateMasterVC - viewDidLoad() called")
         self.config()
     }
     
@@ -63,7 +61,7 @@ class AddCouponReciverVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.delegate?.onMemberViewClicked(receiver: CouponReciverRequest(id: members![indexPath.row].id, name: members![indexPath.row].name, username: members![indexPath.row].username, image: members![indexPath.row].image))
+        self.delegate?.onMemberViewClicked(master: SettingMasterRequest(id: members![indexPath.row].id, name: members![indexPath.row].name, username: members![indexPath.row].username, image: members![indexPath.row].image))
         self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
 }

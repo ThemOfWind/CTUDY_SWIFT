@@ -49,6 +49,21 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
                 controller.members = memberList
                 controller.roomId = roomId
             }
+        } else if let id = segue.identifier, id == "SettingStudyRoomVC" {
+            if let controller = segue.destination as? SettingStudyRoomVC {
+                let master = KeyChainManager().tokenLoad(API.SERVICEID, account: "username")
+                var memberList = [SearchStudyMemberResponse]()
+                
+                for index in 0..<members.count {
+                    if master != members[index].username {
+                        let member = SearchStudyMemberResponse(id: members[index].id, name: members[index].name, username: members[index].username, image: members[index].image)
+                        memberList.append(member)
+                    }
+                }
+                
+                controller.members = memberList
+                // room 정보 (SettingMasterRequest model 사용)
+            }
         }
     }
      
