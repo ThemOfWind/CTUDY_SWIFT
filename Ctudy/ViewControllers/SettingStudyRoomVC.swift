@@ -11,10 +11,10 @@ import Kingfisher
 import NVActivityIndicatorView
 
 protocol SettingSendDelegate: AnyObject {
-    func onMemberViewClicked(master: SettingMasterRequest)
+    func onMemberViewClicked(master: SettingMasterResponse)
 }
 
-class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, SettingSendDelegate{
+class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, SettingSendDelegate, UITextFieldDelegate{
     // MARK: - 변수
     @IBOutlet weak var roomImg: UIImageView!
     @IBOutlet weak var roomName: UITextField!
@@ -43,44 +43,57 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
        return label
     }()
     var members: Array<SearchStudyMemberResponse>? // 전달받은 멤버 리스트
-    var selectedMaster: SettingMasterRequest! // 선택한 마스터멤버 정보
+    var settingRoom: SettingStudyRoomResponse! // 전달받은 room 정보
+    var selectedMaster: SettingMasterResponse! // 선택한 마스터멤버 정보
     var imageFlag: Bool = false // 스터디룸 이미지 입력 flag
     
     // MARK: - override func
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.config()
+        config()
     }
     
     // MARK: - fileprivate func
     fileprivate func config() {
         // navigationbar item
-        self.leftItem = LeftItem.backGeneral
-        self.titleItem = TitleItem.titleGeneral(title: "스터디룸 설정", isLargeTitles: true)
+        leftItem = LeftItem.backGeneral
+        titleItem = TitleItem.titleGeneral(title: "스터디룸 설정", isLargeTitles: true)
         
         // studyroom image ui
-        self.roomImg.layer.cornerRadius = 10
-        self.roomImg.layer.borderWidth = 1
-        self.roomImg.layer.borderColor = COLOR.BASIC_BACKGROUD_COLOR.cgColor
-        self.roomImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
-        self.roomImg.tintColor = COLOR.BASIC_TINT_COLOR
-        self.roomImg.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: self.roomImg.bounds.height / 5, weight: .regular, scale: .large))
-        self.roomImg.contentMode = .center
-        self.roomImg.isUserInteractionEnabled = true
+        roomImg.layer.cornerRadius = 10
+        roomImg.layer.borderWidth = 1
+        roomImg.layer.borderColor = COLOR.BORDER_COLOR.cgColor
+        roomImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
+        roomImg.tintColor = COLOR.BASIC_TINT_COLOR
+        if settingRoom.banner != "" {
+            roomImg.kf.setImage(with: URL(string: API.IMAGE_URL + settingRoom.banner)!)
+        } else {
+            roomImg.image = UIImage(named: "studyroom_default.png")
+        }
+        roomImg.contentMode = .scaleAspectFill
+        roomImg.isUserInteractionEnabled = true
         
         // update button ui
-        self.updateBtn.layer.cornerRadius = 10
-        self.updateBtn.tintColor = .white
-        self.updateBtn.backgroundColor = COLOR.SIGNATURE_COLOR
+        updateBtn.layer.cornerRadius = 10
+        updateBtn.tintColor = .white
+        updateBtn.backgroundColor = COLOR.SIGNATURE_COLOR
+        
+        // roomname textfield ui
+//        roomName.placeholder = settingRoom.name
+        roomName.text = settingRoom.name
         
         // mastername textfield ui
-        self.masterName.isEnabled = false
+        let master = SettingMasterResponse(id: settingRoom.masterid, name: settingRoom.mastername)
+        selectedMaster = master
+        masterName.text = selectedMaster.name
+        masterName.isUserInteractionEnabled = true // readonly
         
         // event 연결
-        self.updateBtn.addTarget(self, action: #selector(onUpdateBtnClicked), for: .touchUpInside)
+        updateBtn.addTarget(self, action: #selector(onUpdateBtnClicked), for: .touchUpInside)
         
         // delegate 연결
-        self.tabGesture.delegate = self
+        masterName.delegate = self
+        tabGesture.delegate = self
         
         // gesture 연결
         self.view.addGestureRecognizer(tabGesture)
@@ -88,7 +101,26 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
     
     // update button click event
     @objc fileprivate func onUpdateBtnClicked() {
+        self.onStartActivityIndicator()
         
+        AlamofireManager.shared.postUpdateRoom(id: settingRoom.id, name: roomName.text!, master: selectedMaster.id, image: nil, completion: {
+            [weak self] result in
+            guard let self = self else { return }
+            
+            self.onStopActivityIndicator()
+            
+            switch result {
+            case .success(_):
+                self.view.makeToast("스터디룸 설정이 변경되었습니다.", duration: 1.0, position: .center)
+                self.navigationController?.popViewController(animated: true)
+            case .failure(let error):
+                self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
+            }
+        })
+        
+        if self.indicator.isAnimating {
+            self.onStopActivityIndicator()
+        }
     }
     
     // masterName textfield click event
@@ -96,7 +128,8 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
         guard let controller = self.storyboard?.instantiateViewController(withIdentifier: "UpdateMasterVC") as? UpdateMasterVC else { return }
         controller.modalTransitionStyle = .coverVertical
         controller.modalPresentationStyle = .automatic
-//        controller.delegate = self
+        controller.members = members
+        controller.delegate = self
         self.present(controller, animated: true, completion: nil)
     }
     
@@ -125,9 +158,12 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
     
     // 초기화 picker setting
     fileprivate func presentCancel() {
-        self.imageFlag = false
-        self.roomImg.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: self.roomImg.bounds.height / 5, weight: .regular, scale: .large))
-        self.roomImg.contentMode = .center
+        imageFlag = false
+        if settingRoom.banner != "" {
+            roomImg.kf.setImage(with: URL(string: API.IMAGE_URL + settingRoom.banner)!)
+        } else {
+            roomImg.image = UIImage(named: "studyroom_default.png")
+        }
     }
     
     // 카메라 picker setting
@@ -213,8 +249,10 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
     }
     
     // MARK: - protocol delegate
-    func onMemberViewClicked(master: SettingMasterRequest) {
+    func onMemberViewClicked(master: SettingMasterResponse) {
+        selectedMaster = master
         
+        masterName.text = selectedMaster.name
     }
     
     // MARK: - UIGestureRecognizer delegate

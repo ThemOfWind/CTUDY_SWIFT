@@ -297,19 +297,19 @@ final class AlamofireManager {
     }
     
     // MARK: - 쿠폰등록
-    func postCreateCoupon(name: String, roomId: Int, receiverId: Int, startDate: String, endData: String, image: Data? = nil, completion: @escaping(Result<Bool, CouponErrors>) -> Void) {
+    func postRegisterCoupon(name: String, roomId: Int, receiverId: Int, startDate: String, endData: String, image: Data? = nil, completion: @escaping(Result<Bool, CouponErrors>) -> Void) {
         let url = URL(string: API.BASE_URL + "coupon/")!
         let token = KeyChainManager().tokenLoad(API.SERVICEID, account: "accessToken")
         let header: HTTPHeaders = [
             "Content-Type" : "multipart/form-data"
-            , "Authorization" : "Bearer " + String(token!)
+          , "Authorization" : "Bearer " + String(token!)
         ]
         
         //        print("postRegisterRoom() - token: \(token), url: \(url)")
         //        print("postRegisterRoom() - header: Content-Type(\(header["Content-Type"])), Authorization(\(header["Authorization"])")
         
         AF.upload(multipartFormData: { multipartFormData in
-            let mpfData = CreateCouponResponse(name: name, room_id: roomId, receiver_id: receiverId, start_date: startDate, end_date: endData)
+            let mpfData = RegisterCouponRequest(name: name, room_id: roomId, receiver_id: receiverId, start_date: startDate, end_date: endData)
             multipartFormData.append(try! JSONEncoder().encode(mpfData), withName: "payload")
             if image != nil {
                 multipartFormData.append(image!, withName: "file", fileName: "default.png", mimeType: "image/png")
@@ -323,8 +323,39 @@ final class AlamofireManager {
             case 200:
                 completion(.success(true))
             default:
-                print("postCreateCoupon() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
+                print("postRegisterCoupon() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
                 completion(.failure(.noCreateCoupon))
+                
+            }
+        })
+    }
+    
+    // MARK: - 스터디룸 설정
+    func postUpdateRoom(id: Int, name: String, master: Int, image: Data? = nil, completion: @escaping(Result<Bool, RoomErrors>) -> Void) {
+        let url = URL(string: API.BASE_URL + "study/room/\(id)")!
+        let token = KeyChainManager().tokenLoad(API.SERVICEID, account: "accessToken")
+        let header: HTTPHeaders = [
+            "Content-Type" : "multipart/form-data"
+          , "Authorization" : "Bearer " + String(token!)
+        ]
+        
+        AF.upload(multipartFormData: { multipartFormData in
+            let mpfData = UpdateRoomRequest(id: id, name: name, master: master)
+            multipartFormData.append(try! JSONEncoder().encode(mpfData), withName: "payload")
+            if image != nil {
+                multipartFormData.append(image!, withName: "file", fileName: "default.png", mimeType: "image/png")
+            }
+        }, to: url, usingThreshold: UInt64.init(), method: .post, headers: header).response(completionHandler: { response in
+            guard let responseValue = response.value
+                    , let statusCode = response.response?.statusCode else { return }
+            let responseJson = JSON(responseValue)
+            
+            switch statusCode {
+            case 200:
+                completion(.success(true))
+            default:
+                print("postUpdateRoom() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
+                completion(.failure(.noUpdateRoom))
                 
             }
         })

@@ -61,7 +61,7 @@ class UpdateMasterVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.delegate?.onMemberViewClicked(master: SettingMasterRequest(id: members![indexPath.row].id, name: members![indexPath.row].name, username: members![indexPath.row].username, image: members![indexPath.row].image))
+        self.delegate?.onMemberViewClicked(master: SettingMasterResponse(id: members![indexPath.row].id, name: members![indexPath.row].name))
         self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
 }

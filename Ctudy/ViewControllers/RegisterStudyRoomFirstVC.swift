@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 //import YPImagePicker
 
-class AddStudyNameVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class RegisterStudyRoomFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     // UIImagePickerControllerDelegate - 이미지를 선택하고 카메라를 찍었을때 다양한 동작을 도와줌
     // UINavigationControllerDelegate - 앨범사진을 선택했을때 화면전환을 네비게이션으로 이동함
     // MARK: - 변수
@@ -17,7 +17,7 @@ class AddStudyNameVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
     @IBOutlet weak var roomImg: UIImageView!
     @IBOutlet weak var registerStudyName: UITextField!
     @IBOutlet weak var nextBtn: UIButton!
-    let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: AddStudyNameVC.self, action: nil)
+    let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: RegisterStudyRoomFirstVC.self, action: nil)
     
     //    let imagePicker: UIImagePickerController = {
     //        let picker = UIImagePickerController()
@@ -36,8 +36,8 @@ class AddStudyNameVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
     
     // 다음 화면정보 연결
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let id = segue.identifier, id == "AddStudyMemberVC" {
-            if let controller = segue.destination as? AddStudyMemberVC {
+        if let id = segue.identifier, id == "RegisterStudyRoomSecondVC" {
+            if let controller = segue.destination as? RegisterStudyRoomSecondVC {
                 controller.studyName = self.registerStudyName.text
                 controller.studyImage = imageFlag ? self.roomImg.image?.pngData() : nil
             }
@@ -170,7 +170,7 @@ class AddStudyNameVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
     }
     
     @objc fileprivate func onNextBtnClicked(_ sender: Any) {
-        self.performSegue(withIdentifier: "AddStudyMemberVC", sender: nil)
+        self.performSegue(withIdentifier: "RegisterStudyRoomSecondVC", sender: nil)
     }
     
     // MARK: - UIGestureRecognizer delegate

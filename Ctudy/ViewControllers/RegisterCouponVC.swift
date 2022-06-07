@@ -15,7 +15,7 @@ protocol CouponSendDelegate: AnyObject {
     func onMemberViewClicked(receiver: CouponReciverRequest)
 }
 
-class CreateCouponVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CouponSendDelegate {
+class RegisterCouponVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CouponSendDelegate {
     
     // MARK: - 변수
     @IBOutlet weak var senderImg: UIImageView!
@@ -31,7 +31,7 @@ class CreateCouponVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
     @IBOutlet weak var endDateMsg: UILabel!
     @IBOutlet weak var couponImg: UIImageView!
     @IBOutlet weak var createBtn: UIButton!
-    let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: CreateCouponVC.self, action: nil)
+    let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: RegisterCouponVC.self, action: nil)
     lazy var indicatorView: UIView = {
         let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         indicatorView.backgroundColor = COLOR.INDICATOR_BACKGROUND_COLOR
@@ -77,74 +77,74 @@ class CreateCouponVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
     // MARK: - fileprivate func
     fileprivate func config() {
         // navigationbar item
-        self.leftItem = LeftItem.backGeneral
-        self.titleItem = TitleItem.titleGeneral(title: "쿠폰 발급", isLargeTitles: true)
+        leftItem = LeftItem.backGeneral
+        titleItem = TitleItem.titleGeneral(title: "쿠폰 발급", isLargeTitles: true)
         
         // sender image ui
-        self.senderImg.layer.cornerRadius = self.senderImg.bounds.height / 2
-        self.senderImg.layer.borderWidth = 1
-        self.senderImg.layer.borderColor = COLOR.BORDER_COLOR.cgColor
-        self.senderImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
-        self.senderImg.tintColor = COLOR.BASIC_TINT_COLOR
+        senderImg.layer.cornerRadius = senderImg.bounds.height / 2
+        senderImg.layer.borderWidth = 1
+        senderImg.layer.borderColor = COLOR.BORDER_COLOR.cgColor
+        senderImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
+        senderImg.tintColor = COLOR.BASIC_TINT_COLOR
         if let myImg = KeyChainManager().tokenLoad(API.SERVICEID, account: "image"), myImg != "" {
-            self.senderImg.kf.setImage(with: URL(string: API.IMAGE_URL + myImg)!)
+            senderImg.kf.setImage(with: URL(string: API.IMAGE_URL + myImg)!)
         } else {
-            self.senderImg.image = UIImage(named: "user_default.png")
+            senderImg.image = UIImage(named: "user_default.png")
         }
-        self.senderImg.contentMode = .scaleAspectFill
-        self.senderImg.translatesAutoresizingMaskIntoConstraints = false
+        senderImg.contentMode = .scaleAspectFill
+        senderImg.translatesAutoresizingMaskIntoConstraints = false
         
         // sender label ui
-        self.senderName.text = KeyChainManager().tokenLoad(API.SERVICEID, account: "name")
-        self.senderUsername.text = "@\(KeyChainManager().tokenLoad(API.SERVICEID, account: "username")!)"
-        self.senderUsername.textColor = COLOR.SUBTITLE_COLOR
+        senderName.text = KeyChainManager().tokenLoad(API.SERVICEID, account: "name")
+        senderUsername.text = "@\(KeyChainManager().tokenLoad(API.SERVICEID, account: "username")!)"
+        senderUsername.textColor = COLOR.SUBTITLE_COLOR
         
         // arrow image ui
-        self.arrowImg.image = UIImage(named: "arrow.png")
-        self.arrowImg.contentMode = .scaleAspectFit
-        self.arrowImg.translatesAutoresizingMaskIntoConstraints = false
+        arrowImg.image = UIImage(named: "arrow.png")
+        arrowImg.contentMode = .scaleAspectFit
+        arrowImg.translatesAutoresizingMaskIntoConstraints = false
         
         // reciver image ui
-        self.receiverImg.layer.cornerRadius = self.senderImg.bounds.height / 2
-        self.receiverImg.layer.borderWidth = 1
-        self.receiverImg.layer.borderColor = COLOR.BORDER_COLOR.cgColor
-        self.receiverImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
-        self.receiverImg.tintColor = COLOR.BASIC_TINT_COLOR
-        self.receiverImg.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: self.receiverImg.bounds.height / 5, weight: .regular, scale: .large))
-        self.receiverImg.contentMode = .center
-        self.receiverImg.isUserInteractionEnabled = true
+        receiverImg.layer.cornerRadius = senderImg.bounds.height / 2
+        receiverImg.layer.borderWidth = 1
+        receiverImg.layer.borderColor = COLOR.BORDER_COLOR.cgColor
+        receiverImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
+        receiverImg.tintColor = COLOR.BASIC_TINT_COLOR
+        receiverImg.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: receiverImg.bounds.height / 5, weight: .regular, scale: .large))
+        receiverImg.contentMode = .center
+        receiverImg.isUserInteractionEnabled = true
         
         // coupon image ui
-        self.couponImg.layer.cornerRadius = 10
-        self.couponImg.layer.borderWidth = 1
-        self.couponImg.layer.borderColor = COLOR.BASIC_BACKGROUD_COLOR.cgColor
-        self.couponImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
-        self.couponImg.tintColor = COLOR.BASIC_TINT_COLOR
-        self.couponImg.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: self.couponImg.bounds.height / 5, weight: .regular, scale: .large))
-        self.couponImg.contentMode = .center
-        self.couponImg.isUserInteractionEnabled = true // 유저의 event가 event queue로부터 무시되고 삭제됐는지 판단하는 boolean 값
+        couponImg.layer.cornerRadius = 10
+        couponImg.layer.borderWidth = 1
+        couponImg.layer.borderColor = COLOR.BASIC_BACKGROUD_COLOR.cgColor
+        couponImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
+        couponImg.tintColor = COLOR.BASIC_TINT_COLOR
+        couponImg.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: couponImg.bounds.height / 5, weight: .regular, scale: .large))
+        couponImg.contentMode = .center
+        couponImg.isUserInteractionEnabled = true // 유저의 event가 event queue로부터 무시되고 삭제됐는지 판단하는 boolean 값
         
         // button ui
-        self.createBtn.layer.cornerRadius = 10
-        self.createBtn.tintColor = .white
-        self.createBtn.backgroundColor = COLOR.DISABLE_COLOR
-        self.createBtn.isEnabled = false
+        createBtn.layer.cornerRadius = 10
+        createBtn.tintColor = .white
+        createBtn.backgroundColor = COLOR.DISABLE_COLOR
+        createBtn.isEnabled = false
         
         // date format, startDate 셋팅
         formatter.timeStyle = .none
         //        formatter.dateStyle = .short
         formatter.dateFormat = "yyyy-MM-dd"
-        self.startDate = formatter.string(from: Date())
+        startDate = formatter.string(from: Date())
         
         // event 연결
-        self.createBtn.addTarget(self, action: #selector(onCreateBtnClicked), for: .touchUpInside)
-        self.couponName.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
-        self.endDate.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
+        createBtn.addTarget(self, action: #selector(onCreateBtnClicked), for: .touchUpInside)
+        couponName.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
+        endDate.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
         
         // delegate 연결
-        self.couponName.delegate = self
-        self.endDate.delegate = self
-        self.tabGesture.delegate = self
+        couponName.delegate = self
+        endDate.delegate = self
+        tabGesture.delegate = self
         
         // gesture 연결
         self.view.addGestureRecognizer(tabGesture)
@@ -164,11 +164,11 @@ class CreateCouponVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
     fileprivate func createBtnAbleChecked() {
         print("nameOKFlag: \(nameOKFlag), dateOKFlag: \(dateOKFlag), receiver_isSelected: \(selectedReceiver != nil)")
         if nameOKFlag && dateOKFlag && (selectedReceiver != nil) {
-            self.createBtn.backgroundColor = COLOR.SIGNATURE_COLOR
-            self.createBtn.isEnabled = true
+            createBtn.backgroundColor = COLOR.SIGNATURE_COLOR
+            createBtn.isEnabled = true
         } else {
-            self.createBtn.backgroundColor = COLOR.DISABLE_COLOR
-            self.createBtn.isEnabled = false
+            createBtn.backgroundColor = COLOR.DISABLE_COLOR
+            createBtn.isEnabled = false
         }
     }
     
@@ -226,9 +226,9 @@ class CreateCouponVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
     
     // 초기화 picker setting
     fileprivate func presentCancel() {
-        self.imageFlag = false
-        self.couponImg.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: self.couponImg.bounds.height / 5, weight: .regular, scale: .large))
-        self.couponImg.contentMode = .center
+        imageFlag = false
+        couponImg.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: couponImg.bounds.height / 5, weight: .regular, scale: .large))
+        couponImg.contentMode = .center
     }
     
     // 카메라 picker setting
@@ -258,9 +258,9 @@ class CreateCouponVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
     // 쿠폰등록 button event
     @objc fileprivate func onCreateBtnClicked() {
         
-        self.onStartActivityIndicator()
+        onStartActivityIndicator()
         
-        AlamofireManager.shared.postCreateCoupon(name: couponName.text!, roomId: roomId, receiverId: selectedReceiver.id, startDate: startDate!, endData: endDate.text!, image: imageFlag ? self.couponImg.image?.pngData() : nil, completion: { [weak self] result in
+        AlamofireManager.shared.postRegisterCoupon(name: couponName.text!, roomId: roomId, receiverId: selectedReceiver.id, startDate: startDate!, endData: endDate.text!, image: imageFlag ? couponImg.image?.pngData() : nil, completion: { [weak self] result in
             guard let self = self else { return }
             
             self.onStopActivityIndicator()
@@ -274,8 +274,8 @@ class CreateCouponVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
             }
         })
         
-        if self.indicator.isAnimating {
-            self.onStopActivityIndicator()
+        if indicator.isAnimating {
+            onStopActivityIndicator()
         }
     }
     
@@ -375,8 +375,6 @@ class CreateCouponVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate,
         default:
             break
         }
-        
-        //        createBtnAbleChecked()
     }
     
     // MARK: - protocol delegate

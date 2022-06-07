@@ -65,7 +65,7 @@ class MainTabBarVC: UITabBarController, UITabBarControllerDelegate {
     // MARK: - action func
     // navigationBar item customBtn event
     @objc func onAddBtnClicked(sender: UIButton) {
-        performSegue(withIdentifier: "AddStudyNameVC", sender: nil)
+        performSegue(withIdentifier: "RegisterStudyRoomFirstVC", sender: nil)
     }
     
     @IBAction func unwindMainTabBarVC(_ segue: UIStoryboardSegue) {}

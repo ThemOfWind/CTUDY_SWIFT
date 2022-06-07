@@ -969,7 +969,7 @@
                     <connections>
                         <segue destination="pdb-Px-9xt" kind="relationship" relationship="viewControllers" id="fVV-I1-eff"/>
                         <segue destination="n98-k0-KlD" kind="relationship" relationship="viewControllers" id="3EX-fU-2xc"/>
-                        <segue destination="hIW-26-vf3" kind="show" identifier="AddStudyNameVC" id="YCu-UV-WN0"/>
+                        <segue destination="hIW-26-vf3" kind="show" identifier="RegisterStudyRoomFirstVC" id="YCu-UV-WN0"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vKX-gY-qMI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1234,16 +1234,17 @@
                         <outlet property="profileName" destination="sl9-pa-h5S" id="vlJ-pD-KiX"/>
                         <outlet property="profileUserImg" destination="4Ur-WJ-Ibw" id="f5c-99-etj"/>
                         <outlet property="profileUserName" destination="jeb-vx-6cT" id="eCs-zV-NqO"/>
+                        <segue destination="Kz7-r3-jLa" kind="show" identifier="SettingStudyRoomVC" id="OdK-pt-doa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1hB-aX-r3A" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3385.507246376812" y="-859.15178571428567"/>
         </scene>
-        <!--Create CouponVC-->
+        <!--Register CouponVC-->
         <scene sceneID="YJz-x1-UbC">
             <objects>
-                <viewController storyboardIdentifier="CreateCouponVC" id="80n-tv-Dan" customClass="CreateCouponVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RegisterCouponVC" id="80n-tv-Dan" customClass="RegisterCouponVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZhW-IX-xcd">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1579,10 +1580,10 @@
             </objects>
             <point key="canvasLocation" x="5190" y="-859"/>
         </scene>
-        <!--Add Study NameVC-->
+        <!--Register Study Room FirstVC-->
         <scene sceneID="iZr-F0-nPK">
             <objects>
-                <viewController id="hIW-26-vf3" customClass="AddStudyNameVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="hIW-26-vf3" customClass="RegisterStudyRoomFirstVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ebe-sd-CyO">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1653,17 +1654,17 @@
                         <outlet property="nextBtn" destination="BfA-Jx-rKx" id="JOw-kT-D4u"/>
                         <outlet property="registerStudyName" destination="XIs-uK-S5r" id="u4L-qc-GxP"/>
                         <outlet property="roomImg" destination="EKv-dY-0wD" id="snI-Nh-cna"/>
-                        <segue destination="Flg-5U-kEK" kind="show" identifier="AddStudyMemberVC" id="824-dM-Z1w"/>
+                        <segue destination="Flg-5U-kEK" kind="show" identifier="RegisterStudyRoomSecondVC" id="824-dM-Z1w"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mg0-us-zMN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3386" y="-3085"/>
         </scene>
-        <!--Add Study MemberVC-->
+        <!--Register Study Room SecondVC-->
         <scene sceneID="7PW-kx-XfU">
             <objects>
-                <viewController id="Flg-5U-kEK" customClass="AddStudyMemberVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Flg-5U-kEK" customClass="RegisterStudyRoomSecondVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1P4-ls-TEK">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1743,7 +1744,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iBG-QD-UqT">
-                                <rect key="frame" x="20" y="64" width="374" height="678"/>
+                                <rect key="frame" x="20" y="108" width="374" height="585"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zI2-vT-Xoh">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="700"/>
@@ -1761,27 +1762,21 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="haJ-dk-BR6">
                                                 <rect key="frame" x="0.0" y="190" width="374" height="130"/>
                                                 <subviews>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="기존 이름" textAlignment="natural" minimumFontSize="20" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="fGA-JC-Nhv">
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="스터디룸 이름" textAlignment="natural" minimumFontSize="20" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="fGA-JC-Nhv">
                                                         <rect key="frame" x="0.0" y="0.0" width="374" height="60"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="60" id="cpT-aQ-3gl"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                         <textInputTraits key="textInputTraits"/>
-                                                        <connections>
-                                                            <action selector="editingChanged:" destination="hIW-26-vf3" eventType="editingChanged" id="zVD-de-HA6"/>
-                                                        </connections>
                                                     </textField>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="방장 이름" textAlignment="natural" minimumFontSize="20" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="joe-2V-Ata">
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="방장 이름" textAlignment="natural" minimumFontSize="20" translatesAutoresizingMaskIntoConstraints="NO" id="joe-2V-Ata">
                                                         <rect key="frame" x="0.0" y="70" width="374" height="60"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="60" id="4GI-ht-OFg"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                         <textInputTraits key="textInputTraits"/>
-                                                        <connections>
-                                                            <action selector="editingChanged:" destination="hIW-26-vf3" eventType="editingChanged" id="JmM-EN-Y9X"/>
-                                                        </connections>
                                                     </textField>
                                                 </subviews>
                                             </stackView>
@@ -1809,7 +1804,7 @@
                                 <viewLayoutGuide key="frameLayoutGuide" id="IWE-PB-taV"/>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="at9-tf-Ml1">
-                                <rect key="frame" x="20" y="762" width="374" height="60"/>
+                                <rect key="frame" x="20" y="713" width="374" height="60"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="bgS-3E-0Le"/>
@@ -1833,8 +1828,9 @@
                             <constraint firstItem="5x3-RD-K93" firstAttribute="bottom" secondItem="at9-tf-Ml1" secondAttribute="bottom" constant="40" id="rrq-Zr-eaY"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="Lf9-Ol-Xb1"/>
                     <connections>
-                        <outlet property="masterName" destination="joe-2V-Ata" id="dUx-iR-l3X"/>
+                        <outlet property="masterName" destination="joe-2V-Ata" id="lAC-hL-juR"/>
                         <outlet property="roomImg" destination="juy-Ew-g4q" id="OmV-TW-UTu"/>
                         <outlet property="roomName" destination="fGA-JC-Nhv" id="vVt-bx-sQA"/>
                         <outlet property="updateBtn" destination="at9-tf-Ml1" id="B44-XZ-StE"/>
@@ -2238,7 +2234,7 @@
         <!--Update MasterVC-->
         <scene sceneID="hcz-8p-gqY">
             <objects>
-                <viewController id="pxc-m5-3iS" customClass="UpdateMasterVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UpdateMasterVC" id="pxc-m5-3iS" customClass="UpdateMasterVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wVC-am-vnW">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

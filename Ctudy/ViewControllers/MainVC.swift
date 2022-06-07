@@ -35,13 +35,8 @@ class MainVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         if let id = segue.identifier, id == "MainDetailVC" {
             if let controller = segue.destination as? MainDetailVC {
                 controller.roomId = self.roomId
-                controller.roomName = self.roomName
             }
         }
-//        } else if let id = segue.identifier, id == "AddStudyNameVC" {
-//            if let controller = segue.destination as? AddStudyNameVC {
-//            }
-//        }
     }
     
     
@@ -119,7 +114,6 @@ class MainVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("MainVC - collectionView didSelectItemAt / selectedItem : \(rooms[indexPath.row].name) choose")
         self.roomId = rooms[indexPath.row].id
-        self.roomName = rooms[indexPath.row].name
         self.performSegue(withIdentifier: "MainDetailVC", sender: nil)
     }
 }

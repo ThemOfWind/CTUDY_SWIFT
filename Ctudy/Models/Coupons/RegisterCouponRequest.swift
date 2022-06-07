@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CreateCouponResponse: Codable {
+struct RegisterCouponRequest: Codable {
     var name: String // 쿠폰이름
     var room_id: Int // 스터디룸 pk
     var receiver_id: Int // 쿠폰 수신자 pk
