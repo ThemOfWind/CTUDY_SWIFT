@@ -21,6 +21,7 @@ enum RoomErrors: String, Error {
     case noSearchRoom = "스터디룸 조회에 실패했습니다."
     case noRegisterRoom = "스터디룸 등록에 실패했습니다."
     case noSearchMemeber = "스터디룸 회원 조회에 실패했습니다."
+    case noUpdateRoomImage = "스터디룸 이미지 변경에 실패했습니다."
     case noUpdateRoom = "스터디룸 설정 변경에 실패했습니다."
 }
 

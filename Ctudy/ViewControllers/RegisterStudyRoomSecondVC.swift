@@ -195,6 +195,7 @@ class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = memberTableView.dequeueReusableCell(withIdentifier: "MemberTableViewCell", for: indexPath) as! MemberTableViewCell
         if members[indexPath.row].image != "" {
+            cell.memberImg.kf.indicatorType = .activity
             cell.memberImg.kf.setImage(with: URL(string: API.IMAGE_URL + members[indexPath.row].image)!)
         } else {
             cell.memberImg.image = UIImage(named: "user_default.png")

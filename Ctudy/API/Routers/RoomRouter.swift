@@ -12,6 +12,7 @@ enum RoomRouter: URLRequestConvertible {
     case searchroom
 //    case registerroom(name: String, member_list: Array<Int>)
     case searchstudymember(id: String) // 스터디 멤버 조회
+    case settingstudyroom(id: String, name: String, master: Int)
     
     var baseURL: URL {
         return URL(string:API.BASE_URL + "study/")!
@@ -23,6 +24,8 @@ enum RoomRouter: URLRequestConvertible {
             return .get
         case .searchstudymember:
             return .get
+        case .settingstudyroom:
+            return .put
         }
     }
     
@@ -31,6 +34,8 @@ enum RoomRouter: URLRequestConvertible {
         case .searchroom:
             return "room/"
         case .searchstudymember(id: let id):
+            return "room/\(id)"
+        case .settingstudyroom(id: let id, name: let name, master: let master):
             return "room/\(id)"
         }
     }
@@ -68,6 +73,10 @@ enum RoomRouter: URLRequestConvertible {
 //            }, to: url, usingThreshold: UInt64.init(), method: method)
         case .searchstudymember(let id):
             break
+        case .settingstudyroom(id: let id, name: let name, master: let master):
+            print("RoomRouter - id: \(id), name: \(name), master: \(master)")
+            let parameters = ["name" : name, "master" : master] as Dictionary
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
         }
         
         return request
