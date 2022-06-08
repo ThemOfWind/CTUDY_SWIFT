@@ -1,5 +1,5 @@
 //
-//  AddStudyMemberVC.swift
+//  RegisterStudyRoomSecondVC.swift
 //  Ctudy
 //
 //  Created by 김지은 on 2022/03/22.
@@ -11,13 +11,13 @@ import SwiftyJSON
 import NVActivityIndicatorView
 import Kingfisher
 
-class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, MemberCheckButtonDelegate {
+class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, MemberCheckButtonDelegate {
     
     // MARK: - 변수
     @IBOutlet weak var memberTableView: UITableView!
     @IBOutlet weak var registerRoomBtn: UIButton!
     @IBOutlet weak var memberSearchBar: UISearchBar!
-    let keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: AddStudyMemberVC.self, action: nil)
+    let keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: RegisterStudyRoomSecondVC.self, action: nil)
     lazy var indicatorView: UIView = {
         let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         indicatorView.backgroundColor = COLOR.INDICATOR_BACKGROUND_COLOR
@@ -112,7 +112,7 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
                 // view reload
                 self.memberTableView.reloadData()
             case .failure(let error):
-                print("AddStudyMemberVC - getSearchMember.failure / error: \(error.rawValue)")
+                print("RegisterStudyRoomSecondVC - getSearchMember.failure / error: \(error.rawValue)")
             }
         })
     }
@@ -195,6 +195,7 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = memberTableView.dequeueReusableCell(withIdentifier: "MemberTableViewCell", for: indexPath) as! MemberTableViewCell
         if members[indexPath.row].image != "" {
+            cell.memberImg.kf.indicatorType = .activity
             cell.memberImg.kf.setImage(with: URL(string: API.IMAGE_URL + members[indexPath.row].image)!)
         } else {
             cell.memberImg.image = UIImage(named: "user_default.png")
@@ -208,7 +209,7 @@ class AddStudyMemberVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UI
     }
     
     func checkBtnClicked(btn: UIButton, ischecked: Bool) {
-        print("AddStudyMemberVC - checkBtnClicked() called / btn.tag: \(btn.tag), btn.id: \(members[btn.tag].id) ischecked: \(ischecked)")
+        print("RegisterStudyRoomSecondVC - checkBtnClicked() called / btn.tag: \(btn.tag), btn.id: \(members[btn.tag].id) ischecked: \(ischecked)")
         self.members[btn.tag].ischecked = ischecked
     }
     

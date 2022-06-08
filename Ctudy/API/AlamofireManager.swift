@@ -154,19 +154,19 @@ final class AlamofireManager {
             .responseJSON(completionHandler: { response in
                 
                 guard let responseValue = response.value
-                    , let statusCode = response.response?.statusCode else { return }
+                        , let statusCode = response.response?.statusCode else { return }
                 let responseJson = JSON(responseValue)
                 guard let id = responseJson["response"]["id"].int
-                    , let userName = responseJson["response"]["username"].string
-                    , let name = responseJson["response"]["name"].string else { return }
+                        , let userName = responseJson["response"]["username"].string
+                        , let name = responseJson["response"]["name"].string else { return }
                 let image = responseJson["response"]["image"].string ?? ""
                 
                 switch statusCode {
                 case 200:
                     if KeyChainManager().tokenSave(API.SERVICEID, account: "id", value: String(id))
-                     , KeyChainManager().tokenSave(API.SERVICEID, account: "username", value: userName)
-                     , KeyChainManager().tokenSave(API.SERVICEID, account: "name", value: name)
-                     , KeyChainManager().tokenSave(API.SERVICEID, account: "image", value: image) {
+                        , KeyChainManager().tokenSave(API.SERVICEID, account: "username", value: userName)
+                        , KeyChainManager().tokenSave(API.SERVICEID, account: "name", value: name)
+                        , KeyChainManager().tokenSave(API.SERVICEID, account: "image", value: image) {
                         let jsonData = ProfileResponse(id: id, username: userName, name: name, image: image)
                         
                         completion(.success(jsonData))
@@ -297,7 +297,7 @@ final class AlamofireManager {
     }
     
     // MARK: - 쿠폰등록
-    func postCreateCoupon(name: String, roomId: Int, receiverId: Int, startDate: String, endData: String, image: Data? = nil, completion: @escaping(Result<Bool, CouponErrors>) -> Void) {
+    func postRegisterCoupon(name: String, roomId: Int, receiverId: Int, startDate: String, endData: String, image: Data? = nil, completion: @escaping(Result<Bool, CouponErrors>) -> Void) {
         let url = URL(string: API.BASE_URL + "coupon/")!
         let token = KeyChainManager().tokenLoad(API.SERVICEID, account: "accessToken")
         let header: HTTPHeaders = [
@@ -309,7 +309,7 @@ final class AlamofireManager {
         //        print("postRegisterRoom() - header: Content-Type(\(header["Content-Type"])), Authorization(\(header["Authorization"])")
         
         AF.upload(multipartFormData: { multipartFormData in
-            let mpfData = CreateCouponResponse(name: name, room_id: roomId, receiver_id: receiverId, start_date: startDate, end_date: endData)
+            let mpfData = RegisterCouponRequest(name: name, room_id: roomId, receiver_id: receiverId, start_date: startDate, end_date: endData)
             multipartFormData.append(try! JSONEncoder().encode(mpfData), withName: "payload")
             if image != nil {
                 multipartFormData.append(image!, withName: "file", fileName: "default.png", mimeType: "image/png")
@@ -323,10 +323,61 @@ final class AlamofireManager {
             case 200:
                 completion(.success(true))
             default:
-                print("postCreateCoupon() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
+                print("postRegisterCoupon() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
                 completion(.failure(.noCreateCoupon))
                 
             }
         })
+    }
+    
+    // MARK: - 스터디룸 설정 (스터디룸 이미지)
+    func postUpdateRoom_image(id: Int, image: Data? = nil, completion: @escaping(Result<Bool, RoomErrors>) -> Void) {
+        let url = URL(string: API.BASE_URL + "study/room/banner/\(id)")!
+        let token = KeyChainManager().tokenLoad(API.SERVICEID, account: "accessToken")
+        let header: HTTPHeaders = [
+            "Content-Type" : "multipart/form-data"
+            , "Authorization" : "Bearer " + String(token!)
+        ]
+        
+        AF.upload(multipartFormData: { multipartFormData in
+            if image != nil {
+                multipartFormData.append(image!, withName: "file", fileName: "default.png", mimeType: "image/png")
+            }
+        }, to: url, usingThreshold: UInt64.init(), method: .post, headers: header).response(completionHandler: { response in
+            guard let responseValue = response.value
+                    , let statusCode = response.response?.statusCode else { return }
+            let responseJson = JSON(responseValue)
+            
+            switch statusCode {
+            case 200:
+                completion(.success(true))
+            default:
+                print("postUpdateRoom_image() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
+                completion(.failure(.noUpdateRoomImage))
+                
+            }
+        })
+    }
+    
+    // MARK: - 스터디룸 설정 (스터디룸 이름, 방장 정보)
+    func putUpdateRoom(id: Int, name: String, master: Int, completion: @escaping(Result<Bool, RoomErrors>) -> Void) {
+        self.session
+            .request(RoomRouter.settingstudyroom(id: String(id), name: name, master: master))
+            .validate(statusCode: 200..<501)
+            .responseJSON(completionHandler: { response in
+                
+                print("putUpdateRoom() - id: \(id), name: \(name), master: \(master)")
+                guard let responseValue = response.value
+                        , let statusCode = response.response?.statusCode else { return }
+                let responseJson = JSON(responseValue)
+                
+                switch statusCode {
+                case 200:
+                    completion(.success(true))
+                default:
+                    print("putUpdateRoom() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
+                    completion(.failure(.noUpdateRoom))
+                }
+            })
     }
 }

@@ -35,13 +35,8 @@ class MainVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         if let id = segue.identifier, id == "MainDetailVC" {
             if let controller = segue.destination as? MainDetailVC {
                 controller.roomId = self.roomId
-                controller.roomName = self.roomName
             }
         }
-//        } else if let id = segue.identifier, id == "AddStudyNameVC" {
-//            if let controller = segue.destination as? AddStudyNameVC {
-//            }
-//        }
     }
     
     
@@ -103,7 +98,8 @@ class MainVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         cell.roomMasterName.text = rooms[indexPath.row].mastername
 //        cell.roomImg.imageLoad(urlString: "https://api.ctudy.com\(rooms[indexPath.row].banner)", size: cell.roomImg.image!.size)
         if rooms[indexPath.row].banner != "" {
-            cell.roomImg.kf.setImage(with: URL(string: API.IMAGE_URL + rooms[indexPath.row].banner)!)
+            cell.roomImg.kf.indicatorType = .activity
+            cell.roomImg.kf.setImage(with: URL(string: API.IMAGE_URL + rooms[indexPath.row].banner)!, options: [.forceRefresh])
         } else {
             cell.roomImg.image = UIImage(named: "studyroom_default.png")
         }
@@ -119,7 +115,6 @@ class MainVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("MainVC - collectionView didSelectItemAt / selectedItem : \(rooms[indexPath.row].name) choose")
         self.roomId = rooms[indexPath.row].id
-        self.roomName = rooms[indexPath.row].name
         self.performSegue(withIdentifier: "MainDetailVC", sender: nil)
     }
 }
