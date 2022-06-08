@@ -16,6 +16,7 @@ enum AuthRouter: URLRequestConvertible {
 //    case signup(name: String, username: String, password: String) // 회원가입
     case logout // 로그아웃
     case profile // 접속 회원정보
+    case searchid(email: String) // 아이디 찾기
     
     var baseURL: URL {
         return URL(string: API.BASE_URL + "account/")!
@@ -33,6 +34,8 @@ enum AuthRouter: URLRequestConvertible {
             return .get
         case .profile:
             return .get
+        case .searchid:
+            return .post
         }
     }
     
@@ -48,6 +51,8 @@ enum AuthRouter: URLRequestConvertible {
             return "logout/"
         case .profile:
             return "profile/"
+        case .searchid:
+            return "findid/"
         }
     }
     
@@ -87,6 +92,9 @@ enum AuthRouter: URLRequestConvertible {
             break
         case .profile:
             break
+        case .searchid(email: let email):
+            let parameters = ["email" : email] as Dictionary
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
         }
         
         return request

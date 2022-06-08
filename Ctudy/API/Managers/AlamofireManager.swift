@@ -50,7 +50,7 @@ final class AlamofireManager {
                     let jsonData = UserNameCheckResponse(username: username)
                     completion(.success(jsonData))
                 default:
-                    print("getUserNameCheck() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
+                    print("getUserNameCheck() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
                     completion(.failure(.duplicatedUserName))
                 }
             })
@@ -81,10 +81,36 @@ final class AlamofireManager {
                 let jsonData = SignUpResponse(name: name, username: username)
                 completion(.success(jsonData))
             default:
-                print("postSignUp() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
+                print("postSignUp() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
                 completion(.failure(.noSignUp))
             }
         })
+    }
+    
+    // MARK: - 아이디 찾기
+    func postSearchId(email: String, completion: @escaping(Result<String, AuthErrors>) -> Void) {
+        self.session
+            .request(AuthRouter.searchid(email: email))
+            .validate(statusCode: 200..<501)
+            .responseJSON(completionHandler: { response in
+                guard let responseValue = response.value
+                        , let statusCode = response.response?.statusCode else { return }
+                let responseJson = JSON(responseValue)
+                
+                switch statusCode {
+                case 200:
+                    if let username = responseJson["response"]["username"].string {
+                        completion(.success(username))
+                    } else {
+                        completion(.success(""))
+                    }
+                case 404:
+                    completion(.failure(.noSearchid))
+                default:
+                    print("postSearchId() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
+                    completion(.failure(.noSearchid))
+                }
+            })
     }
     
     // MARK: - 로그인
@@ -115,7 +141,7 @@ final class AlamofireManager {
                         completion(.failure(.noSaveToken))
                     }
                 default:
-                    print("postSignIn() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
+                    print("postSignIn() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
                     completion(.failure(.noSignIn))
                 }
             })
@@ -140,7 +166,7 @@ final class AlamofireManager {
                         completion(.failure(.noDelToken))
                     }
                 default:
-                    print("getLogout() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
+                    print("getLogout() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
                     completion(.failure(.noLogout))
                 }
             })
@@ -174,7 +200,7 @@ final class AlamofireManager {
                         completion(.failure(.noProfile))
                     }
                 default:
-                    print("getProfile() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
+                    print("getProfile() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
                     completion(.failure(.noProfile))
                 }
             })
@@ -209,7 +235,7 @@ final class AlamofireManager {
                     
                     completion(.success(rooms))
                 default:
-                    print("getSearchRoom() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
+                    print("getSearchRoom() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
                     completion(.failure(.noSearchRoom))
                 }
             })
@@ -232,7 +258,7 @@ final class AlamofireManager {
                     //                    if response.exists() {
                     completion(.success(response))
                 default:
-                    print("getSearchStudyMember() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
+                    print("getSearchStudyMember() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
                     completion(.failure(.noSearchMemeber))
                 }
             })
@@ -256,7 +282,7 @@ final class AlamofireManager {
                     //                    if response.exists() {
                     completion(.success(response))
                 default:
-                    print("getSearchMember() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
+                    print("getSearchMember() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
                     completion(.failure(.noSearchMember))
                 }
             })
@@ -289,7 +315,7 @@ final class AlamofireManager {
             case 200:
                 completion(.success(true))
             default:
-                print("postRegisterRoom() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
+                print("postRegisterRoom() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
                 completion(.failure(.noRegisterRoom))
                 
             }
@@ -323,7 +349,7 @@ final class AlamofireManager {
             case 200:
                 completion(.success(true))
             default:
-                print("postRegisterCoupon() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
+                print("postRegisterCoupon() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
                 completion(.failure(.noCreateCoupon))
                 
             }
@@ -352,7 +378,7 @@ final class AlamofireManager {
             case 200:
                 completion(.success(true))
             default:
-                print("postUpdateRoom_image() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
+                print("postUpdateRoom_image() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
                 completion(.failure(.noUpdateRoomImage))
                 
             }
@@ -375,7 +401,7 @@ final class AlamofireManager {
                 case 200:
                     completion(.success(true))
                 default:
-                    print("putUpdateRoom() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"])")
+                    print("putUpdateRoom() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
                     completion(.failure(.noUpdateRoom))
                 }
             })

@@ -1,17 +1,16 @@
 //
-//  UserInfoVC.swift
+//  SettingVC.swift
 //  Ctudy
 //
-//  Created by 김지은 on 2021/12/28.
+//  Created by 김지은 on 2022/06/08.
 //
 
 import Foundation
 import UIKit
 import NVActivityIndicatorView
 
-class UserInfoVC: UIViewController {
+class SettingVC: BasicVC {
     // MARK: - 변수
-    @IBOutlet weak var logoutBtn: UIButton!
     lazy var indicatorView: UIView = {
         let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         indicatorView.backgroundColor = COLOR.INDICATOR_BACKGROUND_COLOR
@@ -33,23 +32,12 @@ class UserInfoVC: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
-    // MARK: - overrid func
+    // MARK: - override func
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.config()
     }
     
     // MARK: - fileprivate func
-    fileprivate func config() {
-        // btn ui
-        self.logoutBtn.tintColor = .white
-        self.logoutBtn.backgroundColor = COLOR.SIGNATURE_COLOR
-        
-        // btn 연결 event
-        self.logoutBtn.addTarget(self, action: #selector(onLogoutBtnClicked), for: .touchUpInside)
-    }
-    
     fileprivate func onStartActivityIndicator() {
         DispatchQueue.main.async {
             // 불투명 뷰 추가
@@ -79,9 +67,8 @@ class UserInfoVC: UIViewController {
         }
     }
     
-    // MARK: - action func
     // logoutBtn event
-    @objc func onLogoutBtnClicked() {
+    fileprivate func logout() {
         // logout alert 띄우기
         let alert = UIAlertController(title: nil, message: "로그아웃 하시겠습니까?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "취소", style: .cancel))
