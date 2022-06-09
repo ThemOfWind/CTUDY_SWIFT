@@ -43,7 +43,7 @@ class SearchIdFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         print("SearchIdFirstVC - viewDidLoad() called")
-        self.config()
+        config()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

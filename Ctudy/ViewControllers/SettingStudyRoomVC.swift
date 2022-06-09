@@ -104,56 +104,6 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
         self.view.addGestureRecognizer(tabGesture)
     }
     
-    // update button click event
-    @objc fileprivate func onUpdateBtnClicked() {
-        self.onStartActivityIndicator()
-        
-        AlamofireManager.shared.putUpdateRoom(id: settingRoom.id, name: roomName.text!, master: selectedMaster.id, completion: {
-            [weak self] result in
-            guard let self = self else { return }
-            
-            self.onStopActivityIndicator()
-            
-            switch result {
-            case .success(_):
-                /* imageAlFuncFlag :
-                 true : 카메라 & 앨범 & 기본이미지
-                 false : 초기화
-                 */
-                if self.imageAlFuncFlag {
-                    /* imageNilFlag
-                     true : roomImg.image?.pngData()
-                     false : nil
-                     */
-                    AlamofireManager.shared.postUpdateRoom_image(id: self.settingRoom.id, image: self.imageNilFlag ? nil : self.roomImg.image?.pngData()
-                                                                 , completion: {
-                        [weak self] result in
-                        guard let self = self else { return }
-                        
-                        self.onStopActivityIndicator()
-                        
-                        switch result {
-                        case .success(_):
-                            break
-                        case .failure(let error):
-                            self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
-                        }
-                    })
-                }
-                
-                self.view.makeToast("스터디룸 설정이 변경되었습니다.", duration: 1.0, position: .center)
-                self.navigationController?.popViewController(animated: true)
-            case .failure(let error):
-                self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
-            }
-        })
-        
-        
-        if self.indicator.isAnimating {
-            self.onStopActivityIndicator()
-        }
-    }
-    
     // messageLabel 셋팅
     fileprivate func setMsgLabel(flag: Bool, msgLabel: UILabel, msgString: String) {
         if flag {
@@ -339,6 +289,56 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
             textFieldCheck(textField: textField, msgLabel: roomNameMsg, inputData: roomName.text ?? "" )
         default:
             break
+        }
+    }
+    
+    // update button click event
+    @objc fileprivate func onUpdateBtnClicked() {
+        self.onStartActivityIndicator()
+        
+        AlamofireManager.shared.putUpdateRoom(id: settingRoom.id, name: roomName.text!, master: selectedMaster.id, completion: {
+            [weak self] result in
+            guard let self = self else { return }
+            
+            self.onStopActivityIndicator()
+            
+            switch result {
+            case .success(_):
+                /* imageAlFuncFlag :
+                 true : 카메라 & 앨범 & 기본이미지
+                 false : 초기화
+                 */
+                if self.imageAlFuncFlag {
+                    /* imageNilFlag
+                     true : roomImg.image?.pngData()
+                     false : nil
+                     */
+                    AlamofireManager.shared.postUpdateRoom_image(id: self.settingRoom.id, image: self.imageNilFlag ? nil : self.roomImg.image?.pngData()
+                                                                 , completion: {
+                        [weak self] result in
+                        guard let self = self else { return }
+                        
+                        self.onStopActivityIndicator()
+                        
+                        switch result {
+                        case .success(_):
+                            break
+                        case .failure(let error):
+                            self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
+                        }
+                    })
+                }
+                
+                self.view.makeToast("스터디룸 설정이 변경되었습니다.", duration: 1.0, position: .center)
+                self.navigationController?.popViewController(animated: true)
+            case .failure(let error):
+                self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
+            }
+        })
+        
+        
+        if self.indicator.isAnimating {
+            self.onStopActivityIndicator()
         }
     }
     

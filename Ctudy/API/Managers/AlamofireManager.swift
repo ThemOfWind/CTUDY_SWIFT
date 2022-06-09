@@ -388,7 +388,7 @@ final class AlamofireManager {
     // MARK: - 스터디룸 설정 (스터디룸 이름, 방장 정보)
     func putUpdateRoom(id: Int, name: String, master: Int, completion: @escaping(Result<Bool, RoomErrors>) -> Void) {
         self.session
-            .request(RoomRouter.settingstudyroom(id: String(id), name: name, master: master))
+            .request(RoomRouter.updatestudyroom(id: String(id), name: name, master: master))
             .validate(statusCode: 200..<501)
             .responseJSON(completionHandler: { response in
                 
@@ -403,6 +403,57 @@ final class AlamofireManager {
                 default:
                     print("putUpdateRoom() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
                     completion(.failure(.noUpdateRoom))
+                }
+            })
+    }
+    
+    // MARK: - 프로필 관리 (이미지)
+    func postUpdateProfile_image(id: Int, image: Data? = nil, completion: @escaping(Result<Bool, AuthErrors>) -> Void) {
+        let url = URL(string: API.BASE_URL + "account/profile/")!
+        let token = KeyChainManager().tokenLoad(API.SERVICEID, account: "accessToken")
+        let header: HTTPHeaders = [
+            "Content-Type" : "multipart/form-data"
+          , "Authorization" : "Bearer " + String(token!)
+        ]
+        
+        AF.upload(multipartFormData: { multipartFormData in
+            if image != nil {
+                multipartFormData.append(image!, withName: "file", fileName: "default.png", mimeType: "image/png")
+            }
+        }, to: url, usingThreshold: UInt64.init(), method: .post, headers: header).response(completionHandler: { response in
+            guard let responseValue = response.value
+                    , let statusCode = response.response?.statusCode else { return }
+            let responseJson = JSON(responseValue)
+            
+            switch statusCode {
+            case 200:
+                completion(.success(true))
+            default:
+                print("postUpdateProfile_image() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
+                completion(.failure(.noUpdateProfileImage))
+                
+            }
+        })
+    }
+    
+    // MARK: - 프로필 관리 (닉네임)
+    func putUpdateProfile(id: Int, name: String, completion: @escaping(Result<Bool, AuthErrors>) -> Void) {
+        self.session
+            .request(AuthRouter.updateprofile(id: String(id), name: name))
+            .validate(statusCode: 200..<501)
+            .responseJSON(completionHandler: { response in
+                
+                print("putUpdateProfile() - id: \(id), name: \(name)")
+                guard let responseValue = response.value
+                        , let statusCode = response.response?.statusCode else { return }
+                let responseJson = JSON(responseValue)
+                
+                switch statusCode {
+                case 200:
+                    completion(.success(true))
+                default:
+                    print("putUpdateProfile() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
+                    completion(.failure(.noUpdateProfileName))
                 }
             })
     }

@@ -24,7 +24,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
     var members: Array<SearchStudyMemberResponse> = [] // 전달할 멤버 리스트
     var settingRoom: SettingStudyRoomResponse! // 전달할 room 정보
     let userId = Int(KeyChainManager().tokenLoad(API.SERVICEID, account: "id")!) // 사용자 id
-    var profileId: Int? // 접속 회원 id
+    var profileId: Int! // 접속 회원 id
     var roomId: Int! // 스터디룸 id
 //    var roomName: String? // 스터디룸 name
     lazy var indicatorView: UIView = {
