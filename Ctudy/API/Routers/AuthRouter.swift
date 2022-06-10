@@ -17,7 +17,7 @@ enum AuthRouter: URLRequestConvertible {
     case logout // 로그아웃
     case profile // 접속 회원정보
     case searchid(email: String) // 아이디 찾기
-    case updateprofile(id: String, name: String) // 프로필 설정 변경
+    case updateprofile(name: String) // 프로필 설정 변경
     
     var baseURL: URL {
         return URL(string: API.BASE_URL + "account/")!

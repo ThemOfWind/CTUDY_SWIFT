@@ -69,7 +69,7 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
         roomImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
         roomImg.tintColor = COLOR.BASIC_TINT_COLOR
         if settingRoom.banner != "" {
-            roomImg.kf.setImage(with: URL(string: API.IMAGE_URL + settingRoom.banner)!)
+            roomImg.kf.setImage(with: URL(string: API.IMAGE_URL + settingRoom.banner)!, options: [.forceRefresh])
         } else {
             roomImg.image = UIImage(named: "studyroom_default.png")
         }
@@ -184,7 +184,7 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
     fileprivate func presentCancel() {
         imageAlFuncFlag = false
         if settingRoom.banner != "" {
-            roomImg.kf.setImage(with: URL(string: API.IMAGE_URL + settingRoom.banner)!)
+            roomImg.kf.setImage(with: URL(string: API.IMAGE_URL + settingRoom.banner)!, options: [.forceRefresh])
         } else {
             roomImg.image = UIImage(named: "studyroom_default.png")
         }
@@ -322,15 +322,16 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
                         
                         switch result {
                         case .success(_):
-                            break
+                            self.view.makeToast("스터디룸 설정이 변경되었습니다.", duration: 1.0, position: .center)
+                            self.navigationController?.popViewController(animated: true)
                         case .failure(let error):
                             self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
                         }
                     })
+                } else {
+                    self.view.makeToast("스터디룸 설정이 변경되었습니다.", duration: 1.0, position: .center)
+                    self.navigationController?.popViewController(animated: true)
                 }
-                
-                self.view.makeToast("스터디룸 설정이 변경되었습니다.", duration: 1.0, position: .center)
-                self.navigationController?.popViewController(animated: true)
             case .failure(let error):
                 self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
             }

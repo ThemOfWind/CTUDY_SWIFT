@@ -408,7 +408,7 @@ final class AlamofireManager {
     }
     
     // MARK: - 프로필 관리 (이미지)
-    func postUpdateProfile_image(id: Int, image: Data? = nil, completion: @escaping(Result<Bool, AuthErrors>) -> Void) {
+    func postUpdateProfile_image(image: Data? = nil, completion: @escaping(Result<Bool, AuthErrors>) -> Void) {
         let url = URL(string: API.BASE_URL + "account/profile/")!
         let token = KeyChainManager().tokenLoad(API.SERVICEID, account: "accessToken")
         let header: HTTPHeaders = [
@@ -437,13 +437,13 @@ final class AlamofireManager {
     }
     
     // MARK: - 프로필 관리 (닉네임)
-    func putUpdateProfile(id: Int, name: String, completion: @escaping(Result<Bool, AuthErrors>) -> Void) {
+    func putUpdateProfile(name: String, completion: @escaping(Result<Bool, AuthErrors>) -> Void) {
         self.session
-            .request(AuthRouter.updateprofile(id: String(id), name: name))
+            .request(AuthRouter.updateprofile(name: name))
             .validate(statusCode: 200..<501)
             .responseJSON(completionHandler: { response in
                 
-                print("putUpdateProfile() - id: \(id), name: \(name)")
+                print("putUpdateProfile() - name: \(name)")
                 guard let responseValue = response.value
                         , let statusCode = response.response?.statusCode else { return }
                 let responseJson = JSON(responseValue)

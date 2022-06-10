@@ -87,7 +87,7 @@ class RegisterCouponVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegat
         senderImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
         senderImg.tintColor = COLOR.BASIC_TINT_COLOR
         if let myImg = KeyChainManager().tokenLoad(API.SERVICEID, account: "image"), myImg != "" {
-            senderImg.kf.setImage(with: URL(string: API.IMAGE_URL + myImg)!)
+            senderImg.kf.setImage(with: URL(string: API.IMAGE_URL + myImg)!, options: [.forceRefresh])
         } else {
             senderImg.image = UIImage(named: "user_default.png")
         }
@@ -383,7 +383,7 @@ class RegisterCouponVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegat
         
         // reciver를 선택했을때
         if selectedReceiver.image != "" {
-            self.receiverImg.kf.setImage(with: URL(string: API.IMAGE_URL + selectedReceiver.image)!)
+            self.receiverImg.kf.setImage(with: URL(string: API.IMAGE_URL + selectedReceiver.image)!, options: [.forceRefresh])
         } else {
             self.receiverImg.image = UIImage(named: "user_default.png")
         }

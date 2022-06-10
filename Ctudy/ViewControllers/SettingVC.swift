@@ -8,9 +8,11 @@
 import Foundation
 import UIKit
 import NVActivityIndicatorView
+import SwiftUI
 
-class SettingVC: BasicVC {
+class SettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     // MARK: - 변수
+    @IBOutlet weak var settingTableView: UITableView!
     lazy var indicatorView: UIView = {
         let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         indicatorView.backgroundColor = COLOR.INDICATOR_BACKGROUND_COLOR
@@ -32,12 +34,44 @@ class SettingVC: BasicVC {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    // 셋팅 항목
+    let settingList = [
+        [ "text" : "프로필관리", "color" : UIColor.black ]
+      , [ "text" : "계정관리", "color" : UIColor.black ]
+      , [ "text" : "개인정보 처리 방침", "color" : UIColor.black ]
+      , [ "text" : "이용약관", "color" : UIColor.black ]
+      , [ "text" : "오픈소스 라이센스 이용고지", "color" : UIColor.black ]
+      , [ "text" : "버전정보", "color" : UIColor.black ]
+      , [ "text" : "로그아웃", "color" : UIColor.red ]
+    ]
+    
     // MARK: - override func
     override func viewDidLoad() {
         super.viewDidLoad()
+        config()
     }
     
     // MARK: - fileprivate func
+    fileprivate func config() {
+        leftItem = LeftItem.backGeneral
+        titleItem = TitleItem.titleGeneral(title: "설정", isLargeTitles: true)
+        
+        // 셀 리소스 파일 가져오기
+        let settingCell = UINib(nibName: String(describing: SettingTableViewCell.self), bundle: nil)
+        
+        // 셀 리소스 등록하기
+        self.settingTableView.register(settingCell, forCellReuseIdentifier: "SettingTableViewCell")
+        
+        // 셀 설정
+        self.settingTableView.rowHeight = 80
+        self.settingTableView.allowsSelection = false
+        self.settingTableView.showsVerticalScrollIndicator = false // scroll 제거
+        
+        // delegate 연결
+        self.settingTableView.delegate = self
+        self.settingTableView.dataSource = self
+    }
+    
     fileprivate func onStartActivityIndicator() {
         DispatchQueue.main.async {
             // 불투명 뷰 추가
@@ -103,5 +137,22 @@ class SettingVC: BasicVC {
         }
         
         self.present(alert, animated: false)
+    }
+    
+    // MARK: - tableView delegate
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return settingList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print("SettingVC - tableView() called / cellText: \(settingList[(indexPath as NSIndexPath).row]["text"] as! String), cellColor: \(settingList[(indexPath as NSIndexPath).row]["color"] as! UIColor)")
+        let cell = settingTableView.dequeueReusableCell(withIdentifier: "SettingTableViewCell", for: indexPath) as! SettingTableViewCell
+        cell.settingLabel.text = settingList[(indexPath as NSIndexPath).row]["text"] as! String
+        cell.settingLabel.textColor = settingList[(indexPath as NSIndexPath).row]["color"] as! UIColor
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("click")
     }
 }

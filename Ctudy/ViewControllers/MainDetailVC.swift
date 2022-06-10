@@ -111,7 +111,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         profileImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
         profileImg.tintColor = COLOR.BASIC_TINT_COLOR
         if let userImg = KeyChainManager().tokenLoad(API.SERVICEID, account: "image"), userImg != "" {
-            profileImg.kf.setImage(with: URL(string: API.IMAGE_URL + userImg)!)
+            profileImg.kf.setImage(with: URL(string: API.IMAGE_URL + userImg)!, options: [.forceRefresh])
         } else {
             profileImg.image = UIImage(named: "user_default.png")
         }
@@ -251,7 +251,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         cell.memberName.text = "@\(members[indexPath.row].username)"
         cell.couponCnt.text = "쿠폰 00"
         if members[indexPath.row].image != "" {
-            cell.memberImg.kf.setImage(with: URL(string: API.IMAGE_URL + members[indexPath.row].image)!)
+            cell.memberImg.kf.setImage(with: URL(string: API.IMAGE_URL + members[indexPath.row].image)!, options: [.forceRefresh])
         } else {
             cell.memberImg.image = UIImage(named: "user_default.png")
         }

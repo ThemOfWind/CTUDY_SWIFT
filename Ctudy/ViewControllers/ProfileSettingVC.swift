@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 import NVActivityIndicatorView
 
 class ProfileSettingVC: BasicVC, UIGestureRecognizerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate {
@@ -16,7 +17,7 @@ class ProfileSettingVC: BasicVC, UIGestureRecognizerDelegate, UINavigationContro
     @IBOutlet weak var inputName: UITextField!
     @IBOutlet weak var nameMsg: UILabel!
     @IBOutlet weak var updateBtn: UIButton!
-    let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: SearchIdFirstVC.self, action: nil)
+    let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: ProfileSettingVC.self, action: nil)
     lazy var indicatorView: UIView = {
         let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         indicatorView.backgroundColor = COLOR.INDICATOR_BACKGROUND_COLOR
@@ -40,7 +41,7 @@ class ProfileSettingVC: BasicVC, UIGestureRecognizerDelegate, UINavigationContro
     }()
     var profileId: Int!
     lazy var userImg: String? = KeyChainManager().tokenLoad(API.SERVICEID, account: "image") // 키체인에 존재하는 image 담는 변수
-    var nameOKFlag: Bool = false
+    var nameOKFlag: Bool = true
     var imageFlag: Bool = false // image 초기화 flag
     var imageAlFuncFlag: Bool = false // 내 프로필 이미지 alamofire func 실행 여부 flag
     var imageNilFlag: Bool = false // 내 프로필 설정 alamofire func 실행 여부
@@ -64,12 +65,13 @@ class ProfileSettingVC: BasicVC, UIGestureRecognizerDelegate, UINavigationContro
         profileImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
         profileImg.tintColor = COLOR.BASIC_TINT_COLOR
         if let img = userImg, img != "" {
-            profileImg.kf.setImage(with: URL(string: API.IMAGE_URL + img)!)
+            profileImg.kf.setImage(with: URL(string: API.IMAGE_URL + img)!, options: [.forceRefresh])
         } else {
             profileImg.image = UIImage(named: "user_default.png")
         }
         profileImg.contentMode = .scaleAspectFill
-        profileImg.translatesAutoresizingMaskIntoConstraints = false
+//        profileImg.translatesAutoresizingMaskIntoConstraints = false
+        profileImg.isUserInteractionEnabled = true
         
         profileId = Int(KeyChainManager().tokenLoad(API.SERVICEID, account: "id")!)
         inputName.text = KeyChainManager().tokenLoad(API.SERVICEID, account: "name")
@@ -79,8 +81,7 @@ class ProfileSettingVC: BasicVC, UIGestureRecognizerDelegate, UINavigationContro
         // button ui
         updateBtn.layer.cornerRadius = 10
         updateBtn.tintColor = .white
-        updateBtn.backgroundColor = COLOR.DISABLE_COLOR
-        updateBtn.isEnabled = false
+        updateBtn.backgroundColor = COLOR.SIGNATURE_COLOR
         
         // event 연결
         inputName.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
@@ -185,7 +186,7 @@ class ProfileSettingVC: BasicVC, UIGestureRecognizerDelegate, UINavigationContro
     fileprivate func presentCancel() {
         imageAlFuncFlag = false
         if let img = userImg, img != "" {
-            profileImg.kf.setImage(with: URL(string: API.IMAGE_URL + img)!)
+            profileImg.kf.setImage(with: URL(string: API.IMAGE_URL + img)!, options: [.forceRefresh])
         } else {
             profileImg.image = UIImage(named: "user.png")
         }
@@ -260,7 +261,7 @@ class ProfileSettingVC: BasicVC, UIGestureRecognizerDelegate, UINavigationContro
     @objc fileprivate func onUpdateBtnClicked() {
         self.onStartActivityIndicator()
         
-        AlamofireManager.shared.putUpdateProfile(id: profileId, name: inputName.text!, completion: {
+        AlamofireManager.shared.putUpdateProfile(name: inputName.text!, completion: {
             [weak self] result in
             guard let self = self else { return }
             
@@ -277,7 +278,7 @@ class ProfileSettingVC: BasicVC, UIGestureRecognizerDelegate, UINavigationContro
                      true : roomImg.image?.pngData()
                      false : nil
                      */
-                    AlamofireManager.shared.postUpdateProfile_image(id: self.profileId, image: self.imageNilFlag ? nil : self.profileImg.image?.pngData(), completion: {
+                    AlamofireManager.shared.postUpdateProfile_image(image: self.imageNilFlag ? nil : self.profileImg.image?.pngData(), completion: {
                         [weak self] result in
                         guard let self = self else { return }
                         
@@ -285,15 +286,17 @@ class ProfileSettingVC: BasicVC, UIGestureRecognizerDelegate, UINavigationContro
                         
                         switch result {
                         case .success(_):
+                            // keychain에 프로필 정보 update
+                            self.getProfileInfo()
                             break
                         case .failure(let error):
                             self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
                         }
                     })
+                } else {
+                    // keychain에 프로필 정보 update
+                    self.getProfileInfo()
                 }
-                
-                self.view.makeToast("스터디룸 설정이 변경되었습니다.", duration: 1.0, position: .center)
-                self.navigationController?.popViewController(animated: true)
             case .failure(let error):
                 self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
             }
@@ -301,6 +304,31 @@ class ProfileSettingVC: BasicVC, UIGestureRecognizerDelegate, UINavigationContro
         
         
         if self.indicator.isAnimating {
+            self.onStopActivityIndicator()
+        }
+    }
+    
+    // 접속 회원정보 조회 후 keychain 저장
+    fileprivate func getProfileInfo() {
+        
+        self.onStartActivityIndicator()
+        
+        AlamofireManager.shared.getProfile(completion: { [weak self] result in
+            guard let self = self else { return }
+            
+            self.onStopActivityIndicator()
+            
+            switch result {
+            case .success(_):
+                // 프로필 화면으로 이동
+                self.view.makeToast("프로필이 변경되었습니다.", duration: 1.0, position: .center)
+                self.navigationController?.popViewController(animated: true)
+            case .failure(let error):
+                print("ProfileSettingVC - getProfileInfo() called / error: \(error.rawValue)")
+            }
+        })
+        
+        if indicator.isAnimating {
             self.onStopActivityIndicator()
         }
     }
@@ -345,11 +373,13 @@ class ProfileSettingVC: BasicVC, UIGestureRecognizerDelegate, UINavigationContro
             if nameOKFlag {
                 setMsgLabel(flag: nameOKFlag, msgLabel: msgLabel, msgString: "")
             } else {
-                setMsgLabel(flag: nameOKFlag, msgLabel: msgLabel, msgString: "이름이 옳바르지 않습니다. (공백X)")
+                setMsgLabel(flag: nameOKFlag, msgLabel: msgLabel, msgString: "이름이 옳바르지 않습니다.")
             }
         default:
             break
         }
+        
+        searchBtnAbleChecked()
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {

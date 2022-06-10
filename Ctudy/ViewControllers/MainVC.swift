@@ -39,7 +39,6 @@ class MainVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         }
     }
     
-    
     // MARK: - fileprivate func
     fileprivate func config() {
         // 스터디룸 조회

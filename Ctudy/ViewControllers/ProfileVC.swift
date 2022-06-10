@@ -39,41 +39,49 @@ class ProfileVC: UIViewController, UIGestureRecognizerDelegate {
     }()
     
     // MARK: - overrid func
-    override func viewDidLoad() {
-        super.viewDidLoad()
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        self.config()
+//    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.config()
     }
     
     // MARK: - fileprivate func
     fileprivate func config() {
-        // profile
-        self.profileImg.layer.cornerRadius = self.profileImg.bounds.height / 2
-        self.profileImg.layer.borderWidth = 1
-        self.profileImg.layer.borderColor = COLOR.BORDER_COLOR.cgColor
-        self.profileImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
-        self.profileImg.tintColor = COLOR.BASIC_TINT_COLOR
-        if let userImg = KeyChainManager().tokenLoad(API.SERVICEID, account: "image"), userImg != "" {
-            self.profileImg.kf.setImage(with: URL(string: API.IMAGE_URL + userImg)!)
-        } else {
-            self.profileImg.image = UIImage(named: "user_default.png")
-        }
-        self.profileImg.contentMode = .scaleAspectFill
-        self.profileImg.translatesAutoresizingMaskIntoConstraints = false
+        // navigationbar ui
         
-        self.profileName.text = KeyChainManager().tokenLoad(API.SERVICEID, account: "name")
-        self.profileUsername.text = "@\(KeyChainManager().tokenLoad(API.SERVICEID, account: "username")!)"
-        self.profileUsername.textColor = COLOR.SUBTITLE_COLOR
+        // profile
+        profileImg.layer.cornerRadius = profileImg.bounds.height / 2
+        profileImg.layer.borderWidth = 1
+        profileImg.layer.borderColor = COLOR.BORDER_COLOR.cgColor
+        profileImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
+        profileImg.tintColor = COLOR.BASIC_TINT_COLOR
+        if let userImg = KeyChainManager().tokenLoad(API.SERVICEID, account: "image"), userImg != "" {
+            profileImg.kf.setImage(with: URL(string: API.IMAGE_URL + userImg)!, options: [.forceRefresh])
+        } else {
+            profileImg.image = UIImage(named: "user_default.png")
+        }
+        profileImg.contentMode = .scaleAspectFill
+        profileImg.translatesAutoresizingMaskIntoConstraints = false
+        profileImg.isUserInteractionEnabled = true
+        
+        profileName.text = KeyChainManager().tokenLoad(API.SERVICEID, account: "name")
+        profileUsername.text = "@\(KeyChainManager().tokenLoad(API.SERVICEID, account: "username")!)"
+        profileUsername.textColor = COLOR.SUBTITLE_COLOR
         
         // btn ui
-        self.profileSettingBtn.tintColor = COLOR.SIGNATURE_COLOR
-        self.profileSettingBtn.setImage(UIImage(systemName: "pencil"), for: .normal)
-        self.profileSettingBtn.contentMode = .right
+        profileSettingBtn.tintColor = COLOR.SIGNATURE_COLOR
+        profileSettingBtn.setImage(UIImage(systemName: "pencil"), for: .normal)
+        profileSettingBtn.contentMode = .center
         
         // image, btn 연결 event
-        self.profileSettingBtn.addTarget(self, action: #selector(onProfileSettingBtnClicked), for: .touchUpInside)
+        profileSettingBtn.addTarget(self, action: #selector(onProfileSettingBtnClicked), for: .touchUpInside)
         
         // delegate 연결
-        self.tabGesture.delegate = self
+        tabGesture.delegate = self
         
         // gesture 연결
         self.view.addGestureRecognizer(tabGesture)
@@ -113,7 +121,7 @@ class ProfileVC: UIViewController, UIGestureRecognizerDelegate {
         self.performSegue(withIdentifier: "ProfileSettingVC", sender: nil)
     }
     
-    @objc fileprivate func onProfileImageClicked() {
+    fileprivate func onProfileImageClicked() {
         self.performSegue(withIdentifier: "ProfileSettingVC", sender: nil)
     }
     
