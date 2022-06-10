@@ -15,6 +15,9 @@ enum AuthErrors: String, Error {
     case noSaveToken = "토큰 값 저장에 실패했습니다."
     case noDelToken = "토큰 값 삭제에 실패했습니다."
     case noProfile = "회원정보를 가져오지 못했습니다."
+    case noSearchid = "연결된 아이디를 찾을 수 없습니다."
+    case noUpdateProfileImage = "프로필 이미지 변경에 실패했습니다."
+    case noUpdateProfileName = "닉네임 변경에 실패했습니다."
 }
 
 enum RoomErrors: String, Error {

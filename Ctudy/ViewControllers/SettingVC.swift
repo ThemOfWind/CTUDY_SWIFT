@@ -1,17 +1,18 @@
 //
-//  UserInfoVC.swift
+//  SettingVC.swift
 //  Ctudy
 //
-//  Created by 김지은 on 2021/12/28.
+//  Created by 김지은 on 2022/06/08.
 //
 
 import Foundation
 import UIKit
 import NVActivityIndicatorView
+import SwiftUI
 
-class UserInfoVC: UIViewController {
+class SettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     // MARK: - 변수
-    @IBOutlet weak var logoutBtn: UIButton!
+    @IBOutlet weak var settingTableView: UITableView!
     lazy var indicatorView: UIView = {
         let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         indicatorView.backgroundColor = COLOR.INDICATOR_BACKGROUND_COLOR
@@ -33,21 +34,42 @@ class UserInfoVC: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    // 셋팅 항목
+    let settingList = [
+        [ "text" : "프로필관리", "color" : UIColor.black ]
+      , [ "text" : "계정관리", "color" : UIColor.black ]
+      , [ "text" : "개인정보 처리 방침", "color" : UIColor.black ]
+      , [ "text" : "이용약관", "color" : UIColor.black ]
+      , [ "text" : "오픈소스 라이센스 이용고지", "color" : UIColor.black ]
+      , [ "text" : "버전정보", "color" : UIColor.black ]
+      , [ "text" : "로그아웃", "color" : UIColor.red ]
+    ]
     
-    // MARK: - overrid func
+    // MARK: - override func
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.config()
+        config()
     }
     
     // MARK: - fileprivate func
     fileprivate func config() {
-        // btn ui
-        self.logoutBtn.tintColor = .white
-        self.logoutBtn.backgroundColor = COLOR.SIGNATURE_COLOR
+        leftItem = LeftItem.backGeneral
+        titleItem = TitleItem.titleGeneral(title: "설정", isLargeTitles: true)
         
-        // btn 연결 event
-        self.logoutBtn.addTarget(self, action: #selector(onLogoutBtnClicked), for: .touchUpInside)
+        // 셀 리소스 파일 가져오기
+        let settingCell = UINib(nibName: String(describing: SettingTableViewCell.self), bundle: nil)
+        
+        // 셀 리소스 등록하기
+        self.settingTableView.register(settingCell, forCellReuseIdentifier: "SettingTableViewCell")
+        
+        // 셀 설정
+        self.settingTableView.rowHeight = 80
+        self.settingTableView.allowsSelection = false
+        self.settingTableView.showsVerticalScrollIndicator = false // scroll 제거
+        
+        // delegate 연결
+        self.settingTableView.delegate = self
+        self.settingTableView.dataSource = self
     }
     
     fileprivate func onStartActivityIndicator() {
@@ -79,9 +101,8 @@ class UserInfoVC: UIViewController {
         }
     }
     
-    // MARK: - action func
     // logoutBtn event
-    @objc func onLogoutBtnClicked() {
+    fileprivate func logout() {
         // logout alert 띄우기
         let alert = UIAlertController(title: nil, message: "로그아웃 하시겠습니까?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "취소", style: .cancel))
@@ -116,5 +137,22 @@ class UserInfoVC: UIViewController {
         }
         
         self.present(alert, animated: false)
+    }
+    
+    // MARK: - tableView delegate
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return settingList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print("SettingVC - tableView() called / cellText: \(settingList[(indexPath as NSIndexPath).row]["text"] as! String), cellColor: \(settingList[(indexPath as NSIndexPath).row]["color"] as! UIColor)")
+        let cell = settingTableView.dequeueReusableCell(withIdentifier: "SettingTableViewCell", for: indexPath) as! SettingTableViewCell
+        cell.settingLabel.text = settingList[(indexPath as NSIndexPath).row]["text"] as! String
+        cell.settingLabel.textColor = settingList[(indexPath as NSIndexPath).row]["color"] as! UIColor
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("click")
     }
 }

@@ -14,9 +14,9 @@ import NVActivityIndicatorView
 class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
     // MARK: - 변수
 //    @IBOutlet weak var studyRoom: UILabel!
-    @IBOutlet weak var profileUserImg: UIImageView!
+    @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var profileName: UILabel!
-    @IBOutlet weak var profileUserName: UILabel!
+    @IBOutlet weak var profileUsername: UILabel!
     @IBOutlet weak var couponBtn: UIButton!
     @IBOutlet weak var myCouponBtn: UIButton!
     @IBOutlet weak var btnStackView: UIStackView!
@@ -24,7 +24,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
     var members: Array<SearchStudyMemberResponse> = [] // 전달할 멤버 리스트
     var settingRoom: SettingStudyRoomResponse! // 전달할 room 정보
     let userId = Int(KeyChainManager().tokenLoad(API.SERVICEID, account: "id")!) // 사용자 id
-    var profileId: Int? // 접속 회원 id
+    var profileId: Int! // 접속 회원 id
     var roomId: Int! // 스터디룸 id
 //    var roomName: String? // 스터디룸 name
     lazy var indicatorView: UIView = {
@@ -105,23 +105,23 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
 //        rightItem = RightItem.none
         
         // profile
-        profileUserImg.layer.cornerRadius = self.profileUserImg.bounds.height / 2
-        profileUserImg.layer.borderWidth = 1
-        profileUserImg.layer.borderColor = COLOR.BORDER_COLOR.cgColor
-        profileUserImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
-        profileUserImg.tintColor = COLOR.BASIC_TINT_COLOR
+        profileImg.layer.cornerRadius = self.profileImg.bounds.height / 2
+        profileImg.layer.borderWidth = 1
+        profileImg.layer.borderColor = COLOR.BORDER_COLOR.cgColor
+        profileImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
+        profileImg.tintColor = COLOR.BASIC_TINT_COLOR
         if let userImg = KeyChainManager().tokenLoad(API.SERVICEID, account: "image"), userImg != "" {
-            profileUserImg.kf.setImage(with: URL(string: API.IMAGE_URL + userImg)!)
+            profileImg.kf.setImage(with: URL(string: API.IMAGE_URL + userImg)!, options: [.forceRefresh])
         } else {
-            profileUserImg.image = UIImage(named: "user_default.png")
+            profileImg.image = UIImage(named: "user_default.png")
         }
-        profileUserImg.contentMode = .scaleAspectFill
-        profileUserImg.translatesAutoresizingMaskIntoConstraints = false
+        profileImg.contentMode = .scaleAspectFill
+        profileImg.translatesAutoresizingMaskIntoConstraints = false
         
         profileId = Int(KeyChainManager().tokenLoad(API.SERVICEID, account: "id")!)
         profileName.text = KeyChainManager().tokenLoad(API.SERVICEID, account: "name")
-        profileUserName.text = "@\(KeyChainManager().tokenLoad(API.SERVICEID, account: "username")!)"
-        profileUserName.textColor = COLOR.SUBTITLE_COLOR
+        profileUsername.text = "@\(KeyChainManager().tokenLoad(API.SERVICEID, account: "username")!)"
+        profileUsername.textColor = COLOR.SUBTITLE_COLOR
         
         // btn
         btnStackView.layer.cornerRadius = btnStackView.bounds.height / 2
@@ -251,7 +251,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         cell.memberName.text = "@\(members[indexPath.row].username)"
         cell.couponCnt.text = "쿠폰 00"
         if members[indexPath.row].image != "" {
-            cell.memberImg.kf.setImage(with: URL(string: API.IMAGE_URL + members[indexPath.row].image)!)
+            cell.memberImg.kf.setImage(with: URL(string: API.IMAGE_URL + members[indexPath.row].image)!, options: [.forceRefresh])
         } else {
             cell.memberImg.image = UIImage(named: "user_default.png")
         }

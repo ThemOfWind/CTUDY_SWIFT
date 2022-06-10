@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 
 class UpdateMasterVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     // MARK: - 변수
@@ -51,7 +52,8 @@ class UpdateMasterVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
             cell.memberName.text = "@\(memberList[indexPath.row].username)"
             cell.couponCnt.text = ""
             if memberList[indexPath.row].image != "" {
-                cell.memberImg.kf.setImage(with: URL(string: API.IMAGE_URL + memberList[indexPath.row].image)!)
+                cell.memberImg.kf.indicatorType = .activity
+                cell.memberImg.kf.setImage(with: URL(string: API.IMAGE_URL + memberList[indexPath.row].image)!, options: [.forceRefresh])
             } else {
                 cell.memberImg.image = UIImage(named: "user_default.png")
             }

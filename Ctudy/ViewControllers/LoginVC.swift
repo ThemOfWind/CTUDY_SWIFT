@@ -43,6 +43,7 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
     let keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: LoginVC.self, action: nil)
     var distance: Double = 0
     var loginViewY: Double!
+    var token: SignInResponse?
     
     // MARK: - overrid func
     override func viewDidLoad() {
@@ -52,6 +53,7 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        token = nil
         
         // refresh
         self.config()
@@ -133,6 +135,10 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
     @objc func onLoginBtnClicked() {
         print("LoginVC - onLoginBtnClicked() called")
         
+        if token?.token == KeyChainManager().tokenLoad(API.SERVICEID, account: "accessToken") {
+            print("token: \(token?.token)")
+            return }
+        
         self.onStartActivityIndicator()
         
         AlamofireManager.shared.postSignIn(username: userName.text!, password: password.text!, completion: { [weak self] result in
@@ -141,8 +147,9 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
             self.onStopActivityIndicator()
             
             switch result {
-            case .success(_):
+            case .success(let token):
                 print("LoginVC - postSignIn.success")
+                self.token = token
                 self.getProfileInfo()
             case .failure(let error):
                 print("LoginVC - postSignIn.failure / error: \(error.rawValue)")

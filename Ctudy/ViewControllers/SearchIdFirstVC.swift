@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import NVActivityIndicatorView
 
 class SearchIdFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
     // MARK: - 변수
@@ -14,13 +15,43 @@ class SearchIdFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate
     @IBOutlet weak var emailMsg: UILabel!
     @IBOutlet weak var searchBtn: UIButton!
     let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: SearchIdFirstVC.self, action: nil)
+    lazy var indicatorView: UIView = {
+        let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+        indicatorView.backgroundColor = COLOR.INDICATOR_BACKGROUND_COLOR
+        return indicatorView
+    }()
+    lazy var indicator: NVActivityIndicatorView = {
+        let indicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40),
+                                                type: .pacman,
+                                                color: COLOR.BASIC_TINT_COLOR,
+                                                padding: 0)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+    lazy var loading: UILabel = {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 10))
+        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.text = "loading..."
+        label.textColor = COLOR.BASIC_TINT_COLOR
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     var emailOKFlag: Bool = false
+    var searchId: String? // 다음화면으로 넘겨줄 찾은 id
     
     // MARK: - override func
     override func viewDidLoad() {
         super.viewDidLoad()
         print("SearchIdFirstVC - viewDidLoad() called")
-        self.config()
+        config()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let id = segue.identifier, id == "SearchIdSuccessVC" {
+            if let controller = segue.destination as? SearchIdSuccessVC {
+                controller.searchId = searchId
+            }
+        }
     }
     
     // MARK: - fileprivate func
@@ -36,7 +67,7 @@ class SearchIdFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate
         self.searchBtn.isEnabled = false
         
         // button & textField event 연결
-//        self.searchBtn.addTarget(self, action: #selector(onSearchBtnClicked), for: .touchUpInside)
+        self.searchBtn.addTarget(self, action: #selector(onSearchBtnClicked), for: .touchUpInside)
         self.inputEmail.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
         
         // delegate 연결
@@ -83,10 +114,59 @@ class SearchIdFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate
         return pred.evaluate(with: data)
     }
     
+    fileprivate func onStartActivityIndicator() {
+        DispatchQueue.main.async {
+            // 불투명 뷰 추가
+            self.view.addSubview(self.indicatorView)
+            // activity indicator 추가
+            self.indicatorView.addSubview(self.indicator)
+            self.indicatorView.addSubview(self.loading)
+            
+            NSLayoutConstraint.activate([
+                self.indicator.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+                self.indicator.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+                self.loading.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+                self.loading.centerYAnchor.constraint(equalTo: self.indicator.bottomAnchor, constant: 5)
+            ])
+            
+            // 애니메이션 시작
+            self.indicator.startAnimating()
+        }
+    }
+    
+    fileprivate func onStopActivityIndicator() {
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            // 애니메이션 정지.
+            // 서버 통신 완료 후 다음의 메서드를 실행해서 통신의 끝나는 느낌을 줄 수 있다.
+            self.indicator.stopAnimating()
+            self.indicatorView.removeFromSuperview()
+        }
+    }
+    
     // MARK: - @objc func
-//    @objc fileprivate func onSearchBtnClicked() {
-//        print("ID Search Button click!")
-//    }
+    @objc fileprivate func onSearchBtnClicked() {
+        
+        onStartActivityIndicator()
+        
+        AlamofireManager.shared.postSearchId(email: inputEmail.text!, completion: { [weak self] result in
+            guard let self = self else { return }
+            
+            self.onStopActivityIndicator()
+            
+            switch result {
+            case .success(let username):
+                // 다음 화면으로 넘기기
+                self.searchId = username
+                self.performSegue(withIdentifier: "SearchIdSuccessVC", sender: nil)
+            case .failure(let error):
+                self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
+            }
+        })
+        
+        if indicator.isAnimating {
+            onStopActivityIndicator()
+        }
+    }
     
     // textField 변경할 때 event
     @objc func textFieldEditingChanged(_ textField: UITextField) {

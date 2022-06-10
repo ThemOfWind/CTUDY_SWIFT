@@ -14,6 +14,10 @@ class MainTabBarVC: UITabBarController, UITabBarControllerDelegate {
         var Btn = (UINib(nibName: "AddBarButtonItem", bundle: nil).instantiate(withOwner: MainTabBarVC.self, options: nil).first as! UIButton)
         return Btn
     }()
+    let settingBtn: UIButton = {
+        var Btn = (UINib(nibName: "SettingBarButtonItem", bundle: nil).instantiate(withOwner: MainTabBarVC.self, options: nil).first as! UIButton)
+        return Btn
+    }()
     
     // MARK: - overrid func
     override func viewDidLoad() {
@@ -45,9 +49,10 @@ class MainTabBarVC: UITabBarController, UITabBarControllerDelegate {
         self.navigationItem.title = "스터디룸"
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationItem.largeTitleDisplayMode = .always
-        
+    
         // navigationBar right item
         self.addBtn.addTarget(self, action: #selector(onAddBtnClicked(sender:)), for: .touchUpInside)
+        self.settingBtn.addTarget(self, action: #selector(onSettingBtnClicked(sender:)), for: .touchUpInside)
         self.navigationItem.setRightBarButton(UIBarButtonItem(customView: addBtn), animated: true)
         
         // delegate
@@ -68,18 +73,25 @@ class MainTabBarVC: UITabBarController, UITabBarControllerDelegate {
         performSegue(withIdentifier: "RegisterStudyRoomFirstVC", sender: nil)
     }
     
+    @objc func onSettingBtnClicked(sender: UIButton) {
+        performSegue(withIdentifier: "SettingVC", sender: nil)
+    }
+    
     @IBAction func unwindMainTabBarVC(_ segue: UIStoryboardSegue) {}
     
     // MARK: - tabBar delegate
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         if viewController is MainVC {
-            self.navigationItem.title = "스터디룸"
+            self.navigationItem.title = nil
+            self.navigationController?.navigationBar.topItem?.title = "스터디룸"
+            self.navigationItem.rightBarButtonItem = nil
             self.navigationItem.setRightBarButton(UIBarButtonItem(customView: addBtn), animated: true)
-        } else {
-            if self.navigationItem.rightBarButtonItem != nil {
-                self.navigationItem.title = ""
-                self.navigationItem.rightBarButtonItem = nil
-            }
+        } else if viewController is ProfileVC {
+            self.navigationController?.navigationBar.sizeToFit() // UIKit에 포함된 특정 View를 자체 내부 요구의 사이즈로 resize 해주는 함수
+            self.navigationItem.title = nil
+            self.navigationController?.navigationBar.topItem?.title = "프로필"
+            self.navigationItem.rightBarButtonItem = nil
+            self.navigationItem.setRightBarButton(UIBarButtonItem(customView: settingBtn), animated: true)
         }
     }
 }

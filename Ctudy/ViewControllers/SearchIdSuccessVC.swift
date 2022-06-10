@@ -12,6 +12,7 @@ class SearchIdSuccessVC: BasicVC {
     // MARK: - 변수
     @IBOutlet weak var homeBtn: UIButton!
     @IBOutlet weak var uesrName: UILabel!
+    var searchId: String? // 넘겨받은 찾은 id
     
     // MARK: - override func
     override func viewDidLoad() {
