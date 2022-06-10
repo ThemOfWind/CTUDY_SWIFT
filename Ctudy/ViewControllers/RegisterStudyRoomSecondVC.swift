@@ -72,7 +72,7 @@ class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataS
         
         // 셀 설정
         self.memberTableView.rowHeight = 90
-        self.memberTableView.allowsSelection = false
+//        self.memberTableView.allowsSelection = false
         self.memberTableView.showsVerticalScrollIndicator = false // scroll 제거
 //        self.memberTableView.estimatedRowHeight = 100
         
@@ -194,6 +194,7 @@ class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataS
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = memberTableView.dequeueReusableCell(withIdentifier: "MemberTableViewCell", for: indexPath) as! MemberTableViewCell
+        cell.selectionStyle = .none // 선택 block 없애기
         if members[indexPath.row].image != "" {
             cell.memberImg.kf.indicatorType = .activity
             cell.memberImg.kf.setImage(with: URL(string: API.IMAGE_URL + members[indexPath.row].image)!, options: [.forceRefresh])

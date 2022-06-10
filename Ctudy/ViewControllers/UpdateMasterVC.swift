@@ -47,6 +47,7 @@ class UpdateMasterVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = memberTableView.dequeueReusableCell(withIdentifier: "StudyMemberTableViewCell", for: indexPath) as! StudyMemberTableViewCell
+        cell.selectionStyle = .none // 선택 block 없애기
         if let memberList = members {
             cell.member.text = memberList[indexPath.row].name
             cell.memberName.text = "@\(memberList[indexPath.row].username)"

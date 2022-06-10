@@ -64,7 +64,7 @@ class SettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         
         // 셀 설정
         self.settingTableView.rowHeight = 80
-        self.settingTableView.allowsSelection = false
+        self.settingTableView.allowsSelection = true
         self.settingTableView.showsVerticalScrollIndicator = false // scroll 제거
         
         // delegate 연결
@@ -145,8 +145,9 @@ class SettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("SettingVC - tableView() called / cellText: \(settingList[(indexPath as NSIndexPath).row]["text"] as! String), cellColor: \(settingList[(indexPath as NSIndexPath).row]["color"] as! UIColor)")
+        print("SettingVC - tableView() called / cellText: \(settingList[(indexPath as NSIndexPath).row]["text"] as! String)")
         let cell = settingTableView.dequeueReusableCell(withIdentifier: "SettingTableViewCell", for: indexPath) as! SettingTableViewCell
+        cell.selectionStyle = .none // 선택 block 없애기
         cell.settingLabel.text = settingList[(indexPath as NSIndexPath).row]["text"] as! String
         cell.settingLabel.textColor = settingList[(indexPath as NSIndexPath).row]["color"] as! UIColor
         return cell
