@@ -103,11 +103,11 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
     
     // 아이디 중복체크 api 호출 event
     fileprivate func userNameChecked(inputUserName: String) {
-        AlamofireManager.shared.getUserNameCheck(username: inputUserName, completion: {
+        AlamofireManager.shared.getExistCheck(errorType: "username", username: inputUserName, email: nil, completion: {
             [weak self] result in
             guard let self = self else { return }
             switch result {
-            case .success(let checkData):
+            case .success(_):
                 print("SignUpSecondVC - getUserNameCheck.success")
                 // 사용가능 문구 띄우기
                 //self.view.makeToast("사용가능한 아이디(이메일)입니다.", duration: 1.0, position: .center)

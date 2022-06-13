@@ -32,26 +32,39 @@ final class AlamofireManager {
         )
     }
     
-    // MARK: - 아이디 중복체크
-    func getUserNameCheck(username username: String, completion: @escaping (Result<UserNameCheckResponse, AuthErrors>) -> Void) {
-        print("AlamofireManger - getUserNameCheck() called / parameters = [username: \(username)]")
+    // MARK: - 아이디&이메일 중복체크
+    func getExistCheck(errorType errorType: String, username username: String? = nil, email email: String? = nil, completion: @escaping (Result<Bool, AuthErrors>) -> Void) {
+        print("AlamofireManger - getExistCheck() called / parameters = [username: \(username)]")
         
         self.session
-            .request(AuthRouter.usernamecheck(username: username))
+            .request(AuthRouter.usernamecheck(username: username, email: email))
             .validate(statusCode: 200..<501)
             .responseJSON(completionHandler: { response in
                 guard let responseValue = response.value
                         , let statusCode = response.response?.statusCode else { return }
                 let responseJson = JSON(responseValue)
                 
+                var error: AuthErrors!
+                switch errorType {
+                case "username":
+                    error = .existedUserName
+                case "email":
+                    error = .existedEmail
+                default:
+                    error = .existed
+                }
+                
                 switch statusCode {
                 case 200:
-                    guard let username = responseJson["response"]["username"].string else { return }
-                    let jsonData = UserNameCheckResponse(username: username)
-                    completion(.success(jsonData))
+                    guard let result = responseJson["response"]["success"].bool else { return }
+                    if result {
+                        completion(.success(result))
+                    } else {
+                        completion(.failure(error))
+                    }
                 default:
-                    print("getUserNameCheck() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
-                    completion(.failure(.duplicatedUserName))
+                    print("getExistCheck() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
+                    completion(.failure(error))
                 }
             })
     }
