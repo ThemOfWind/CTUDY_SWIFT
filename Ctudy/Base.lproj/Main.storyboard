@@ -1198,7 +1198,7 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="N7u-AA-fRu">
                                                         <rect key="frame" x="0.0" y="86" width="374" height="83"/>
                                                         <subviews>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="쿠폰 만료일 (yyyy-MM-dd)" textAlignment="natural" minimumFontSize="20" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="tgj-eQ-6N0">
+                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="쿠폰 만료일" textAlignment="natural" minimumFontSize="20" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="tgj-eQ-6N0">
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="60"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="60" id="bRY-3v-bPY"/>
@@ -2201,7 +2201,7 @@
                                     <fontDescription key="titleFontDescription" type="boldSystem" pointSize="18"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <segue destination="84B-3l-WYf" kind="show" id="rfb-1G-Ryh"/>
+                                    <segue destination="84B-3l-WYf" kind="show" identifier="SignUpSecondVC" id="rfb-1G-Ryh"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -2251,13 +2251,13 @@
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="309"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="3W7-HL-ljF">
-                                                <rect key="frame" x="20" y="10" width="334" height="279"/>
+                                                <rect key="frame" x="0.0" y="10" width="374" height="279"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="C7M-Ug-o0N">
-                                                        <rect key="frame" x="0.0" y="0.0" width="334" height="83"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="83"/>
                                                         <subviews>
                                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="아이디" textAlignment="natural" minimumFontSize="20" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="iQ5-eP-UqK">
-                                                                <rect key="frame" x="0.0" y="0.0" width="334" height="60"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="374" height="60"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="60" id="TZX-Sz-JOG"/>
                                                                 </constraints>
@@ -2265,7 +2265,7 @@
                                                                 <textInputTraits key="textInputTraits" textContentType="username"/>
                                                             </textField>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N9p-OH-lQ1">
-                                                                <rect key="frame" x="0.0" y="63" width="334" height="20"/>
+                                                                <rect key="frame" x="0.0" y="63" width="374" height="20"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="20" id="kO5-gZ-LX0"/>
                                                                 </constraints>
@@ -2276,10 +2276,10 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="1b9-wo-gAb">
-                                                        <rect key="frame" x="0.0" y="98" width="334" height="83"/>
+                                                        <rect key="frame" x="0.0" y="98" width="374" height="83"/>
                                                         <subviews>
                                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder=" 비밀번호 (특수문자 포함, 8자이상)" textAlignment="natural" minimumFontSize="20" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="tMN-Ii-WBK">
-                                                                <rect key="frame" x="0.0" y="0.0" width="334" height="60"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="374" height="60"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="60" id="lWF-9V-dp2"/>
                                                                 </constraints>
@@ -2287,7 +2287,7 @@
                                                                 <textInputTraits key="textInputTraits" textContentType="password"/>
                                                             </textField>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eki-Qq-sxv">
-                                                                <rect key="frame" x="0.0" y="63" width="334" height="20"/>
+                                                                <rect key="frame" x="0.0" y="63" width="374" height="20"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="20" id="uBR-mO-Qx3"/>
                                                                 </constraints>
@@ -2298,10 +2298,10 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="fhv-Vy-QrS">
-                                                        <rect key="frame" x="0.0" y="196" width="334" height="83"/>
+                                                        <rect key="frame" x="0.0" y="196" width="374" height="83"/>
                                                         <subviews>
                                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder=" 비밀번호 확인" textAlignment="natural" minimumFontSize="20" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="DzJ-p8-idu">
-                                                                <rect key="frame" x="0.0" y="0.0" width="334" height="60"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="374" height="60"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="60" id="ukk-76-AkE"/>
                                                                 </constraints>
@@ -2309,7 +2309,7 @@
                                                                 <textInputTraits key="textInputTraits" textContentType="password"/>
                                                             </textField>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0lC-t3-Qpo" userLabel="PasswordChkMsg">
-                                                                <rect key="frame" x="0.0" y="63" width="334" height="20"/>
+                                                                <rect key="frame" x="0.0" y="63" width="374" height="20"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="20" id="IFu-no-VJf"/>
                                                                 </constraints>
@@ -2324,10 +2324,10 @@
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstItem="3W7-HL-ljF" firstAttribute="leading" secondItem="M19-MI-8Qv" secondAttribute="leading" constant="20" id="Ahk-BK-rEx"/>
+                                            <constraint firstItem="3W7-HL-ljF" firstAttribute="leading" secondItem="M19-MI-8Qv" secondAttribute="leading" id="Ahk-BK-rEx"/>
                                             <constraint firstAttribute="bottom" secondItem="3W7-HL-ljF" secondAttribute="bottom" constant="20" id="bBa-io-I2v"/>
                                             <constraint firstItem="3W7-HL-ljF" firstAttribute="top" secondItem="M19-MI-8Qv" secondAttribute="top" constant="10" id="ilO-be-c4d"/>
-                                            <constraint firstAttribute="trailing" secondItem="3W7-HL-ljF" secondAttribute="trailing" constant="20" id="sPS-yk-wDh"/>
+                                            <constraint firstAttribute="trailing" secondItem="3W7-HL-ljF" secondAttribute="trailing" id="sPS-yk-wDh"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -2375,6 +2375,7 @@
                         <outlet property="registerPassword" destination="tMN-Ii-WBK" id="ZQX-Rc-aPf"/>
                         <outlet property="registerPasswordChk" destination="DzJ-p8-idu" id="hYe-O6-c38"/>
                         <outlet property="registerUsername" destination="iQ5-eP-UqK" id="VKd-y6-n2n"/>
+                        <outlet property="signUpBtn" destination="J9c-WN-hSF" id="9of-T3-UtQ"/>
                         <outlet property="usernameMsg" destination="N9p-OH-lQ1" id="0E0-92-MmQ"/>
                         <segue destination="W7c-w3-KJQ" kind="show" identifier="SignUpSuccessVC" id="a2r-Uv-Jqf"/>
                     </connections>

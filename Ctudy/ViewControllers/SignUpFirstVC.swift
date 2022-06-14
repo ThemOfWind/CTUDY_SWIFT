@@ -19,7 +19,7 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
     @IBOutlet weak var emailMsg: UILabel!
     @IBOutlet weak var goToStartBtn: UIButton!
     let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: SignUpFirstVC.self, action: nil)
-    var memberName: String?
+//    var memberName: String?
     var nameOKFlag: Bool = false
     var emailOKFlag: Bool = false
     var imageFlag: Bool = false // image 초기화 flag
@@ -88,10 +88,13 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
                 print("SignUpFirstVC - getExistCheck.success")
                 // 사용가능 문구 띄우기
                 //self.view.makeToast("사용가능한 아이디(이메일)입니다.", duration: 1.0, position: .center)
-                self.setMsgLabel(flag: true, msgLabel: self.emailMsg, msgString: "사용가능한 이메일입니다.")
+                self.emailOKFlag = true
+                self.setMsgLabel(flag: self.emailOKFlag, msgLabel: self.emailMsg, msgString: "사용가능한 이메일입니다.")
             case .failure(let error):
                 print("SignUpFirstVC - getExistCheck.failure / error: \(error)")
-                self.setMsgLabel(flag: false, msgLabel: self.emailMsg, msgString: error.rawValue)
+                self.emailOKFlag = false
+                self.setMsgLabel(flag: self.emailOKFlag, msgLabel: self.emailMsg, msgString: error.rawValue)
+                self.nextBtnAbleChecked()
             }
         })
     }
@@ -233,8 +236,6 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
         default:
             break
         }
-        
-        nextBtnAbleChecked()
     }
     
     @objc fileprivate func onGoToStartBtnClicked() {
@@ -288,6 +289,8 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
         default:
             break
         }
+        
+        nextBtnAbleChecked()
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {

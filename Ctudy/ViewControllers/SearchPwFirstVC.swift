@@ -143,7 +143,7 @@ class SearchPwFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate
             if emailOKFlag {
                 setMsgLabel(flag: emailOKFlag, msgLabel: msgLabel, msgString: "")
             } else {
-                setMsgLabel(flag: emailOKFlag, msgLabel: msgLabel, msgString: "이메일(email)이 옳바르지 않습니다.")
+                setMsgLabel(flag: emailOKFlag, msgLabel: msgLabel, msgString: "이메일이 옳바르지 않습니다.")
             }
         case inputUsername:
             usernameOKFlag = isValidData(flag: "inputUsername", data: inputData)

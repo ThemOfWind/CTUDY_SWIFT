@@ -97,9 +97,14 @@ enum AuthRouter: URLRequestConvertible {
         case .signin(let username, let password):
             let parameters = ["username" : username, "password" : password] as Dictionary
             request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
-        case .usernamecheck(username: let usernamem, email: let email):
-            let parameters = ["username" : usernamem ?? nil, "email" : email ?? nil] as Dictionary
-            request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
+        case .usernamecheck(username: let username, email: let email):
+            if let usernameParam = username, email == nil {
+                let parameters = ["username" : usernameParam] as Dictionary
+                request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
+            } else if let emailParam = email, username == nil {
+                let parameters = ["email" : emailParam] as Dictionary
+                request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
+            }
 //        case .signup(let name, let username, let password):
 //            let parameters = ["name" : name, "username" : username, "password" : password] as Dictionary
 //            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])

@@ -44,6 +44,8 @@ final class AlamofireManager {
                         , let statusCode = response.response?.statusCode else { return }
                 let responseJson = JSON(responseValue)
                 
+                print("AlamofireManager - getExistCheck()")
+                
                 var error: AuthErrors!
                 switch errorType {
                 case "username":
