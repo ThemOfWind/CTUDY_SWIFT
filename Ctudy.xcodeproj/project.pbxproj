@@ -31,7 +31,7 @@
 		5A58EEA9275F7E84000A1A39 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A58EEA7275F7E84000A1A39 /* LaunchScreen.storyboard */; };
 		5A5C98D42857731B001AEF03 /* WithdrawVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5C98D32857731B001AEF03 /* WithdrawVC.swift */; };
 		5A5FCD36283F9C6900C9C3C4 /* SearchIdSuccessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5FCD35283F9C6900C9C3C4 /* SearchIdSuccessVC.swift */; };
-		5A60DFA328571CBB00791779 /* UsernameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A60DFA228571CBB00791779 /* UsernameVC.swift */; };
+		5A60DFA328571CBB00791779 /* UpdatePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A60DFA228571CBB00791779 /* UpdatePasswordVC.swift */; };
 		5A6FEEB42840845E007C7751 /* SearchPwSecondVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6FEEB32840845E007C7751 /* SearchPwSecondVC.swift */; };
 		5A6FEEB628408498007C7751 /* SearchPwThirdVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6FEEB528408498007C7751 /* SearchPwThirdVC.swift */; };
 		5A6FEEB8284084EA007C7751 /* SearchPwSuccessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6FEEB7284084EA007C7751 /* SearchPwSuccessVC.swift */; };
@@ -115,7 +115,7 @@
 		5A58EEAA275F7E84000A1A39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5A5C98D32857731B001AEF03 /* WithdrawVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawVC.swift; sourceTree = "<group>"; };
 		5A5FCD35283F9C6900C9C3C4 /* SearchIdSuccessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchIdSuccessVC.swift; sourceTree = "<group>"; };
-		5A60DFA228571CBB00791779 /* UsernameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameVC.swift; sourceTree = "<group>"; };
+		5A60DFA228571CBB00791779 /* UpdatePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordVC.swift; sourceTree = "<group>"; };
 		5A6FEEB32840845E007C7751 /* SearchPwSecondVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPwSecondVC.swift; sourceTree = "<group>"; };
 		5A6FEEB528408498007C7751 /* SearchPwThirdVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPwThirdVC.swift; sourceTree = "<group>"; };
 		5A6FEEB7284084EA007C7751 /* SearchPwSuccessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPwSuccessVC.swift; sourceTree = "<group>"; };
@@ -289,7 +289,7 @@
 				5A7BC0FC284BA73F0077F10F /* UpdateMasterVC.swift */,
 				5AA3F27A28508CDC00A4EF80 /* SettingVC.swift */,
 				5AC84435285097140081C4B2 /* ProfileSettingVC.swift */,
-				5A60DFA228571CBB00791779 /* UsernameVC.swift */,
+				5A60DFA228571CBB00791779 /* UpdatePasswordVC.swift */,
 				5A5C98D32857731B001AEF03 /* WithdrawVC.swift */,
 			);
 			path = ViewControllers;
@@ -557,7 +557,7 @@
 				5AC1CE792765CB20009586B2 /* MemberRouter.swift in Sources */,
 				5AC1CE702765C9E0009586B2 /* AuthRouter.swift in Sources */,
 				5A7BC0FD284BA73F0077F10F /* UpdateMasterVC.swift in Sources */,
-				5A60DFA328571CBB00791779 /* UsernameVC.swift in Sources */,
+				5A60DFA328571CBB00791779 /* UpdatePasswordVC.swift in Sources */,
 				5A5C98D42857731B001AEF03 /* WithdrawVC.swift in Sources */,
 				5AC1CE732765CADC009586B2 /* RoomRouter.swift in Sources */,
 				5AA86D0B2761005D0067620C /* MainVC.swift in Sources */,

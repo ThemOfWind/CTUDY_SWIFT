@@ -124,16 +124,17 @@ class SettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
                     self.navigationController?.view.makeToast("로그아웃 되었습니다.", duration: 1.0, position: .center)
                 case .failure(let error):
                     print("SettingVC - logout().failure / error: \(error)")
-                    guard let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginVC") as? LoginVC else { return }
-                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(loginVC, animated: false)
+//                    guard let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginVC") as? LoginVC else { return }
+//                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(loginVC, animated: false)
                     //self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
                 }
             })
+            
+            if self.indicator.isAnimating {
+                self.onStopActivityIndicator()
+            }
+            
         }))
-        
-        if self.indicator.isAnimating {
-            self.onStopActivityIndicator()
-        }
         
         self.present(alert, animated: false)
     }
@@ -160,7 +161,7 @@ class SettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
             break
         case "username":
             // 계정관리 화면으로 이동
-            self.performSegue(withIdentifier: "UsernameVC", sender: self)
+            self.performSegue(withIdentifier: "UpdatePasswordVC", sender: self)
             break
         case "privacy":
             break

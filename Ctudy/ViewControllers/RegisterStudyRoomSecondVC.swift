@@ -175,9 +175,10 @@ class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataS
             
             switch result {
             case .success(_):
-                self.view.makeToast("스터디룸이 등록되었습니다.", duration: 1.0, position: .center)
                 self.performSegue(withIdentifier: "unwindMainTabBarVC", sender: self)
+                self.navigationController?.view.makeToast("스터디룸이 등록되었습니다.", duration: 1.0, position: .center)
             case .failure(let error):
+                print("RegisterStudyRoomSecondVC - postRegisterRoom() called / error: \(error.rawValue)")
                 self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
             }
         })

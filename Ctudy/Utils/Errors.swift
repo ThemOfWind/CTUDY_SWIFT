@@ -20,6 +20,8 @@ enum AuthErrors: String, Error {
     case noSearchid = "연결된 아이디를 찾을 수 없습니다."
     case noUpdateProfileImage = "프로필 이미지 변경에 실패했습니다."
     case noUpdateProfileName = "닉네임 변경에 실패했습니다."
+    case noUpdatePassword = "비밀번호 변경에 실패했습니다."
+    case noWithdraw = "회원탈퇴에 실패했습니다."
 }
 
 enum RoomErrors: String, Error {

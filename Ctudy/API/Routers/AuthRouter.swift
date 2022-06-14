@@ -18,6 +18,8 @@ enum AuthRouter: URLRequestConvertible {
     case profile // 접속 회원정보
     case searchid(email: String) // 아이디 찾기
     case updateprofile(name: String) // 프로필 설정 변경
+    case updatepassword(password: String, newpassword: String) // 비밀번호 변경
+    case withdraw // 회원탈퇴
     
     var baseURL: URL {
         return URL(string: API.BASE_URL + "account/")!
@@ -39,6 +41,10 @@ enum AuthRouter: URLRequestConvertible {
             return .post
         case .updateprofile:
             return .put
+        case .updatepassword:
+            return .put
+        case .withdraw:
+            return .delete
         }
     }
     
@@ -58,6 +64,10 @@ enum AuthRouter: URLRequestConvertible {
             return "findid/"
         case .updateprofile:
             return "profile/"
+        case .updatepassword:
+            return "password/"
+        case .withdraw:
+            return "withdraw/"
         }
     }
     
@@ -103,6 +113,11 @@ enum AuthRouter: URLRequestConvertible {
         case .updateprofile(name: let name):
             let parameters = ["name" : name] as Dictionary
             request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
+        case .updatepassword(password: let password, newpassword: let newpassword):
+            let parameters = ["password" : password, "new_password" : newpassword]
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
+        case .withdraw:
+            break
         }
         
         return request

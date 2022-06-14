@@ -159,6 +159,7 @@ class SearchIdFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate
                 self.searchId = username
                 self.performSegue(withIdentifier: "SearchIdSuccessVC", sender: nil)
             case .failure(let error):
+                print("SearchIdFirstVC - postSearchId() called / error: \(error.rawValue)")
                 self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
             }
         })

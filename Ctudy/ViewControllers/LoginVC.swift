@@ -7,7 +7,6 @@
 
 import UIKit
 import NVActivityIndicatorView
-import AlamofireNetworkActivityIndicator
 
 class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
     
@@ -153,7 +152,7 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
                 self.getProfileInfo()
             case .failure(let error):
                 print("LoginVC - postSignIn.failure / error: \(error.rawValue)")
-                self.view.makeToast(error.rawValue, duration: 0.5, position: .center)
+                self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
             }
         })
         

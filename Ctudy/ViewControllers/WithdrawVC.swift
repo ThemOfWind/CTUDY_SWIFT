@@ -97,11 +97,33 @@ class WithdrawVC: BasicVC {
     // MARK: - @objc func
     @objc fileprivate func onWithdrawBtnClicked() {
         // logout alert 띄우기
-        let alert = UIAlertController(title: nil, message: "로그아웃 하시겠습니까?", preferredStyle: .alert)
+        let alert = UIAlertController(title: nil, message: "정말 탈퇴하시겠습니까?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "취소", style: .cancel))
         alert.addAction(UIAlertAction(title: "확인", style: .destructive, handler: { (_) in
             
+            self.onStartActivityIndicator()
             
+            AlamofireManager.shared.deleteWithdraw(completion: {
+                [weak self] result in
+                guard let self = self else { return }
+                
+                self.onStopActivityIndicator()
+                
+                switch result {
+                case .success(_):
+                    self.performSegue(withIdentifier: "unwindStartVC", sender: self)
+                    self.navigationController?.view.makeToast("회원탈퇴가 완료되었습니다.", duration: 1.0, position: .center)
+                case .failure(let error):
+                    print("WithdrawVC - deleteWithdraw().failure / error: \(error)")
+                    self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
+                }
+            })
+            
+            if self.indicator.isAnimating {
+                self.onStopActivityIndicator()
+            }
         }))
+        
+        self.present(alert, animated: false)
     }
 }

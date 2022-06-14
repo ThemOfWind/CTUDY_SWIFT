@@ -108,12 +108,12 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
             guard let self = self else { return }
             switch result {
             case .success(_):
-                print("SignUpSecondVC - getUserNameCheck.success")
+                print("SignUpSecondVC - getExistCheck.success")
                 // 사용가능 문구 띄우기
                 //self.view.makeToast("사용가능한 아이디(이메일)입니다.", duration: 1.0, position: .center)
                 self.setMsgLabel(flag: true, msgLabel: self.usernameMsg, msgString: "사용가능한 아이디입니다.")
             case .failure(let error):
-                print("SignUpSecondVC - getUserNameCheck.failure / error: \(error)")
+                print("SignUpSecondVC - getExistCheck.failure / error: \(error)")
                 // 중복사용 문구 띄우기
                 //self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
                 self.setMsgLabel(flag: false, msgLabel: self.usernameMsg, msgString: error.rawValue)

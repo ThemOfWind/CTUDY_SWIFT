@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import NVActivityIndicatorView
 
-class UsernameVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
+class UpdatePasswordVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
     // MARK: - 변수
     @IBOutlet weak var inputPassword: UITextField!
     @IBOutlet weak var passwordMsg: UILabel!
@@ -42,6 +42,8 @@ class UsernameVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
     }()
     var passwordOKFlag: Bool = false
     var newPasswordOKFlag: Bool = false
+    var onlyPasswordOKFlag: Bool = true
+    
     
     // MARK: - override func
     override func viewDidLoad() {
@@ -122,7 +124,7 @@ class UsernameVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
     
     // createButton 활성화 & 비활성화 event
     fileprivate func updateBtnAbleChecked() {
-        if passwordOKFlag && newPasswordOKFlag {
+        if passwordOKFlag && newPasswordOKFlag && onlyPasswordOKFlag {
             updateBtn.backgroundColor = COLOR.SIGNATURE_COLOR
             updateBtn.isEnabled = true
         } else {
@@ -176,7 +178,27 @@ class UsernameVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
     // MARK: - @objc func
     // 저장하기 button event
     @objc fileprivate func onUpdateBtnClicked() {
+        onStartActivityIndicator()
         
+        AlamofireManager.shared.putPassword(password: inputPassword.text!, newpassword: inputNewPassword.text!, completion: {
+            [weak self] result in
+            guard let self = self else { return }
+            
+            self.onStopActivityIndicator()
+            
+            switch result {
+            case .success(_):
+                self.navigationController?.popViewController(animated: true)
+                self.navigationController?.view.makeToast("비밀번호가 변경되었습니다.", duration: 1.0, position: .center)
+            case .failure(let error):
+                print("UpdatePasswordVC - putPassword().failure / error: \(error)")
+                self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
+            }
+        })
+        
+        if indicator.isAnimating {
+            onStopActivityIndicator()
+        }
     }
     
     // 회원탈퇴 button event
@@ -189,10 +211,10 @@ class UsernameVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
         //        print("CreateCouponVC - textFieldEditingChanged() called / sender.text: \(sender.text)")
         switch textField {
         case inputPassword:
-            textFieldCheck(textField: textField, msgLabel: passwordMsg, inputData: inputPassword.text ?? "")
+            passwordCheck(textField: textField, msgLabel: passwordMsg, inputData: textField.text ?? "")
         case inputNewPassword:
             // 이름 형식 체크 (모든 문자 1글자 이상, 공백만 X)
-            textFieldCheck(textField: textField, msgLabel: newPasswordMsg, inputData: inputNewPassword.text ?? "" )
+            newPasswordCheck(textField: textField, msgLabel: newPasswordMsg, inputData: textField.text ?? "" )
         default:
             break
         }
@@ -213,10 +235,10 @@ class UsernameVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
         switch textField {
             // 기존 비밀번호
         case inputPassword:
-            textFieldCheck(textField: textField, msgLabel: passwordMsg, inputData: inputPassword.text ?? "")
+            passwordCheck(textField: textField, msgLabel: passwordMsg, inputData: textField.text ?? "")
         case inputNewPassword:
             // 신규 비밀번호
-            textFieldCheck(textField: textField, msgLabel: newPasswordMsg, inputData: inputNewPassword.text ?? "" )
+            newPasswordCheck(textField: textField, msgLabel: newPasswordMsg, inputData: textField.text ?? "" )
         default:
             break
         }
@@ -225,34 +247,49 @@ class UsernameVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
         return true
     }
     
-    func textFieldCheck(textField: UITextField, msgLabel: UILabel, inputData: String) {
-        print("UsernameVC - textFieldCheck() called / msgLabel: \(msgLabel), inputData: \(inputData)")
-        
+    // 기존 비밀번호 check event
+    func passwordCheck(textField: UITextField, msgLabel: UILabel, inputData: String) {
         guard inputData != "" else {
             msgLabel.text = ""
             return
         }
         
-        switch textField {
-        case inputPassword:
-            passwordOKFlag = isValidData(flag: "password", data: inputData)
-            if passwordOKFlag {
-                setMsgLabel(flag: passwordOKFlag, msgLabel: msgLabel, msgString: "")
-            } else {
-                setMsgLabel(flag: passwordOKFlag, msgLabel: msgLabel, msgString: "비밀번호가 옳바르지 않습니다.")
-            }
-        case inputNewPassword:
-            let flag = isValidData(flag: "password", data: inputData)
-            if flag {
-                setMsgLabel(flag: flag, msgLabel: msgLabel, msgString: "사용가능한 비밀번호 입니다.")
-            } else {
-                setMsgLabel(flag: flag, msgLabel: msgLabel, msgString: "비밀번호가 옳바르지 않습니다.")
-            }
-            
-            // 비밀번호 & 비밀번호확인 일치 체크
-            passwordValueChecked()
-        default:
-            break
+        passwordOKFlag = isValidData(flag: "password", data: inputData)
+        if passwordOKFlag {
+            setMsgLabel(flag: passwordOKFlag, msgLabel: msgLabel, msgString: "")
+        } else {
+            setMsgLabel(flag: passwordOKFlag, msgLabel: msgLabel, msgString: "비밀번호가 옳바르지 않습니다.")
+        }
+        
+        newPasswordCheck(textField: inputNewPassword, msgLabel: newPasswordMsg, inputData: inputNewPassword.text ?? "")
+        
+        updateBtnAbleChecked()
+    }
+    
+    // 신규 비밀번호 check event
+    func newPasswordCheck(textField: UITextField, msgLabel: UILabel, inputData: String) {
+        print("UpdatePasswordVC - textFieldCheck() called / msgLabel: \(msgLabel), inputData: \(inputData)")
+        guard inputData != "" else {
+            msgLabel.text = ""
+            return
+        }
+        
+        if inputPassword.text == inputNewPassword.text {
+            onlyPasswordOKFlag = false
+            setMsgLabel(flag: onlyPasswordOKFlag, msgLabel: newPasswordMsg, msgString: "기존 비밀번호와 일치합니다.")
+        } else {
+            onlyPasswordOKFlag = true
+            setMsgLabel(flag: onlyPasswordOKFlag, msgLabel: newPasswordMsg, msgString: "")
+        
+        let flag = isValidData(flag: "password", data: inputData)
+        if flag {
+            setMsgLabel(flag: flag, msgLabel: msgLabel, msgString: "사용가능한 비밀번호 입니다.")
+        } else {
+            setMsgLabel(flag: flag, msgLabel: msgLabel, msgString: "비밀번호가 옳바르지 않습니다.")
+        }
+        
+        // 비밀번호 & 비밀번호확인 일치 체크
+        passwordValueChecked()
         }
         
         updateBtnAbleChecked()
@@ -262,6 +299,7 @@ class UsernameVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
         switch textField {
         case inputPassword:
             passwordOKFlag = false
+            newPasswordCheck(textField: inputNewPassword, msgLabel: newPasswordMsg, inputData: inputNewPassword.text ?? "")
         case inputNewPassword:
             passwordValueChecked()
         case inputNewPasswordChk:

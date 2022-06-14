@@ -322,17 +322,19 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
                         
                         switch result {
                         case .success(_):
-                            self.view.makeToast("스터디룸 설정이 변경되었습니다.", duration: 1.0, position: .center)
                             self.navigationController?.popViewController(animated: true)
+                            self.navigationController?.view.makeToast("스터디룸 설정이 변경되었습니다.", duration: 1.0, position: .center)
                         case .failure(let error):
+                            print("SettingStudyRoomVC - postUpdateRoom_image() called / error: \(error.rawValue)")
                             self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
                         }
                     })
                 } else {
-                    self.view.makeToast("스터디룸 설정이 변경되었습니다.", duration: 1.0, position: .center)
                     self.navigationController?.popViewController(animated: true)
+                    self.navigationController?.view.makeToast("스터디룸 설정이 변경되었습니다.", duration: 1.0, position: .center)
                 }
             case .failure(let error):
+                print("SettingStudyRoomVC - putUpdateRoom() called / error: \(error.rawValue)")
                 self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
             }
         })

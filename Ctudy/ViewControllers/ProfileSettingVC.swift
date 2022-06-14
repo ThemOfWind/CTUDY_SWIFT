@@ -290,6 +290,7 @@ class ProfileSettingVC: BasicVC, UIGestureRecognizerDelegate, UINavigationContro
                             self.getProfileInfo()
                             break
                         case .failure(let error):
+                            print("ProfileSettingVC - postUpdateProfile_image() called / error: \(error.rawValue)")
                             self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
                         }
                     })
@@ -298,6 +299,7 @@ class ProfileSettingVC: BasicVC, UIGestureRecognizerDelegate, UINavigationContro
                     self.getProfileInfo()
                 }
             case .failure(let error):
+                print("ProfileSettingVC - putUpdateProfile() called / error: \(error.rawValue)")
                 self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
             }
         })
@@ -321,10 +323,10 @@ class ProfileSettingVC: BasicVC, UIGestureRecognizerDelegate, UINavigationContro
             switch result {
             case .success(_):
                 // 프로필 화면으로 이동
-                self.view.makeToast("프로필이 변경되었습니다.", duration: 1.0, position: .center)
                 self.navigationController?.popViewController(animated: true)
+                self.navigationController?.view.makeToast("프로필이 변경되었습니다.", duration: 1.0, position: .center)
             case .failure(let error):
-                print("ProfileSettingVC - getProfileInfo() called / error: \(error.rawValue)")
+                print("ProfileSettingVC - getProfile() called / error: \(error.rawValue)")
             }
         })
         

@@ -267,9 +267,10 @@ class RegisterCouponVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegat
             
             switch result {
             case .success(_):
-                self.view.makeToast("쿠폰이 등록되었습니다.", duration: 1.0, position: .center)
                 self.navigationController?.popViewController(animated: true)
+                self.navigationController?.view.makeToast("쿠폰이 등록되었습니다.", duration: 1.0, position: .center)
             case .failure(let error):
+                print("RegisterCouponVC - postRegisterCoupon() called / error: \(error.rawValue)")
                 self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
             }
         })
