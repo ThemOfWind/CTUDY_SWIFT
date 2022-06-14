@@ -145,7 +145,6 @@ class SearchIdFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate
     
     // MARK: - @objc func
     @objc fileprivate func onSearchBtnClicked() {
-        
         onStartActivityIndicator()
         
         AlamofireManager.shared.postSearchId(email: inputEmail.text!, completion: { [weak self] result in

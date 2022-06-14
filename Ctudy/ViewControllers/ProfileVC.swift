@@ -13,7 +13,7 @@ class ProfileVC: UIViewController, UIGestureRecognizerDelegate {
     // MARK: - 변수
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var profileName: UILabel!
-    @IBOutlet weak var profileSettingBtn: UIButton!
+//    @IBOutlet weak var profileSettingBtn: UIButton!
     @IBOutlet weak var profileUsername: UILabel!
 //    @IBOutlet weak var subView: UIView!
     let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: ProfileVC.self, action: nil)
@@ -74,14 +74,15 @@ class ProfileVC: UIViewController, UIGestureRecognizerDelegate {
         profileUsername.textColor = COLOR.SUBTITLE_COLOR
         
         // btn ui
-        profileSettingBtn.tintColor = COLOR.SIGNATURE_COLOR
-        profileSettingBtn.setImage(UIImage(systemName: "pencil"), for: .normal)
-        profileSettingBtn.contentMode = .center
-        profileSettingBtn.translatesAutoresizingMaskIntoConstraints = false
-        profileSettingBtn.isUserInteractionEnabled = true
+//        profileSettingBtn.tintColor = COLOR.SIGNATURE_COLOR
+//        profileSettingBtn.setImage(UIImage(systemName: "pencil"), for: .normal)
+//        profileSettingBtn.contentMode = .center
+//        profileSettingBtn.translatesAutoresizingMaskIntoConstraints = false
+//        profileSettingBtn.isUserInteractionEnabled = false
         
         // image, btn 연결 event
-        profileSettingBtn.addTarget(self, action: #selector(onProfileSettingBtnClicked(_:)), for: .touchUpInside)
+//        profileSettingBtn.addTarget(self, action: #selector(onProfileSettingBtnClicked(_:)), for: .touchUpInside)
+        
         
         // delegate 연결
         tabGesture.delegate = self
@@ -123,9 +124,6 @@ class ProfileVC: UIViewController, UIGestureRecognizerDelegate {
         self.performSegue(withIdentifier: "ProfileSettingVC", sender: nil)
     }
     
-    @objc func onProfileSettingBtnClicked(_ sender: Any) {
-        self.performSegue(withIdentifier: "ProfileSettingVC", sender: nil)
-    }
     
     // MARK: - UIGestureRecognizer delegate
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
@@ -134,7 +132,7 @@ class ProfileVC: UIViewController, UIGestureRecognizerDelegate {
             view.endEditing(true)
             onGoToProfileSettingVC()
             return true
-        } else if touch.view?.isDescendant(of: profileSettingBtn) == true {
+        } else if touch.view?.isDescendant(of: profileName) == true {
             view.endEditing(true)
             onGoToProfileSettingVC()
             return true

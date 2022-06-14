@@ -115,7 +115,7 @@ final class AlamofireManager {
                     if let username = responseJson["response"]["username"].string {
                         completion(.success(username))
                     } else {
-                        completion(.success(""))
+                        completion(.failure(.noSearchid))
                     }
                 case 404:
                     completion(.failure(.noSearchid))
