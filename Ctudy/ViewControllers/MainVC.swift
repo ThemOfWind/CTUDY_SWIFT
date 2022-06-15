@@ -96,7 +96,7 @@ class MainVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
 //        cell.roomImg.imageLoad(urlString: "https://api.ctudy.com\(rooms[indexPath.row].banner)", size: cell.roomImg.image!.size)
         if rooms[indexPath.row].banner != "" {
             cell.roomImg.kf.indicatorType = .activity
-            cell.roomImg.kf.setImage(with: URL(string: API.IMAGE_URL + rooms[indexPath.row].banner)!, options: [.forceRefresh])
+            cell.roomImg.kf.setImage(with: URL(string: API.IMAGE_URL + rooms[indexPath.row].banner)!)
         } else {
             cell.roomImg.image = UIImage(named: "studyroom_default.png")
         }

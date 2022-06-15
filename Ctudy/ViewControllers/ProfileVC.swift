@@ -61,7 +61,7 @@ class ProfileVC: UIViewController, UIGestureRecognizerDelegate {
         profileImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
         profileImg.tintColor = COLOR.BASIC_TINT_COLOR
         if let userImg = KeyChainManager().tokenLoad(API.SERVICEID, account: "image"), userImg != "" {
-            profileImg.kf.setImage(with: URL(string: API.IMAGE_URL + userImg)!, options: [.forceRefresh])
+            profileImg.kf.setImage(with: URL(string: API.IMAGE_URL + userImg)!)
         } else {
             profileImg.image = UIImage(named: "user_default.png")
         }

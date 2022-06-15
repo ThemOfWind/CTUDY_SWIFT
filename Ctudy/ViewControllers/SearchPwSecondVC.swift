@@ -12,12 +12,22 @@ class SearchPwSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegat
     // MARK: - 변수
     @IBOutlet weak var inputAuthNumber: UITextField!
     @IBOutlet weak var authBtn: UIButton!
+    @IBOutlet weak var authTimer: UILabel!
+    @IBOutlet weak var resendBtn: UIButton!
     let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: SearchPwSecondVC.self, action: nil)
+    var timer: Timer?
+    var second = 180
     var authOKFlag: Bool = false
     
     // MARK: - override func
-    override func viewDidLoad() {
-        super.viewDidLoad()
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        print("SearchPwSecondVC - viewDidLoad() called")
+//        self.config()
+//    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         print("SearchPwSecondVC - viewDidLoad() called")
         self.config()
     }
@@ -25,22 +35,33 @@ class SearchPwSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegat
     // MARK: fileprivate func
     fileprivate func config() {
         // navigationvar item 설정
-        self.leftItem = LeftItem.backGeneral
-        self.titleItem = TitleItem.titleGeneral(title: "비밀번호 찾기", isLargeTitles: true)
+        leftItem = LeftItem.backGeneral
+        titleItem = TitleItem.titleGeneral(title: "비밀번호 찾기", isLargeTitles: true)
         
-        // button & textField ui
-        self.authBtn.tintColor = .white
-        self.authBtn.backgroundColor = COLOR.DISABLE_COLOR
-        self.authBtn.layer.cornerRadius = 10
-        self.authBtn.isEnabled = false
-        self.inputAuthNumber.textContentType = .oneTimeCode
+        // inputAuthNumber textField
+        inputAuthNumber.textContentType = .oneTimeCode
         
-        // textField event 연결
-        self.inputAuthNumber.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
+        // authTimer label
+        authTimer.text = "03:00"
+        authTimer.tintColor = .red
+        
+        // resend button
+        resendBtn.tintColor = COLOR.BASIC_TINT_COLOR
+        
+        // auth button
+        authBtn.tintColor = .white
+        authBtn.backgroundColor = COLOR.DISABLE_COLOR
+        authBtn.layer.cornerRadius = 10
+        authBtn.isEnabled = false
+        
+        // event 연결
+        inputAuthNumber.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
+        authBtn.addTarget(self, action: #selector(onResendBtnClicked), for: .touchUpInside)
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: SearchPwSecondVC.self, selector: #selector(onTimerFires), userInfo: nil, repeats: true)
         
         // delegate 연결
-        self.inputAuthNumber.delegate = self
-        self.tabGesture.delegate = self
+        inputAuthNumber.delegate = self
+        tabGesture.delegate = self
         
         // gesture 연결
         self.view.addGestureRecognizer(tabGesture)
@@ -48,12 +69,19 @@ class SearchPwSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegat
     
     fileprivate func authBtnAbleChecked() {
         if authOKFlag {
-            self.authBtn.backgroundColor = COLOR.SIGNATURE_COLOR
-            self.authBtn.isEnabled = true
+            authBtn.backgroundColor = COLOR.SIGNATURE_COLOR
+            authBtn.isEnabled = true
         } else {
-            self.authBtn.backgroundColor = COLOR.DISABLE_COLOR
-            self.authBtn.isEnabled = false
+            authBtn.backgroundColor = COLOR.DISABLE_COLOR
+            authBtn.isEnabled = false
         }
+    }
+    
+    fileprivate func stopTimer() {
+        // 타이머 종료
+        timer?.invalidate()
+        // 타이머 초기화
+        timer = nil
     }
     
     // MARK: - @objc delegate
@@ -65,6 +93,37 @@ class SearchPwSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegat
         }
         
         authBtnAbleChecked()
+    }
+    
+    @objc fileprivate func onTimerFires() {
+        second -= 1
+        // 남은 분
+        var minutes = second / 60
+        // 남은 초
+        var secondes = second % 60
+        
+        if second > 0 {
+            authTimer.text = String(format: "%02d:%02d", minutes, secondes)
+        } else {
+            authTimer.text = "00:00"
+            stopTimer()
+        }
+    }
+    
+    @objc fileprivate func onResendBtnClicked() {
+        // 타이머 reset
+        if timer != nil {
+            stopTimer()
+            return
+        }
+        
+        // 시간 초기화
+        second = 180
+        // 타이머
+        authTimer.text = "03:00"
+        
+        // 타이머 생성
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: SearchPwSecondVC.self, selector: #selector(onTimerFires), userInfo: nil, repeats: true)
     }
     
     // MARK: - textField delegate

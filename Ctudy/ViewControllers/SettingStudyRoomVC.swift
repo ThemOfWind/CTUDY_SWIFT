@@ -69,7 +69,7 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
         roomImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
         roomImg.tintColor = COLOR.BASIC_TINT_COLOR
         if settingRoom.banner != "" {
-            roomImg.kf.setImage(with: URL(string: API.IMAGE_URL + settingRoom.banner)!, options: [.forceRefresh])
+            roomImg.kf.setImage(with: URL(string: API.IMAGE_URL + settingRoom.banner)!)
         } else {
             roomImg.image = UIImage(named: "studyroom_default.png")
         }
@@ -184,7 +184,7 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
     fileprivate func presentCancel() {
         imageAlFuncFlag = false
         if settingRoom.banner != "" {
-            roomImg.kf.setImage(with: URL(string: API.IMAGE_URL + settingRoom.banner)!, options: [.forceRefresh])
+            roomImg.kf.setImage(with: URL(string: API.IMAGE_URL + settingRoom.banner)!)
         } else {
             roomImg.image = UIImage(named: "studyroom_default.png")
         }

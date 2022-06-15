@@ -198,7 +198,7 @@ class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataS
         cell.selectionStyle = .none // 선택 block 없애기
         if members[indexPath.row].image != "" {
             cell.memberImg.kf.indicatorType = .activity
-            cell.memberImg.kf.setImage(with: URL(string: API.IMAGE_URL + members[indexPath.row].image)!, options: [.forceRefresh])
+            cell.memberImg.kf.setImage(with: URL(string: API.IMAGE_URL + members[indexPath.row].image)!)
         } else {
             cell.memberImg.image = UIImage(named: "user_default.png")
         }

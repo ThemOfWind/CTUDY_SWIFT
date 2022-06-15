@@ -54,7 +54,7 @@ class UpdateMasterVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
             cell.couponCnt.text = ""
             if memberList[indexPath.row].image != "" {
                 cell.memberImg.kf.indicatorType = .activity
-                cell.memberImg.kf.setImage(with: URL(string: API.IMAGE_URL + memberList[indexPath.row].image)!, options: [.forceRefresh])
+                cell.memberImg.kf.setImage(with: URL(string: API.IMAGE_URL + memberList[indexPath.row].image)!)
             } else {
                 cell.memberImg.image = UIImage(named: "user_default.png")
             }

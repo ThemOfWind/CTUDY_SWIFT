@@ -65,7 +65,7 @@ class ProfileSettingVC: BasicVC, UIGestureRecognizerDelegate, UINavigationContro
         profileImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
         profileImg.tintColor = COLOR.BASIC_TINT_COLOR
         if let img = userImg, img != "" {
-            profileImg.kf.setImage(with: URL(string: API.IMAGE_URL + img)!, options: [.forceRefresh])
+            profileImg.kf.setImage(with: URL(string: API.IMAGE_URL + img)!)
         } else {
             profileImg.image = UIImage(named: "user_default.png")
         }
@@ -186,7 +186,7 @@ class ProfileSettingVC: BasicVC, UIGestureRecognizerDelegate, UINavigationContro
     fileprivate func presentCancel() {
         imageAlFuncFlag = false
         if let img = userImg, img != "" {
-            profileImg.kf.setImage(with: URL(string: API.IMAGE_URL + img)!, options: [.forceRefresh])
+            profileImg.kf.setImage(with: URL(string: API.IMAGE_URL + img)!)
         } else {
             profileImg.image = UIImage(named: "user.png")
         }
