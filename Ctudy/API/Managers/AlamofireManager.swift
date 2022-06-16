@@ -119,11 +119,74 @@ final class AlamofireManager {
                     } else {
                         completion(.failure(.noSearchid))
                     }
-                case 404:
-                    completion(.failure(.noSearchid))
                 default:
                     print("postSearchId() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
                     completion(.failure(.noSearchid))
+                }
+            })
+    }
+    
+    // MARK: - 비밀번호 찾기 (아이디&이메일 확인)
+    func postSearchPw(email: String, username: String, completion: @escaping(Result<Bool, AuthErrors>) -> Void) {
+        self.session
+            .request(AuthRouter.searchpw(email: email, username: username))
+            .validate(statusCode: 200..<501)
+            .responseJSON(completionHandler: { response in
+                guard let responseValue = response.value
+                        , let statusCode = response.response?.statusCode else {
+                    return }
+                let responseJson = JSON(responseValue)
+                
+                switch statusCode {
+                case 200:
+                    completion(.success(true))
+                default:
+                    print("postSearchPw() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
+                    completion(.failure(.noSearchPw))
+                }
+            })
+    }
+    
+    // MARK: - 비밀번호 찾기 (이메일로 인증번호 받기)
+    func postCertificate(email: String, username: String, code: String, completion: @escaping(Result<CertificateResponseRequest, AuthErrors>) -> Void) {
+        self.session
+            .request(AuthRouter.certificate(email: email, username: username, code: code))
+            .validate(statusCode: 200..<501)
+            .responseJSON(completionHandler: { response in
+                guard let responseValue = response.value
+                        , let statusCode = response.response?.statusCode else {
+                    return }
+                let responseJson = JSON(responseValue)
+                
+                switch statusCode {
+                case 200:
+                    guard let key = responseJson["response"]["key"].string else { return }
+                    let data = CertificateResponseRequest(email: email, username: username, key: key)
+                    completion(.success(data))
+                default:
+                    print("postSearchPw() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
+                    completion(.failure(.noCertificate))
+                }
+            })
+    }
+    
+    // MARK: - 비밀번호 찾기 (신규 비밀번호)
+    func postResetPw(email: String, username: String, key: String, newpassword: String, completion: @escaping(Result<Bool, AuthErrors>) -> Void) {
+        self.session
+            .request(AuthRouter.resetpw(email: email, username: username, key: key, newpassword: newpassword))
+            .validate(statusCode: 200..<501)
+            .responseJSON(completionHandler: { response in
+                guard let responseValue = response.value
+                        , let statusCode = response.response?.statusCode else {
+                    return }
+                let responseJson = JSON(responseValue)
+                
+                switch statusCode {
+                case 200:
+                    completion(.success(true))
+                default:
+                    print("postResetPw() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
+                    completion(.failure(.noUpdatePassword))
                 }
             })
     }

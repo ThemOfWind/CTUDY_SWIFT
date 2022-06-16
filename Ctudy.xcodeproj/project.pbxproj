@@ -78,6 +78,7 @@
 		5AC84436285097140081C4B2 /* ProfileSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC84435285097140081C4B2 /* ProfileSettingVC.swift */; };
 		5AC92394284DF388006E6A29 /* UpdateRoomRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC92393284DF388006E6A29 /* UpdateRoomRequest.swift */; };
 		5ACF0C9327673065003907E9 /* SignInResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACF0C9227673065003907E9 /* SignInResponse.swift */; };
+		5AD3C8D6285B23F200ADA836 /* CertificateResponseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD3C8D5285B23F200ADA836 /* CertificateResponseRequest.swift */; };
 		5AD9515C280870100038048F /* StudyMemberTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AD9515B280870100038048F /* StudyMemberTableViewCell.xib */; };
 		5AD9515E280870330038048F /* StudyMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD9515D280870330038048F /* StudyMemberTableViewCell.swift */; };
 		5AD95160280A8D570038048F /* SearchStudyMemberResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD9515F280A8D570038048F /* SearchStudyMemberResponse.swift */; };
@@ -163,6 +164,7 @@
 		5AC84435285097140081C4B2 /* ProfileSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingVC.swift; sourceTree = "<group>"; };
 		5AC92393284DF388006E6A29 /* UpdateRoomRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRoomRequest.swift; sourceTree = "<group>"; };
 		5ACF0C9227673065003907E9 /* SignInResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInResponse.swift; sourceTree = "<group>"; };
+		5AD3C8D5285B23F200ADA836 /* CertificateResponseRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateResponseRequest.swift; sourceTree = "<group>"; };
 		5AD9515B280870100038048F /* StudyMemberTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StudyMemberTableViewCell.xib; sourceTree = "<group>"; };
 		5AD9515D280870330038048F /* StudyMemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberTableViewCell.swift; sourceTree = "<group>"; };
 		5AD9515F280A8D570038048F /* SearchStudyMemberResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStudyMemberResponse.swift; sourceTree = "<group>"; };
@@ -409,6 +411,7 @@
 				5ACF0C9227673065003907E9 /* SignInResponse.swift */,
 				5A1C2FFA28000B1100487A16 /* ProfileResponse.swift */,
 				5A8D9FF82836890B008FBD9F /* SignUpRequest.swift */,
+				5AD3C8D5285B23F200ADA836 /* CertificateResponseRequest.swift */,
 			);
 			path = Auths;
 			sourceTree = "<group>";
@@ -568,6 +571,7 @@
 				5A1C2FFB28000B1100487A16 /* ProfileResponse.swift in Sources */,
 				5AD9515E280870330038048F /* StudyMemberTableViewCell.swift in Sources */,
 				5ADDFC7B2765BED9001291DD /* BaseInterceptor.swift in Sources */,
+				5AD3C8D6285B23F200ADA836 /* CertificateResponseRequest.swift in Sources */,
 				5A3BBBEC27EB4F6C00BA9E3F /* StartVC.swift in Sources */,
 				5AC84436285097140081C4B2 /* ProfileSettingVC.swift in Sources */,
 				5AC1CE7C2765D5E8009586B2 /* SignUpResponse.swift in Sources */,

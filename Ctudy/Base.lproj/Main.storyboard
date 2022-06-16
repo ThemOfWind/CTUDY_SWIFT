@@ -379,9 +379,6 @@
                                         <buttonConfiguration key="configuration" style="plain" title="비 밀 번 호 찾 기">
                                             <fontDescription key="titleFontDescription" type="boldSystem" pointSize="18"/>
                                         </buttonConfiguration>
-                                        <connections>
-                                            <segue destination="2r3-rG-KDE" kind="show" id="tIQ-Zv-kC9"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -411,6 +408,7 @@
                         <outlet property="inputUsername" destination="Heb-hk-32b" id="iTh-Z3-sIH"/>
                         <outlet property="searchBtn" destination="sSA-ej-5Hu" id="lJo-16-Epl"/>
                         <outlet property="usernameMsg" destination="q1y-4V-kLM" id="O4C-f8-LYP"/>
+                        <segue destination="2r3-rG-KDE" kind="show" identifier="SearchPwSecondVC" id="3FH-QE-4WF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qIh-pc-6b2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -429,7 +427,7 @@
                                 <rect key="frame" x="20" y="108" width="374" height="685"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="pyK-uB-KTY">
-                                        <rect key="frame" x="0.0" y="240" width="374" height="137"/>
+                                        <rect key="frame" x="0.0" y="278.5" width="374" height="60"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="인증번호" textAlignment="natural" minimumFontSize="20" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="n1s-Bi-lC1">
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="60"/>
@@ -439,39 +437,18 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits" textContentType="one-time-code"/>
                                             </textField>
-                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="YGn-Vr-dg6">
-                                                <rect key="frame" x="0.0" y="63" width="374" height="74"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mRl-tB-dIQ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="110" height="74"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" constant="110" id="X9l-4e-4Xg"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UQL-Et-yBm">
-                                                        <rect key="frame" x="113" y="0.0" width="118" height="74"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                    </view>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dzL-wg-RTY">
-                                                        <rect key="frame" x="234" y="0.0" width="140" height="74"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" constant="140" id="EaJ-hk-Rbm"/>
-                                                        </constraints>
-                                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <state key="normal" title="Button"/>
-                                                        <buttonConfiguration key="configuration" style="plain" title="인증 번호 재발송">
-                                                            <fontDescription key="titleFontDescription" type="system" pointSize="15"/>
-                                                        </buttonConfiguration>
-                                                    </button>
-                                                </subviews>
-                                            </stackView>
                                         </subviews>
                                     </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dzL-wg-RTY">
+                                        <rect key="frame" x="241" y="341.5" width="123" height="32"/>
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="인증 번호 재발송">
+                                            <fontDescription key="titleFontDescription" type="system" pointSize="15"/>
+                                        </buttonConfiguration>
+                                    </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ndo-J0-Ia2">
-                                        <rect key="frame" x="0.0" y="132" width="374" height="58"/>
+                                        <rect key="frame" x="0.0" y="170.5" width="374" height="58"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="입력하신 이메일로 인증번호를" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xkR-PB-a2o">
                                                 <rect key="frame" x="0.0" y="0.0" width="235" height="24"/>
@@ -500,17 +477,24 @@
                                         <buttonConfiguration key="configuration" style="plain" title="인 증 하 기">
                                             <fontDescription key="titleFontDescription" type="boldSystem" pointSize="18"/>
                                         </buttonConfiguration>
-                                        <connections>
-                                            <segue destination="MnP-05-NIZ" kind="show" id="tbb-Dd-bGc"/>
-                                        </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mRl-tB-dIQ">
+                                        <rect key="frame" x="10" y="346.5" width="41.5" height="18"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="CZh-li-5Fd" firstAttribute="leading" secondItem="zpl-p7-Jbl" secondAttribute="leading" id="3qY-v9-jhg"/>
+                                    <constraint firstItem="mRl-tB-dIQ" firstAttribute="top" secondItem="pyK-uB-KTY" secondAttribute="bottom" constant="8" id="BkQ-tm-JNe"/>
                                     <constraint firstAttribute="bottom" secondItem="CZh-li-5Fd" secondAttribute="bottom" constant="20" id="KY2-qF-irt"/>
                                     <constraint firstAttribute="trailing" secondItem="ndo-J0-Ia2" secondAttribute="trailing" id="LoG-oh-phN"/>
                                     <constraint firstItem="ndo-J0-Ia2" firstAttribute="leading" secondItem="zpl-p7-Jbl" secondAttribute="leading" id="Rsb-By-lSg"/>
+                                    <constraint firstItem="mRl-tB-dIQ" firstAttribute="leading" secondItem="zpl-p7-Jbl" secondAttribute="leading" constant="10" id="WJ7-EC-Mc4"/>
+                                    <constraint firstItem="dzL-wg-RTY" firstAttribute="top" secondItem="pyK-uB-KTY" secondAttribute="bottom" constant="3" id="XDw-Uh-Zaa"/>
+                                    <constraint firstAttribute="trailing" secondItem="dzL-wg-RTY" secondAttribute="trailing" constant="10" id="mwW-LN-nI3"/>
                                     <constraint firstItem="pyK-uB-KTY" firstAttribute="leading" secondItem="zpl-p7-Jbl" secondAttribute="leading" id="ngW-o3-eXC"/>
                                     <constraint firstAttribute="trailing" secondItem="CZh-li-5Fd" secondAttribute="trailing" id="p7X-Tx-iXl"/>
                                     <constraint firstAttribute="trailing" secondItem="pyK-uB-KTY" secondAttribute="trailing" id="raq-l1-Fhu"/>
@@ -534,6 +518,7 @@
                         <outlet property="authTimer" destination="mRl-tB-dIQ" id="XOM-8w-bMG"/>
                         <outlet property="inputAuthNumber" destination="n1s-Bi-lC1" id="tzJ-YX-k0S"/>
                         <outlet property="resendBtn" destination="dzL-wg-RTY" id="Vsi-RQ-pc6"/>
+                        <segue destination="MnP-05-NIZ" kind="show" identifier="SearchPwThirdVC" id="KPt-UM-3Y7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9nb-xW-dp4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -613,9 +598,6 @@
                                         <buttonConfiguration key="configuration" style="plain" title="비 밀 번 호 변 경">
                                             <fontDescription key="titleFontDescription" type="boldSystem" pointSize="18"/>
                                         </buttonConfiguration>
-                                        <connections>
-                                            <segue destination="hcZ-ab-sts" kind="show" id="4If-Af-ZRR"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -640,11 +622,12 @@
                     </view>
                     <navigationItem key="navigationItem" id="CNm-cy-2u8"/>
                     <connections>
-                        <outlet property="newPassword" destination="4BQ-4s-jE9" id="KK4-uR-Agf"/>
-                        <outlet property="newPasswordChk" destination="IMo-ey-q3X" id="6Pn-l3-5Ub"/>
+                        <outlet property="inputNewPassword" destination="4BQ-4s-jE9" id="ZRO-o8-Opv"/>
+                        <outlet property="inputNewPasswordChk" destination="IMo-ey-q3X" id="1su-gW-fx3"/>
                         <outlet property="passwordChkMsg" destination="pdm-wQ-Qpj" id="T6Y-WG-mZ1"/>
                         <outlet property="passwordMsg" destination="DR3-Pu-Fec" id="pOF-Tk-uRm"/>
                         <outlet property="updateBtn" destination="Cqk-K3-5Qb" id="mP5-WC-nOY"/>
+                        <segue destination="hcZ-ab-sts" kind="show" identifier="SearchPwSuccessVC" id="df7-p8-j8W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r7r-xc-utT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -663,7 +646,7 @@
                                 <rect key="frame" x="20" y="108" width="374" height="685"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="비밀번호가 성공적으로" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XVS-nP-fX3">
-                                        <rect key="frame" x="98" y="296.5" width="178" height="24"/>
+                                        <rect key="frame" x="98" y="262" width="178" height="24"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -686,7 +669,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="변경되었습니다." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bq7-v7-zPS">
-                                        <rect key="frame" x="124" y="330.5" width="126.5" height="24"/>
+                                        <rect key="frame" x="124" y="296" width="126.5" height="24"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -698,7 +681,7 @@
                                     <constraint firstItem="Bq7-v7-zPS" firstAttribute="top" secondItem="XVS-nP-fX3" secondAttribute="bottom" constant="10" id="4s1-Qq-Lb7"/>
                                     <constraint firstAttribute="trailing" secondItem="BiS-Xg-Xsz" secondAttribute="trailing" id="MBI-vF-sK2"/>
                                     <constraint firstItem="Bq7-v7-zPS" firstAttribute="centerX" secondItem="EWT-uC-YNa" secondAttribute="centerX" id="WWI-l0-k4h"/>
-                                    <constraint firstItem="XVS-nP-fX3" firstAttribute="centerY" secondItem="EWT-uC-YNa" secondAttribute="centerY" multiplier="0.9" id="WoX-Ok-OCT"/>
+                                    <constraint firstItem="XVS-nP-fX3" firstAttribute="centerY" secondItem="EWT-uC-YNa" secondAttribute="centerY" multiplier="0.8" id="WoX-Ok-OCT"/>
                                     <constraint firstAttribute="bottom" secondItem="BiS-Xg-Xsz" secondAttribute="bottom" constant="20" id="gDt-RO-tTI"/>
                                     <constraint firstItem="BiS-Xg-Xsz" firstAttribute="leading" secondItem="EWT-uC-YNa" secondAttribute="leading" id="taD-Nd-f1y"/>
                                 </constraints>
@@ -1415,7 +1398,6 @@
         <!--CouponVC-->
         <scene sceneID="iTt-ge-sIw">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="MEM-tI-04y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController id="83z-Zo-AOK" customClass="CouponVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HfN-9L-R8q">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -1425,6 +1407,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="N6m-L1-uSi"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MEM-tI-04y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="6487" y="-859"/>
         </scene>

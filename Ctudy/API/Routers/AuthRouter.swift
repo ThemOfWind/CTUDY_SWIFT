@@ -17,6 +17,9 @@ enum AuthRouter: URLRequestConvertible {
     case logout // 로그아웃
     case profile // 접속 회원정보
     case searchid(email: String) // 아이디 찾기
+    case searchpw(email: String, username: String) // 비밀번호 찾기 (아이디&이메일 확인)
+    case certificate(email: String, username: String, code: String) // 비밀번호 찾기 (인증번호)
+    case resetpw(email: String, username: String, key: String, newpassword: String) // 비밀번호 찾기 (비밀번호 변경)
     case updateprofile(name: String) // 프로필 설정 변경
     case updatepassword(password: String, newpassword: String) // 비밀번호 변경
     case withdraw // 회원탈퇴
@@ -38,6 +41,12 @@ enum AuthRouter: URLRequestConvertible {
         case .profile:
             return .get
         case .searchid:
+            return .post
+        case .searchpw:
+            return .post
+        case .certificate:
+            return .post
+        case .resetpw:
             return .post
         case .updateprofile:
             return .put
@@ -62,6 +71,12 @@ enum AuthRouter: URLRequestConvertible {
             return "profile/"
         case .searchid:
             return "findid/"
+        case .searchpw:
+            return "findpw/"
+        case .certificate:
+            return "findpw/certificate/"
+        case .resetpw:
+            return "findpw/reset/"
         case .updateprofile:
             return "profile/"
         case .updatepassword:
@@ -114,6 +129,15 @@ enum AuthRouter: URLRequestConvertible {
             break
         case .searchid(email: let email):
             let parameters = ["email" : email] as Dictionary
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
+        case .searchpw(email: let email, username: let username):
+            let parameters = ["email" : email, "username" : username] as Dictionary
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
+        case .certificate(email: let email, username: let username, code: let code):
+            let parameters = ["email" : email, "username" : username, "code" : code] as Dictionary
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
+        case .resetpw(email: let email, username: let username, key: let key, newpassword: let newpassword):
+            let parameters = ["email" : email, "username" : username, "key" : key, "new_password" : newpassword] as Dictionary
             request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
         case .updateprofile(name: let name):
             let parameters = ["name" : name] as Dictionary
