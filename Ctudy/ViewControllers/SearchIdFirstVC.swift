@@ -145,7 +145,6 @@ class SearchIdFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate
     
     // MARK: - @objc func
     @objc fileprivate func onSearchBtnClicked() {
-        
         onStartActivityIndicator()
         
         AlamofireManager.shared.postSearchId(email: inputEmail.text!, completion: { [weak self] result in
@@ -159,6 +158,7 @@ class SearchIdFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate
                 self.searchId = username
                 self.performSegue(withIdentifier: "SearchIdSuccessVC", sender: nil)
             case .failure(let error):
+                print("SearchIdFirstVC - postSearchId() called / error: \(error.rawValue)")
                 self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
             }
         })
@@ -208,7 +208,7 @@ class SearchIdFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate
             if emailOKFlag {
                 setMsgLabel(flag: emailOKFlag, msgLabel: msgLabel, msgString: "")
             } else {
-                setMsgLabel(flag: emailOKFlag, msgLabel: msgLabel, msgString: "이메일(email)이 옳바르지 않습니다.")
+                setMsgLabel(flag: emailOKFlag, msgLabel: msgLabel, msgString: "이메일이 옳바르지 않습니다.")
             }
         default:
             break

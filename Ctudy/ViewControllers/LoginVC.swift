@@ -7,7 +7,6 @@
 
 import UIKit
 import NVActivityIndicatorView
-import AlamofireNetworkActivityIndicator
 
 class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
     
@@ -135,9 +134,9 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
     @objc func onLoginBtnClicked() {
         print("LoginVC - onLoginBtnClicked() called")
         
-        if token?.token == KeyChainManager().tokenLoad(API.SERVICEID, account: "accessToken") {
-            print("token: \(token?.token)")
-            return }
+//        if token?.token == KeyChainManager().tokenLoad(API.SERVICEID, account: "accessToken") || token != nil {
+//            print("token: \(token?.token)")
+//            return }
         
         self.onStartActivityIndicator()
         
@@ -153,7 +152,7 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
                 self.getProfileInfo()
             case .failure(let error):
                 print("LoginVC - postSignIn.failure / error: \(error.rawValue)")
-                self.view.makeToast(error.rawValue, duration: 0.5, position: .center)
+                self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
             }
         })
         

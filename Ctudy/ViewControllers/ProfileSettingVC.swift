@@ -65,7 +65,7 @@ class ProfileSettingVC: BasicVC, UIGestureRecognizerDelegate, UINavigationContro
         profileImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
         profileImg.tintColor = COLOR.BASIC_TINT_COLOR
         if let img = userImg, img != "" {
-            profileImg.kf.setImage(with: URL(string: API.IMAGE_URL + img)!, options: [.forceRefresh])
+            profileImg.kf.setImage(with: URL(string: API.IMAGE_URL + img)!)
         } else {
             profileImg.image = UIImage(named: "user_default.png")
         }
@@ -186,7 +186,7 @@ class ProfileSettingVC: BasicVC, UIGestureRecognizerDelegate, UINavigationContro
     fileprivate func presentCancel() {
         imageAlFuncFlag = false
         if let img = userImg, img != "" {
-            profileImg.kf.setImage(with: URL(string: API.IMAGE_URL + img)!, options: [.forceRefresh])
+            profileImg.kf.setImage(with: URL(string: API.IMAGE_URL + img)!)
         } else {
             profileImg.image = UIImage(named: "user.png")
         }
@@ -290,6 +290,7 @@ class ProfileSettingVC: BasicVC, UIGestureRecognizerDelegate, UINavigationContro
                             self.getProfileInfo()
                             break
                         case .failure(let error):
+                            print("ProfileSettingVC - postUpdateProfile_image() called / error: \(error.rawValue)")
                             self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
                         }
                     })
@@ -298,6 +299,7 @@ class ProfileSettingVC: BasicVC, UIGestureRecognizerDelegate, UINavigationContro
                     self.getProfileInfo()
                 }
             case .failure(let error):
+                print("ProfileSettingVC - putUpdateProfile() called / error: \(error.rawValue)")
                 self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
             }
         })
@@ -321,10 +323,10 @@ class ProfileSettingVC: BasicVC, UIGestureRecognizerDelegate, UINavigationContro
             switch result {
             case .success(_):
                 // 프로필 화면으로 이동
-                self.view.makeToast("프로필이 변경되었습니다.", duration: 1.0, position: .center)
                 self.navigationController?.popViewController(animated: true)
+                self.navigationController?.view.makeToast("프로필이 변경되었습니다.", duration: 1.0, position: .center)
             case .failure(let error):
-                print("ProfileSettingVC - getProfileInfo() called / error: \(error.rawValue)")
+                print("ProfileSettingVC - getProfile() called / error: \(error.rawValue)")
             }
         })
         

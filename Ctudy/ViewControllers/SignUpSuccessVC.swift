@@ -11,7 +11,7 @@ import UIKit
 class SignUpSuccessVC: BasicVC {
     // MARK: - 변수
     @IBOutlet weak var enterName: UILabel!
-    @IBOutlet weak var goToLoginBtn: UIButton!
+    @IBOutlet weak var goToStartBtn: UIButton!
     var memberName: String?
     var memberUserName: String?
     
@@ -28,9 +28,9 @@ class SignUpSuccessVC: BasicVC {
 //        self.navigationItem.hidesBackButton = true
         
         // btn ui
-        self.goToLoginBtn.tintColor = .white
-        self.goToLoginBtn.backgroundColor = COLOR.SIGNATURE_COLOR
-        self.goToLoginBtn.layer.cornerRadius = 10
+        self.goToStartBtn.tintColor = .white
+        self.goToStartBtn.backgroundColor = COLOR.SIGNATURE_COLOR
+        self.goToStartBtn.layer.cornerRadius = 10
         
         // label ui
         self.enterName.text = memberName
@@ -38,7 +38,7 @@ class SignUpSuccessVC: BasicVC {
     
     // MARK: - action func
     // start 화면으로 이동
-    @IBAction func onGoToLoginBtnClicked(_ sender: Any) {
+    @IBAction func onGoToStartBtnClicked(_ sender: Any) {
         performSegue(withIdentifier: "unwindStartVC", sender: self)
     }
 }

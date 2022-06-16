@@ -29,7 +29,9 @@
 		5A58EEA4275F7E83000A1A39 /* Ctudy.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5A58EEA2275F7E83000A1A39 /* Ctudy.xcdatamodeld */; };
 		5A58EEA6275F7E84000A1A39 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5A58EEA5275F7E84000A1A39 /* Assets.xcassets */; };
 		5A58EEA9275F7E84000A1A39 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A58EEA7275F7E84000A1A39 /* LaunchScreen.storyboard */; };
+		5A5C98D42857731B001AEF03 /* WithdrawVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5C98D32857731B001AEF03 /* WithdrawVC.swift */; };
 		5A5FCD36283F9C6900C9C3C4 /* SearchIdSuccessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A5FCD35283F9C6900C9C3C4 /* SearchIdSuccessVC.swift */; };
+		5A60DFA328571CBB00791779 /* UpdatePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A60DFA228571CBB00791779 /* UpdatePasswordVC.swift */; };
 		5A6FEEB42840845E007C7751 /* SearchPwSecondVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6FEEB32840845E007C7751 /* SearchPwSecondVC.swift */; };
 		5A6FEEB628408498007C7751 /* SearchPwThirdVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6FEEB528408498007C7751 /* SearchPwThirdVC.swift */; };
 		5A6FEEB8284084EA007C7751 /* SearchPwSuccessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6FEEB7284084EA007C7751 /* SearchPwSuccessVC.swift */; };
@@ -64,7 +66,7 @@
 		5AAE518B27F7023400DDA555 /* BasicButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAE518A27F7023400DDA555 /* BasicButton.swift */; };
 		5ABA13F2283CBBFE007AE4F0 /* CouponHistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABA13F1283CBBFE007AE4F0 /* CouponHistoryVC.swift */; };
 		5ABB95C22760F697003B4764 /* SignUpSecondVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABB95C12760F697003B4764 /* SignUpSecondVC.swift */; };
-		5AC0E3B52840B6F200E99943 /* RegisterCouponVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC0E3B42840B6F200E99943 /* RegisterCouponVC.swift */; };
+		5AC0E3B52840B6F200E99943 /* RegisterCouponFirstVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC0E3B42840B6F200E99943 /* RegisterCouponFirstVC.swift */; };
 		5AC1CE702765C9E0009586B2 /* AuthRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC1CE6F2765C9E0009586B2 /* AuthRouter.swift */; };
 		5AC1CE732765CADC009586B2 /* RoomRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC1CE722765CADC009586B2 /* RoomRouter.swift */; };
 		5AC1CE772765CB0D009586B2 /* CouponRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC1CE762765CB0D009586B2 /* CouponRouter.swift */; };
@@ -76,12 +78,13 @@
 		5AC84436285097140081C4B2 /* ProfileSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC84435285097140081C4B2 /* ProfileSettingVC.swift */; };
 		5AC92394284DF388006E6A29 /* UpdateRoomRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AC92393284DF388006E6A29 /* UpdateRoomRequest.swift */; };
 		5ACF0C9327673065003907E9 /* SignInResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACF0C9227673065003907E9 /* SignInResponse.swift */; };
-		5ACF0C96276733F7003907E9 /* UserNameCheckResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACF0C95276733F7003907E9 /* UserNameCheckResponse.swift */; };
+		5AD3C8D6285B23F200ADA836 /* CertificateResponseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD3C8D5285B23F200ADA836 /* CertificateResponseRequest.swift */; };
 		5AD9515C280870100038048F /* StudyMemberTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AD9515B280870100038048F /* StudyMemberTableViewCell.xib */; };
 		5AD9515E280870330038048F /* StudyMemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD9515D280870330038048F /* StudyMemberTableViewCell.swift */; };
 		5AD95160280A8D570038048F /* SearchStudyMemberResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD9515F280A8D570038048F /* SearchStudyMemberResponse.swift */; };
 		5ADDFC792765B983001291DD /* AlamofireManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADDFC782765B983001291DD /* AlamofireManager.swift */; };
 		5ADDFC7B2765BED9001291DD /* BaseInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADDFC7A2765BED9001291DD /* BaseInterceptor.swift */; };
+		5AF63CE82859BC1900B7F8B9 /* RegisterCouponSecondVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF63CE72859BC1900B7F8B9 /* RegisterCouponSecondVC.swift */; };
 		5E8F0DACD2EAF7F0B8D95D57 /* Pods_Ctudy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AEB34C08528B3EDE17B79DD /* Pods_Ctudy.framework */; };
 /* End PBXBuildFile section */
 
@@ -112,7 +115,9 @@
 		5A58EEA5275F7E84000A1A39 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5A58EEA8275F7E84000A1A39 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5A58EEAA275F7E84000A1A39 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5A5C98D32857731B001AEF03 /* WithdrawVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WithdrawVC.swift; sourceTree = "<group>"; };
 		5A5FCD35283F9C6900C9C3C4 /* SearchIdSuccessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchIdSuccessVC.swift; sourceTree = "<group>"; };
+		5A60DFA228571CBB00791779 /* UpdatePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordVC.swift; sourceTree = "<group>"; };
 		5A6FEEB32840845E007C7751 /* SearchPwSecondVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPwSecondVC.swift; sourceTree = "<group>"; };
 		5A6FEEB528408498007C7751 /* SearchPwThirdVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPwThirdVC.swift; sourceTree = "<group>"; };
 		5A6FEEB7284084EA007C7751 /* SearchPwSuccessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPwSuccessVC.swift; sourceTree = "<group>"; };
@@ -147,7 +152,7 @@
 		5AAE518A27F7023400DDA555 /* BasicButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicButton.swift; sourceTree = "<group>"; };
 		5ABA13F1283CBBFE007AE4F0 /* CouponHistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponHistoryVC.swift; sourceTree = "<group>"; };
 		5ABB95C12760F697003B4764 /* SignUpSecondVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpSecondVC.swift; sourceTree = "<group>"; };
-		5AC0E3B42840B6F200E99943 /* RegisterCouponVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterCouponVC.swift; sourceTree = "<group>"; };
+		5AC0E3B42840B6F200E99943 /* RegisterCouponFirstVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterCouponFirstVC.swift; sourceTree = "<group>"; };
 		5AC1CE6F2765C9E0009586B2 /* AuthRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthRouter.swift; sourceTree = "<group>"; };
 		5AC1CE722765CADC009586B2 /* RoomRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomRouter.swift; sourceTree = "<group>"; };
 		5AC1CE762765CB0D009586B2 /* CouponRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponRouter.swift; sourceTree = "<group>"; };
@@ -159,12 +164,13 @@
 		5AC84435285097140081C4B2 /* ProfileSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingVC.swift; sourceTree = "<group>"; };
 		5AC92393284DF388006E6A29 /* UpdateRoomRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRoomRequest.swift; sourceTree = "<group>"; };
 		5ACF0C9227673065003907E9 /* SignInResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInResponse.swift; sourceTree = "<group>"; };
-		5ACF0C95276733F7003907E9 /* UserNameCheckResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameCheckResponse.swift; sourceTree = "<group>"; };
+		5AD3C8D5285B23F200ADA836 /* CertificateResponseRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateResponseRequest.swift; sourceTree = "<group>"; };
 		5AD9515B280870100038048F /* StudyMemberTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StudyMemberTableViewCell.xib; sourceTree = "<group>"; };
 		5AD9515D280870330038048F /* StudyMemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyMemberTableViewCell.swift; sourceTree = "<group>"; };
 		5AD9515F280A8D570038048F /* SearchStudyMemberResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchStudyMemberResponse.swift; sourceTree = "<group>"; };
 		5ADDFC782765B983001291DD /* AlamofireManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireManager.swift; sourceTree = "<group>"; };
 		5ADDFC7A2765BED9001291DD /* BaseInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseInterceptor.swift; sourceTree = "<group>"; };
+		5AF63CE72859BC1900B7F8B9 /* RegisterCouponSecondVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterCouponSecondVC.swift; sourceTree = "<group>"; };
 		7AEB34C08528B3EDE17B79DD /* Pods_Ctudy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ctudy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -281,12 +287,15 @@
 				5A6FEEB32840845E007C7751 /* SearchPwSecondVC.swift */,
 				5A6FEEB528408498007C7751 /* SearchPwThirdVC.swift */,
 				5A6FEEB7284084EA007C7751 /* SearchPwSuccessVC.swift */,
-				5AC0E3B42840B6F200E99943 /* RegisterCouponVC.swift */,
+				5AC0E3B42840B6F200E99943 /* RegisterCouponFirstVC.swift */,
+				5AF63CE72859BC1900B7F8B9 /* RegisterCouponSecondVC.swift */,
 				5A8DF8F428449BE200AFF41F /* AddCouponReciverVC.swift */,
 				5A7BC0FA284BA6250077F10F /* SettingStudyRoomVC.swift */,
 				5A7BC0FC284BA73F0077F10F /* UpdateMasterVC.swift */,
 				5AA3F27A28508CDC00A4EF80 /* SettingVC.swift */,
 				5AC84435285097140081C4B2 /* ProfileSettingVC.swift */,
+				5A60DFA228571CBB00791779 /* UpdatePasswordVC.swift */,
+				5A5C98D32857731B001AEF03 /* WithdrawVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -399,10 +408,10 @@
 			isa = PBXGroup;
 			children = (
 				5AC1CE7B2765D5E8009586B2 /* SignUpResponse.swift */,
-				5ACF0C95276733F7003907E9 /* UserNameCheckResponse.swift */,
 				5ACF0C9227673065003907E9 /* SignInResponse.swift */,
 				5A1C2FFA28000B1100487A16 /* ProfileResponse.swift */,
 				5A8D9FF82836890B008FBD9F /* SignUpRequest.swift */,
+				5AD3C8D5285B23F200ADA836 /* CertificateResponseRequest.swift */,
 			);
 			path = Auths;
 			sourceTree = "<group>";
@@ -554,13 +563,15 @@
 				5AC1CE792765CB20009586B2 /* MemberRouter.swift in Sources */,
 				5AC1CE702765C9E0009586B2 /* AuthRouter.swift in Sources */,
 				5A7BC0FD284BA73F0077F10F /* UpdateMasterVC.swift in Sources */,
+				5A60DFA328571CBB00791779 /* UpdatePasswordVC.swift in Sources */,
+				5A5C98D42857731B001AEF03 /* WithdrawVC.swift in Sources */,
 				5AC1CE732765CADC009586B2 /* RoomRouter.swift in Sources */,
 				5AA86D0B2761005D0067620C /* MainVC.swift in Sources */,
-				5ACF0C96276733F7003907E9 /* UserNameCheckResponse.swift in Sources */,
 				5A8DC12B27EB5FA5008FA26E /* SignUpFirstVC.swift in Sources */,
 				5A1C2FFB28000B1100487A16 /* ProfileResponse.swift in Sources */,
 				5AD9515E280870330038048F /* StudyMemberTableViewCell.swift in Sources */,
 				5ADDFC7B2765BED9001291DD /* BaseInterceptor.swift in Sources */,
+				5AD3C8D6285B23F200ADA836 /* CertificateResponseRequest.swift in Sources */,
 				5A3BBBEC27EB4F6C00BA9E3F /* StartVC.swift in Sources */,
 				5AC84436285097140081C4B2 /* ProfileSettingVC.swift in Sources */,
 				5AC1CE7C2765D5E8009586B2 /* SignUpResponse.swift in Sources */,
@@ -574,7 +585,7 @@
 				5A5FCD36283F9C6900C9C3C4 /* SearchIdSuccessVC.swift in Sources */,
 				5A9D31BA277B17DD00DCEAEA /* ProfileVC.swift in Sources */,
 				5A7BC0FF284BAEEF0077F10F /* SettingMasterResponse.swift in Sources */,
-				5AC0E3B52840B6F200E99943 /* RegisterCouponVC.swift in Sources */,
+				5AC0E3B52840B6F200E99943 /* RegisterCouponFirstVC.swift in Sources */,
 				5A6FEEB42840845E007C7751 /* SearchPwSecondVC.swift in Sources */,
 				5ABB95C22760F697003B4764 /* SignUpSecondVC.swift in Sources */,
 				5ABA13F2283CBBFE007AE4F0 /* CouponHistoryVC.swift in Sources */,
@@ -598,6 +609,7 @@
 				5A453AFE27E9B25B006F0A1D /* RegisterStudyRoomFirstVC.swift in Sources */,
 				5AA84FE3283F604E0090C4E6 /* SearchPwFirstVC.swift in Sources */,
 				5AD95160280A8D570038048F /* SearchStudyMemberResponse.swift in Sources */,
+				5AF63CE82859BC1900B7F8B9 /* RegisterCouponSecondVC.swift in Sources */,
 				5A98551028465DAF0078B72C /* RegisterCouponRequest.swift in Sources */,
 				5A4CD0DC27E8A09E00F6C829 /* AddBarButtonItem.swift in Sources */,
 				5AA8D80528534B78002AC1ED /* SettingBarButtonItem.swift in Sources */,
@@ -778,8 +790,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jinny.ctudy.v1;
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jinny.ctudy.v2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -811,8 +823,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.jinny.ctudy.v1;
+				MARKETING_VERSION = 2.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jinny.ctudy.v2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

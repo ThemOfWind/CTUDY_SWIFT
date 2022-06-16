@@ -36,13 +36,13 @@ class SettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     }()
     // 셋팅 항목
     let settingList = [
-        [ "text" : "프로필관리", "color" : UIColor.black ]
-      , [ "text" : "계정관리", "color" : UIColor.black ]
-      , [ "text" : "개인정보 처리 방침", "color" : UIColor.black ]
-      , [ "text" : "이용약관", "color" : UIColor.black ]
-      , [ "text" : "오픈소스 라이센스 이용고지", "color" : UIColor.black ]
-      , [ "text" : "버전정보", "color" : UIColor.black ]
-      , [ "text" : "로그아웃", "color" : UIColor.red ]
+        [ "id" : "profile", "text" : "프로필관리", "color" : UIColor.black ]
+        , [ "id" : "username", "text" : "계정관리", "color" : UIColor.black ]
+        , [ "id" : "privacy", "text" : "개인정보 처리 방침", "color" : UIColor.black ]
+        , [ "id" : "service", "text" : "이용약관", "color" : UIColor.black ]
+        , [ "id" : "notice", "text" : "오픈소스 라이센스 이용고지", "color" : UIColor.black ]
+        , [ "id" : "version", "text" : "버전정보", "color" : UIColor.black ]
+        , [ "id" : "logout", "text" : "로그아웃", "color" : UIColor.red ]
     ]
     
     // MARK: - override func
@@ -64,7 +64,7 @@ class SettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         
         // 셀 설정
         self.settingTableView.rowHeight = 80
-        self.settingTableView.allowsSelection = false
+        //        self.settingTableView.allowsSelection = true
         self.settingTableView.showsVerticalScrollIndicator = false // scroll 제거
         
         // delegate 연결
@@ -118,23 +118,23 @@ class SettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
                 
                 switch result {
                 case .success(let checkData):
-                    print("UserInfoVC - getLogout.success")
-                    self.navigationController?.popViewController(animated: true)
+                    print("SettingVC - logout().success")
+                    //                    self.navigationController?.popViewController(animated: true)
+                    self.performSegue(withIdentifier: "unwindStartVC", sender: self)
                     self.navigationController?.view.makeToast("로그아웃 되었습니다.", duration: 1.0, position: .center)
                 case .failure(let error):
-                    print("UserInfoVC - getLogout.failure / error: \(error)")
-                    // 중복사용 문구 띄우기
-                    guard let mainVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginVC") as? LoginVC else { return }
-                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(mainVC, animated: false)
-                    
+                    print("SettingVC - logout().failure / error: \(error)")
+//                    guard let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginVC") as? LoginVC else { return }
+//                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(loginVC, animated: false)
                     //self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
                 }
             })
+            
+            if self.indicator.isAnimating {
+                self.onStopActivityIndicator()
+            }
+            
         }))
-        
-        if self.indicator.isAnimating {
-            self.onStopActivityIndicator()
-        }
         
         self.present(alert, animated: false)
     }
@@ -145,14 +145,38 @@ class SettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("SettingVC - tableView() called / cellText: \(settingList[(indexPath as NSIndexPath).row]["text"] as! String), cellColor: \(settingList[(indexPath as NSIndexPath).row]["color"] as! UIColor)")
+        print("SettingVC - tableView() called / cellText: \(settingList[(indexPath as NSIndexPath).row]["text"] as! String)")
         let cell = settingTableView.dequeueReusableCell(withIdentifier: "SettingTableViewCell", for: indexPath) as! SettingTableViewCell
+        cell.selectionStyle = .none // 선택 block 없애기
         cell.settingLabel.text = settingList[(indexPath as NSIndexPath).row]["text"] as! String
         cell.settingLabel.textColor = settingList[(indexPath as NSIndexPath).row]["color"] as! UIColor
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("click")
+        switch settingList[(indexPath as NSIndexPath).row]["id"] as! String {
+        case "profile":
+            // 프로필관리 화면으로 이동
+            self.performSegue(withIdentifier: "ProfileSettingVC", sender: self)
+            break
+        case "username":
+            // 계정관리 화면으로 이동
+            self.performSegue(withIdentifier: "UpdatePasswordVC", sender: self)
+            break
+        case "privacy":
+            break
+        case "service":
+            break
+        case "notice":
+            break
+        case "version":
+            break
+        case "logout":
+            // 로그아웃 (Start화면으로 이동)
+            logout()
+            break
+        default:
+            break
+        }
     }
 }

@@ -64,13 +64,13 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
     
     // 다음 화면 이동 시 입력받은 이름정보 넘기기
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let id = segue.identifier, id == "RegisterCouponVC" {
-            if let controller = segue.destination as? RegisterCouponVC {
+        if let id = segue.identifier, id == "RegisterCouponFirstVC" {
+            if let controller = segue.destination as? RegisterCouponFirstVC {
                 var memberList = [SearchStudyMemberResponse]()
                 
                 for index in 0..<members.count {
                     if userId != members[index].id {
-                        let member = SearchStudyMemberResponse(id: members[index].id, name: members[index].name, username: members[index].username, image: members[index].image)
+                        let member = SearchStudyMemberResponse(id: members[index].id, name: members[index].name, username: members[index].username, image: members[index].image, coupon: members[index].coupon)
                         memberList.append(member)
                     }
                 }
@@ -85,7 +85,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
                     
                     for index in 0..<members.count {
                         if userId != members[index].id {
-                            let member = SearchStudyMemberResponse(id: members[index].id, name: members[index].name, username: members[index].username, image: members[index].image)
+                            let member = SearchStudyMemberResponse(id: members[index].id, name: members[index].name, username: members[index].username, image: members[index].image, coupon: members[index].coupon)
                             memberList.append(member)
                         }
                     }
@@ -111,7 +111,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         profileImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
         profileImg.tintColor = COLOR.BASIC_TINT_COLOR
         if let userImg = KeyChainManager().tokenLoad(API.SERVICEID, account: "image"), userImg != "" {
-            profileImg.kf.setImage(with: URL(string: API.IMAGE_URL + userImg)!, options: [.forceRefresh])
+            profileImg.kf.setImage(with: URL(string: API.IMAGE_URL + userImg)!)
         } else {
             profileImg.image = UIImage(named: "user_default.png")
         }
@@ -199,8 +199,9 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
                     , let username = masterList["username"].string
                     , let name = masterList["name"].string else { return }
                 let image = masterList["image"].string ?? ""
+                let coupon = masterList["coupon"].int ?? 0
                 
-                let masterItem = SearchStudyMemberResponse(id: id, name: name + "⭐️", username: username, image: image)
+                let masterItem = SearchStudyMemberResponse(id: id, name: name + "⭐️", username: username, image: image, coupon: coupon)
                 self.members.append(masterItem)
                 
                 // 멤버 정보
@@ -210,8 +211,9 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
                         , let username = subJson["username"].string
                         , let name = subJson["name"].string else { return }
                     let image = subJson["image"].string ?? ""
+                    let coupon = subJson["coupon"].int ?? 0
                     
-                    let memberItem = SearchStudyMemberResponse(id: id, name: name, username: username, image: image)
+                    let memberItem = SearchStudyMemberResponse(id: id, name: name, username: username, image: image, coupon: coupon)
                     self.members.append(memberItem)
                 }
 
@@ -235,6 +237,9 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    // MARK: - return func
+    @IBAction func unwindMainDetailVC(_ segue: UIStoryboardSegue) {}
+    
     // MARK: - btn action func
     override func AnyItemAction(sender: UIBarButtonItem) {
         self.performSegue(withIdentifier: "SettingStudyRoomVC", sender: nil)
@@ -249,9 +254,10 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         let cell = memberTableView.dequeueReusableCell(withIdentifier: "StudyMemberTableViewCell", for: indexPath) as! StudyMemberTableViewCell
         cell.member.text = members[indexPath.row].name
         cell.memberName.text = "@\(members[indexPath.row].username)"
-        cell.couponCnt.text = "쿠폰 00"
+//        let coupon = String("0\(members[indexPath.row].coupon)")
+        cell.couponCnt.text = "쿠폰 \(String(format: "%02d", members[indexPath.row].coupon))"
         if members[indexPath.row].image != "" {
-            cell.memberImg.kf.setImage(with: URL(string: API.IMAGE_URL + members[indexPath.row].image)!, options: [.forceRefresh])
+            cell.memberImg.kf.setImage(with: URL(string: API.IMAGE_URL + members[indexPath.row].image)!)
         } else {
             cell.memberImg.image = UIImage(named: "user_default.png")
         }

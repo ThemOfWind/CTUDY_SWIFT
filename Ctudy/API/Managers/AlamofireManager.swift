@@ -32,26 +32,41 @@ final class AlamofireManager {
         )
     }
     
-    // MARK: - 아이디 중복체크
-    func getUserNameCheck(username username: String, completion: @escaping (Result<UserNameCheckResponse, AuthErrors>) -> Void) {
-        print("AlamofireManger - getUserNameCheck() called / parameters = [username: \(username)]")
+    // MARK: - 아이디&이메일 중복체크
+    func getExistCheck(errorType errorType: String, username username: String? = nil, email email: String? = nil, completion: @escaping (Result<Bool, AuthErrors>) -> Void) {
+        print("AlamofireManger - getExistCheck() called / parameters = [username: \(username)]")
         
         self.session
-            .request(AuthRouter.usernamecheck(username: username))
+            .request(AuthRouter.usernamecheck(username: username, email: email))
             .validate(statusCode: 200..<501)
             .responseJSON(completionHandler: { response in
                 guard let responseValue = response.value
                         , let statusCode = response.response?.statusCode else { return }
                 let responseJson = JSON(responseValue)
                 
+                print("AlamofireManager - getExistCheck()")
+                
+                var error: AuthErrors!
+                switch errorType {
+                case "username":
+                    error = .existedUserName
+                case "email":
+                    error = .existedEmail
+                default:
+                    error = .existed
+                }
+                
                 switch statusCode {
                 case 200:
-                    guard let username = responseJson["response"]["username"].string else { return }
-                    let jsonData = UserNameCheckResponse(username: username)
-                    completion(.success(jsonData))
+                    guard let result = responseJson["response"]["success"].bool else { return }
+                    if result {
+                        completion(.success(result))
+                    } else {
+                        completion(.failure(error))
+                    }
                 default:
-                    print("getUserNameCheck() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
-                    completion(.failure(.duplicatedUserName))
+                    print("getExistCheck() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
+                    completion(.failure(error))
                 }
             })
     }
@@ -81,7 +96,7 @@ final class AlamofireManager {
                 let jsonData = SignUpResponse(name: name, username: username)
                 completion(.success(jsonData))
             default:
-                print("postSignUp() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
+                print("postSignUp() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
                 completion(.failure(.noSignUp))
             }
         })
@@ -102,13 +117,76 @@ final class AlamofireManager {
                     if let username = responseJson["response"]["username"].string {
                         completion(.success(username))
                     } else {
-                        completion(.success(""))
+                        completion(.failure(.noSearchid))
                     }
-                case 404:
-                    completion(.failure(.noSearchid))
                 default:
-                    print("postSearchId() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
+                    print("postSearchId() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
                     completion(.failure(.noSearchid))
+                }
+            })
+    }
+    
+    // MARK: - 비밀번호 찾기 (아이디&이메일 확인)
+    func postSearchPw(email: String, username: String, completion: @escaping(Result<Bool, AuthErrors>) -> Void) {
+        self.session
+            .request(AuthRouter.searchpw(email: email, username: username))
+            .validate(statusCode: 200..<501)
+            .responseJSON(completionHandler: { response in
+                guard let responseValue = response.value
+                        , let statusCode = response.response?.statusCode else {
+                    return }
+                let responseJson = JSON(responseValue)
+                
+                switch statusCode {
+                case 200:
+                    completion(.success(true))
+                default:
+                    print("postSearchPw() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
+                    completion(.failure(.noSearchPw))
+                }
+            })
+    }
+    
+    // MARK: - 비밀번호 찾기 (이메일로 인증번호 받기)
+    func postCertificate(email: String, username: String, code: String, completion: @escaping(Result<CertificateResponseRequest, AuthErrors>) -> Void) {
+        self.session
+            .request(AuthRouter.certificate(email: email, username: username, code: code))
+            .validate(statusCode: 200..<501)
+            .responseJSON(completionHandler: { response in
+                guard let responseValue = response.value
+                        , let statusCode = response.response?.statusCode else {
+                    return }
+                let responseJson = JSON(responseValue)
+                
+                switch statusCode {
+                case 200:
+                    guard let key = responseJson["response"]["key"].string else { return }
+                    let data = CertificateResponseRequest(email: email, username: username, key: key)
+                    completion(.success(data))
+                default:
+                    print("postSearchPw() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
+                    completion(.failure(.noCertificate))
+                }
+            })
+    }
+    
+    // MARK: - 비밀번호 찾기 (신규 비밀번호)
+    func postResetPw(email: String, username: String, key: String, newpassword: String, completion: @escaping(Result<Bool, AuthErrors>) -> Void) {
+        self.session
+            .request(AuthRouter.resetpw(email: email, username: username, key: key, newpassword: newpassword))
+            .validate(statusCode: 200..<501)
+            .responseJSON(completionHandler: { response in
+                guard let responseValue = response.value
+                        , let statusCode = response.response?.statusCode else {
+                    return }
+                let responseJson = JSON(responseValue)
+                
+                switch statusCode {
+                case 200:
+                    completion(.success(true))
+                default:
+                    print("postResetPw() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
+                    completion(.failure(.noUpdatePassword))
                 }
             })
     }
@@ -141,7 +219,7 @@ final class AlamofireManager {
                         completion(.failure(.noSaveToken))
                     }
                 default:
-                    print("postSignIn() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
+                    print("postSignIn() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
                     completion(.failure(.noSignIn))
                 }
             })
@@ -166,7 +244,7 @@ final class AlamofireManager {
                         completion(.failure(.noDelToken))
                     }
                 default:
-                    print("getLogout() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
+                    print("getLogout() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
                     completion(.failure(.noLogout))
                 }
             })
@@ -200,8 +278,53 @@ final class AlamofireManager {
                         completion(.failure(.noProfile))
                     }
                 default:
-                    print("getProfile() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
+                    print("getProfile() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
                     completion(.failure(.noProfile))
+                }
+            })
+    }
+    
+    // MARK: - 비밀번호 변경
+    func putPassword(password: String, newpassword: String, completion: @escaping(Result<Bool, AuthErrors>) -> Void) {
+        self.session
+            .request(AuthRouter.updatepassword(password: password, newpassword: newpassword))
+            .validate(statusCode: 200..<501)
+            .responseJSON(completionHandler: { response in
+                guard let responseValue = response.value
+                    , let statusCode = response.response?.statusCode else { return }
+                let responseJson = JSON(responseValue)
+                
+                switch statusCode {
+                case 200:
+                    guard let result = responseJson["response"]["success"].bool else { return }
+                    if result {
+                        completion(.success(result))
+                    } else {
+                        completion(.failure(.noUpdatePassword))
+                    }
+                default:
+                    print("putPassword() - netsork fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
+                    completion(.failure(.noUpdatePassword))
+                }
+            })
+    }
+    
+    // MARK: - 회원탈퇴
+    func deleteWithdraw(completion: @escaping(Result<Bool, AuthErrors>) -> Void) {
+        self.session
+            .request(AuthRouter.withdraw)
+            .validate(statusCode: 200..<501)
+            .responseJSON(completionHandler: { response in
+                guard let responseValue = response.value
+                    , let statusCode = response.response?.statusCode else { return }
+                let responseJson = JSON(responseValue)
+                
+                switch statusCode {
+                case 200:
+                    completion(.success(true))
+                default:
+                    print("deleteWithdraw() - netsork fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
+                    completion(.failure(.noWithdraw))
                 }
             })
     }
@@ -235,7 +358,7 @@ final class AlamofireManager {
                     
                     completion(.success(rooms))
                 default:
-                    print("getSearchRoom() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
+                    print("getSearchRoom() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
                     completion(.failure(.noSearchRoom))
                 }
             })
@@ -258,7 +381,7 @@ final class AlamofireManager {
                     //                    if response.exists() {
                     completion(.success(response))
                 default:
-                    print("getSearchStudyMember() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
+                    print("getSearchStudyMember() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
                     completion(.failure(.noSearchMemeber))
                 }
             })
@@ -282,7 +405,7 @@ final class AlamofireManager {
                     //                    if response.exists() {
                     completion(.success(response))
                 default:
-                    print("getSearchMember() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
+                    print("getSearchMember() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
                     completion(.failure(.noSearchMember))
                 }
             })
@@ -315,7 +438,7 @@ final class AlamofireManager {
             case 200:
                 completion(.success(true))
             default:
-                print("postRegisterRoom() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
+                print("postRegisterRoom() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
                 completion(.failure(.noRegisterRoom))
                 
             }
@@ -349,7 +472,7 @@ final class AlamofireManager {
             case 200:
                 completion(.success(true))
             default:
-                print("postRegisterCoupon() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
+                print("postRegisterCoupon() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
                 completion(.failure(.noCreateCoupon))
                 
             }
@@ -378,7 +501,7 @@ final class AlamofireManager {
             case 200:
                 completion(.success(true))
             default:
-                print("postUpdateRoom_image() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
+                print("postUpdateRoom_image() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
                 completion(.failure(.noUpdateRoomImage))
                 
             }
@@ -401,7 +524,7 @@ final class AlamofireManager {
                 case 200:
                     completion(.success(true))
                 default:
-                    print("putUpdateRoom() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
+                    print("putUpdateRoom() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
                     completion(.failure(.noUpdateRoom))
                 }
             })
@@ -429,7 +552,7 @@ final class AlamofireManager {
             case 200:
                 completion(.success(true))
             default:
-                print("postUpdateProfile_image() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
+                print("postUpdateProfile_image() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
                 completion(.failure(.noUpdateProfileImage))
                 
             }
@@ -452,9 +575,11 @@ final class AlamofireManager {
                 case 200:
                     completion(.success(true))
                 default:
-                    print("putUpdateProfile() - network fail / error: \(statusCode), \(responseJson["erorr"]["message"].rawValue)")
+                    print("putUpdateProfile() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
                     completion(.failure(.noUpdateProfileName))
                 }
             })
     }
+    
+   
 }

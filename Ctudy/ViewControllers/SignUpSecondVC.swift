@@ -45,8 +45,8 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
     }()
     // 이전 화면에서 데이터 전달
     var userImage: Data?
-    var registerName: String?
-    var registerEmail: String?
+    var registerName: String!
+    var registerEmail: String!
     
     var memberName: String?
     var memberUsername: String?
@@ -103,20 +103,23 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
     
     // 아이디 중복체크 api 호출 event
     fileprivate func userNameChecked(inputUserName: String) {
-        AlamofireManager.shared.getUserNameCheck(username: inputUserName, completion: {
+        AlamofireManager.shared.getExistCheck(errorType: "username", username: inputUserName, email: nil, completion: {
             [weak self] result in
             guard let self = self else { return }
             switch result {
-            case .success(let checkData):
-                print("SignUpSecondVC - getUserNameCheck.success")
+            case .success(_):
+                print("SignUpSecondVC - getExistCheck.success")
                 // 사용가능 문구 띄우기
                 //self.view.makeToast("사용가능한 아이디(이메일)입니다.", duration: 1.0, position: .center)
-                self.setMsgLabel(flag: true, msgLabel: self.usernameMsg, msgString: "사용가능한 아이디입니다.")
+                self.usernameOKFlag = true
+                self.setMsgLabel(flag: self.usernameOKFlag, msgLabel: self.usernameMsg, msgString: "사용가능한 아이디입니다.")
             case .failure(let error):
-                print("SignUpSecondVC - getUserNameCheck.failure / error: \(error)")
+                print("SignUpSecondVC - getExistCheck.failure / error: \(error)")
                 // 중복사용 문구 띄우기
                 //self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
-                self.setMsgLabel(flag: false, msgLabel: self.usernameMsg, msgString: error.rawValue)
+                self.usernameOKFlag = false
+                self.setMsgLabel(flag: self.usernameOKFlag, msgLabel: self.usernameMsg, msgString: error.rawValue)
+                self.signUpBtnAbleChecked()
             }
         })
     }
@@ -216,9 +219,10 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
     // MARK: - @objc func
     // 회원가입 버튼 event
     @objc func onSignUpBtnClicked() {
-        
+    
+        print("registerName: \(registerName), registerEmail: \(registerEmail)")
         self.onStartActivityIndicator()
-        
+    
         AlamofireManager.shared.postSignUp(name: registerName!, email: registerEmail!, username: registerUsername.text!, password: registerPassword.text!, image: userImage, completion: { [weak self] result in
             guard let self = self else { return }
             
@@ -253,8 +257,6 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
         default:
             break
         }
-        
-        signUpBtnAbleChecked()
     }
     
     // 비밀번호 일치하는지 체크하는 editingChanged event
@@ -315,6 +317,8 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
         default:
             break
         }
+        
+        signUpBtnAbleChecked()
     }
     
     // textField clearBtn event

@@ -12,4 +12,5 @@ struct SearchStudyMemberResponse: Codable {
     var name: String // 사용자 이름
     var username: String // 사용자 아이디
     var image: String // 사용자 이미지
+    var coupon: Int // 쿠폰 개수
 }

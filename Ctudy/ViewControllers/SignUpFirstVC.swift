@@ -19,7 +19,7 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
     @IBOutlet weak var emailMsg: UILabel!
     @IBOutlet weak var goToStartBtn: UIButton!
     let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: SignUpFirstVC.self, action: nil)
-    var memberName: String?
+//    var memberName: String?
     var nameOKFlag: Bool = false
     var emailOKFlag: Bool = false
     var imageFlag: Bool = false // image 초기화 flag
@@ -76,6 +76,27 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
         
         // gesture 연결
         self.view.addGestureRecognizer(tabGesture)
+    }
+    
+    // 이메일 중복체크 api 호출 event
+    fileprivate func emailChecked(inputEmail: String) {
+        AlamofireManager.shared.getExistCheck(errorType: "email", username: nil, email: inputEmail, completion: {
+            [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(_):
+                print("SignUpFirstVC - getExistCheck.success")
+                // 사용가능 문구 띄우기
+                //self.view.makeToast("사용가능한 아이디(이메일)입니다.", duration: 1.0, position: .center)
+                self.emailOKFlag = true
+                self.setMsgLabel(flag: self.emailOKFlag, msgLabel: self.emailMsg, msgString: "사용가능한 이메일입니다.")
+            case .failure(let error):
+                print("SignUpFirstVC - getExistCheck.failure / error: \(error)")
+                self.emailOKFlag = false
+                self.setMsgLabel(flag: self.emailOKFlag, msgLabel: self.emailMsg, msgString: error.rawValue)
+                self.nextBtnAbleChecked()
+            }
+        })
     }
     
     // messageLabel 셋팅
@@ -215,8 +236,6 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
         default:
             break
         }
-        
-        nextBtnAbleChecked()
     }
     
     @objc fileprivate func onGoToStartBtnClicked() {
@@ -262,13 +281,16 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
         case registerEmail:
             emailOKFlag = isValidData(flag: "registerEmail", data: inputData)
             if emailOKFlag {
-                setMsgLabel(flag: emailOKFlag, msgLabel: msgLabel, msgString: "")
+//                setMsgLabel(flag: emailOKFlag, msgLabel: msgLabel, msgString: "")
+                emailChecked(inputEmail: inputData)
             } else {
-                setMsgLabel(flag: emailOKFlag, msgLabel: msgLabel, msgString: "이메일(email)이 옳바르지 않습니다.")
+                setMsgLabel(flag: emailOKFlag, msgLabel: msgLabel, msgString: "이메일이 옳바르지 않습니다.")
             }
         default:
             break
         }
+        
+        nextBtnAbleChecked()
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {

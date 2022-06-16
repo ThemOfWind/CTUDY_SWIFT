@@ -72,7 +72,7 @@ class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataS
         
         // 셀 설정
         self.memberTableView.rowHeight = 90
-        self.memberTableView.allowsSelection = false
+//        self.memberTableView.allowsSelection = false
         self.memberTableView.showsVerticalScrollIndicator = false // scroll 제거
 //        self.memberTableView.estimatedRowHeight = 100
         
@@ -175,9 +175,10 @@ class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataS
             
             switch result {
             case .success(_):
-                self.view.makeToast("스터디룸이 등록되었습니다.", duration: 1.0, position: .center)
                 self.performSegue(withIdentifier: "unwindMainTabBarVC", sender: self)
+                self.navigationController?.view.makeToast("스터디룸이 등록되었습니다.", duration: 1.0, position: .center)
             case .failure(let error):
+                print("RegisterStudyRoomSecondVC - postRegisterRoom() called / error: \(error.rawValue)")
                 self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
             }
         })
@@ -194,9 +195,10 @@ class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataS
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = memberTableView.dequeueReusableCell(withIdentifier: "MemberTableViewCell", for: indexPath) as! MemberTableViewCell
+        cell.selectionStyle = .none // 선택 block 없애기
         if members[indexPath.row].image != "" {
             cell.memberImg.kf.indicatorType = .activity
-            cell.memberImg.kf.setImage(with: URL(string: API.IMAGE_URL + members[indexPath.row].image)!, options: [.forceRefresh])
+            cell.memberImg.kf.setImage(with: URL(string: API.IMAGE_URL + members[indexPath.row].image)!)
         } else {
             cell.memberImg.image = UIImage(named: "user_default.png")
         }

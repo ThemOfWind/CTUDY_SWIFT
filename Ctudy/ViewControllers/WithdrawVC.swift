@@ -1,18 +1,19 @@
 //
-//  CouponHistoryVC.swift
+//  WithdrawVC.swift
 //  Ctudy
 //
-//  Created by 김지은 on 2022/05/24.
+//  Created by 김지은 on 2022/06/13.
 //
 
 import Foundation
 import UIKit
 import NVActivityIndicatorView
 
-class CouponHistoryVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
+class WithdrawVC: BasicVC {
     // MARK: - 변수
-    @IBOutlet weak var couponCount: UILabel!
-    @IBOutlet weak var couponHistoryTableView: UITableView!
+    @IBOutlet weak var withdrawImg: UIImageView!
+    @IBOutlet weak var withdrawNoti: UILabel!
+    @IBOutlet weak var withdrawBtn: UIButton!
     lazy var indicatorView: UIView = {
         let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         indicatorView.backgroundColor = COLOR.INDICATOR_BACKGROUND_COLOR
@@ -32,49 +33,38 @@ class CouponHistoryVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         label.text = "loading..."
         label.textColor = COLOR.BASIC_TINT_COLOR
         label.translatesAutoresizingMaskIntoConstraints = false
-       return label
+        return label
     }()
+    
     // MARK: - override func
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.config()
+        config()
     }
     
     // MARK: - fileprivate func
     fileprivate func config() {
-        // navigationbar item 설정
-        self.leftItem = LeftItem.backGeneral
-        self.titleItem = TitleItem.titleGeneral(title: "내 쿠폰 히스토리", isLargeTitles: true)
-        self.rightItem = RightItem.none
+        leftItem = LeftItem.backGeneral
+        titleItem = TitleItem.titleGeneral(title: "회원탈퇴", isLargeTitles: true)
         
-        // label ui
-        self.couponCount.textColor = COLOR.SIGNATURE_COLOR
-        self.couponCount.text = "00"
+        // withdraw image ui
+//        withdrawImg.layer.cornerRadius = withdrawImg.bounds.height / 2
+        withdrawImg.image = UIImage(systemName: "xmark.circle")
+        withdrawImg.tintColor = .red
         
-        // 셀 리소스 파일 가져오기
-        let couponHistoryCell = UINib(nibName: String(describing: CouponHistoryTableViewCell.self), bundle: nil)
+        // withdraw textfield ui
+        withdrawNoti.numberOfLines = 0
+        withdrawNoti.text = "* 회원탈퇴 시\n* 개인정보 삭제\n* 쿠폰 삭제\n* 스터디룸 삭제\n* 현재 계정으로 재가입 불가"
         
-        // 셀 리소스 등록하기
-        self.couponHistoryTableView.register(couponHistoryCell, forCellReuseIdentifier: "CouponHistoryTableViewCell")
+        // withdraw button ui
+        withdrawBtn.layer.cornerRadius = 10
+        withdrawBtn.tintColor = .white
+        withdrawBtn.backgroundColor = COLOR.SIGNATURE_COLOR
         
-        // 셀 설정
-        self.couponHistoryTableView.rowHeight = 80
-        self.couponHistoryTableView.allowsSelection = false
-//        self.couponHistoryTableView.layer.borderWidth = 1
-//        self.couponHistoryTableView.layer.borderColor = COLOR.BORDER_COLOR.cgColor
-        
-        // delegate 연결
-        self.couponHistoryTableView.delegate = self
-        self.couponHistoryTableView.dataSource = self
-        
-        // 히스토리 조회
-        self.getSearchCouponHistory()
+        // event 연결
+        withdrawBtn.addTarget(self, action: #selector(onWithdrawBtnClicked), for: .touchUpInside)
     }
     
-    fileprivate func getSearchCouponHistory() {
-        
-    }
-
     fileprivate func onStartActivityIndicator() {
         DispatchQueue.main.async {
             // 불투명 뷰 추가
@@ -104,16 +94,36 @@ class CouponHistoryVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    // MARK: - delegate
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        5
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = couponHistoryTableView.dequeueReusableCell(withIdentifier: "CouponHistoryTableViewCell", for: indexPath) as! CouponHistoryTableViewCell
+    // MARK: - @objc func
+    @objc fileprivate func onWithdrawBtnClicked() {
+        // logout alert 띄우기
+        let alert = UIAlertController(title: nil, message: "정말 탈퇴하시겠습니까?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
+        alert.addAction(UIAlertAction(title: "확인", style: .destructive, handler: { (_) in
+            
+            self.onStartActivityIndicator()
+            
+            AlamofireManager.shared.deleteWithdraw(completion: {
+                [weak self] result in
+                guard let self = self else { return }
+                
+                self.onStopActivityIndicator()
+                
+                switch result {
+                case .success(_):
+                    self.performSegue(withIdentifier: "unwindStartVC", sender: self)
+                    self.navigationController?.view.makeToast("회원탈퇴가 완료되었습니다.", duration: 1.0, position: .center)
+                case .failure(let error):
+                    print("WithdrawVC - deleteWithdraw().failure / error: \(error)")
+                    self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
+                }
+            })
+            
+            if self.indicator.isAnimating {
+                self.onStopActivityIndicator()
+            }
+        }))
         
-        cell.couponSender.text = "test"
-        cell.couponReciver.text = "test"
-        return cell
+        self.present(alert, animated: false)
     }
 }

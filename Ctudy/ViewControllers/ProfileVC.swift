@@ -13,8 +13,9 @@ class ProfileVC: UIViewController, UIGestureRecognizerDelegate {
     // MARK: - 변수
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var profileName: UILabel!
-    @IBOutlet weak var profileSettingBtn: UIButton!
+//    @IBOutlet weak var profileSettingBtn: UIButton!
     @IBOutlet weak var profileUsername: UILabel!
+//    @IBOutlet weak var subView: UIView!
     let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: ProfileVC.self, action: nil)
     lazy var indicatorView: UIView = {
         let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
@@ -39,11 +40,6 @@ class ProfileVC: UIViewController, UIGestureRecognizerDelegate {
     }()
     
     // MARK: - overrid func
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        self.config()
-//    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.config()
@@ -51,7 +47,12 @@ class ProfileVC: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: - fileprivate func
     fileprivate func config() {
-        // navigationbar ui
+        //subView
+//        subView.layer.zPosition = 999
+//        subStackView.bringSubviewToFront(profileSettingBtn)
+//        view.bringSubviewToFront(subStackView)
+//        view.bringSubviewToFront(profileSettingBtn)
+//        subView.bringSubviewToFront(profileSettingBtn)
         
         // profile
         profileImg.layer.cornerRadius = profileImg.bounds.height / 2
@@ -60,7 +61,7 @@ class ProfileVC: UIViewController, UIGestureRecognizerDelegate {
         profileImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
         profileImg.tintColor = COLOR.BASIC_TINT_COLOR
         if let userImg = KeyChainManager().tokenLoad(API.SERVICEID, account: "image"), userImg != "" {
-            profileImg.kf.setImage(with: URL(string: API.IMAGE_URL + userImg)!, options: [.forceRefresh])
+            profileImg.kf.setImage(with: URL(string: API.IMAGE_URL + userImg)!)
         } else {
             profileImg.image = UIImage(named: "user_default.png")
         }
@@ -73,12 +74,15 @@ class ProfileVC: UIViewController, UIGestureRecognizerDelegate {
         profileUsername.textColor = COLOR.SUBTITLE_COLOR
         
         // btn ui
-        profileSettingBtn.tintColor = COLOR.SIGNATURE_COLOR
-        profileSettingBtn.setImage(UIImage(systemName: "pencil"), for: .normal)
-        profileSettingBtn.contentMode = .center
+//        profileSettingBtn.tintColor = COLOR.SIGNATURE_COLOR
+//        profileSettingBtn.setImage(UIImage(systemName: "pencil"), for: .normal)
+//        profileSettingBtn.contentMode = .center
+//        profileSettingBtn.translatesAutoresizingMaskIntoConstraints = false
+//        profileSettingBtn.isUserInteractionEnabled = false
         
         // image, btn 연결 event
-        profileSettingBtn.addTarget(self, action: #selector(onProfileSettingBtnClicked), for: .touchUpInside)
+//        profileSettingBtn.addTarget(self, action: #selector(onProfileSettingBtnClicked(_:)), for: .touchUpInside)
+        
         
         // delegate 연결
         tabGesture.delegate = self
@@ -116,20 +120,21 @@ class ProfileVC: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    // MARK: - @objc func
-    @objc fileprivate func onProfileSettingBtnClicked() {
+    fileprivate func onGoToProfileSettingVC() {
         self.performSegue(withIdentifier: "ProfileSettingVC", sender: nil)
     }
     
-    fileprivate func onProfileImageClicked() {
-        self.performSegue(withIdentifier: "ProfileSettingVC", sender: nil)
-    }
     
     // MARK: - UIGestureRecognizer delegate
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        print("touch.view: \(touch.view)")
         if touch.view?.isDescendant(of: profileImg) == true {
             view.endEditing(true)
-            onProfileImageClicked()
+            onGoToProfileSettingVC()
+            return true
+        } else if touch.view?.isDescendant(of: profileName) == true {
+            view.endEditing(true)
+            onGoToProfileSettingVC()
             return true
         } else {
             view.endEditing(true)

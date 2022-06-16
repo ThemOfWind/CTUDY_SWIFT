@@ -11,8 +11,8 @@ import UIKit
 class SearchIdSuccessVC: BasicVC {
     // MARK: - 변수
     @IBOutlet weak var homeBtn: UIButton!
-    @IBOutlet weak var uesrName: UILabel!
-    var searchId: String? // 넘겨받은 찾은 id
+    @IBOutlet weak var userName: UILabel!
+    var searchId: String! // 넘겨받은 찾은 id
     
     // MARK: - override func
     override func viewDidLoad() {
@@ -24,16 +24,19 @@ class SearchIdSuccessVC: BasicVC {
     // MARK: - fileprivate func
     fileprivate func config() {
         // navigationbar item
-        self.leftItem = LeftItem.none
-        self.titleItem = TitleItem.titleGeneral(title: "아이디 찾기", isLargeTitles: true)
+        leftItem = LeftItem.none
+        titleItem = TitleItem.titleGeneral(title: "아이디 찾기", isLargeTitles: true)
         
         // button ui
-        self.homeBtn.tintColor = .white
-        self.homeBtn.backgroundColor = COLOR.SIGNATURE_COLOR
-        self.homeBtn.layer.cornerRadius = 10
+        homeBtn.tintColor = .white
+        homeBtn.backgroundColor = COLOR.SIGNATURE_COLOR
+        homeBtn.layer.cornerRadius = 10
+        
+        // label ui
+        userName.text = searchId
         
         // button event 연결
-        self.homeBtn.addTarget(self, action: #selector(onGoToHomeBtnClicked(_:)), for: .touchUpInside)
+        homeBtn.addTarget(self, action: #selector(onGoToHomeBtnClicked(_:)), for: .touchUpInside)
     }
     
     // MARK: - @objc func

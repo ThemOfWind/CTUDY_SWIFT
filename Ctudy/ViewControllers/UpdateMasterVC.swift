@@ -47,13 +47,14 @@ class UpdateMasterVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = memberTableView.dequeueReusableCell(withIdentifier: "StudyMemberTableViewCell", for: indexPath) as! StudyMemberTableViewCell
+        cell.selectionStyle = .none // 선택 block 없애기
         if let memberList = members {
             cell.member.text = memberList[indexPath.row].name
             cell.memberName.text = "@\(memberList[indexPath.row].username)"
             cell.couponCnt.text = ""
             if memberList[indexPath.row].image != "" {
                 cell.memberImg.kf.indicatorType = .activity
-                cell.memberImg.kf.setImage(with: URL(string: API.IMAGE_URL + memberList[indexPath.row].image)!, options: [.forceRefresh])
+                cell.memberImg.kf.setImage(with: URL(string: API.IMAGE_URL + memberList[indexPath.row].image)!)
             } else {
                 cell.memberImg.image = UIImage(named: "user_default.png")
             }
