@@ -47,17 +47,19 @@ class SearchPwSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegat
         super.viewDidLoad()
         self.config()
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if certificationData.key != "" {
-            inputAuthNumber.text = ""
-            onResendBtnClicked()
-            return
-        }
-        
-        // 타이머 생성
-        makeFireTimer()
-    }
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        if certificationData.key != "" {
+//            inputAuthNumber.text = ""
+//            onResendBtnClicked()
+//            return
+//        }
+//
+//        // 타이머 생성
+//        makeFireTimer()
+//    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let id = segue.identifier, id == "SearchPwThirdVC" {
             if let controller = segue.destination as? SearchPwThirdVC {
@@ -86,6 +88,9 @@ class SearchPwSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegat
         authBtn.backgroundColor = COLOR.DISABLE_COLOR
         authBtn.layer.cornerRadius = 10
         authBtn.isEnabled = false
+        
+        // 타이머 생성
+        makeFireTimer()
         
         // event 연결
         inputAuthNumber.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
