@@ -10,10 +10,11 @@ import UIKit
 import SwiftyJSON
 import Kingfisher
 import NVActivityIndicatorView
+import SwiftUI
 
 class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
     // MARK: - 변수
-//    @IBOutlet weak var studyRoom: UILabel!
+    //    @IBOutlet weak var studyRoom: UILabel!
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var profileName: UILabel!
     @IBOutlet weak var profileUsername: UILabel!
@@ -21,12 +22,6 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var myCouponBtn: UIButton!
     @IBOutlet weak var btnStackView: UIStackView!
     @IBOutlet weak var memberTableView: UITableView!
-    var members: Array<SearchStudyMemberResponse> = [] // 전달할 멤버 리스트
-    var settingRoom: SettingStudyRoomResponse! // 전달할 room 정보
-    let userId = Int(KeyChainManager().tokenLoad(API.SERVICEID, account: "id")!) // 사용자 id
-    var profileId: Int! // 접속 회원 id
-    var roomId: Int! // 스터디룸 id
-//    var roomName: String? // 스터디룸 name
     lazy var indicatorView: UIView = {
         let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         indicatorView.backgroundColor = COLOR.INDICATOR_BACKGROUND_COLOR
@@ -48,6 +43,12 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    var members: Array<SearchStudyMemberResponse> = [] // 전달할 멤버 리스트
+    var settingRoom: SettingStudyRoomResponse! // 전달할 room 정보
+    let userId = Int(KeyChainManager().tokenLoad(API.SERVICEID, account: "id")!) // 사용자 id
+    var profileId: Int! // 접속 회원 id
+    var roomId: Int! // 스터디룸 id
+    var isMaster: Bool = false // 사용자가 master인지
     
     // MARK: - override func
     override func viewWillAppear(_ animated: Bool) {
@@ -78,31 +79,30 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
                 controller.members = memberList
                 controller.roomId = roomId
             }
-        } else if let id = segue.identifier, id == "SettingStudyRoomVC" {
-            if let controller = segue.destination as? SettingStudyRoomVC {
-                if let controller = segue.destination as? SettingStudyRoomVC {
-                    var memberList = [SearchStudyMemberResponse]()
-                    
-                    for index in 0..<members.count {
-                        if userId != members[index].id {
-                            let member = SearchStudyMemberResponse(id: members[index].id, name: members[index].name, username: members[index].username, image: members[index].image, coupon: members[index].coupon)
-                            memberList.append(member)
-                        }
+        } else if let id = segue.identifier, id == "StudyRoomSettingVC" {
+            if let controller = segue.destination as? StudyRoomSettingVC {
+                var memberList = [SearchStudyMemberResponse]()
+                
+                for index in 0..<members.count {
+                    if userId != members[index].id {
+                        let member = SearchStudyMemberResponse(id: members[index].id, name: members[index].name, username: members[index].username, image: members[index].image, coupon: members[index].coupon)
+                        memberList.append(member)
                     }
-                    
-                    controller.members = memberList
-                    controller.settingRoom = settingRoom
                 }
+                
+                controller.members = memberList
+                controller.settingRoom = settingRoom
+                
             }
         }
     }
-     
+    
     // MARK: - fileprivate func
     fileprivate func config() {
         // navigationbar item 설정
         leftItem = LeftItem.backGeneral
         titleItem = TitleItem.titleGeneral(title: "", isLargeTitles: true)
-//        rightItem = RightItem.none
+        rightItem = RightItem.anyCustoms(items: [.setting], title: nil, rightSpaceCloseToDefault: false)
         
         // profile
         profileImg.layer.cornerRadius = self.profileImg.bounds.height / 2
@@ -196,8 +196,8 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
                 // 마스터 정보
                 let masterList = response["master"]
                 guard let id = masterList["id"].int
-                    , let username = masterList["username"].string
-                    , let name = masterList["name"].string else { return }
+                        , let username = masterList["username"].string
+                        , let name = masterList["name"].string else { return }
                 let image = masterList["image"].string ?? ""
                 let coupon = masterList["coupon"].int ?? 0
                 
@@ -208,20 +208,21 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
                 let memberList = response["members"]
                 for (_, subJson) : (String, JSON) in memberList {
                     guard let id = subJson["id"].int
-                        , let username = subJson["username"].string
-                        , let name = subJson["name"].string else { return }
+                            , let username = subJson["username"].string
+                            , let name = subJson["name"].string else { return }
                     let image = subJson["image"].string ?? ""
                     let coupon = subJson["coupon"].int ?? 0
                     
                     let memberItem = SearchStudyMemberResponse(id: id, name: name, username: username, image: image, coupon: coupon)
                     self.members.append(memberItem)
                 }
-
+                
                 self.settingRoom = SettingStudyRoomResponse(id: response["id"].int!, name: response["name"].string!, masterid: id, mastername: name, banner: response["banner"].string ?? "")
                 
+                // 현재 사용자가 master인지 체크
                 self.titleItem = TitleItem.titleGeneral(title: self.settingRoom.name, isLargeTitles: true)
                 if self.settingRoom.masterid == self.userId {
-                    self.rightItem = RightItem.anyCustoms(items: [.setting], title: nil, rightSpaceCloseToDefault: false)
+                    self.isMaster = true
                 }
                 
                 // view reload
@@ -237,12 +238,44 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    // 멤버 강퇴 button event
+    fileprivate func onDeleteBtnClicked(id: String, index: Int) {
+        // logout alert 띄우기
+        let alert = UIAlertController(title: nil, message: "멤버를 강퇴하시겠습니까?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
+        alert.addAction(UIAlertAction(title: "확인", style: .destructive, handler: { (_) in
+            
+            self.onStartActivityIndicator()
+            
+            AlamofireManager.shared.deleteStudyMember(id: id, memberlist: [self.members[index].id], completion: {
+                [weak self] result in
+                guard let self = self else { return }
+                
+                self.onStopActivityIndicator()
+                
+                switch result {
+                case .success(_):
+                    self.memberTableView.reloadData()
+                case .failure(let error):
+                    print("MainDetailVC - deleteStudyMember().failure / error: \(error)")
+                    self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
+                }
+            })
+            
+            if self.indicator.isAnimating {
+                self.onStopActivityIndicator()
+            }
+        }))
+        
+        self.present(alert, animated: false)
+    }
+    
     // MARK: - return func
     @IBAction func unwindMainDetailVC(_ segue: UIStoryboardSegue) {}
     
     // MARK: - btn action func
     override func AnyItemAction(sender: UIBarButtonItem) {
-        self.performSegue(withIdentifier: "SettingStudyRoomVC", sender: nil)
+        self.performSegue(withIdentifier: "StudyRoomSettingVC", sender: nil)
     }
     
     // MARK: - delegate
@@ -254,14 +287,32 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         let cell = memberTableView.dequeueReusableCell(withIdentifier: "StudyMemberTableViewCell", for: indexPath) as! StudyMemberTableViewCell
         cell.member.text = members[indexPath.row].name
         cell.memberName.text = "@\(members[indexPath.row].username)"
-//        let coupon = String("0\(members[indexPath.row].coupon)")
+        //        let coupon = String("0\(members[indexPath.row].coupon)")
         cell.couponCnt.text = "쿠폰 \(String(format: "%02d", members[indexPath.row].coupon))"
         if members[indexPath.row].image != "" {
             cell.memberImg.kf.setImage(with: URL(string: API.IMAGE_URL + members[indexPath.row].image)!)
         } else {
             cell.memberImg.image = UIImage(named: "user_default.png")
         }
-
+        
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        if isMaster, indexPath.row > 0 {
+            let delete = UIContextualAction(style: .normal, title: "delete") {
+                (UIContextualAction, UIView, success: @escaping (Bool) -> Void) in
+                print("member delete click! / indexPath: \(indexPath.row)")
+                self.onDeleteBtnClicked(id: String(self.roomId), index: indexPath.row)
+                success(true)
+            }
+            delete.backgroundColor = .systemPink
+            delete.image = UIImage(systemName: "trash")
+            
+            // actions배열 인덱스 0이 왼쪽에 붙음
+            return UISwipeActionsConfiguration(actions: [delete])
+        } else {
+            return nil
+        }
     }
 }

@@ -37,3 +37,7 @@ enum COLOR {
     static let BASIC_TINT_COLOR: UIColor = UIColor(red: 229/255, green: 229/255, blue: 234/255, alpha: 1)
     static let INDICATOR_BACKGROUND_COLOR: UIColor = UIColor(red: 185/255, green: 185/255, blue: 185/255, alpha: 50)
 }
+
+enum APP {
+    static let VERSION: String = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
+}

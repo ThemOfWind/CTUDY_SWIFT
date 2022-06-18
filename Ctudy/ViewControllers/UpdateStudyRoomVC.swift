@@ -14,14 +14,14 @@ protocol SettingSendDelegate: AnyObject {
     func onMemberViewClicked(master: SettingMasterResponse)
 }
 
-class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, SettingSendDelegate, UITextFieldDelegate{
+class UpdateStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, SettingSendDelegate, UITextFieldDelegate{
     // MARK: - 변수
     @IBOutlet weak var roomImg: UIImageView!
     @IBOutlet weak var roomName: UITextField!
     @IBOutlet weak var roomNameMsg: UILabel!
     @IBOutlet weak var masterName: UITextField!
     @IBOutlet weak var updateBtn: UIButton!
-    let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: SettingStudyRoomVC.self, action: nil)
+    let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: UpdateStudyRoomVC.self, action: nil)
     lazy var indicatorView: UIView = {
         let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         indicatorView.backgroundColor = COLOR.INDICATOR_BACKGROUND_COLOR
@@ -282,7 +282,7 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
     
     // textField 변경할 때 event
     @objc func textFieldEditingChanged(_ textField: UITextField) {
-        //        print("SettingStudyRoomVC - textFieldEditingChanged() called / sender.text: \(sender.text)")
+        //        print("UpdateStudyRoomVC - textFieldEditingChanged() called / sender.text: \(sender.text)")
         switch textField {
         case roomName:
             // 이름 형식 체크 (모든 문자 1글자 이상, 공백만 X)
@@ -325,7 +325,7 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
                             self.navigationController?.popViewController(animated: true)
                             self.navigationController?.view.makeToast("스터디룸 설정이 변경되었습니다.", duration: 1.0, position: .center)
                         case .failure(let error):
-                            print("SettingStudyRoomVC - postUpdateRoom_image() called / error: \(error.rawValue)")
+                            print("UpdateStudyRoomVC - postUpdateRoom_image() called / error: \(error.rawValue)")
                             self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
                         }
                     })
@@ -334,7 +334,7 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
                     self.navigationController?.view.makeToast("스터디룸 설정이 변경되었습니다.", duration: 1.0, position: .center)
                 }
             case .failure(let error):
-                print("SettingStudyRoomVC - putUpdateRoom() called / error: \(error.rawValue)")
+                print("UpdateStudyRoomVC - putUpdateRoom() called / error: \(error.rawValue)")
                 self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
             }
         })
@@ -355,7 +355,7 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
     // MARK: - textField delegate
     // textField에서 enter키 눌렀을때 event
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        //        print("SettingStudyRoomVC - textFieldShouldReturn() called")
+        //        print("UpdateStudyRoomVC - textFieldShouldReturn() called")
         switch textField {
         case roomName:
             // 이름 형식 체크 (모든 문자 1글자 이상, 공백만 X)
@@ -369,7 +369,7 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
     }
     
     func textFieldCheck(textField: UITextField, msgLabel: UILabel, inputData: String) {
-        print("SettingStudyRoomVC - textFieldCheck() called / msgLabel: \(msgLabel), inputData: \(inputData)")
+        print("UpdateStudyRoomVC - textFieldCheck() called / msgLabel: \(msgLabel), inputData: \(inputData)")
         
         guard inputData != "" else {
             msgLabel.text = ""

@@ -1,5 +1,5 @@
 //
-//  ProfileSettingVC.swift
+//  UpdateProfileVC.swift
 //  Ctudy
 //
 //  Created by 김지은 on 2022/06/08.
@@ -10,14 +10,14 @@ import UIKit
 import Kingfisher
 import NVActivityIndicatorView
 
-class ProfileSettingVC: BasicVC, UIGestureRecognizerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate {
+class UpdateProfileVC: BasicVC, UIGestureRecognizerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate {
     // MARK: - 변수
     @IBOutlet weak var profileUsername: UILabel!
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var inputName: UITextField!
     @IBOutlet weak var nameMsg: UILabel!
     @IBOutlet weak var updateBtn: UIButton!
-    let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: ProfileSettingVC.self, action: nil)
+    let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: UpdateProfileVC.self, action: nil)
     lazy var indicatorView: UIView = {
         let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         indicatorView.backgroundColor = COLOR.INDICATOR_BACKGROUND_COLOR
@@ -290,7 +290,7 @@ class ProfileSettingVC: BasicVC, UIGestureRecognizerDelegate, UINavigationContro
                             self.getProfileInfo()
                             break
                         case .failure(let error):
-                            print("ProfileSettingVC - postUpdateProfile_image() called / error: \(error.rawValue)")
+                            print("UpdateProfileVC - postUpdateProfile_image() called / error: \(error.rawValue)")
                             self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
                         }
                     })
@@ -299,7 +299,7 @@ class ProfileSettingVC: BasicVC, UIGestureRecognizerDelegate, UINavigationContro
                     self.getProfileInfo()
                 }
             case .failure(let error):
-                print("ProfileSettingVC - putUpdateProfile() called / error: \(error.rawValue)")
+                print("UpdateProfileVC - putUpdateProfile() called / error: \(error.rawValue)")
                 self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
             }
         })
@@ -326,7 +326,7 @@ class ProfileSettingVC: BasicVC, UIGestureRecognizerDelegate, UINavigationContro
                 self.navigationController?.popViewController(animated: true)
                 self.navigationController?.view.makeToast("프로필이 변경되었습니다.", duration: 1.0, position: .center)
             case .failure(let error):
-                print("ProfileSettingVC - getProfile() called / error: \(error.rawValue)")
+                print("UpdateProfileVC - getProfile() called / error: \(error.rawValue)")
             }
         })
         

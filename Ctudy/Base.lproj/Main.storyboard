@@ -798,7 +798,7 @@
                         <outlet property="profileImg" destination="U5M-uN-g6M" id="YgK-Nv-Fke"/>
                         <outlet property="profileName" destination="Tvg-Hd-hgY" id="v66-5f-uKF"/>
                         <outlet property="profileUsername" destination="OsZ-6Y-g5M" id="ZlF-Ry-vwt"/>
-                        <segue destination="hT0-se-8tA" kind="show" identifier="ProfileSettingVC" id="MTc-r2-fOe"/>
+                        <segue destination="hT0-se-8tA" kind="show" identifier="UpdateProfileVC" id="MTc-r2-fOe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zWi-4X-OE7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1086,7 +1086,7 @@
                         <outlet property="profileImg" destination="4Ur-WJ-Ibw" id="SLQ-qq-UsS"/>
                         <outlet property="profileName" destination="sl9-pa-h5S" id="vlJ-pD-KiX"/>
                         <outlet property="profileUsername" destination="jeb-vx-6cT" id="LiX-g0-Se1"/>
-                        <segue destination="Kz7-r3-jLa" kind="show" identifier="SettingStudyRoomVC" id="OdK-pt-doa"/>
+                        <segue destination="YEb-yf-DJf" kind="show" identifier="StudyRoomSettingVC" id="JUk-Ew-CEG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1hB-aX-r3A" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1235,6 +1235,52 @@
                 <exit id="oqU-f5-Kd2" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="6487" y="-1608"/>
+        </scene>
+        <!--Study Room SettingVC-->
+        <scene sceneID="02v-WH-t6a">
+            <objects>
+                <viewController id="YEb-yf-DJf" customClass="StudyRoomSettingVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="70d-3v-cLv">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FW4-Bu-rBl">
+                                <rect key="frame" x="34" y="126" width="345" height="687"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="0Ez-7M-QZ5">
+                                        <rect key="frame" x="0.0" y="0.0" width="345" height="687"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </tableView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="0Ez-7M-QZ5" firstAttribute="trailing" secondItem="WVI-HO-CNn" secondAttribute="trailing" id="4lv-hg-Lmh"/>
+                                    <constraint firstItem="0Ez-7M-QZ5" firstAttribute="leading" secondItem="WVI-HO-CNn" secondAttribute="leading" id="6WR-9i-vD8"/>
+                                    <constraint firstItem="WVI-HO-CNn" firstAttribute="bottom" secondItem="0Ez-7M-QZ5" secondAttribute="bottom" id="FyU-gU-vSc"/>
+                                    <constraint firstItem="0Ez-7M-QZ5" firstAttribute="trailing" secondItem="D66-FO-G51" secondAttribute="trailing" id="HEh-op-3nl"/>
+                                    <constraint firstItem="0Ez-7M-QZ5" firstAttribute="bottom" secondItem="D66-FO-G51" secondAttribute="bottom" id="QQf-r7-hNN"/>
+                                    <constraint firstItem="0Ez-7M-QZ5" firstAttribute="top" secondItem="D66-FO-G51" secondAttribute="top" id="TdX-kr-QzS"/>
+                                    <constraint firstItem="0Ez-7M-QZ5" firstAttribute="width" secondItem="WVI-HO-CNn" secondAttribute="width" id="h6o-oZ-Bjk"/>
+                                    <constraint firstItem="0Ez-7M-QZ5" firstAttribute="leading" secondItem="D66-FO-G51" secondAttribute="leading" id="kSd-1c-Jl5"/>
+                                    <constraint firstItem="0Ez-7M-QZ5" firstAttribute="top" secondItem="WVI-HO-CNn" secondAttribute="top" id="xvt-Df-sFp"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="D66-FO-G51"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="WVI-HO-CNn"/>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="5Te-Se-GR2"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="U97-Zl-9rh"/>
+                    <connections>
+                        <outlet property="settingTableView" destination="0Ez-7M-QZ5" id="ADk-7Q-5Hn"/>
+                        <segue destination="Kz7-r3-jLa" kind="show" identifier="UpdateStudyRoomVC" id="i6z-9u-ZIa"/>
+                        <segue destination="WiB-Pd-WYS" kind="show" identifier="AddStudyRoomMemberVC" id="LM4-W7-6Br"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sMt-c8-YSX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4473.913043478261" y="-2341.0714285714284"/>
         </scene>
         <!--Register Coupon FirstVC-->
         <scene sceneID="Y0J-Oo-R0Z">
@@ -1408,22 +1454,6 @@
             </objects>
             <point key="canvasLocation" x="5480" y="-1608"/>
         </scene>
-        <!--CouponVC-->
-        <scene sceneID="iTt-ge-sIw">
-            <objects>
-                <viewController id="83z-Zo-AOK" customClass="CouponVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="HfN-9L-R8q">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="wok-ZI-Dbo"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="N6m-L1-uSi"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="MEM-tI-04y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="6487" y="-859"/>
-        </scene>
         <!--SettingVC-->
         <scene sceneID="NsJ-9g-ckJ">
             <objects>
@@ -1465,14 +1495,18 @@
                     <connections>
                         <outlet property="settingTableView" destination="AEA-GU-lVf" id="LA5-ZM-yCq"/>
                         <segue destination="TsX-t5-Chy" kind="unwind" identifier="unwindStartVC" unwindAction="unwindStartVC:" id="sUi-n8-uO9"/>
-                        <segue destination="hT0-se-8tA" kind="show" identifier="ProfileSettingVC" id="4no-wb-8Xr"/>
+                        <segue destination="hT0-se-8tA" kind="show" identifier="UpdateProfileVC" id="4no-wb-8Xr"/>
                         <segue destination="O0e-C2-sqD" kind="show" identifier="UpdatePasswordVC" id="jnW-5k-KVx"/>
+                        <segue destination="2HN-5l-Tin" kind="show" identifier="VersionVC" id="QOf-Sw-OTv"/>
+                        <segue destination="LKA-TT-K22" kind="show" identifier="PrivacyVC" id="n7T-42-aAk"/>
+                        <segue destination="IX6-Qw-xSi" kind="show" identifier="ServiceVC" id="0RU-Qx-5N8"/>
+                        <segue destination="NKY-2O-q1O" kind="show" identifier="NoticeVC" id="Zwy-Pr-Ghr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xdG-t1-xH0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="TsX-t5-Chy" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4474" y="-125"/>
+            <point key="canvasLocation" x="7493" y="-125"/>
         </scene>
         <!--Update PasswordVC-->
         <scene sceneID="VDs-Xc-4eN">
@@ -1631,7 +1665,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vMr-wO-Icq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5479.7101449275369" y="-125.22321428571428"/>
+            <point key="canvasLocation" x="8499" y="-125"/>
         </scene>
         <!--WithdrawVC-->
         <scene sceneID="P3x-Mu-IeF">
@@ -1719,7 +1753,23 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Mf-PZ-agP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="NlO-uO-5fG" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="6486.9565217391309" y="-125.22321428571428"/>
+            <point key="canvasLocation" x="9506" y="-125"/>
+        </scene>
+        <!--PrivacyVC-->
+        <scene sceneID="2Mg-gc-ueb">
+            <objects>
+                <viewController id="LKA-TT-K22" customClass="PrivacyVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="tyC-df-eZG">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="uap-jK-8Nh"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="TrS-Mr-5I0"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="C0H-nL-qLp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8499" y="668"/>
         </scene>
         <!--Coupon HistoryVC-->
         <scene sceneID="jtb-ED-VnN">
@@ -1939,10 +1989,26 @@
             </objects>
             <point key="canvasLocation" x="4474" y="-3087"/>
         </scene>
-        <!--Setting Study RoomVC-->
+        <!--Add Study Room MemberVC-->
+        <scene sceneID="JR7-Kh-Sgk">
+            <objects>
+                <viewController id="WiB-Pd-WYS" customClass="AddStudyRoomMemberVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nLb-Am-HXF">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="VYO-mA-KK7"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="NYD-7J-gog"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="48k-Xj-caQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7493" y="-3087"/>
+        </scene>
+        <!--Update Study RoomVC-->
         <scene sceneID="9a0-1v-Def">
             <objects>
-                <viewController id="Kz7-r3-jLa" customClass="SettingStudyRoomVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Kz7-r3-jLa" customClass="UpdateStudyRoomVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ffc-S9-4pn">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2057,7 +2123,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ejw-dA-rOz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4474" y="-2355"/>
+            <point key="canvasLocation" x="7493" y="-2340"/>
         </scene>
         <!--StartVC-->
         <scene sceneID="aep-r6-mmF">
@@ -2505,12 +2571,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l2R-lc-AOi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5480" y="-2355"/>
+            <point key="canvasLocation" x="8499" y="-2340"/>
         </scene>
-        <!--Profile SettingVC-->
+        <!--Update ProfileVC-->
         <scene sceneID="qAp-eJ-Xo7">
             <objects>
-                <viewController id="hT0-se-8tA" customClass="ProfileSettingVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="hT0-se-8tA" customClass="UpdateProfileVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eZY-qN-88R">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2626,7 +2692,101 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Vu-G4-xzc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4474" y="668"/>
+            <point key="canvasLocation" x="8499" y="-859"/>
+        </scene>
+        <!--ServiceVC-->
+        <scene sceneID="QQO-AW-lx0">
+            <objects>
+                <viewController id="IX6-Qw-xSi" customClass="ServiceVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3Aj-RE-YlY">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="MJ9-Ny-sJA"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="cPe-Kp-3la"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qbr-Oo-hAq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8499" y="1398"/>
+        </scene>
+        <!--NoticeVC-->
+        <scene sceneID="2I2-6t-wy9">
+            <objects>
+                <viewController id="NKY-2O-q1O" customClass="NoticeVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="CMH-8M-sEO">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="2pB-lN-A0z"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="MTq-xT-Po3"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="t17-oB-fdM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8499" y="2149"/>
+        </scene>
+        <!--VersionVC-->
+        <scene sceneID="cwe-SH-iDg">
+            <objects>
+                <viewController id="2HN-5l-Tin" customClass="VersionVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="PYf-VM-xdE">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g3w-gm-yXV">
+                                <rect key="frame" x="10" y="98" width="394" height="705"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ctudy_icon" translatesAutoresizingMaskIntoConstraints="NO" id="ghw-cE-4OW">
+                                        <rect key="frame" x="132" y="252.5" width="130" height="130"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="130" id="28B-eB-7yr"/>
+                                            <constraint firstAttribute="height" constant="130" id="de5-Ut-uqN"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9hU-tB-faM">
+                                        <rect key="frame" x="181.5" y="417" width="31" height="14.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KwO-Ye-kcF">
+                                        <rect key="frame" x="175" y="392.5" width="44" height="21.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="KwO-Ye-kcF" firstAttribute="top" secondItem="ghw-cE-4OW" secondAttribute="bottom" constant="10" id="4Xl-CN-hZV"/>
+                                    <constraint firstItem="9hU-tB-faM" firstAttribute="top" secondItem="KwO-Ye-kcF" secondAttribute="bottom" constant="3" id="Jwc-bS-uuI"/>
+                                    <constraint firstItem="ghw-cE-4OW" firstAttribute="centerY" secondItem="g3w-gm-yXV" secondAttribute="centerY" multiplier="0.9" id="kQv-We-fcY"/>
+                                    <constraint firstItem="9hU-tB-faM" firstAttribute="centerX" secondItem="KwO-Ye-kcF" secondAttribute="centerX" id="nrZ-UH-hA3"/>
+                                    <constraint firstItem="ghw-cE-4OW" firstAttribute="centerX" secondItem="g3w-gm-yXV" secondAttribute="centerX" id="ofh-yE-FzT"/>
+                                    <constraint firstItem="KwO-Ye-kcF" firstAttribute="centerX" secondItem="g3w-gm-yXV" secondAttribute="centerX" id="xOa-hs-4o1"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="axl-zq-bsH"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="g3w-gm-yXV" firstAttribute="top" secondItem="axl-zq-bsH" secondAttribute="top" constant="10" id="Rc8-4T-Ibv"/>
+                            <constraint firstItem="g3w-gm-yXV" firstAttribute="leading" secondItem="axl-zq-bsH" secondAttribute="leading" constant="10" id="VrH-dc-Fhb"/>
+                            <constraint firstItem="axl-zq-bsH" firstAttribute="trailing" secondItem="g3w-gm-yXV" secondAttribute="trailing" constant="10" id="pMy-yx-MkP"/>
+                            <constraint firstItem="axl-zq-bsH" firstAttribute="bottom" secondItem="g3w-gm-yXV" secondAttribute="bottom" constant="10" id="zNH-UF-HIS"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="dON-fH-goD"/>
+                    <connections>
+                        <outlet property="ctudyImg" destination="ghw-cE-4OW" id="pnR-LZ-GNa"/>
+                        <outlet property="currentVersion" destination="9hU-tB-faM" id="utp-lS-9gP"/>
+                        <outlet property="versionMsg" destination="KwO-Ye-kcF" id="a9q-NX-2wb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9qX-Vx-5Gc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8499" y="2905"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
