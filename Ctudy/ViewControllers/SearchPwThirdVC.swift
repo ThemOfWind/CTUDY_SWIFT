@@ -16,6 +16,7 @@ class SearchPwThirdVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate
     @IBOutlet weak var passwordMsg: UILabel!
     @IBOutlet weak var passwordChkMsg: UILabel!
     @IBOutlet weak var updateBtn: UIButton!
+    @IBOutlet weak var goToStartBtn: UIButton!
     let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: SearchPwThirdVC.self, action: nil)
     lazy var indicatorView: UIView = {
         let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
@@ -51,7 +52,7 @@ class SearchPwThirdVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate
     // MARK: - config func
     fileprivate func config() {
         // navigationbar item
-        self.leftItem = LeftItem.backGeneral
+        self.leftItem = LeftItem.none
         self.titleItem = TitleItem.titleGeneral(title: "새로운 비밀번호", isLargeTitles: true)
         
         // button & textField ui
@@ -66,6 +67,7 @@ class SearchPwThirdVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate
         self.updateBtn.addTarget(self, action: #selector(onUpdateBtnClicked), for: .touchUpInside)
         self.inputNewPassword.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
         self.inputNewPasswordChk.addTarget(self, action: #selector(passwordChkEditingChanged(_:)), for: .editingChanged)
+        self.goToStartBtn.addTarget(self, action: #selector(onGoToStartBtnClicked), for: .touchUpInside)
         
         // delegate 연결
         self.inputNewPassword.delegate = self
@@ -141,6 +143,10 @@ class SearchPwThirdVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate
             self.updateBtn.backgroundColor = COLOR.DISABLE_COLOR
             self.updateBtn.isEnabled = false
         }
+    }
+    
+    @objc fileprivate func onGoToStartBtnClicked() {
+        performSegue(withIdentifier: "unwindStartVC", sender: self)
     }
     
     // MARK: - textField Delegate

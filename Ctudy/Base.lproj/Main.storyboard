@@ -474,7 +474,7 @@
                                         <color key="tintColor" red="0.70588235290000001" green="0.49019607840000001" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="다 음"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="인 증 하 기">
+                                        <buttonConfiguration key="configuration" style="plain" title="인 증">
                                             <fontDescription key="titleFontDescription" type="boldSystem" pointSize="18"/>
                                         </buttonConfiguration>
                                     </button>
@@ -586,7 +586,7 @@
                                         </subviews>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cqk-K3-5Qb">
-                                        <rect key="frame" x="0.0" y="605" width="374" height="60"/>
+                                        <rect key="frame" x="0.0" y="553" width="374" height="60"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="60" id="cFM-P1-Ceu"/>
@@ -599,14 +599,24 @@
                                             <fontDescription key="titleFontDescription" type="boldSystem" pointSize="18"/>
                                         </buttonConfiguration>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QTT-5P-jcI">
+                                        <rect key="frame" x="134" y="633" width="106" height="32"/>
+                                        <color key="tintColor" red="0.72549019609999998" green="0.72549019609999998" blue="0.72549019609999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="처음 화면으로">
+                                            <fontDescription key="titleFontDescription" type="system" pointSize="15"/>
+                                        </buttonConfiguration>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="Cqk-K3-5Qb" secondAttribute="bottom" constant="20" id="4H3-19-Os1"/>
+                                    <constraint firstAttribute="bottom" secondItem="QTT-5P-jcI" secondAttribute="bottom" constant="20" id="M7S-IL-fmd"/>
                                     <constraint firstItem="b4t-jA-hRW" firstAttribute="top" secondItem="8GK-wD-zPY" secondAttribute="top" constant="10" id="MIH-ms-gVP"/>
                                     <constraint firstAttribute="trailing" secondItem="b4t-jA-hRW" secondAttribute="trailing" id="Q43-zL-jWf"/>
                                     <constraint firstItem="Cqk-K3-5Qb" firstAttribute="leading" secondItem="8GK-wD-zPY" secondAttribute="leading" id="iGP-83-i4b"/>
                                     <constraint firstItem="b4t-jA-hRW" firstAttribute="leading" secondItem="8GK-wD-zPY" secondAttribute="leading" id="l4d-Ml-fxZ"/>
+                                    <constraint firstItem="QTT-5P-jcI" firstAttribute="centerX" secondItem="8GK-wD-zPY" secondAttribute="centerX" id="m8B-al-NyO"/>
+                                    <constraint firstItem="QTT-5P-jcI" firstAttribute="top" secondItem="Cqk-K3-5Qb" secondAttribute="bottom" constant="20" id="r6V-zj-hOP"/>
                                     <constraint firstAttribute="trailing" secondItem="Cqk-K3-5Qb" secondAttribute="trailing" id="wMZ-0o-YZu"/>
                                 </constraints>
                             </view>
@@ -622,15 +632,18 @@
                     </view>
                     <navigationItem key="navigationItem" id="CNm-cy-2u8"/>
                     <connections>
+                        <outlet property="goToStartBtn" destination="QTT-5P-jcI" id="FkM-vy-L3J"/>
                         <outlet property="inputNewPassword" destination="4BQ-4s-jE9" id="ZRO-o8-Opv"/>
                         <outlet property="inputNewPasswordChk" destination="IMo-ey-q3X" id="1su-gW-fx3"/>
                         <outlet property="passwordChkMsg" destination="pdm-wQ-Qpj" id="T6Y-WG-mZ1"/>
                         <outlet property="passwordMsg" destination="DR3-Pu-Fec" id="pOF-Tk-uRm"/>
                         <outlet property="updateBtn" destination="Cqk-K3-5Qb" id="mP5-WC-nOY"/>
                         <segue destination="hcZ-ab-sts" kind="show" identifier="SearchPwSuccessVC" id="df7-p8-j8W"/>
+                        <segue destination="JmL-qh-Bid" kind="unwind" identifier="unwindStartVC" unwindAction="unwindStartVC:" id="4Mr-rS-pMm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r7r-xc-utT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="JmL-qh-Bid" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="5480" y="2149"/>
         </scene>
@@ -661,7 +674,7 @@
                                         <color key="tintColor" red="0.70588235290000001" green="0.49019607840000001" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" title="다 음"/>
-                                        <buttonConfiguration key="configuration" style="plain" title="처 음 으 로">
+                                        <buttonConfiguration key="configuration" style="plain" title="로 그 인 하 러 가 기">
                                             <fontDescription key="titleFontDescription" type="boldSystem" pointSize="18"/>
                                         </buttonConfiguration>
                                         <connections>
