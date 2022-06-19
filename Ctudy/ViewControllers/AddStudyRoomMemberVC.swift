@@ -134,7 +134,7 @@ class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource,
             switch result {
             case .success(_):
                 self.performSegue(withIdentifier: "unwindMainDetailVC", sender: self)
-//                self.navigationController?.view.makeToast("멤버가 초대되었습니다.", duration: 1.0, position: .center)
+                self.navigationController?.view.makeToast("멤버 초대가 완료되었습니다.", duration: 1.0, position: .center)
             case .failure(let error):
                 print("RegisterStudyRoomSecondVC - postRegisterRoom() called / error: \(error.rawValue)")
                 self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
