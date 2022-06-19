@@ -50,11 +50,13 @@ enum RoomErrors: String, Error {
     case noSearchMemeber = "스터디룸 회원 조회에 실패했습니다."
     case noUpdateRoomImage = "스터디룸 이미지 변경에 실패했습니다."
     case noUpdateRoom = "스터디룸 설정 변경에 실패했습니다."
+    case noOutRoom = "스터디룸 탈퇴에 실패했습니다."
 }
 
 enum MemberErrors: String, Error {
     case noSearchMember = "전체 회원 조회에 실패했습니다."
     case noDeleteMember = "멤버 강제 탈퇴에 실패했습니다."
+    case noInviteMember = "멤버 초대에 실패했습니다."
 }
 
 enum CouponErrors: String, Error {

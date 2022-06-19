@@ -36,7 +36,7 @@ class SettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     }()
     // 셋팅 항목
     let settingList = [
-        [ "id" : "profile", "text" : "프로필관리", "color" : UIColor.black ]
+        [ "id" : "profile", "text" : "프로필 설정", "color" : UIColor.black ]
         , [ "id" : "username", "text" : "계정관리", "color" : UIColor.black ]
         , [ "id" : "privacy", "text" : "개인정보 처리 방침", "color" : UIColor.black ]
         , [ "id" : "service", "text" : "이용약관", "color" : UIColor.black ]
@@ -158,7 +158,7 @@ class SettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch settingList[(indexPath as NSIndexPath).row]["id"] as! String {
         case "profile":
-            // 프로필관리 화면으로 이동
+            // 프로필설정 화면으로 이동
             self.performSegue(withIdentifier: "UpdateProfileVC", sender: self)
             break
         case "username":

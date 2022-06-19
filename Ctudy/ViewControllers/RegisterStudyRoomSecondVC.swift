@@ -46,13 +46,12 @@ class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataS
     var studyImage: Data?
     var studyName: String?
     
-    // MARK: - override func
+    // MARK: - view load func
     override func viewDidLoad() {
         super.viewDidLoad()
         self.config()
     }
     
-    // MARK: - fileprivate func
     fileprivate func config() {
         // navigationBar item 설정
         self.leftItem = LeftItem.backGeneral
@@ -88,6 +87,7 @@ class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataS
         self.getSearchMember()
     }
     
+    // MARK: - search member api
     // 전체 멤버 조회
     fileprivate func getSearchMember() {
         AlamofireManager.shared.getSearchMember(page: nextPage ?? "0", completion: {
@@ -117,16 +117,7 @@ class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataS
         })
     }
     
-    // 로딩 그리기
-    fileprivate func createSpinnerFooter() -> UIView {
-        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: memberTableView.frame.size.width, height: 100))
-        let spinner = UIActivityIndicatorView()
-        spinner.center = footerView.center
-        footerView.addSubview(spinner)
-        spinner.startAnimating()
-        return footerView
-    }
-    
+    // MARK: - indicator in api calling
     fileprivate func onStartActivityIndicator() {
         DispatchQueue.main.async {
             // 불투명 뷰 추가
@@ -153,6 +144,45 @@ class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataS
             // 서버 통신 완료 후 다음의 메서드를 실행해서 통신의 끝나는 느낌을 줄 수 있다.
             self.indicator.stopAnimating()
             self.indicatorView.removeFromSuperview()
+        }
+    }
+    
+    // MARK: - infinity scroll
+    // 로딩 그리기
+    fileprivate func createSpinnerFooter() -> UIView {
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: memberTableView.frame.size.width, height: 100))
+        let spinner = UIActivityIndicatorView()
+        spinner.center = footerView.center
+        footerView.addSubview(spinner)
+        spinner.startAnimating()
+        return footerView
+    }
+    
+    // 아래로 스크롤시 event
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // tableView 끝에 도달
+        if scrollView.contentOffset.y > (memberTableView.contentSize.height - scrollView.bounds.size.height) {
+            // 다음 페이지가 없을 시
+            if nextPage != nil {
+                // 로딩 가능한지 체크
+                if !fetchingMore {
+                    // 현재 로딩 On
+                    fetchingMore = true
+                    
+                    // 로딩 생성
+                    self.memberTableView.tableFooterView = createSpinnerFooter()
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                        // 데이터 가져오기
+                        self.getSearchMember()
+                        
+                        // 로딩 off & view reload
+                        self.fetchingMore = false
+                        self.memberTableView.tableFooterView = nil
+                        
+                    }
+                }
+            }
         }
     }
     
@@ -213,34 +243,6 @@ class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataS
     func checkBtnClicked(btn: UIButton, ischecked: Bool) {
         print("RegisterStudyRoomSecondVC - checkBtnClicked() called / btn.tag: \(btn.tag), btn.id: \(members[btn.tag].id) ischecked: \(ischecked)")
         self.members[btn.tag].ischecked = ischecked
-    }
-    
-    // 아래로 스크롤시 event
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // tableView 끝에 도달
-        if scrollView.contentOffset.y > (memberTableView.contentSize.height - scrollView.bounds.size.height) {
-            // 다음 페이지가 없을 시
-            if nextPage != nil {
-                // 로딩 가능한지 체크
-                if !fetchingMore {
-                    // 현재 로딩 On
-                    fetchingMore = true
-                    
-                    // 로딩 생성
-                    self.memberTableView.tableFooterView = createSpinnerFooter()
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                        // 데이터 가져오기
-                        self.getSearchMember()
-                        
-                        // 로딩 off & view reload
-                        self.fetchingMore = false
-                        self.memberTableView.tableFooterView = nil
-                        
-                    }
-                }
-            }
-        }
     }
     
     // MARK: - UIGestureRecognizerDelegate

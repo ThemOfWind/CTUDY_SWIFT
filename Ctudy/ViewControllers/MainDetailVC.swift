@@ -43,12 +43,11 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    var roomId: Int! // 전달받은 스터디룸 id
     var members: Array<SearchStudyMemberResponse> = [] // 전달할 멤버 리스트
     var settingRoom: SettingStudyRoomResponse! // 전달할 room 정보
-    let userId = Int(KeyChainManager().tokenLoad(API.SERVICEID, account: "id")!) // 사용자 id
-    var profileId: Int! // 접속 회원 id
-    var roomId: Int! // 스터디룸 id
-    var isMaster: Bool = false // 사용자가 master인지
+    var isMaster: Bool = false // 사용자가 master인지 체크, 전달할 master bool값
+    let profileId = Int(KeyChainManager().tokenLoad(API.SERVICEID, account: "id")!) // 사용자 id
     
     // MARK: - override func
     override func viewWillAppear(_ animated: Bool) {
@@ -70,7 +69,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
                 var memberList = [SearchStudyMemberResponse]()
                 
                 for index in 0..<members.count {
-                    if userId != members[index].id {
+                    if profileId != members[index].id {
                         let member = SearchStudyMemberResponse(id: members[index].id, name: members[index].name, username: members[index].username, image: members[index].image, coupon: members[index].coupon)
                         memberList.append(member)
                     }
@@ -84,7 +83,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
                 var memberList = [SearchStudyMemberResponse]()
                 
                 for index in 0..<members.count {
-                    if userId != members[index].id {
+                    if profileId != members[index].id {
                         let member = SearchStudyMemberResponse(id: members[index].id, name: members[index].name, username: members[index].username, image: members[index].image, coupon: members[index].coupon)
                         memberList.append(member)
                     }
@@ -92,7 +91,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
                 
                 controller.members = memberList
                 controller.settingRoom = settingRoom
-                
+                controller.isMaster = isMaster
             }
         }
     }
@@ -118,7 +117,6 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         profileImg.contentMode = .scaleAspectFill
         profileImg.translatesAutoresizingMaskIntoConstraints = false
         
-        profileId = Int(KeyChainManager().tokenLoad(API.SERVICEID, account: "id")!)
         profileName.text = KeyChainManager().tokenLoad(API.SERVICEID, account: "name")
         profileUsername.text = "@\(KeyChainManager().tokenLoad(API.SERVICEID, account: "username")!)"
         profileUsername.textColor = COLOR.SUBTITLE_COLOR
@@ -221,8 +219,10 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
                 
                 // 현재 사용자가 master인지 체크
                 self.titleItem = TitleItem.titleGeneral(title: self.settingRoom.name, isLargeTitles: true)
-                if self.settingRoom.masterid == self.userId {
+                if self.settingRoom.masterid == self.profileId {
                     self.isMaster = true
+                } else {
+                    self.isMaster = false
                 }
                 
                 // view reload

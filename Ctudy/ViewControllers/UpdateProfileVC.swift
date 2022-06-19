@@ -56,7 +56,7 @@ class UpdateProfileVC: BasicVC, UIGestureRecognizerDelegate, UINavigationControl
     fileprivate func config() {
         // navigationbar item
         leftItem = LeftItem.backGeneral
-        titleItem = TitleItem.titleGeneral(title: "프로필 관리", isLargeTitles: true)
+        titleItem = TitleItem.titleGeneral(title: "프로필 설정", isLargeTitles: true)
         
         // profile
         profileImg.layer.cornerRadius = self.profileImg.bounds.height / 2
@@ -161,7 +161,7 @@ class UpdateProfileVC: BasicVC, UIGestureRecognizerDelegate, UINavigationControl
     }
     
     fileprivate func actionSheetAlert() {
-        let alert = UIAlertController(title: "새로운 프로필 이미지 설정", message: nil, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "프로필 이미지 변경", message: nil, preferredStyle: .actionSheet)
         let cancel = UIAlertAction(title: "초기화", style: .cancel, handler: { [weak self] (_) in
             self?.presentCancel()
         })

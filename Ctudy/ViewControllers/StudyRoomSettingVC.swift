@@ -12,8 +12,6 @@ import NVActivityIndicatorView
 class StudyRoomSettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     // MARK: - 변수
     @IBOutlet weak var settingTableView: UITableView!
-    var members: Array<SearchStudyMemberResponse>? // 전달받은 멤버 리스트
-    var settingRoom: SettingStudyRoomResponse! // 전달받은 room 정보
     lazy var indicatorView: UIView = {
         let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         indicatorView.backgroundColor = COLOR.INDICATOR_BACKGROUND_COLOR
@@ -35,12 +33,10 @@ class StudyRoomSettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    // 셋팅 항목
-    let settingList = [
-        [ "id" : "setting", "text" : "설정", "color" : UIColor.black ]
-        , [ "id" : "add", "text" : "멤버 초대", "color" : UIColor.black ]
-        , [ "id" : "out", "text" : "나가기", "color" : UIColor.red ]
-    ]
+    var members: Array<SearchStudyMemberResponse>? // 전달받은 멤버 리스트
+    var settingRoom: SettingStudyRoomResponse! // 전달받은 room 정보
+    var isMaster: Bool! // 사용자가 master인지 체크, 전달받은 master bool값
+    var settingList: Array<Dictionary<String, Any>>! // 셋팅 항목
     
     // MARK: - override func
     override func viewWillAppear(_ animated: Bool) {
@@ -51,20 +47,12 @@ class StudyRoomSettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let id = segue.identifier, id == "UpdateStudyRoomVC" {
             if let controller = segue.destination as? UpdateStudyRoomVC {
-                var memberList = [SearchStudyMemberResponse]()
-                
-//                if let list = members {
-//                for index in 0..<list.count {
-//                    if userId != members[index].id {
-//                        let member = SearchStudyMemberResponse(id: members[index].id, name: members[index].name, username: members[index].username, image: members[index].image, coupon: members[index].coupon)
-//                        memberList.append(member)
-//                    }
-//                }
-//                }
-                
-                controller.members = memberList
+                controller.members = members
                 controller.settingRoom = settingRoom
-                
+            }
+        } else if let id = segue.identifier, id == "AddStudyRoomMemberVC" {
+            if let controller = segue.destination as? AddStudyRoomMemberVC {
+                controller.roomId = settingRoom.id
             }
         }
     }
@@ -90,6 +78,17 @@ class StudyRoomSettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         // delegate 연결
         self.settingTableView.delegate = self
         self.settingTableView.dataSource = self
+        
+        // 사용자가 master일 경우
+        if isMaster {
+            settingList =  [
+                [ "id" : "setting", "text" : "스터디룸 설정", "color" : UIColor.black ]
+              , [ "id" : "add", "text" : "멤버 초대", "color" : UIColor.black ]
+              , [ "id" : "out", "text" : "나가기", "color" : UIColor.red ]
+            ]
+        } else {
+            settingList = [ [ "id" : "out", "text" : "나가기", "color" : UIColor.red ] ]
+        }
     }
     
     fileprivate func onStartActivityIndicator() {
@@ -122,34 +121,42 @@ class StudyRoomSettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     // logoutBtn event
-    fileprivate func logout() {
-        // logout alert 띄우기
+    fileprivate func outStudyRoom() {
+        if isMaster {
+            print("click!")
+            let alert = UIAlertController(title: nil, message: "스터디룸을 나갈 수 없습니다.\n'스터디룸관리>스터디룸설정'에서 방장을 변경해주세요.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .cancel))
+            self.present(alert, animated: false)
+            return
+//            self.view.makeToast("방장은 스터디룸을 나갈 수 없습니다.\n'스터디룸관리>스터디룸설정'에서 방장을 변경해주세요.", duration: 2.0, position: .center)
+        }
+        
+        // out alert 띄우기
         let alert = UIAlertController(title: nil, message: "스터디룸을 나가시겠습니까?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "취소", style: .cancel))
         alert.addAction(UIAlertAction(title: "확인", style: .destructive, handler: { (_) in
             
-//            self.onStartActivityIndicator()
-//            
-//            AlamofireManager.shared.getLogout(completion: {
-//                [weak self] result in
-//                guard let self = self else { return }
-//                
-//                self.onStopActivityIndicator()
-//                
-//                switch result {
-//                case .success(let checkData):
-//                    print("StudyRoomSettingVC - logout().success")
-//                    //                    self.navigationController?.popViewController(animated: true)
-//                    self.performSegue(withIdentifier: "unwindStartVC", sender: self)
-//                    self.navigationController?.view.makeToast("로그아웃 되었습니다.", duration: 1.0, position: .center)
-//                case .failure(let error):
-//                    print("StudyRoomSettingVC - logout().failure / error: \(error)")
-//                }
-//            })
-//            
-//            if self.indicator.isAnimating {
-//                self.onStopActivityIndicator()
-//            }
+            self.onStartActivityIndicator()
+            
+            AlamofireManager.shared.deleteOutRoom(id: String(self.settingRoom.id), memberId: KeyChainManager().tokenLoad(API.SERVICEID, account: "id")!, completion: {
+                [weak self] result in
+                guard let self = self else { return }
+                
+                self.onStopActivityIndicator()
+                
+                switch result {
+                case .success(let checkData):
+                    print("StudyRoomSettingVC - deleteOutRoom().success")
+                    self.performSegue(withIdentifier: "unwindMainTabBarVC", sender: self)
+                    self.navigationController?.view.makeToast("스터디룸 '\(self.settingRoom.name)'을(를) 탈퇴했습니다.", duration: 1.0, position: .center)
+                case .failure(let error):
+                    print("StudyRoomSettingVC - deleteOutRoom().failure / error: \(error)")
+                }
+            })
+            
+            if self.indicator.isAnimating {
+                self.onStopActivityIndicator()
+            }
             
         }))
         
@@ -182,7 +189,7 @@ class StudyRoomSettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
             break
         case "out":
             // 나가기 (스터디룸 화면으로 이동)
-            logout()
+            outStudyRoom()
             break
         default:
             break

@@ -11,6 +11,7 @@ import Alamofire
 enum MemberRouter: URLRequestConvertible {
     case searchmember(page: String) // 전체 멤버 조회
     case deletemember(id: String, memberlist: Array<Int>)
+    case invitemember(id: String, memberlist: Array<Int>) // 멤버 초대
     
     var baseURL: URL {
         return URL(string: API.BASE_URL + "study/")!
@@ -22,6 +23,8 @@ enum MemberRouter: URLRequestConvertible {
             return .get
         case .deletemember:
             return .delete
+        case .invitemember:
+            return .post
         }
     }
     
@@ -30,6 +33,8 @@ enum MemberRouter: URLRequestConvertible {
         case .searchmember:
             return "room/member/"
         case .deletemember(id: let id, memberlist: let memberlist):
+            return "room/member/\(id)"
+        case .invitemember(id: let id, memberlist: let memberlist):
             return "room/member/\(id)"
         }
     }
@@ -47,6 +52,9 @@ enum MemberRouter: URLRequestConvertible {
             let parameters = ["page" : page, "max_page" : "10"] as Dictionary
             request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
         case .deletemember(id: let id, memberlist: let memberlist):
+            let parameters: Dictionary = ["member_list" : memberlist] as Dictionary
+            request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
+        case .invitemember(id: let id, memberlist: let memberlist):
             let parameters: Dictionary = ["member_list" : memberlist] as Dictionary
             request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])
         }

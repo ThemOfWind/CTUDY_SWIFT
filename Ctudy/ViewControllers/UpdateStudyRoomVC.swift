@@ -322,7 +322,7 @@ class UpdateStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCont
                         
                         switch result {
                         case .success(_):
-                            self.navigationController?.popViewController(animated: true)
+                            self.performSegue(withIdentifier: "unwindMainDetailVC", sender: self)
                             self.navigationController?.view.makeToast("스터디룸 설정이 변경되었습니다.", duration: 1.0, position: .center)
                         case .failure(let error):
                             print("UpdateStudyRoomVC - postUpdateRoom_image() called / error: \(error.rawValue)")
@@ -330,7 +330,7 @@ class UpdateStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCont
                         }
                     })
                 } else {
-                    self.navigationController?.popViewController(animated: true)
+                    self.performSegue(withIdentifier: "unwindMainDetailVC", sender: self)
                     self.navigationController?.view.makeToast("스터디룸 설정이 변경되었습니다.", duration: 1.0, position: .center)
                 }
             case .failure(let error):
