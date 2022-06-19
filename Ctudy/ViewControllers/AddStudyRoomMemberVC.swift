@@ -1,23 +1,22 @@
 //
-//  RegisterStudyRoomSecondVC.swift
+//  AddStudyRoomMemberVC.swift
 //  Ctudy
 //
-//  Created by 김지은 on 2022/03/22.
+//  Created by 김지은 on 2022/06/18.
 //
 
 import Foundation
 import UIKit
-import SwiftyJSON
 import NVActivityIndicatorView
-import Kingfisher
+import SwiftyJSON
 
-class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, MemberCheckButtonDelegate {
+class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, MemberCheckButtonDelegate {
     
     // MARK: - 변수
-    @IBOutlet weak var memberTableView: UITableView!
-    @IBOutlet weak var registerRoomBtn: UIButton!
+    @IBOutlet weak var invitationBtn: UIButton!
     @IBOutlet weak var memberSearchBar: UISearchBar!
-    let keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: RegisterStudyRoomSecondVC.self, action: nil)
+    @IBOutlet weak var memberTableView: UITableView!
+    let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: AddStudyRoomMemberVC.self, action: nil)
     lazy var indicatorView: UIView = {
         let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         indicatorView.backgroundColor = COLOR.INDICATOR_BACKGROUND_COLOR
@@ -40,51 +39,49 @@ class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataS
        return label
     }()
     var members: Array<SearchMemberResponse> = []
+    var roomId: Int! // 전달받은 roomId
     var nextPage: String? = "1"
     var fetchingMore = false
-    // 이전 화면에서 데이터 전달
-    var studyImage: Data?
-    var studyName: String?
     
     // MARK: - view load func
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.config()
+        config()
     }
     
     fileprivate func config() {
-        // navigationBar item 설정
-        self.leftItem = LeftItem.backGeneral
-        self.titleItem = TitleItem.titleGeneral(title: "멤버 등록", isLargeTitles: true)
+        // navigationbar item 설정
+        leftItem = LeftItem.backGeneral
+        titleItem = TitleItem.titleGeneral(title: "멤버 초대", isLargeTitles: true)
         
-        // btn
-        self.registerRoomBtn.tintColor = .white
-        self.registerRoomBtn.backgroundColor = COLOR.SIGNATURE_COLOR
-        self.registerRoomBtn.layer.cornerRadius = 10
-        
+        // button
+        invitationBtn.tintColor = .white
+        invitationBtn.backgroundColor = COLOR.SIGNATURE_COLOR
+        invitationBtn.layer.cornerRadius = 10
         
         // 셀 리소스 파일 가져오기
         let memberCell = UINib(nibName: String(describing: MemberTableViewCell.self), bundle: nil)
         
         // 셀 리소스 등록하기
-        self.memberTableView.register(memberCell, forCellReuseIdentifier: "MemberTableViewCell")
+        memberTableView.register(memberCell, forCellReuseIdentifier: "MemberTableViewCell")
         
         // 셀 설정
-        self.memberTableView.rowHeight = 90
-//        self.memberTableView.allowsSelection = false
-        self.memberTableView.showsVerticalScrollIndicator = false // scroll 제거
-//        self.memberTableView.estimatedRowHeight = 100
+        memberTableView.rowHeight = 90
+        memberTableView.showsVerticalScrollIndicator = false // scroll 제거
+        
+        // button event 연결
+        invitationBtn.addTarget(self, action: #selector(onInvitationBtnClicked), for: .touchUpInside)
         
         // delegate 연결
-        self.memberTableView.delegate = self
-        self.memberTableView.dataSource = self
-        self.keyboardDismissTabGesture.delegate = self
+        memberTableView.delegate = self
+        memberTableView.dataSource = self
+        tabGesture.delegate = self
         
         // gesture 연결
-        self.view.addGestureRecognizer(keyboardDismissTabGesture)
+        self.view.addGestureRecognizer(tabGesture)
         
         // 전체 멤버 조회
-        self.getSearchMember()
+        getSearchMember()
     }
     
     // MARK: - search member api
@@ -112,9 +109,41 @@ class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataS
                 // view reload
                 self.memberTableView.reloadData()
             case .failure(let error):
-                print("RegisterStudyRoomSecondVC - getSearchMember.failure / error: \(error.rawValue)")
+                print("AddStudyRoomMemberVC - getSearchMember.failure / error: \(error.rawValue)")
             }
         })
+    }
+    
+    // MARK: - invitation api
+    @objc fileprivate func onInvitationBtnClicked() {
+        var selectedMemeberList: Array<Int> = []
+        
+        for index in 0..<members.count {
+            if members[index].ischecked {
+                selectedMemeberList.append(members[index].id)
+            }
+        }
+        
+        self.onStartActivityIndicator()
+        
+        AlamofireManager.shared.postInviteMember(id: String(roomId), memberList: selectedMemeberList, completion:  { [weak self] result in
+            guard let self = self else { return }
+            
+            self.onStopActivityIndicator()
+            
+            switch result {
+            case .success(_):
+                self.performSegue(withIdentifier: "unwindMainDetailVC", sender: self)
+                self.navigationController?.view.makeToast("멤버 초대가 완료되었습니다.", duration: 1.0, position: .center)
+            case .failure(let error):
+                print("RegisterStudyRoomSecondVC - postRegisterRoom() called / error: \(error.rawValue)")
+                self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
+            }
+        })
+        
+        if self.indicator.isAnimating {
+            self.onStopActivityIndicator()
+        }
     }
     
     // MARK: - indicator in api calling
@@ -186,38 +215,6 @@ class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataS
         }
     }
     
-    // MARK: - @IBAction func
-    @IBAction func onRegisterRoomBtnClicked(_ sender: Any) {
-        var selectedMemeberList: Array<Int> = []
-        
-        for index in 0..<members.count {
-            if members[index].ischecked {
-                selectedMemeberList.append(members[index].id)
-            }
-        }
-        
-        self.onStartActivityIndicator()
-        
-        AlamofireManager.shared.postRegisterRoom(name: studyName!, member_list: selectedMemeberList, image: studyImage, completion: { [weak self] result in
-            guard let self = self else { return }
-            
-            self.onStopActivityIndicator()
-            
-            switch result {
-            case .success(_):
-                self.performSegue(withIdentifier: "unwindMainTabBarVC", sender: self)
-                self.navigationController?.view.makeToast("스터디룸이 등록되었습니다.", duration: 1.0, position: .center)
-            case .failure(let error):
-                print("RegisterStudyRoomSecondVC - postRegisterRoom() called / error: \(error.rawValue)")
-                self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
-            }
-        })
-        
-        if self.indicator.isAnimating {
-            self.onStopActivityIndicator()
-        }
-    }
-    
     // MARK: - tableView delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return members.count
@@ -240,8 +237,10 @@ class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataS
         return cell
     }
     
+    
+    // custom button event
     func checkBtnClicked(btn: UIButton, ischecked: Bool) {
-        print("RegisterStudyRoomSecondVC - checkBtnClicked() called / btn.tag: \(btn.tag), btn.id: \(members[btn.tag].id) ischecked: \(ischecked)")
+        print("AddStudyRoomMemberVC - checkBtnClicked() called / btn.tag: \(btn.tag), btn.id: \(members[btn.tag].id) ischecked: \(ischecked)")
         self.members[btn.tag].ischecked = ischecked
     }
     

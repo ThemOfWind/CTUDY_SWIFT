@@ -798,7 +798,7 @@
                         <outlet property="profileImg" destination="U5M-uN-g6M" id="YgK-Nv-Fke"/>
                         <outlet property="profileName" destination="Tvg-Hd-hgY" id="v66-5f-uKF"/>
                         <outlet property="profileUsername" destination="OsZ-6Y-g5M" id="ZlF-Ry-vwt"/>
-                        <segue destination="hT0-se-8tA" kind="show" identifier="ProfileSettingVC" id="MTc-r2-fOe"/>
+                        <segue destination="hT0-se-8tA" kind="show" identifier="UpdateProfileVC" id="MTc-r2-fOe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zWi-4X-OE7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1086,7 +1086,7 @@
                         <outlet property="profileImg" destination="4Ur-WJ-Ibw" id="SLQ-qq-UsS"/>
                         <outlet property="profileName" destination="sl9-pa-h5S" id="vlJ-pD-KiX"/>
                         <outlet property="profileUsername" destination="jeb-vx-6cT" id="LiX-g0-Se1"/>
-                        <segue destination="Kz7-r3-jLa" kind="show" identifier="SettingStudyRoomVC" id="OdK-pt-doa"/>
+                        <segue destination="YEb-yf-DJf" kind="show" identifier="StudyRoomSettingVC" id="JUk-Ew-CEG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1hB-aX-r3A" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1235,6 +1235,56 @@
                 <exit id="oqU-f5-Kd2" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="6487" y="-1608"/>
+        </scene>
+        <!--Study Room SettingVC-->
+        <scene sceneID="02v-WH-t6a">
+            <objects>
+                <viewController id="YEb-yf-DJf" customClass="StudyRoomSettingVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="70d-3v-cLv">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FW4-Bu-rBl">
+                                <rect key="frame" x="20" y="88" width="374" height="725"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="0Ez-7M-QZ5">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="725"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </tableView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="0Ez-7M-QZ5" firstAttribute="height" secondItem="WVI-HO-CNn" secondAttribute="height" id="6Kw-iO-fDU"/>
+                                    <constraint firstItem="0Ez-7M-QZ5" firstAttribute="bottom" secondItem="D66-FO-G51" secondAttribute="bottom" id="G49-t8-REd"/>
+                                    <constraint firstItem="0Ez-7M-QZ5" firstAttribute="trailing" secondItem="D66-FO-G51" secondAttribute="trailing" id="H1K-fL-qEA"/>
+                                    <constraint firstItem="0Ez-7M-QZ5" firstAttribute="leading" secondItem="D66-FO-G51" secondAttribute="leading" id="Td0-yK-ndv"/>
+                                    <constraint firstItem="0Ez-7M-QZ5" firstAttribute="width" secondItem="WVI-HO-CNn" secondAttribute="width" id="nsa-eU-mpy"/>
+                                    <constraint firstItem="0Ez-7M-QZ5" firstAttribute="top" secondItem="D66-FO-G51" secondAttribute="top" id="w1X-cO-90m"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="D66-FO-G51"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="WVI-HO-CNn"/>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="5Te-Se-GR2"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="5Te-Se-GR2" firstAttribute="trailing" secondItem="FW4-Bu-rBl" secondAttribute="trailing" constant="20" id="Q9C-Ul-vyf"/>
+                            <constraint firstItem="FW4-Bu-rBl" firstAttribute="top" secondItem="5Te-Se-GR2" secondAttribute="top" id="cjH-lN-vpl"/>
+                            <constraint firstItem="FW4-Bu-rBl" firstAttribute="bottom" secondItem="5Te-Se-GR2" secondAttribute="bottom" id="qTn-J2-RMd"/>
+                            <constraint firstItem="FW4-Bu-rBl" firstAttribute="leading" secondItem="5Te-Se-GR2" secondAttribute="leading" constant="20" id="zWg-hX-Dxt"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="U97-Zl-9rh"/>
+                    <connections>
+                        <outlet property="settingTableView" destination="0Ez-7M-QZ5" id="ADk-7Q-5Hn"/>
+                        <segue destination="Kz7-r3-jLa" kind="show" identifier="UpdateStudyRoomVC" id="i6z-9u-ZIa"/>
+                        <segue destination="WiB-Pd-WYS" kind="show" identifier="AddStudyRoomMemberVC" id="LM4-W7-6Br"/>
+                        <segue destination="SlG-SC-Pgj" kind="unwind" identifier="unwindMainTabBarVC" unwindAction="unwindMainTabBarVC:" id="mgy-H5-SUq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sMt-c8-YSX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="SlG-SC-Pgj" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="4473.913043478261" y="-2341.0714285714284"/>
         </scene>
         <!--Register Coupon FirstVC-->
         <scene sceneID="Y0J-Oo-R0Z">
@@ -1408,22 +1458,6 @@
             </objects>
             <point key="canvasLocation" x="5480" y="-1608"/>
         </scene>
-        <!--CouponVC-->
-        <scene sceneID="iTt-ge-sIw">
-            <objects>
-                <viewController id="83z-Zo-AOK" customClass="CouponVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="HfN-9L-R8q">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="wok-ZI-Dbo"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="N6m-L1-uSi"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="MEM-tI-04y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="6487" y="-859"/>
-        </scene>
         <!--SettingVC-->
         <scene sceneID="NsJ-9g-ckJ">
             <objects>
@@ -1465,14 +1499,18 @@
                     <connections>
                         <outlet property="settingTableView" destination="AEA-GU-lVf" id="LA5-ZM-yCq"/>
                         <segue destination="TsX-t5-Chy" kind="unwind" identifier="unwindStartVC" unwindAction="unwindStartVC:" id="sUi-n8-uO9"/>
-                        <segue destination="hT0-se-8tA" kind="show" identifier="ProfileSettingVC" id="4no-wb-8Xr"/>
+                        <segue destination="hT0-se-8tA" kind="show" identifier="UpdateProfileVC" id="4no-wb-8Xr"/>
                         <segue destination="O0e-C2-sqD" kind="show" identifier="UpdatePasswordVC" id="jnW-5k-KVx"/>
+                        <segue destination="2HN-5l-Tin" kind="show" identifier="VersionVC" id="QOf-Sw-OTv"/>
+                        <segue destination="LKA-TT-K22" kind="show" identifier="PrivacyVC" id="n7T-42-aAk"/>
+                        <segue destination="IX6-Qw-xSi" kind="show" identifier="ServiceVC" id="0RU-Qx-5N8"/>
+                        <segue destination="NKY-2O-q1O" kind="show" identifier="NoticeVC" id="Zwy-Pr-Ghr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xdG-t1-xH0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="TsX-t5-Chy" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4474" y="-125"/>
+            <point key="canvasLocation" x="7493" y="-125"/>
         </scene>
         <!--Update PasswordVC-->
         <scene sceneID="VDs-Xc-4eN">
@@ -1631,7 +1669,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vMr-wO-Icq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5479.7101449275369" y="-125.22321428571428"/>
+            <point key="canvasLocation" x="8499" y="-125"/>
         </scene>
         <!--WithdrawVC-->
         <scene sceneID="P3x-Mu-IeF">
@@ -1719,7 +1757,23 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Mf-PZ-agP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="NlO-uO-5fG" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="6486.9565217391309" y="-125.22321428571428"/>
+            <point key="canvasLocation" x="9506" y="-125"/>
+        </scene>
+        <!--PrivacyVC-->
+        <scene sceneID="2Mg-gc-ueb">
+            <objects>
+                <viewController id="LKA-TT-K22" customClass="PrivacyVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="tyC-df-eZG">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="uap-jK-8Nh"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="TrS-Mr-5I0"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="C0H-nL-qLp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8499" y="668"/>
         </scene>
         <!--Coupon HistoryVC-->
         <scene sceneID="jtb-ED-VnN">
@@ -1892,28 +1946,30 @@
                                         </connections>
                                     </button>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="V4Q-Eg-CaR">
-                                        <rect key="frame" x="0.0" y="10" width="374" height="575"/>
+                                        <rect key="frame" x="0.0" y="51" width="374" height="534"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <searchBar key="tableHeaderView" contentMode="redraw" placeholder="검색" id="L9E-Tf-wxm">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="51"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                            <textInputTraits key="textInputTraits"/>
-                                            <scopeButtonTitles>
-                                                <string>Title</string>
-                                                <string>Title</string>
-                                            </scopeButtonTitles>
-                                        </searchBar>
                                     </tableView>
+                                    <searchBar contentMode="redraw" placeholder="검색" id="L9E-Tf-wxm">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="51"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <scopeButtonTitles>
+                                            <string>Title</string>
+                                            <string>Title</string>
+                                        </scopeButtonTitles>
+                                    </searchBar>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="V4Q-Eg-CaR" firstAttribute="top" secondItem="cz6-C6-JlY" secondAttribute="top" constant="10" id="5QZ-Yk-mPp"/>
                                     <constraint firstItem="07o-YI-uMg" firstAttribute="leading" secondItem="V4Q-Eg-CaR" secondAttribute="leading" id="7f0-6h-U68"/>
                                     <constraint firstItem="07o-YI-uMg" firstAttribute="top" secondItem="V4Q-Eg-CaR" secondAttribute="bottom" constant="20" id="Lko-WO-MZY"/>
                                     <constraint firstAttribute="bottom" secondItem="07o-YI-uMg" secondAttribute="bottom" constant="20" id="Tau-a8-y61"/>
                                     <constraint firstItem="V4Q-Eg-CaR" firstAttribute="leading" secondItem="cz6-C6-JlY" secondAttribute="leading" id="Zbf-wx-A0T"/>
+                                    <constraint firstItem="L9E-Tf-wxm" firstAttribute="trailing" secondItem="V4Q-Eg-CaR" secondAttribute="trailing" id="gTk-pw-VbJ"/>
                                     <constraint firstAttribute="trailing" secondItem="V4Q-Eg-CaR" secondAttribute="trailing" id="k6E-n1-qp1"/>
                                     <constraint firstItem="07o-YI-uMg" firstAttribute="trailing" secondItem="V4Q-Eg-CaR" secondAttribute="trailing" id="nQA-d5-bEJ"/>
+                                    <constraint firstItem="V4Q-Eg-CaR" firstAttribute="top" secondItem="L9E-Tf-wxm" secondAttribute="bottom" id="phZ-FP-zLz"/>
+                                    <constraint firstItem="L9E-Tf-wxm" firstAttribute="leading" secondItem="V4Q-Eg-CaR" secondAttribute="leading" id="zPb-Sn-zyz"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -1937,12 +1993,86 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zt0-AA-G5a" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="G69-UU-zHa" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4474" y="-3087"/>
+            <point key="canvasLocation" x="4473.913043478261" y="-3087.0535714285711"/>
         </scene>
-        <!--Setting Study RoomVC-->
+        <!--Add Study Room MemberVC-->
+        <scene sceneID="JR7-Kh-Sgk">
+            <objects>
+                <viewController id="WiB-Pd-WYS" customClass="AddStudyRoomMemberVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nLb-Am-HXF">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vNU-6a-547">
+                                <rect key="frame" x="20" y="108" width="374" height="685"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="134-Zm-5Uj">
+                                        <rect key="frame" x="0.0" y="51" width="374" height="534"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </tableView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fSZ-Tc-kMX">
+                                        <rect key="frame" x="0.0" y="605" width="374" height="60"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="cTl-E8-EJ5"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.70588235290000001" green="0.49019607840000001" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="등 록">
+                                            <fontDescription key="titleFontDescription" type="boldSystem" pointSize="20"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="onRegisterRoomBtnClicked:" destination="Flg-5U-kEK" eventType="touchUpInside" id="CxR-Ml-Idv"/>
+                                        </connections>
+                                    </button>
+                                    <searchBar contentMode="redraw" placeholder="검색" id="qLy-jw-E1R">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="51"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <scopeButtonTitles>
+                                            <string>Title</string>
+                                            <string>Title</string>
+                                        </scopeButtonTitles>
+                                    </searchBar>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="134-Zm-5Uj" firstAttribute="leading" secondItem="vNU-6a-547" secondAttribute="leading" id="FQg-lV-SJT"/>
+                                    <constraint firstItem="fSZ-Tc-kMX" firstAttribute="leading" secondItem="vNU-6a-547" secondAttribute="leading" id="jtG-a0-sBo"/>
+                                    <constraint firstAttribute="trailing" secondItem="fSZ-Tc-kMX" secondAttribute="trailing" id="rgy-UZ-FpW"/>
+                                    <constraint firstItem="fSZ-Tc-kMX" firstAttribute="top" secondItem="134-Zm-5Uj" secondAttribute="bottom" constant="20" id="scx-Xv-SDE"/>
+                                    <constraint firstAttribute="bottom" secondItem="fSZ-Tc-kMX" secondAttribute="bottom" constant="20" id="wib-J5-ioj"/>
+                                    <constraint firstItem="134-Zm-5Uj" firstAttribute="top" secondItem="qLy-jw-E1R" secondAttribute="bottom" id="yfC-Uo-pxg"/>
+                                    <constraint firstAttribute="trailing" secondItem="134-Zm-5Uj" secondAttribute="trailing" id="zH7-2B-6f0"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="VYO-mA-KK7"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="VYO-mA-KK7" firstAttribute="trailing" secondItem="vNU-6a-547" secondAttribute="trailing" constant="20" id="1MC-Mv-vcx"/>
+                            <constraint firstItem="vNU-6a-547" firstAttribute="leading" secondItem="VYO-mA-KK7" secondAttribute="leading" constant="20" id="BBs-5V-rom"/>
+                            <constraint firstItem="VYO-mA-KK7" firstAttribute="bottom" secondItem="vNU-6a-547" secondAttribute="bottom" constant="20" id="PcT-mB-unE"/>
+                            <constraint firstItem="vNU-6a-547" firstAttribute="top" secondItem="VYO-mA-KK7" secondAttribute="top" constant="20" id="n9f-9S-XLy"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="NYD-7J-gog"/>
+                    <connections>
+                        <outlet property="invitationBtn" destination="fSZ-Tc-kMX" id="8iz-sc-hOz"/>
+                        <outlet property="memberSearchBar" destination="qLy-jw-E1R" id="ALQ-PA-ZpC"/>
+                        <outlet property="memberTableView" destination="134-Zm-5Uj" id="vea-Qf-Dzf"/>
+                        <segue destination="RDX-Ul-CRa" kind="unwind" identifier="unwindMainDetailVC" unwindAction="unwindMainDetailVC:" id="3u4-qz-Kvb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="48k-Xj-caQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="RDX-Ul-CRa" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="7447.826086956522" y="-2341.0714285714284"/>
+        </scene>
+        <!--Update Study RoomVC-->
         <scene sceneID="9a0-1v-Def">
             <objects>
-                <viewController id="Kz7-r3-jLa" customClass="SettingStudyRoomVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Kz7-r3-jLa" customClass="UpdateStudyRoomVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ffc-S9-4pn">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2053,11 +2183,13 @@
                         <outlet property="roomName" destination="fGA-JC-Nhv" id="vVt-bx-sQA"/>
                         <outlet property="roomNameMsg" destination="3vn-vV-RcX" id="nCa-34-4TC"/>
                         <outlet property="updateBtn" destination="at9-tf-Ml1" id="B44-XZ-StE"/>
+                        <segue destination="GOj-z3-Til" kind="unwind" identifier="unwindMainDetailVC" unwindAction="unwindMainDetailVC:" id="7pg-fM-SOc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ejw-dA-rOz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="GOj-z3-Til" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4474" y="-2355"/>
+            <point key="canvasLocation" x="7448" y="-3087"/>
         </scene>
         <!--StartVC-->
         <scene sceneID="aep-r6-mmF">
@@ -2505,12 +2637,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l2R-lc-AOi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5480" y="-2355"/>
+            <point key="canvasLocation" x="8454" y="-3087"/>
         </scene>
-        <!--Profile SettingVC-->
+        <!--Update ProfileVC-->
         <scene sceneID="qAp-eJ-Xo7">
             <objects>
-                <viewController id="hT0-se-8tA" customClass="ProfileSettingVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="hT0-se-8tA" customClass="UpdateProfileVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="eZY-qN-88R">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2626,7 +2758,101 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Vu-G4-xzc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4474" y="668"/>
+            <point key="canvasLocation" x="8499" y="-859"/>
+        </scene>
+        <!--ServiceVC-->
+        <scene sceneID="QQO-AW-lx0">
+            <objects>
+                <viewController id="IX6-Qw-xSi" customClass="ServiceVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3Aj-RE-YlY">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="MJ9-Ny-sJA"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="cPe-Kp-3la"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qbr-Oo-hAq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8499" y="1398"/>
+        </scene>
+        <!--NoticeVC-->
+        <scene sceneID="2I2-6t-wy9">
+            <objects>
+                <viewController id="NKY-2O-q1O" customClass="NoticeVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="CMH-8M-sEO">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="2pB-lN-A0z"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="MTq-xT-Po3"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="t17-oB-fdM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8499" y="2149"/>
+        </scene>
+        <!--VersionVC-->
+        <scene sceneID="cwe-SH-iDg">
+            <objects>
+                <viewController id="2HN-5l-Tin" customClass="VersionVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="PYf-VM-xdE">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g3w-gm-yXV">
+                                <rect key="frame" x="10" y="98" width="394" height="705"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ctudy_icon" translatesAutoresizingMaskIntoConstraints="NO" id="ghw-cE-4OW">
+                                        <rect key="frame" x="132" y="252.5" width="130" height="130"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="130" id="28B-eB-7yr"/>
+                                            <constraint firstAttribute="height" constant="130" id="de5-Ut-uqN"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9hU-tB-faM">
+                                        <rect key="frame" x="181.5" y="417" width="31" height="14.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KwO-Ye-kcF">
+                                        <rect key="frame" x="175" y="392.5" width="44" height="21.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="KwO-Ye-kcF" firstAttribute="top" secondItem="ghw-cE-4OW" secondAttribute="bottom" constant="10" id="4Xl-CN-hZV"/>
+                                    <constraint firstItem="9hU-tB-faM" firstAttribute="top" secondItem="KwO-Ye-kcF" secondAttribute="bottom" constant="3" id="Jwc-bS-uuI"/>
+                                    <constraint firstItem="ghw-cE-4OW" firstAttribute="centerY" secondItem="g3w-gm-yXV" secondAttribute="centerY" multiplier="0.9" id="kQv-We-fcY"/>
+                                    <constraint firstItem="9hU-tB-faM" firstAttribute="centerX" secondItem="KwO-Ye-kcF" secondAttribute="centerX" id="nrZ-UH-hA3"/>
+                                    <constraint firstItem="ghw-cE-4OW" firstAttribute="centerX" secondItem="g3w-gm-yXV" secondAttribute="centerX" id="ofh-yE-FzT"/>
+                                    <constraint firstItem="KwO-Ye-kcF" firstAttribute="centerX" secondItem="g3w-gm-yXV" secondAttribute="centerX" id="xOa-hs-4o1"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="axl-zq-bsH"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="g3w-gm-yXV" firstAttribute="top" secondItem="axl-zq-bsH" secondAttribute="top" constant="10" id="Rc8-4T-Ibv"/>
+                            <constraint firstItem="g3w-gm-yXV" firstAttribute="leading" secondItem="axl-zq-bsH" secondAttribute="leading" constant="10" id="VrH-dc-Fhb"/>
+                            <constraint firstItem="axl-zq-bsH" firstAttribute="trailing" secondItem="g3w-gm-yXV" secondAttribute="trailing" constant="10" id="pMy-yx-MkP"/>
+                            <constraint firstItem="axl-zq-bsH" firstAttribute="bottom" secondItem="g3w-gm-yXV" secondAttribute="bottom" constant="10" id="zNH-UF-HIS"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="dON-fH-goD"/>
+                    <connections>
+                        <outlet property="ctudyImg" destination="ghw-cE-4OW" id="pnR-LZ-GNa"/>
+                        <outlet property="currentVersion" destination="9hU-tB-faM" id="utp-lS-9gP"/>
+                        <outlet property="versionMsg" destination="KwO-Ye-kcF" id="a9q-NX-2wb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9qX-Vx-5Gc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8499" y="2905"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

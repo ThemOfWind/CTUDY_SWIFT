@@ -1,8 +1,8 @@
 //
-//  UpdateStudyMasterVC.swift
+//  UpdateProfileVC.swift
 //  Ctudy
 //
-//  Created by 김지은 on 2022/06/04.
+//  Created by 김지은 on 2022/06/08.
 //
 
 import Foundation
@@ -10,18 +10,14 @@ import UIKit
 import Kingfisher
 import NVActivityIndicatorView
 
-protocol SettingSendDelegate: AnyObject {
-    func onMemberViewClicked(master: SettingMasterResponse)
-}
-
-class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, SettingSendDelegate, UITextFieldDelegate{
+class UpdateProfileVC: BasicVC, UIGestureRecognizerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate {
     // MARK: - 변수
-    @IBOutlet weak var roomImg: UIImageView!
-    @IBOutlet weak var roomName: UITextField!
-    @IBOutlet weak var roomNameMsg: UILabel!
-    @IBOutlet weak var masterName: UITextField!
+    @IBOutlet weak var profileUsername: UILabel!
+    @IBOutlet weak var profileImg: UIImageView!
+    @IBOutlet weak var inputName: UITextField!
+    @IBOutlet weak var nameMsg: UILabel!
     @IBOutlet weak var updateBtn: UIButton!
-    let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: SettingStudyRoomVC.self, action: nil)
+    let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: UpdateProfileVC.self, action: nil)
     lazy var indicatorView: UIView = {
         let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         indicatorView.backgroundColor = COLOR.INDICATOR_BACKGROUND_COLOR
@@ -43,12 +39,12 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    var members: Array<SearchStudyMemberResponse>? // 전달받은 멤버 리스트
-    var settingRoom: SettingStudyRoomResponse! // 전달받은 room 정보
-    var selectedMaster: SettingMasterResponse! // 선택한 마스터멤버 정보
-    var roomNameOKFlag: Bool = false // 스터디룸 이름 입력 flag
-    var imageAlFuncFlag: Bool = false // 스터디룸 이미지 alamofire func 실행 여부 flag
-    var imageNilFlag: Bool = false // 스터디룸 설정 alamofire func 실행 여부
+    var profileId: Int!
+    lazy var userImg: String? = KeyChainManager().tokenLoad(API.SERVICEID, account: "image") // 키체인에 존재하는 image 담는 변수
+    var nameOKFlag: Bool = true
+    var imageFlag: Bool = false // image 초기화 flag
+    var imageAlFuncFlag: Bool = false // 내 프로필 이미지 alamofire func 실행 여부 flag
+    var imageNilFlag: Bool = false // 내 프로필 설정 alamofire func 실행 여부
     
     // MARK: - override func
     override func viewDidLoad() {
@@ -60,44 +56,39 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
     fileprivate func config() {
         // navigationbar item
         leftItem = LeftItem.backGeneral
-        titleItem = TitleItem.titleGeneral(title: "스터디룸 설정", isLargeTitles: true)
+        titleItem = TitleItem.titleGeneral(title: "프로필 설정", isLargeTitles: true)
         
-        // studyroom image ui
-        roomImg.layer.cornerRadius = 10
-        roomImg.layer.borderWidth = 1
-        roomImg.layer.borderColor = COLOR.BORDER_COLOR.cgColor
-        roomImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
-        roomImg.tintColor = COLOR.BASIC_TINT_COLOR
-        if settingRoom.banner != "" {
-            roomImg.kf.setImage(with: URL(string: API.IMAGE_URL + settingRoom.banner)!)
+        // profile
+        profileImg.layer.cornerRadius = self.profileImg.bounds.height / 2
+        profileImg.layer.borderWidth = 1
+        profileImg.layer.borderColor = COLOR.BORDER_COLOR.cgColor
+        profileImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
+        profileImg.tintColor = COLOR.BASIC_TINT_COLOR
+        if let img = userImg, img != "" {
+            profileImg.kf.setImage(with: URL(string: API.IMAGE_URL + img)!)
         } else {
-            roomImg.image = UIImage(named: "studyroom_default.png")
+            profileImg.image = UIImage(named: "user_default.png")
         }
-        roomImg.contentMode = .scaleAspectFill
-        roomImg.isUserInteractionEnabled = true
+        profileImg.contentMode = .scaleAspectFill
+//        profileImg.translatesAutoresizingMaskIntoConstraints = false
+        profileImg.isUserInteractionEnabled = true
         
-        // update button ui
+        profileId = Int(KeyChainManager().tokenLoad(API.SERVICEID, account: "id")!)
+        inputName.text = KeyChainManager().tokenLoad(API.SERVICEID, account: "name")
+        profileUsername.text = "@\(KeyChainManager().tokenLoad(API.SERVICEID, account: "username")!)"
+        profileUsername.textColor = COLOR.SUBTITLE_COLOR
+        
+        // button ui
         updateBtn.layer.cornerRadius = 10
         updateBtn.tintColor = .white
         updateBtn.backgroundColor = COLOR.SIGNATURE_COLOR
         
-        // roomname textfield ui
-        //        roomName.placeholder = settingRoom.name
-        roomName.text = settingRoom.name
-        
-        // mastername textfield ui
-        let master = SettingMasterResponse(id: settingRoom.masterid, name: settingRoom.mastername)
-        selectedMaster = master
-        masterName.text = selectedMaster.name
-        masterName.isUserInteractionEnabled = true // readonly
-        
         // event 연결
-        roomName.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
+        inputName.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
         updateBtn.addTarget(self, action: #selector(onUpdateBtnClicked), for: .touchUpInside)
         
         // delegate 연결
-        roomName.delegate = self
-        masterName.delegate = self
+        inputName.delegate = self
         tabGesture.delegate = self
         
         // gesture 연결
@@ -114,10 +105,9 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
         msgLabel.text = msgString
     }
     
-    // createButton 활성화 & 비활성화 event
-    fileprivate func createBtnAbleChecked() {
-        print("roomNameOKFlag: \(roomNameOKFlag), selectedMaster: \(selectedMaster)")
-        if roomNameOKFlag && (selectedMaster != nil) {
+    // searchButton 활성화 & 비활성화 event
+    fileprivate func searchBtnAbleChecked() {
+        if nameOKFlag {
             updateBtn.backgroundColor = COLOR.SIGNATURE_COLOR
             updateBtn.isEnabled = true
         } else {
@@ -128,97 +118,17 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
     
     // 이름 정규식 체크 event
     fileprivate func isValidData(flag: String, data: String) -> Bool {
-        //        print("SignUpFirstVC - isValidData() called / data: \(data), flag: \(flag)")
-        
         guard data != "" else { return false }
         let pred : NSPredicate
         
         switch flag {
-        case "roomName":
-            pred = NSPredicate(format: "SELF MATCHES %@", REGEX.CTUDYNAME_REGEX)
+        case "inputName":
+            pred = NSPredicate(format: "SELF MATCHES %@", REGEX.NAME_REGEX)
         default:
             pred = NSPredicate(format: "SELF MATCHES %@", "")
         }
         
         return pred.evaluate(with: data)
-    }
-    
-    // masterName textfield click event
-    fileprivate func onMasterNameTextFieldClicked() {
-        guard let controller = self.storyboard?.instantiateViewController(withIdentifier: "UpdateMasterVC") as? UpdateMasterVC else { return }
-        controller.modalTransitionStyle = .coverVertical
-        controller.modalPresentationStyle = .automatic
-        controller.members = members
-        controller.delegate = self
-        self.present(controller, animated: true, completion: nil)
-    }
-    
-    // 쿠폰 imageView event
-    fileprivate func onRoomImageClicked() {
-        actionSheetAlert()
-    }
-    
-    fileprivate func actionSheetAlert() {
-        let alert = UIAlertController(title: "새로운 스터디룸 이미지 설정", message: nil, preferredStyle: .actionSheet)
-        let cancel = UIAlertAction(title: "초기화", style: .cancel, handler: { [weak self] (_) in
-            self?.presentCancel()
-        })
-        let basic = UIAlertAction(title: "기본 이미지", style: .default, handler: { [weak self] (_) in
-            self?.presentBasic()
-        })
-        let camera = UIAlertAction(title: "카메라", style: .default, handler: { [weak self] (_) in
-            self?.presentCamera()
-        })
-        let album = UIAlertAction(title: "앨범", style: .default, handler: { [weak self] (_) in
-            self?.presentAlbum()
-        })
-        
-        alert.addAction(cancel)
-        alert.addAction(camera)
-        alert.addAction(album)
-        alert.addAction(basic)
-        present(alert, animated: true, completion: nil)
-    }
-    
-    // 초기화 picker setting
-    fileprivate func presentCancel() {
-        imageAlFuncFlag = false
-        if settingRoom.banner != "" {
-            roomImg.kf.setImage(with: URL(string: API.IMAGE_URL + settingRoom.banner)!)
-        } else {
-            roomImg.image = UIImage(named: "studyroom_default.png")
-        }
-    }
-    
-    // 기본 이미지 picker setting
-    fileprivate func presentBasic() {
-        imageAlFuncFlag = true
-        imageNilFlag = true
-        roomImg.image = UIImage(named: "studyroom_default.png")
-    }
-    
-    // 카메라 picker setting
-    fileprivate func presentCamera() {
-        let vc = UIImagePickerController()
-        vc.sourceType = .camera
-        vc.delegate = self
-        vc.allowsEditing = true
-        vc.cameraFlashMode = .off
-        vc.modalPresentationStyle = .fullScreen
-        //        vc.cameraOverlayView?.addSubview(customOverlayView())
-        present(vc, animated: true, completion: nil)
-    }
-    
-    // 앨범 picker setting
-    fileprivate func presentAlbum() {
-        let vc = UIImagePickerController()
-        vc.sourceType = .photoLibrary
-        vc.delegate = self
-        vc.allowsEditing = true
-        vc.modalPresentationStyle = .fullScreen
-        //        vc.showsCameraControls = false
-        //        vc.cameraOverlayView?.addSubview(customOverlayView())
-        present(vc, animated: true, completion: nil)
     }
     
     fileprivate func onStartActivityIndicator() {
@@ -250,6 +160,73 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
         }
     }
     
+    fileprivate func actionSheetAlert() {
+        let alert = UIAlertController(title: "프로필 이미지 변경", message: nil, preferredStyle: .actionSheet)
+        let cancel = UIAlertAction(title: "초기화", style: .cancel, handler: { [weak self] (_) in
+            self?.presentCancel()
+        })
+        let basic = UIAlertAction(title: "기본 이미지", style: .default, handler: { [weak self] (_) in
+            self?.presentBasic()
+        })
+        let camera = UIAlertAction(title: "카메라", style: .default, handler: { [weak self] (_) in
+            self?.presentCamera()
+        })
+        let album = UIAlertAction(title: "앨범", style: .default, handler: { [weak self] (_) in
+            self?.presentAlbum()
+        })
+        
+        alert.addAction(cancel)
+        alert.addAction(camera)
+        alert.addAction(album)
+        alert.addAction(basic)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    // 초기화 picker setting
+    fileprivate func presentCancel() {
+        imageAlFuncFlag = false
+        if let img = userImg, img != "" {
+            profileImg.kf.setImage(with: URL(string: API.IMAGE_URL + img)!)
+        } else {
+            profileImg.image = UIImage(named: "user.png")
+        }
+    }
+    
+    // 기본 이미지 picker setting
+    fileprivate func presentBasic() {
+        imageAlFuncFlag = true
+        imageNilFlag = true
+        profileImg.image = UIImage(named: "user_default.png")
+    }
+    
+    // 카메라 picker setting
+    fileprivate func presentCamera() {
+        let vc = UIImagePickerController()
+        vc.sourceType = .camera
+        vc.delegate = self
+        vc.allowsEditing = true
+        vc.cameraFlashMode = .off
+        vc.modalPresentationStyle = .fullScreen
+        //        vc.cameraOverlayView?.addSubview(customOverlayView())
+        present(vc, animated: true, completion: nil)
+    }
+    
+    // 앨범 picker setting
+    fileprivate func presentAlbum() {
+        let vc = UIImagePickerController()
+        vc.sourceType = .photoLibrary
+        vc.delegate = self
+        vc.allowsEditing = true
+        vc.modalPresentationStyle = .fullScreen
+        //        vc.showsCameraControls = false
+        //        vc.cameraOverlayView?.addSubview(customOverlayView())
+        present(vc, animated: true, completion: nil)
+    }
+    
+    fileprivate func onProfileImageClicked() {
+        actionSheetAlert()
+    }
+    
     // 취소버튼 click event
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
@@ -267,8 +244,8 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
             newImage = possibleImage
         }
         
-        self.roomImg.contentMode = .scaleAspectFill
-        self.roomImg.image = newImage
+        self.profileImg.contentMode = .scaleAspectFill
+        self.profileImg.image = newImage
         imageAlFuncFlag = true
         imageNilFlag = false
         picker.dismiss(animated: true, completion: nil)
@@ -276,27 +253,15 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
     
     func customOverlayView() -> UIView {
         let overlayView = UIView()
-        overlayView.frame = self.roomImg.frame
+        overlayView.frame = self.profileImg.frame
         return overlayView
     }
     
-    // textField 변경할 때 event
-    @objc func textFieldEditingChanged(_ textField: UITextField) {
-        //        print("SettingStudyRoomVC - textFieldEditingChanged() called / sender.text: \(sender.text)")
-        switch textField {
-        case roomName:
-            // 이름 형식 체크 (모든 문자 1글자 이상, 공백만 X)
-            textFieldCheck(textField: textField, msgLabel: roomNameMsg, inputData: roomName.text ?? "" )
-        default:
-            break
-        }
-    }
-    
-    // update button click event
+    // MARK: - @objc func
     @objc fileprivate func onUpdateBtnClicked() {
         self.onStartActivityIndicator()
         
-        AlamofireManager.shared.putUpdateRoom(id: settingRoom.id, name: roomName.text!, master: selectedMaster.id, completion: {
+        AlamofireManager.shared.putUpdateProfile(name: inputName.text!, completion: {
             [weak self] result in
             guard let self = self else { return }
             
@@ -313,8 +278,7 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
                      true : roomImg.image?.pngData()
                      false : nil
                      */
-                    AlamofireManager.shared.postUpdateRoom_image(id: self.settingRoom.id, image: self.imageNilFlag ? nil : self.roomImg.image?.pngData()
-                                                                 , completion: {
+                    AlamofireManager.shared.postUpdateProfile_image(image: self.imageNilFlag ? nil : self.profileImg.image?.pngData(), completion: {
                         [weak self] result in
                         guard let self = self else { return }
                         
@@ -322,19 +286,20 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
                         
                         switch result {
                         case .success(_):
-                            self.navigationController?.popViewController(animated: true)
-                            self.navigationController?.view.makeToast("스터디룸 설정이 변경되었습니다.", duration: 1.0, position: .center)
+                            // keychain에 프로필 정보 update
+                            self.getProfileInfo()
+                            break
                         case .failure(let error):
-                            print("SettingStudyRoomVC - postUpdateRoom_image() called / error: \(error.rawValue)")
+                            print("UpdateProfileVC - postUpdateProfile_image() called / error: \(error.rawValue)")
                             self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
                         }
                     })
                 } else {
-                    self.navigationController?.popViewController(animated: true)
-                    self.navigationController?.view.makeToast("스터디룸 설정이 변경되었습니다.", duration: 1.0, position: .center)
+                    // keychain에 프로필 정보 update
+                    self.getProfileInfo()
                 }
             case .failure(let error):
-                print("SettingStudyRoomVC - putUpdateRoom() called / error: \(error.rawValue)")
+                print("UpdateProfileVC - putUpdateProfile() called / error: \(error.rawValue)")
                 self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
             }
         })
@@ -345,21 +310,51 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
         }
     }
     
-    // MARK: - protocol delegate
-    func onMemberViewClicked(master: SettingMasterResponse) {
-        selectedMaster = master
+    // 접속 회원정보 조회 후 keychain 저장
+    fileprivate func getProfileInfo() {
         
-        masterName.text = selectedMaster.name
+        self.onStartActivityIndicator()
+        
+        AlamofireManager.shared.getProfile(completion: { [weak self] result in
+            guard let self = self else { return }
+            
+            self.onStopActivityIndicator()
+            
+            switch result {
+            case .success(_):
+                // 프로필 화면으로 이동
+                self.navigationController?.popViewController(animated: true)
+                self.navigationController?.view.makeToast("프로필이 변경되었습니다.", duration: 1.0, position: .center)
+            case .failure(let error):
+                print("UpdateProfileVC - getProfile() called / error: \(error.rawValue)")
+            }
+        })
+        
+        if indicator.isAnimating {
+            self.onStopActivityIndicator()
+        }
+    }
+    
+    // textField 변경할 때 event
+    @objc func textFieldEditingChanged(_ textField: UITextField) {
+        switch textField {
+        case inputName:
+            // 이름 형식 체크 (자음 및 모음 X, 2글자 이상, 특수문자 사용 X)
+            textFieldCheck(textField: textField, msgLabel: nameMsg, inputData: inputName.text ?? "")
+        default:
+            break
+        }
+        
+        searchBtnAbleChecked()
     }
     
     // MARK: - textField delegate
     // textField에서 enter키 눌렀을때 event
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        //        print("SettingStudyRoomVC - textFieldShouldReturn() called")
         switch textField {
-        case roomName:
-            // 이름 형식 체크 (모든 문자 1글자 이상, 공백만 X)
-            textFieldCheck(textField: textField, msgLabel: roomNameMsg, inputData: roomName.text ?? "" )
+        case inputName:
+            // 이름 형식 체크 (자음 및 모음 X, 2글자 이상, 특수문자 사용 X)
+            textFieldCheck(textField: textField, msgLabel: nameMsg, inputData: inputName.text ?? "" )
         default:
             break
         }
@@ -369,51 +364,45 @@ class SettingStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCon
     }
     
     func textFieldCheck(textField: UITextField, msgLabel: UILabel, inputData: String) {
-        print("SettingStudyRoomVC - textFieldCheck() called / msgLabel: \(msgLabel), inputData: \(inputData)")
-        
         guard inputData != "" else {
             msgLabel.text = ""
             return
         }
         
         switch textField {
-        case roomName:
-            roomNameOKFlag = isValidData(flag: "roomName", data: inputData)
-            if roomNameOKFlag {
-                setMsgLabel(flag: roomNameOKFlag, msgLabel: msgLabel, msgString: "")
+        case inputName:
+            nameOKFlag = isValidData(flag: "inputName", data: inputData)
+            if nameOKFlag {
+                setMsgLabel(flag: nameOKFlag, msgLabel: msgLabel, msgString: "")
             } else {
-                setMsgLabel(flag: roomNameOKFlag, msgLabel: msgLabel, msgString: "이름이 옳바르지 않습니다. (공백X)")
+                setMsgLabel(flag: nameOKFlag, msgLabel: msgLabel, msgString: "이름이 옳바르지 않습니다.")
             }
         default:
             break
         }
         
-        createBtnAbleChecked()
+        searchBtnAbleChecked()
     }
     
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         switch textField {
-        case roomName:
-            roomNameOKFlag = false
+        case inputName:
+            nameOKFlag = false
         default:
             break
         }
         
-        createBtnAbleChecked()
+        searchBtnAbleChecked()
         return true
     }
     
     // MARK: - UIGestureRecognizer delegate
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        if touch.view?.isDescendant(of: roomImg) == true {
+        if touch.view?.isDescendant(of: profileImg) == true {
             view.endEditing(true)
-            onRoomImageClicked()
+            onProfileImageClicked()
             return true
-        } else if touch.view?.isDescendant(of: masterName) == true {
-            view.endEditing(true)
-            onMasterNameTextFieldClicked()
-            return true
-        } else if touch.view?.isDescendant(of: roomName) == true {
+        } else if touch.view?.isDescendant(of: inputName) == true {
             return false
         } else {
             view.endEditing(true)

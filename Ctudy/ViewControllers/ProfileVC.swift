@@ -121,7 +121,7 @@ class ProfileVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     fileprivate func onGoToProfileSettingVC() {
-        self.performSegue(withIdentifier: "ProfileSettingVC", sender: nil)
+        self.performSegue(withIdentifier: "UpdateProfileVC", sender: nil)
     }
     
     

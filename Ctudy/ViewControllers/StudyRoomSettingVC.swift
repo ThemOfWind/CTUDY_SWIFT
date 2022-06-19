@@ -1,16 +1,15 @@
 //
-//  SettingVC.swift
+//  RoomSettingVC.swift
 //  Ctudy
 //
-//  Created by 김지은 on 2022/06/08.
+//  Created by 김지은 on 2022/06/18.
 //
 
 import Foundation
 import UIKit
 import NVActivityIndicatorView
-import SwiftUI
 
-class SettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
+class StudyRoomSettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     // MARK: - 변수
     @IBOutlet weak var settingTableView: UITableView!
     lazy var indicatorView: UIView = {
@@ -34,16 +33,10 @@ class SettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    // 셋팅 항목
-    let settingList = [
-        [ "id" : "profile", "text" : "프로필 설정", "color" : UIColor.black ]
-        , [ "id" : "username", "text" : "계정관리", "color" : UIColor.black ]
-        , [ "id" : "privacy", "text" : "개인정보 처리 방침", "color" : UIColor.black ]
-        , [ "id" : "service", "text" : "이용약관", "color" : UIColor.black ]
-        , [ "id" : "notice", "text" : "오픈소스 라이센스 이용고지", "color" : UIColor.black ]
-        , [ "id" : "version", "text" : "버전정보", "color" : UIColor.black ]
-        , [ "id" : "logout", "text" : "로그아웃", "color" : UIColor.red ]
-    ]
+    var members: Array<SearchStudyMemberResponse>? // 전달받은 멤버 리스트
+    var settingRoom: SettingStudyRoomResponse! // 전달받은 room 정보
+    var isMaster: Bool! // 사용자가 master인지 체크, 전달받은 master bool값
+    var settingList: Array<Dictionary<String, Any>>! // 셋팅 항목
     
     // MARK: - override func
     override func viewWillAppear(_ animated: Bool) {
@@ -51,12 +44,25 @@ class SettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         config()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let id = segue.identifier, id == "UpdateStudyRoomVC" {
+            if let controller = segue.destination as? UpdateStudyRoomVC {
+                controller.members = members
+                controller.settingRoom = settingRoom
+            }
+        } else if let id = segue.identifier, id == "AddStudyRoomMemberVC" {
+            if let controller = segue.destination as? AddStudyRoomMemberVC {
+                controller.roomId = settingRoom.id
+            }
+        }
+    }
+    
     // MARK: - fileprivate func
     fileprivate func config() {
         // navigationbar
         self.navigationController?.navigationBar.sizeToFit() // UIKit에 포함된 특정 View를 자체 내부 요구의 사이즈로 resize 해주는 함수
         leftItem = LeftItem.backGeneral
-        titleItem = TitleItem.titleGeneral(title: "설정", isLargeTitles: true)
+        titleItem = TitleItem.titleGeneral(title: "스터디룸 관리", isLargeTitles: true)
 
         // 셀 리소스 파일 가져오기
         let settingCell = UINib(nibName: String(describing: SettingTableViewCell.self), bundle: nil)
@@ -72,6 +78,17 @@ class SettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         // delegate 연결
         self.settingTableView.delegate = self
         self.settingTableView.dataSource = self
+        
+        // 사용자가 master일 경우
+        if isMaster {
+            settingList =  [
+                [ "id" : "setting", "text" : "스터디룸 설정", "color" : UIColor.black ]
+              , [ "id" : "add", "text" : "멤버 초대", "color" : UIColor.black ]
+              , [ "id" : "out", "text" : "나가기", "color" : UIColor.red ]
+            ]
+        } else {
+            settingList = [ [ "id" : "out", "text" : "나가기", "color" : UIColor.red ] ]
+        }
     }
     
     fileprivate func onStartActivityIndicator() {
@@ -104,15 +121,24 @@ class SettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     // logoutBtn event
-    fileprivate func logout() {
-        // logout alert 띄우기
-        let alert = UIAlertController(title: nil, message: "로그아웃 하시겠습니까?", preferredStyle: .alert)
+    fileprivate func outStudyRoom() {
+        if isMaster {
+            print("click!")
+            let alert = UIAlertController(title: nil, message: "스터디룸을 나갈 수 없습니다.\n'스터디룸관리>스터디룸설정'에서 방장을 변경해주세요.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "확인", style: .cancel))
+            self.present(alert, animated: false)
+            return
+//            self.view.makeToast("방장은 스터디룸을 나갈 수 없습니다.\n'스터디룸관리>스터디룸설정'에서 방장을 변경해주세요.", duration: 2.0, position: .center)
+        }
+        
+        // out alert 띄우기
+        let alert = UIAlertController(title: nil, message: "스터디룸을 나가시겠습니까?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "취소", style: .cancel))
         alert.addAction(UIAlertAction(title: "확인", style: .destructive, handler: { (_) in
             
             self.onStartActivityIndicator()
             
-            AlamofireManager.shared.getLogout(completion: {
+            AlamofireManager.shared.deleteOutRoom(id: String(self.settingRoom.id), memberId: KeyChainManager().tokenLoad(API.SERVICEID, account: "id")!, completion: {
                 [weak self] result in
                 guard let self = self else { return }
                 
@@ -120,15 +146,11 @@ class SettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
                 
                 switch result {
                 case .success(let checkData):
-                    print("SettingVC - logout().success")
-                    //                    self.navigationController?.popViewController(animated: true)
-                    self.performSegue(withIdentifier: "unwindStartVC", sender: self)
-                    self.navigationController?.view.makeToast("로그아웃 되었습니다.", duration: 1.0, position: .center)
+                    print("StudyRoomSettingVC - deleteOutRoom().success")
+                    self.performSegue(withIdentifier: "unwindMainTabBarVC", sender: self)
+                    self.navigationController?.view.makeToast("스터디룸 '\(self.settingRoom.name)'을(를) 탈퇴했습니다.", duration: 1.0, position: .center)
                 case .failure(let error):
-                    print("SettingVC - logout().failure / error: \(error)")
-//                    guard let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginVC") as? LoginVC else { return }
-//                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(loginVC, animated: false)
-                    //self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
+                    print("StudyRoomSettingVC - deleteOutRoom().failure / error: \(error)")
                 }
             })
             
@@ -147,7 +169,7 @@ class SettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("SettingVC - tableView() called / cellText: \(settingList[(indexPath as NSIndexPath).row]["text"] as! String)")
+        print("StudyRoomSettingVC - tableView() called / cellText: \(settingList[(indexPath as NSIndexPath).row]["text"] as! String)")
         let cell = settingTableView.dequeueReusableCell(withIdentifier: "SettingTableViewCell", for: indexPath) as! SettingTableViewCell
         cell.selectionStyle = .none // 선택 block 없애기
         cell.settingLabel.text = settingList[(indexPath as NSIndexPath).row]["text"] as! String
@@ -157,33 +179,17 @@ class SettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch settingList[(indexPath as NSIndexPath).row]["id"] as! String {
-        case "profile":
-            // 프로필설정 화면으로 이동
-            self.performSegue(withIdentifier: "UpdateProfileVC", sender: self)
+        case "setting":
+            // 스터디룸 설정 화면으로 이동
+            self.performSegue(withIdentifier: "UpdateStudyRoomVC", sender: self)
             break
-        case "username":
-            // 계정관리 화면으로 이동
-            self.performSegue(withIdentifier: "UpdatePasswordVC", sender: self)
+        case "add":
+            // 멤버 초대 화면으로 이동
+            self.performSegue(withIdentifier: "AddStudyRoomMemberVC", sender: self)
             break
-        case "privacy":
-            // 개인정보 처리 방침 화면으로 이동
-            self.performSegue(withIdentifier: "PrivacyVC", sender: self)
-            break
-        case "service":
-            // 이용약관 화면으로 이동
-            self.performSegue(withIdentifier: "ServiceVC", sender: self)
-            break
-        case "notice":
-            // 오픈소스 라이센스 이용고지 화면으로 이동
-            self.performSegue(withIdentifier: "NoticeVC", sender: self)
-            break
-        case "version":
-            // 버전정보 화면으로 이동
-            self.performSegue(withIdentifier: "VersionVC", sender: self)
-            break
-        case "logout":
-            // 로그아웃 (Start화면으로 이동)
-            logout()
+        case "out":
+            // 나가기 (스터디룸 화면으로 이동)
+            outStudyRoom()
             break
         default:
             break

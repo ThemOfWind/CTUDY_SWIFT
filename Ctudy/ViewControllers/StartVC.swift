@@ -27,6 +27,7 @@ class StartVC : BasicVC {
         self.rightItem = RightItem.none
         
         // logo ui
+        signatureImg.image = UIImage(named: "ctudy_icon.png")
         signatureImg.tintColor = COLOR.SIGNATURE_COLOR
         
         // btn ui

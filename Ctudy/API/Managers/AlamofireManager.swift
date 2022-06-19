@@ -378,11 +378,30 @@ final class AlamofireManager {
                 switch statusCode {
                 case 200:
                     let response = responseJson["response"]
-                    //                    if response.exists() {
                     completion(.success(response))
                 default:
                     print("getSearchStudyMember() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
                     completion(.failure(.noSearchMemeber))
+                }
+            })
+    }
+    
+    // MARK: - 스터디룸 멤버 강제 탈퇴
+    func deleteStudyMember(id: String, memberlist: Array<Int>, completion: @escaping(Result<Bool, MemberErrors>) -> Void) {
+        self.session
+            .request(MemberRouter.deletemember(id: id, memberlist: memberlist))
+            .validate(statusCode: 200..<501)
+            .response(completionHandler: { response in
+                guard let responseValue = response.value
+                    , let statusCode = response.response?.statusCode else { return }
+                let responseJson = JSON(responseValue)
+                
+                switch statusCode {
+                case 200:
+                    completion(.success(true))
+                default:
+                    print("deleteStudyMember() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
+                    completion(.failure(.noDeleteMember))
                 }
             })
     }
@@ -477,6 +496,26 @@ final class AlamofireManager {
                 
             }
         })
+    }
+    
+    // MARK: - 스터디룸 나가기
+    func deleteOutRoom(id: String, memberId: String, completion: @escaping(Result<Bool, RoomErrors>) -> Void) {
+        self.session
+            .request(RoomRouter.outroom(id: id, memberId: memberId))
+            .validate(statusCode: 200..<501)
+            .response(completionHandler: { response in
+                guard let responseValue = response.value
+                    , let statusCode = response.response?.statusCode else { return }
+                let responseJson = JSON(responseValue)
+                
+                switch statusCode {
+                case 200:
+                    completion(.success(true))
+                default:
+                    print("deleteOutRoom() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
+                    completion(.failure(.noOutRoom))
+                }
+            })
     }
     
     // MARK: - 스터디룸 설정 (스터디룸 이미지)
@@ -581,5 +620,24 @@ final class AlamofireManager {
             })
     }
     
-   
+    // MARK: - 스터디룸 멤버 초대
+    func postInviteMember(id: String, memberList: Array<Int>, completion: @escaping(Result<Bool, MemberErrors>) -> Void) {
+        self.session
+            .request(MemberRouter.invitemember(id: id, memberlist: memberList))
+            .validate(statusCode: 200..<501)
+            .responseJSON(completionHandler: { response in
+                
+                guard let responseValue = response.value
+                        , let statusCode = response.response?.statusCode else { return }
+                let responseJson = JSON(responseValue)
+                
+                switch statusCode {
+                case 200:
+                    completion(.success(true))
+                default:
+                    print("postInviteMember() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
+                    completion(.failure(.noInviteMember))
+                }
+            })
+    }
 }

@@ -16,7 +16,6 @@ class MainVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     @IBOutlet var studyCollectionView: UICollectionView!
     var rooms = [] as! Array<SearchRoomResponse>
     var roomId: Int?
-    var roomName: String?
     
     // MARK: - overrid func
     override func viewWillAppear(_ animated: Bool) {
@@ -25,7 +24,7 @@ class MainVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        self.rooms.removeAll()
+//        self.rooms.removeAll()
         super.viewDidDisappear(animated)
     }
 
