@@ -61,4 +61,5 @@ enum MemberErrors: String, Error {
 
 enum CouponErrors: String, Error {
     case noCreateCoupon = "쿠폰 등록에 실패했습니다."
+    case noSearchCoupon = "쿠폰 조회에 실패했습니다."
 }

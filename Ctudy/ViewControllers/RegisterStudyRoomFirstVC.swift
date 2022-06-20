@@ -28,7 +28,7 @@ class RegisterStudyRoomFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognize
     
     var imageFlag: Bool = false
     
-    // MARK: - override func
+    // MARK: - view load func
     override func viewDidLoad() {
         super.viewDidLoad()
         self.config()
@@ -44,7 +44,6 @@ class RegisterStudyRoomFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognize
         }
     }
     
-    // MARK: - fileprivate func
     fileprivate func config() {
         // navigationBar item 설정
         self.leftItem = LeftItem.backGeneral
@@ -73,6 +72,11 @@ class RegisterStudyRoomFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognize
         
         // gesture 연결
         self.view.addGestureRecognizer(tabGesture)
+    }
+    
+    // MARK: - picker func
+    @objc fileprivate func onProfileImageClicked() {
+        actionSheetAlert()
     }
     
     fileprivate func actionSheetAlert() {
@@ -154,7 +158,8 @@ class RegisterStudyRoomFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognize
         return overlayView
     }
     
-    // MARK: - action func
+    // MARK: - button func
+    // butto ui change
     @IBAction func editingChanged(_ sender: Any) {
         if self.registerStudyName.text!.isEmpty {
             self.nextBtn.backgroundColor = COLOR.DISABLE_COLOR
@@ -165,10 +170,7 @@ class RegisterStudyRoomFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognize
         }
     }
     
-    @objc fileprivate func onProfileImageClicked() {
-        actionSheetAlert()
-    }
-    
+    // go to next view
     @objc fileprivate func onNextBtnClicked(_ sender: Any) {
         self.performSegue(withIdentifier: "RegisterStudyRoomSecondVC", sender: nil)
     }

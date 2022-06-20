@@ -1017,7 +1017,7 @@
                                                     <fontDescription key="titleFontDescription" type="boldSystem" pointSize="15"/>
                                                 </buttonConfiguration>
                                                 <connections>
-                                                    <segue destination="bpt-De-tIw" kind="show" id="xqM-5D-k8T"/>
+                                                    <segue destination="bpt-De-tIw" kind="show" identifier="CouponVC" id="xqM-5D-k8T"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -1775,10 +1775,10 @@
             </objects>
             <point key="canvasLocation" x="8499" y="668"/>
         </scene>
-        <!--Coupon HistoryVC-->
+        <!--CouponVC-->
         <scene sceneID="jtb-ED-VnN">
             <objects>
-                <viewController id="bpt-De-tIw" customClass="CouponHistoryVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="bpt-De-tIw" customClass="CouponVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fIt-Lk-QVa">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1786,36 +1786,17 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z8z-cj-R4P">
                                 <rect key="frame" x="20" y="108" width="374" height="685"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="H5u-CC-Afc">
-                                        <rect key="frame" x="271" y="0.0" width="103" height="50"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="내 쿠폰" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s94-ll-H58">
-                                                <rect key="frame" x="0.0" y="0.0" width="43" height="18"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pvw-Ya-X02">
-                                                <rect key="frame" x="53" y="0.0" width="50" height="50"/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="YpN-Ks-e9u" userLabel="coupon History Table View">
-                                        <rect key="frame" x="0.0" y="55" width="374" height="630"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="685"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     </tableView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="YpN-Ks-e9u" firstAttribute="leading" secondItem="z8z-cj-R4P" secondAttribute="leading" id="281-Xc-PDK"/>
-                                    <constraint firstAttribute="trailing" secondItem="H5u-CC-Afc" secondAttribute="trailing" id="Ch7-fx-uPk"/>
+                                    <constraint firstItem="YpN-Ks-e9u" firstAttribute="top" secondItem="z8z-cj-R4P" secondAttribute="top" id="43z-0a-hfW"/>
                                     <constraint firstAttribute="bottom" secondItem="YpN-Ks-e9u" secondAttribute="bottom" id="OZt-Jk-ihj"/>
-                                    <constraint firstItem="YpN-Ks-e9u" firstAttribute="top" secondItem="H5u-CC-Afc" secondAttribute="bottom" constant="5" id="RoC-mc-5i6"/>
                                     <constraint firstAttribute="trailing" secondItem="YpN-Ks-e9u" secondAttribute="trailing" id="gaX-Ti-BMc"/>
-                                    <constraint firstItem="H5u-CC-Afc" firstAttribute="top" secondItem="z8z-cj-R4P" secondAttribute="top" id="qdB-yX-tuu"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -1830,8 +1811,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="ejE-qj-bRE"/>
                     <connections>
-                        <outlet property="couponCount" destination="Pvw-Ya-X02" id="cSH-Am-QGx"/>
-                        <outlet property="couponHistoryTableView" destination="YpN-Ks-e9u" id="qud-xQ-YS2"/>
+                        <outlet property="couponTableView" destination="YpN-Ks-e9u" id="KDF-q6-SPD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4tA-Ph-bIZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

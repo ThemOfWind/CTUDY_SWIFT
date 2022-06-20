@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 enum MemberRouter: URLRequestConvertible {
-    case searchmember(page: String) // 전체 멤버 조회
+    case searchmember(search: String, roomid: String?, page: String) // 전체 멤버 조회
     case deletemember(id: String, memberlist: Array<Int>)
     case invitemember(id: String, memberlist: Array<Int>) // 멤버 초대
     
@@ -48,9 +48,14 @@ enum MemberRouter: URLRequestConvertible {
         request.method = method
         
         switch self {
-        case .searchmember(page: let page):
-            let parameters = ["page" : page, "max_page" : "10"] as Dictionary
-            request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
+        case .searchmember(search: let search, roomid: let roomid, page: let page):
+            if let id = roomid {
+                let parameters = ["search" : search, "room_id" : id, "page" : page, "max_page" : "10"] as Dictionary
+                request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
+            } else {
+                let parameters = ["search" : search, "page" : page, "max_page" : "10"] as Dictionary
+                request = try URLEncodedFormParameterEncoder().encode(parameters, into: request)
+            }
         case .deletemember(id: let id, memberlist: let memberlist):
             let parameters: Dictionary = ["member_list" : memberlist] as Dictionary
             request.httpBody = try JSONSerialization.data(withJSONObject: parameters, options: [])

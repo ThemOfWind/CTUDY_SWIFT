@@ -49,7 +49,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
     var isMaster: Bool = false // 사용자가 master인지 체크, 전달할 master bool값
     let profileId = Int(KeyChainManager().tokenLoad(API.SERVICEID, account: "id")!) // 사용자 id
     
-    // MARK: - override func
+    // MARK: - view load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -93,10 +93,13 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
                 controller.settingRoom = settingRoom
                 controller.isMaster = isMaster
             }
+        } else if let id = segue.identifier, id == "CouponVC" {
+            if let controller = segue.destination as? CouponVC {
+                controller.roomId = roomId
+            }
         }
     }
     
-    // MARK: - fileprivate func
     fileprivate func config() {
         // navigationbar item 설정
         leftItem = LeftItem.backGeneral
@@ -149,6 +152,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         memberTableView.dataSource = self
     }
     
+    // MARK: - indicator in api calling
     fileprivate func onStartActivityIndicator() {
         DispatchQueue.main.async {
             // 불투명 뷰 추가
@@ -178,9 +182,8 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    // 스터디룸 멤버 조회
+    // MARK: - search room member api
     fileprivate func getSearchStudyMemeber(id: String) {
-        
         self.onStartActivityIndicator()
         
         AlamofireManager.shared.getSearchStudyMember(id: id, completion: {
@@ -238,7 +241,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    // 멤버 강퇴 button event
+    // MARK: - delete memeber api
     fileprivate func onDeleteBtnClicked(id: String, index: Int) {
         // logout alert 띄우기
         let alert = UIAlertController(title: nil, message: "멤버를 강퇴하시겠습니까?", preferredStyle: .alert)
@@ -270,15 +273,15 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         self.present(alert, animated: false)
     }
     
-    // MARK: - return func
+    // MARK: - return view func
     @IBAction func unwindMainDetailVC(_ segue: UIStoryboardSegue) {}
     
-    // MARK: - btn action func
+    // MARK: - navigation right button func
     override func AnyItemAction(sender: UIBarButtonItem) {
         self.performSegue(withIdentifier: "StudyRoomSettingVC", sender: nil)
     }
     
-    // MARK: - delegate
+    // MARK: - tableview delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return members.count
     }

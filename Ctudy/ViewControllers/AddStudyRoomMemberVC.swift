@@ -10,7 +10,7 @@ import UIKit
 import NVActivityIndicatorView
 import SwiftyJSON
 
-class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, MemberCheckButtonDelegate {
+class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, MemberCheckButtonDelegate, UITextFieldDelegate {
     
     // MARK: - 변수
     @IBOutlet weak var invitationBtn: UIButton!
@@ -71,25 +71,31 @@ class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource,
         
         // button event 연결
         invitationBtn.addTarget(self, action: #selector(onInvitationBtnClicked), for: .touchUpInside)
+        memberSearchBar.searchTextField.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
         
         // delegate 연결
         memberTableView.delegate = self
         memberTableView.dataSource = self
+        memberSearchBar.searchTextField.delegate = self
         tabGesture.delegate = self
         
         // gesture 연결
         self.view.addGestureRecognizer(tabGesture)
         
         // 전체 멤버 조회
-        getSearchMember()
+        getSearchMember(text: memberSearchBar.searchTextField.text ?? "")
     }
     
     // MARK: - search member api
     // 전체 멤버 조회
-    fileprivate func getSearchMember() {
-        AlamofireManager.shared.getSearchMember(page: nextPage ?? "0", completion: {
+    fileprivate func getSearchMember(text: String) {
+        self.onStartActivityIndicator()
+
+        AlamofireManager.shared.getSearchMember(search: text, roomId: String(roomId), page: nextPage ?? "0", completion: {
             [weak self] result in
             guard let self = self else { return }
+            
+            self.onStopActivityIndicator()
             
             switch result {
             case .success(let response):
@@ -112,6 +118,10 @@ class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource,
                 print("AddStudyRoomMemberVC - getSearchMember.failure / error: \(error.rawValue)")
             }
         })
+        
+        if self.indicator.isAnimating {
+            self.onStopActivityIndicator()
+        }
     }
     
     // MARK: - invitation api
@@ -134,7 +144,7 @@ class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource,
             switch result {
             case .success(_):
                 self.performSegue(withIdentifier: "unwindMainDetailVC", sender: self)
-                self.navigationController?.view.makeToast("멤버 초대가 완료되었습니다.", duration: 1.0, position: .center)
+                self.navigationController?.view.makeToast("멤버가 초대되었습니다.", duration: 1.0, position: .center)
             case .failure(let error):
                 print("RegisterStudyRoomSecondVC - postRegisterRoom() called / error: \(error.rawValue)")
                 self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
@@ -203,12 +213,11 @@ class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource,
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                         // 데이터 가져오기
-                        self.getSearchMember()
+                        self.getSearchMember(text: self.memberSearchBar.searchTextField.text ?? "")
                         
                         // 로딩 off & view reload
                         self.fetchingMore = false
                         self.memberTableView.tableFooterView = nil
-                        
                     }
                 }
             }
@@ -242,6 +251,12 @@ class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource,
     func checkBtnClicked(btn: UIButton, ischecked: Bool) {
         print("AddStudyRoomMemberVC - checkBtnClicked() called / btn.tag: \(btn.tag), btn.id: \(members[btn.tag].id) ischecked: \(ischecked)")
         self.members[btn.tag].ischecked = ischecked
+    }
+    
+    // MARK: - textfield delegate
+    // textField 변경할 때 event
+    @objc func textFieldEditingChanged(_ textField: UITextField) {
+        getSearchMember(text: textField.text ?? "")
     }
     
     // MARK: - UIGestureRecognizerDelegate

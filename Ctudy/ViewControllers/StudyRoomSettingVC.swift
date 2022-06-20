@@ -38,7 +38,7 @@ class StudyRoomSettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     var isMaster: Bool! // 사용자가 master인지 체크, 전달받은 master bool값
     var settingList: Array<Dictionary<String, Any>>! // 셋팅 항목
     
-    // MARK: - override func
+    // MARK: - view load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         config()
@@ -57,7 +57,6 @@ class StudyRoomSettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    // MARK: - fileprivate func
     fileprivate func config() {
         // navigationbar
         self.navigationController?.navigationBar.sizeToFit() // UIKit에 포함된 특정 View를 자체 내부 요구의 사이즈로 resize 해주는 함수
@@ -91,6 +90,7 @@ class StudyRoomSettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    // MARK: - indicator in api calling
     fileprivate func onStartActivityIndicator() {
         DispatchQueue.main.async {
             // 불투명 뷰 추가
@@ -120,7 +120,7 @@ class StudyRoomSettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    // logoutBtn event
+    // MARK: - out studyroom api
     fileprivate func outStudyRoom() {
         if isMaster {
             print("click!")

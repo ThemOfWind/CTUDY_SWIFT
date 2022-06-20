@@ -9,19 +9,19 @@ import Foundation
 import UIKit
 
 class StartVC : BasicVC {
-    
     // MARK: - 변수
     @IBOutlet weak var signatureImg: UIImageView!
     @IBOutlet weak var signUpBtn: UIButton!
     @IBOutlet weak var loginBtn: UIButton!
     
+    // MARK: - view load func
     override func viewDidLoad() {
         super.viewDidLoad()
         self.config()
     }
     
     fileprivate func config() {
-//        // navigationbar
+        // navigationbar
         self.leftItem = LeftItem.none
         self.titleItem = TitleItem.none
         self.rightItem = RightItem.none

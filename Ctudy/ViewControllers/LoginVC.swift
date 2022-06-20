@@ -44,7 +44,7 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
     var loginViewY: Double!
     var token: SignInResponse?
     
-    // MARK: - overrid func
+    // MARK: - view load func
     override func viewDidLoad() {
         super.viewDidLoad()
         self.config()
@@ -69,8 +69,7 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
         //NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         //NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidHideNotification, object: nil)
     }
-    
-    // MARK: - fileprivate func
+
     // 기본 셋팅
     fileprivate func config() {
         // textField 초기화
@@ -100,6 +99,7 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
         self.view.addGestureRecognizer(keyboardDismissTabGesture)
     }
     
+    // MARK: - indicator in api calling
     fileprivate func onStartActivityIndicator() {
         DispatchQueue.main.async {
             // 불투명 뷰 추가
@@ -129,7 +129,7 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
         }
     }
     
-    // MARK: - @objc func
+    // MARK: - login api
     // loginBtn event
     @objc func onLoginBtnClicked() {
         print("LoginVC - onLoginBtnClicked() called")
@@ -161,6 +161,32 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
         }
     }
     
+    // MARK: - search profile api
+    // 접속 회원정보 조회 후 keychain 저장
+    fileprivate func getProfileInfo() {
+        
+        self.onStartActivityIndicator()
+        
+        AlamofireManager.shared.getProfile(completion: { [weak self] result in
+            guard let self = self else { return }
+            
+            self.onStopActivityIndicator()
+            
+            switch result {
+            case .success(_):
+                // 다음 화면으로 이동
+                self.performSegue(withIdentifier: "MainTabBarVC", sender: nil)
+            case .failure(let error):
+                print("LoginVC - getProfileInfo() called / error: \(error.rawValue)")
+            }
+        })
+        
+        if indicator.isAnimating {
+            self.onStopActivityIndicator()
+        }
+    }
+    
+    // MARK: - keyboard func
     @objc func keyboardWillShowHandle(noti: NSNotification) {
         //        print("LoginVC - keyboardWillShowHandle() called")
         // keyboard 사이즈 가져오기
@@ -186,35 +212,12 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
         }
     }
     
+    // MARK: - go to startview func
     @objc fileprivate func onGoToStartBtnClicked() {
         self.navigationController?.popViewController(animated: true)
     }
     
-    // 접속 회원정보 조회 후 keychain 저장
-    fileprivate func getProfileInfo() {
-        
-        self.onStartActivityIndicator()
-        
-        AlamofireManager.shared.getProfile(completion: { [weak self] result in
-            guard let self = self else { return }
-            
-            self.onStopActivityIndicator()
-            
-            switch result {
-            case .success(_):
-                // 다음 화면으로 이동
-                self.performSegue(withIdentifier: "MainTabBarVC", sender: nil)
-            case .failure(let error):
-                print("LoginVC - getProfileInfo() called / error: \(error.rawValue)")
-            }
-        })
-        
-        if indicator.isAnimating {
-            self.onStopActivityIndicator()
-        }
-    }
-    
-    // MARK: - @IBACiton func
+    // MARK: - button ui change func
     // loginBtn 활성화 & 비활성화 event
     @IBAction func editingChanged(_ sender: Any) {
         if userName.text!.isEmpty || password.text!.isEmpty {
@@ -224,6 +227,13 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
             self.loginBtn.backgroundColor = COLOR.SIGNATURE_COLOR
             self.loginBtn.isEnabled = true
         }
+    }
+    
+    // MARK: - textField delegate
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        self.dismiss(animated: true, completion: nil)
+        return true
     }
     
     // MARK: - UIGestureRecognizer delegate
@@ -236,13 +246,6 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
             view.endEditing(true)
             return true
         }
-    }
-    
-    // MARK: - textField delegate
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        self.dismiss(animated: true, completion: nil)
-        return true
     }
 }
 
