@@ -288,7 +288,7 @@ class RegisterCouponSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerD
         datePicker.preferredDatePickerStyle = .wheels
         datePicker.locale = NSLocale(localeIdentifier: "ko_KO") as Locale
         datePicker.datePickerMode = .date
-        datePicker.minimumDate = Date.now
+        datePicker.minimumDate = Date()
         
         endDate.inputAccessoryView = toolbar
         endDate.inputView = datePicker

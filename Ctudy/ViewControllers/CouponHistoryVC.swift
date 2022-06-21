@@ -174,18 +174,4 @@ class CouponHistoryVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         
         return cell
     }
-    
-    // slide button
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let use = UIContextualAction(style: .normal, title: "use") {
-            (UIContextualAction, UIView, success: @escaping (Bool) -> Void) in
-            print("coupon use click! / indexPath: \(indexPath.row)")
-            self.onUseBtnClicked(couponId: String(self.coupons[indexPath.row].id))
-            success(true)
-        }
-        use.backgroundColor = .systemCyan
-        use.image = UIImage(systemName: "hand.point.up.left.fill")
-        
-        return UISwipeActionsConfiguration(actions: [use])
-    }
 }
