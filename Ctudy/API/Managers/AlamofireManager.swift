@@ -682,4 +682,24 @@ final class AlamofireManager {
                 }
             })
     }
+    
+    // MARK: - 쿠폰 사용
+    func deleteUseCoupon(id: String, completion: @escaping(Result<Bool, CouponErrors>) -> Void) {
+        self.session
+            .request(CouponRouter.usecoupon(id: id))
+            .validate(statusCode: 200..<501)
+            .response(completionHandler: { response in
+                guard let responseValue = response.value
+                    , let statusCode = response.response?.statusCode else { return }
+                let responseJson = JSON(responseValue)
+                
+                switch statusCode {
+                case 200:
+                    completion(.success(true))
+                default:
+                    print("deleteUseCoupon() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
+                    completion(.failure(.noUseCoupon))
+                }
+            })
+    }
 }

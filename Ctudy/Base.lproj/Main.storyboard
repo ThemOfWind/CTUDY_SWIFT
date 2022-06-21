@@ -1812,11 +1812,55 @@
                     <navigationItem key="navigationItem" id="ejE-qj-bRE"/>
                     <connections>
                         <outlet property="couponTableView" destination="YpN-Ks-e9u" id="KDF-q6-SPD"/>
+                        <segue destination="dKw-K9-QjO" kind="show" identifier="CouponHistoryVC" id="oCi-nf-QXp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4tA-Ph-bIZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4474" y="-859"/>
+        </scene>
+        <!--Coupon HistoryVC-->
+        <scene sceneID="dph-PW-Rot">
+            <objects>
+                <viewController id="dKw-K9-QjO" customClass="CouponHistoryVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="eJi-Er-Sth">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DrG-Di-Kex">
+                                <rect key="frame" x="20" y="108" width="374" height="685"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="xal-4Q-MgZ">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="685"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </tableView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="xal-4Q-MgZ" secondAttribute="trailing" id="Dax-Ck-e6p"/>
+                                    <constraint firstAttribute="bottom" secondItem="xal-4Q-MgZ" secondAttribute="bottom" id="Rb6-60-Rh3"/>
+                                    <constraint firstItem="xal-4Q-MgZ" firstAttribute="top" secondItem="DrG-Di-Kex" secondAttribute="top" id="XLs-tQ-Cy7"/>
+                                    <constraint firstItem="xal-4Q-MgZ" firstAttribute="leading" secondItem="DrG-Di-Kex" secondAttribute="leading" id="YgL-ZR-pQM"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="8WI-AI-YcD"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="DrG-Di-Kex" firstAttribute="top" secondItem="8WI-AI-YcD" secondAttribute="top" constant="20" id="C88-pd-XXN"/>
+                            <constraint firstItem="8WI-AI-YcD" firstAttribute="bottom" secondItem="DrG-Di-Kex" secondAttribute="bottom" constant="20" id="GFQ-Qp-1Mz"/>
+                            <constraint firstItem="8WI-AI-YcD" firstAttribute="trailing" secondItem="DrG-Di-Kex" secondAttribute="trailing" constant="20" id="Nc9-fG-diF"/>
+                            <constraint firstItem="DrG-Di-Kex" firstAttribute="leading" secondItem="8WI-AI-YcD" secondAttribute="leading" constant="20" id="hXk-WC-eTl"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="66Q-Gi-Xjo"/>
+                    <connections>
+                        <outlet property="couponHistoryTableView" destination="xal-4Q-MgZ" id="ag8-AJ-IqC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Z7a-JI-tOn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5480" y="-859"/>
         </scene>
         <!--Register Study Room FirstVC-->
         <scene sceneID="iZr-F0-nPK">

@@ -143,7 +143,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         memberTableView.register(memberCell, forCellReuseIdentifier: "StudyMemberTableViewCell")
         
         // 셀 설정
-        memberTableView.rowHeight = 90
+        memberTableView.rowHeight = 100
         memberTableView.allowsSelection = false
         memberTableView.showsVerticalScrollIndicator = false // scroll 제거
         
@@ -303,7 +303,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         if isMaster, indexPath.row > 0 {
-            let delete = UIContextualAction(style: .normal, title: "delete") {
+            let delete = UIContextualAction(style: .normal, title: "내보내기") {
                 (UIContextualAction, UIView, success: @escaping (Bool) -> Void) in
                 print("member delete click! / indexPath: \(indexPath.row)")
                 self.onDeleteBtnClicked(id: String(self.roomId), index: indexPath.row)

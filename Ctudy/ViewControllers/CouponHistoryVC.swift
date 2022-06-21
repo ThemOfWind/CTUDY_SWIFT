@@ -2,16 +2,16 @@
 //  CouponHistoryVC.swift
 //  Ctudy
 //
-//  Created by 김지은 on 2022/05/24.
+//  Created by 김지은 on 2022/06/21.
 //
 
 import Foundation
 import UIKit
 import NVActivityIndicatorView
 
-class CouponVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
+class CouponHistoryVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     // MARK: - 변수
-    @IBOutlet weak var couponTableView: UITableView!
+    @IBOutlet weak var couponHistoryTableView: UITableView!
     lazy var indicatorView: UIView = {
         let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         indicatorView.backgroundColor = COLOR.INDICATOR_BACKGROUND_COLOR
@@ -31,7 +31,7 @@ class CouponVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         label.text = "loading..."
         label.textColor = COLOR.BASIC_TINT_COLOR
         label.translatesAutoresizingMaskIntoConstraints = false
-        return label
+       return label
     }()
     var coupons = [] as! Array<CouponResponse>
     var roomId: Int!
@@ -42,38 +42,29 @@ class CouponVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         config()
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let id = segue.identifier, id == "CouponHistoryVC" {
-            if let controller = segue.destination as? CouponHistoryVC {
-                controller.roomId = roomId
-            }
-        }
-    }
-    
     fileprivate func config() {
         // navigationbar item 설정
         leftItem = LeftItem.backGeneral
-        titleItem = TitleItem.titleGeneral(title: "내 쿠폰", isLargeTitles: true)
-        rightItem = RightItem.anyCustoms(items: [.setting], title: nil, rightSpaceCloseToDefault: true)
+        titleItem = TitleItem.titleGeneral(title: "히스토리", isLargeTitles: true)
         
         // 셀 리소스 파일 가져오기
-        let couponCell = UINib(nibName: String(describing: CouponTableViewCell.self), bundle: nil)
+        let couponCell = UINib(nibName: String(describing: CouponHistoryTableViewCell.self), bundle: nil)
         
         // 셀 리소스 등록하기
-        couponTableView.register(couponCell, forCellReuseIdentifier: "CouponTableViewCell")
+        couponHistoryTableView.register(couponCell, forCellReuseIdentifier: "CouponHistoryTableViewCell")
         
         // 셀 설정
-        couponTableView.rowHeight = 100
-        couponTableView.allowsSelection = false
-        //        self.couponHistoryTableView.layer.borderWidth = 1
-        //        self.couponHistoryTableView.layer.borderColor = COLOR.BORDER_COLOR.cgColor
+        couponHistoryTableView.rowHeight = 100
+        couponHistoryTableView.allowsSelection = false
+//        self.couponHistoryTableView.layer.borderWidth = 1
+//        self.couponHistoryTableView.layer.borderColor = COLOR.BORDER_COLOR.cgColor
         
         // delegate 연결
-        couponTableView.delegate = self
-        couponTableView.dataSource = self
+        couponHistoryTableView.delegate = self
+        couponHistoryTableView.dataSource = self
         
         // 히스토리 조회
-        getSearchCoupon()
+        getSearchCouponHistory()
     }
     
     // MARK: - indicator in api calling
@@ -107,7 +98,7 @@ class CouponVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     // MARK: - coupon history api
-    fileprivate func getSearchCoupon() {
+    fileprivate func getSearchCouponHistory() {
         self.onStartActivityIndicator()
         
         AlamofireManager.shared.getSearchCoupon(id: String(roomId), mode: "r", completion: {
@@ -119,7 +110,7 @@ class CouponVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
             switch result {
             case .success(let result):
                 self.coupons = result
-                self.couponTableView.reloadData()
+                self.couponHistoryTableView.reloadData()
             case .failure(let error):
                 print("CouponVC - getSearchCoupon().failure / error: \(error)")
                 self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
@@ -131,41 +122,29 @@ class CouponVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    // MARK: - use coupon api
+    // MARK: - search coupon history api
     fileprivate func onUseBtnClicked(couponId: String) {
-        // coupon alert 띄우기
-        let alert = UIAlertController(title: nil, message: "쿠폰을 사용하시겠습니까?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
-        alert.addAction(UIAlertAction(title: "확인", style: .destructive, handler: { (_) in
-            
-            self.onStartActivityIndicator()
-            
-            AlamofireManager.shared.deleteUseCoupon(id: couponId, completion: {
-                [weak self] result in
-                guard let self = self else { return }
-                
-                self.onStopActivityIndicator()
-                
-                switch result {
-                case .success(_):
-                    self.getSearchCoupon()
-                case .failure(let error):
-                    print("CouponVC - deleteUseCoupon().failure / error: \(error)")
-                    self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
-                }
-            })
-            
-            if self.indicator.isAnimating {
-                self.onStopActivityIndicator()
-            }
-            
-        }))
+        self.onStartActivityIndicator()
         
-        self.present(alert, animated: false)
-    }
-    
-    override func AnyItemAction(sender: UIBarButtonItem) {
-        self.performSegue(withIdentifier: "CouponHistoryVC", sender: nil)
+        AlamofireManager.shared.getSearchCoupon(id: String(roomId), mode: nil, completion: {
+            [weak self] result in
+            guard let self = self else { return }
+            
+            self.onStopActivityIndicator()
+            
+            switch result {
+            case .success(let result):
+                self.coupons = result
+                self.couponHistoryTableView.reloadData()
+            case .failure(let error):
+                print("CouponVC - getSearchCoupon().failure / error: \(error)")
+                self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
+            }
+        })
+        
+        if self.indicator.isAnimating {
+            self.onStopActivityIndicator()
+        }
     }
     
     // MARK: - tableview delegate
@@ -174,16 +153,31 @@ class CouponVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = couponTableView.dequeueReusableCell(withIdentifier: "CouponTableViewCell", for: indexPath) as! CouponTableViewCell
-        cell.couponName.text = coupons[indexPath.row].name
+        let cell = couponHistoryTableView.dequeueReusableCell(withIdentifier: "CouponHistoryTableViewCell", for: indexPath) as! CouponHistoryTableViewCell
+        // sender
+        if coupons[indexPath.row].simage != "" {
+            cell.senderImg.kf.setImage(with: URL(string: API.IMAGE_URL + coupons[indexPath.row].simage)!)
+        } else {
+            cell.senderImg.image = UIImage(named: "user_default.png")
+        }
         cell.senderName.text = coupons[indexPath.row].sname
         cell.senderUsername.text = "@\(coupons[indexPath.row].susername)"
+        
+        // reciever
+        if coupons[indexPath.row].rimage != "" {
+            cell.recieverImg.kf.setImage(with: URL(string: API.IMAGE_URL + coupons[indexPath.row].rimage)!)
+        } else {
+            cell.recieverImg.image = UIImage(named: "user_default.png")
+        }
+        cell.recieverName.text = coupons[indexPath.row].rname
+        cell.recieverUsername.text = "@\(coupons[indexPath.row].rusername)"
+        
         return cell
     }
     
     // slide button
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let use = UIContextualAction(style: .normal, title: "사용하기") {
+        let use = UIContextualAction(style: .normal, title: "use") {
             (UIContextualAction, UIView, success: @escaping (Bool) -> Void) in
             print("coupon use click! / indexPath: \(indexPath.row)")
             self.onUseBtnClicked(couponId: String(self.coupons[indexPath.row].id))
