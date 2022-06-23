@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import NVActivityIndicatorView
+import SwiftUI
 
 class CouponVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     // MARK: - 변수
@@ -47,6 +48,11 @@ class CouponVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
             if let controller = segue.destination as? CouponHistoryVC {
                 controller.roomId = roomId
             }
+            
+//        } else if let id = segue.identifier, id == "CouponDetailVC" {
+//            if let controller = segue.destination as? CouponDetailVC {
+//                controller.coupon = coupon
+//            }
         }
     }
     
@@ -64,7 +70,6 @@ class CouponVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         
         // 셀 설정
         couponTableView.rowHeight = 100
-        couponTableView.allowsSelection = false
         //        self.couponHistoryTableView.layer.borderWidth = 1
         //        self.couponHistoryTableView.layer.borderColor = COLOR.BORDER_COLOR.cgColor
         
@@ -168,6 +173,21 @@ class CouponVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         self.performSegue(withIdentifier: "CouponHistoryVC", sender: nil)
     }
     
+    // MARK: - modal View
+    fileprivate func presentModal(index: Int) {
+        let couponView = CouponDetailVC()
+//        couponView.coupon = coupons[index]
+        let naviView = UINavigationController(rootViewController: couponView)
+        naviView.modalPresentationStyle = .pageSheet
+        
+        if let sheet = naviView.sheetPresentationController {
+            sheet.detents = [.medium()]
+            sheet.largestUndimmedDetentIdentifier = .medium
+        }
+        
+        present(naviView, animated: true, completion: nil)
+    }
+    
     // MARK: - tableview delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return coupons.count
@@ -175,6 +195,7 @@ class CouponVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = couponTableView.dequeueReusableCell(withIdentifier: "CouponTableViewCell", for: indexPath) as! CouponTableViewCell
+        cell.selectionStyle = .none // 선택 block 없애기
         cell.couponName.text = coupons[indexPath.row].name
         cell.senderName.text = coupons[indexPath.row].sname
         cell.senderUsername.text = "@\(coupons[indexPath.row].susername)"
@@ -193,5 +214,19 @@ class CouponVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         use.image = UIImage(systemName: "hand.point.up.left.fill")
         
         return UISwipeActionsConfiguration(actions: [use])
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let controller = self.storyboard?.instantiateViewController(withIdentifier: "CouponDetailVC") as? CouponDetailVC else { return }
+        controller.modalTransitionStyle = .coverVertical
+        controller.modalPresentationStyle = .pageSheet
+//        controller.preferredContentSize = CGSize(width: self.view.bounds.width, height: 500)
+        controller.coupon = coupons[indexPath.row]
+        
+        if let sheet = controller.sheetPresentationController {
+            sheet.detents = [.medium()]
+            sheet.largestUndimmedDetentIdentifier = .medium
+        }
+        self.present(controller, animated: true, completion: nil)
     }
 }

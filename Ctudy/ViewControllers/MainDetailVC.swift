@@ -144,7 +144,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         
         // 셀 설정
         memberTableView.rowHeight = 100
-        memberTableView.allowsSelection = false
+//        memberTableView.allowsSelection = false
         memberTableView.showsVerticalScrollIndicator = false // scroll 제거
         
         // delegete
@@ -288,6 +288,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = memberTableView.dequeueReusableCell(withIdentifier: "StudyMemberTableViewCell", for: indexPath) as! StudyMemberTableViewCell
+        cell.selectionStyle = .none // 선택 block 없애기
         cell.member.text = members[indexPath.row].name
         cell.memberName.text = "@\(members[indexPath.row].username)"
         //        let coupon = String("0\(members[indexPath.row].coupon)")

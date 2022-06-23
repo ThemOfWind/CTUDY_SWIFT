@@ -25,6 +25,7 @@
 		5A4CD0D927E86F1F00F6C829 /* AddBarButtonItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A4CD0D827E86F1F00F6C829 /* AddBarButtonItem.xib */; };
 		5A4CD0DC27E8A09E00F6C829 /* AddBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4CD0DB27E8A09E00F6C829 /* AddBarButtonItem.swift */; };
 		5A4CD0DE27E8C2F600F6C829 /* MainDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4CD0DD27E8C2F600F6C829 /* MainDetailVC.swift */; };
+		5A51DA742864531A00AF415F /* CouponDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A51DA732864531A00AF415F /* CouponDetailVC.swift */; };
 		5A563C7F2861AECA005FD226 /* CouponHistoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A563C7E2861AECA005FD226 /* CouponHistoryVC.swift */; };
 		5A58EE9A275F7E83000A1A39 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A58EE99275F7E83000A1A39 /* AppDelegate.swift */; };
 		5A58EE9C275F7E83000A1A39 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A58EE9B275F7E83000A1A39 /* SceneDelegate.swift */; };
@@ -118,6 +119,7 @@
 		5A4CD0D827E86F1F00F6C829 /* AddBarButtonItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddBarButtonItem.xib; sourceTree = "<group>"; };
 		5A4CD0DB27E8A09E00F6C829 /* AddBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBarButtonItem.swift; sourceTree = "<group>"; };
 		5A4CD0DD27E8C2F600F6C829 /* MainDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainDetailVC.swift; sourceTree = "<group>"; };
+		5A51DA732864531A00AF415F /* CouponDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponDetailVC.swift; sourceTree = "<group>"; };
 		5A563C7E2861AECA005FD226 /* CouponHistoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponHistoryVC.swift; sourceTree = "<group>"; };
 		5A58EE96275F7E83000A1A39 /* Ctudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ctudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A58EE99275F7E83000A1A39 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -298,6 +300,7 @@
 				5A24494227EA17280082EC88 /* RegisterStudyRoomSecondVC.swift */,
 				5ABA13F1283CBBFE007AE4F0 /* CouponVC.swift */,
 				5A563C7E2861AECA005FD226 /* CouponHistoryVC.swift */,
+				5A51DA732864531A00AF415F /* CouponDetailVC.swift */,
 				5AA84FE0283F60240090C4E6 /* SearchIdFirstVC.swift */,
 				5A5FCD35283F9C6900C9C3C4 /* SearchIdSuccessVC.swift */,
 				5AA84FE2283F604E0090C4E6 /* SearchPwFirstVC.swift */,
@@ -631,6 +634,7 @@
 				5ADDFC792765B983001291DD /* AlamofireManager.swift in Sources */,
 				5A58EE9C275F7E83000A1A39 /* SceneDelegate.swift in Sources */,
 				5A7BC101284BBD260077F10F /* SettingStudyRoomResponse.swift in Sources */,
+				5A51DA742864531A00AF415F /* CouponDetailVC.swift in Sources */,
 				5A6FEEB8284084EA007C7751 /* SearchPwSuccessVC.swift in Sources */,
 				5A9EDD1427F0C89500ED3343 /* MemberCheckButton.swift in Sources */,
 				5A8D9FF92836890B008FBD9F /* SignUpRequest.swift in Sources */,

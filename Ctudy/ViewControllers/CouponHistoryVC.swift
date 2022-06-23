@@ -55,7 +55,7 @@ class CouponHistoryVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         
         // 셀 설정
         couponHistoryTableView.rowHeight = 100
-        couponHistoryTableView.allowsSelection = false
+//        couponHistoryTableView.allowsSelection = false
 //        self.couponHistoryTableView.layer.borderWidth = 1
 //        self.couponHistoryTableView.layer.borderColor = COLOR.BORDER_COLOR.cgColor
         
@@ -154,6 +154,7 @@ class CouponHistoryVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = couponHistoryTableView.dequeueReusableCell(withIdentifier: "CouponHistoryTableViewCell", for: indexPath) as! CouponHistoryTableViewCell
+        cell.selectionStyle = .none // 선택 block 없애기
         // sender
         if coupons[indexPath.row].simage != "" {
             cell.senderImg.kf.setImage(with: URL(string: API.IMAGE_URL + coupons[indexPath.row].simage)!)

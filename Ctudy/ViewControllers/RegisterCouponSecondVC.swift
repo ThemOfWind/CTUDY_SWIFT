@@ -289,7 +289,7 @@ class RegisterCouponSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerD
         datePicker.locale = NSLocale(localeIdentifier: "ko_KO") as Locale
         datePicker.datePickerMode = .date
         datePicker.minimumDate = Date()
-        
+        datePicker.maximumDate = Calendar.current.date(byAdding: .year, value: 2, to: Date())
         endDate.inputAccessoryView = toolbar
         endDate.inputView = datePicker
         
