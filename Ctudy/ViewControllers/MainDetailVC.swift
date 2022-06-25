@@ -24,13 +24,14 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var memberTableView: UITableView!
     lazy var indicatorView: UIView = {
         let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-        indicatorView.backgroundColor = COLOR.INDICATOR_BACKGROUND_COLOR
+        indicatorView.backgroundColor = UIColor.white
+        indicatorView.isOpaque = false
         return indicatorView
     }()
     lazy var indicator: NVActivityIndicatorView = {
         let indicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40),
                                                 type: .pacman,
-                                                color: COLOR.BASIC_TINT_COLOR,
+                                                color: COLOR.SIGNATURE_COLOR,
                                                 padding: 0)
         indicator.translatesAutoresizingMaskIntoConstraints = false
         return indicator
@@ -39,7 +40,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 10))
         label.font = UIFont.boldSystemFont(ofSize: 15)
         label.text = "loading..."
-        label.textColor = COLOR.BASIC_TINT_COLOR
+        label.textColor = COLOR.SIGNATURE_COLOR
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -49,7 +50,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
     var isMaster: Bool = false // 사용자가 master인지 체크, 전달할 master bool값
     let profileId = Int(KeyChainManager().tokenLoad(API.SERVICEID, account: "id")!) // 사용자 id
     
-    // MARK: - override func
+    // MARK: - view load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -93,10 +94,13 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
                 controller.settingRoom = settingRoom
                 controller.isMaster = isMaster
             }
+        } else if let id = segue.identifier, id == "CouponVC" {
+            if let controller = segue.destination as? CouponVC {
+                controller.roomId = roomId
+            }
         }
     }
     
-    // MARK: - fileprivate func
     fileprivate func config() {
         // navigationbar item 설정
         leftItem = LeftItem.backGeneral
@@ -135,13 +139,15 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         
         // 셀 리소스 파일 가져오기
         let memberCell = UINib(nibName: String(describing: StudyMemberTableViewCell.self), bundle: nil)
+        let emptyCell = EmptyTableViewCell.nib()
         
         // 셀 리소스 등록하기
         memberTableView.register(memberCell, forCellReuseIdentifier: "StudyMemberTableViewCell")
+        memberTableView.register(emptyCell, forCellReuseIdentifier: "EmptyTableViewCell")
         
         // 셀 설정
-        memberTableView.rowHeight = 90
-        memberTableView.allowsSelection = false
+        memberTableView.rowHeight = 100
+//        memberTableView.allowsSelection = false
         memberTableView.showsVerticalScrollIndicator = false // scroll 제거
         
         // delegete
@@ -149,6 +155,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         memberTableView.dataSource = self
     }
     
+    // MARK: - indicator in api calling
     fileprivate func onStartActivityIndicator() {
         DispatchQueue.main.async {
             // 불투명 뷰 추가
@@ -178,9 +185,8 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    // 스터디룸 멤버 조회
+    // MARK: - search room member api
     fileprivate func getSearchStudyMemeber(id: String) {
-        
         self.onStartActivityIndicator()
         
         AlamofireManager.shared.getSearchStudyMember(id: id, completion: {
@@ -238,7 +244,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         }
     }
     
-    // 멤버 강퇴 button event
+    // MARK: - delete memeber api
     fileprivate func onDeleteBtnClicked(id: String, index: Int) {
         // logout alert 띄우기
         let alert = UIAlertController(title: nil, message: "멤버를 강퇴하시겠습니까?", preferredStyle: .alert)
@@ -270,49 +276,67 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
         self.present(alert, animated: false)
     }
     
-    // MARK: - return func
+    // MARK: - return view func
     @IBAction func unwindMainDetailVC(_ segue: UIStoryboardSegue) {}
     
-    // MARK: - btn action func
+    // MARK: - navigation right button func
     override func AnyItemAction(sender: UIBarButtonItem) {
         self.performSegue(withIdentifier: "StudyRoomSettingVC", sender: nil)
     }
     
-    // MARK: - delegate
+    // MARK: - tableview delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return members.count
+        if members.count == 0 {
+            return 1
+        } else {
+            return members.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = memberTableView.dequeueReusableCell(withIdentifier: "StudyMemberTableViewCell", for: indexPath) as! StudyMemberTableViewCell
-        cell.member.text = members[indexPath.row].name
-        cell.memberName.text = "@\(members[indexPath.row].username)"
-        //        let coupon = String("0\(members[indexPath.row].coupon)")
-        cell.couponCnt.text = "쿠폰 \(String(format: "%02d", members[indexPath.row].coupon))"
-        if members[indexPath.row].image != "" {
-            cell.memberImg.kf.setImage(with: URL(string: API.IMAGE_URL + members[indexPath.row].image)!)
+        if members.isEmpty == true {
+            let cell = memberTableView.dequeueReusableCell(withIdentifier: "EmptyTableViewCell", for: indexPath) as! EmptyTableViewCell
+            cell.selectionStyle = .none
+            cell.titleLabel.text = "아직 초대한 멤버가 없습니다."
+            cell.subtitleLabel.text = "초대는 방장만 가능합니다.\n방장은 '설정>멤버초대'를 통해서\n멤버를 초대할 수 있습니다."
+            memberTableView.rowHeight = self.memberTableView.bounds.height
+            return cell
         } else {
-            cell.memberImg.image = UIImage(named: "user_default.png")
+            let cell = memberTableView.dequeueReusableCell(withIdentifier: "StudyMemberTableViewCell", for: indexPath) as! StudyMemberTableViewCell
+            cell.selectionStyle = .none // 선택 block 없애기
+            cell.member.text = members[indexPath.row].name
+            cell.memberName.text = "@\(members[indexPath.row].username)"
+            //        let coupon = String("0\(members[indexPath.row].coupon)")
+            cell.couponCnt.text = "쿠폰 \(String(format: "%02d", members[indexPath.row].coupon))"
+            if members[indexPath.row].image != "" {
+                cell.memberImg.kf.setImage(with: URL(string: API.IMAGE_URL + members[indexPath.row].image)!)
+            } else {
+                cell.memberImg.image = UIImage(named: "user_default.png")
+            }
+            memberTableView.rowHeight = 100
+            return cell
         }
-        
-        return cell
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        if isMaster, indexPath.row > 0 {
-            let delete = UIContextualAction(style: .normal, title: "delete") {
-                (UIContextualAction, UIView, success: @escaping (Bool) -> Void) in
-                print("member delete click! / indexPath: \(indexPath.row)")
-                self.onDeleteBtnClicked(id: String(self.roomId), index: indexPath.row)
-                success(true)
-            }
-            delete.backgroundColor = .systemPink
-            delete.image = UIImage(systemName: "trash")
-            
-            // actions배열 인덱스 0이 왼쪽에 붙음
-            return UISwipeActionsConfiguration(actions: [delete])
-        } else {
+        if members.isEmpty == true {
             return nil
+        } else {
+            if isMaster, indexPath.row > 0 {
+                let delete = UIContextualAction(style: .normal, title: "내보내기") {
+                    (UIContextualAction, UIView, success: @escaping (Bool) -> Void) in
+                    print("member delete click! / indexPath: \(indexPath.row)")
+                    self.onDeleteBtnClicked(id: String(self.roomId), index: indexPath.row)
+                    success(true)
+                }
+                delete.backgroundColor = .systemPink
+                delete.image = UIImage(systemName: "trash")
+                
+                // actions배열 인덱스 0이 왼쪽에 붙음
+                return UISwipeActionsConfiguration(actions: [delete])
+            } else {
+                return nil
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 import NVActivityIndicatorView
 import SwiftyJSON
 
-class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, MemberCheckButtonDelegate {
+class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, MemberCheckButtonDelegate, UITextFieldDelegate {
     
     // MARK: - 변수
     @IBOutlet weak var invitationBtn: UIButton!
@@ -19,13 +19,13 @@ class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource,
     let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: AddStudyRoomMemberVC.self, action: nil)
     lazy var indicatorView: UIView = {
         let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-        indicatorView.backgroundColor = COLOR.INDICATOR_BACKGROUND_COLOR
+        indicatorView.backgroundColor = UIColor.white
         return indicatorView
     }()
     lazy var indicator: NVActivityIndicatorView = {
         let indicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40),
                                                 type: .pacman,
-                                                color: COLOR.BASIC_TINT_COLOR,
+                                                color: COLOR.SIGNATURE_COLOR,
                                                 padding: 0)
         indicator.translatesAutoresizingMaskIntoConstraints = false
         return indicator
@@ -34,7 +34,7 @@ class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource,
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 10))
         label.font = UIFont.boldSystemFont(ofSize: 15)
         label.text = "loading..."
-        label.textColor = COLOR.BASIC_TINT_COLOR
+        label.textColor = COLOR.SIGNATURE_COLOR
         label.translatesAutoresizingMaskIntoConstraints = false
        return label
     }()
@@ -71,23 +71,26 @@ class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource,
         
         // button event 연결
         invitationBtn.addTarget(self, action: #selector(onInvitationBtnClicked), for: .touchUpInside)
+        memberSearchBar.searchTextField.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
         
         // delegate 연결
         memberTableView.delegate = self
         memberTableView.dataSource = self
+        memberSearchBar.searchTextField.delegate = self
         tabGesture.delegate = self
         
         // gesture 연결
         self.view.addGestureRecognizer(tabGesture)
         
         // 전체 멤버 조회
-        getSearchMember()
+        getSearchMember(text: memberSearchBar.searchTextField.text ?? "")
     }
     
     // MARK: - search member api
     // 전체 멤버 조회
-    fileprivate func getSearchMember() {
-        AlamofireManager.shared.getSearchMember(page: nextPage ?? "0", completion: {
+    fileprivate func getSearchMember(text: String) {
+
+        AlamofireManager.shared.getSearchMember(search: text, roomId: String(roomId), page: nextPage ?? "0", completion: {
             [weak self] result in
             guard let self = self else { return }
             
@@ -134,7 +137,7 @@ class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource,
             switch result {
             case .success(_):
                 self.performSegue(withIdentifier: "unwindMainDetailVC", sender: self)
-                self.navigationController?.view.makeToast("멤버 초대가 완료되었습니다.", duration: 1.0, position: .center)
+                self.navigationController?.view.makeToast("멤버가 초대되었습니다.", duration: 1.0, position: .center)
             case .failure(let error):
                 print("RegisterStudyRoomSecondVC - postRegisterRoom() called / error: \(error.rawValue)")
                 self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
@@ -203,12 +206,11 @@ class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource,
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                         // 데이터 가져오기
-                        self.getSearchMember()
+                        self.getSearchMember(text: self.memberSearchBar.searchTextField.text ?? "")
                         
                         // 로딩 off & view reload
                         self.fetchingMore = false
                         self.memberTableView.tableFooterView = nil
-                        
                     }
                 }
             }
@@ -242,6 +244,12 @@ class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource,
     func checkBtnClicked(btn: UIButton, ischecked: Bool) {
         print("AddStudyRoomMemberVC - checkBtnClicked() called / btn.tag: \(btn.tag), btn.id: \(members[btn.tag].id) ischecked: \(ischecked)")
         self.members[btn.tag].ischecked = ischecked
+    }
+    
+    // MARK: - textfield delegate
+    // textField 변경할 때 event
+    @objc func textFieldEditingChanged(_ textField: UITextField) {
+        getSearchMember(text: textField.text ?? "")
     }
     
     // MARK: - UIGestureRecognizerDelegate

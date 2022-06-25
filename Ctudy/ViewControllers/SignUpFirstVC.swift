@@ -9,7 +9,6 @@ import Foundation
 import UIKit
 
 class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
     // MARK: - 변수
     @IBOutlet weak var userImg: UIImageView!
     @IBOutlet weak var registerName: UITextField!
@@ -24,7 +23,7 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
     var emailOKFlag: Bool = false
     var imageFlag: Bool = false // image 초기화 flag
     
-    // MARK: - override func
+    // MARK: - view load func
     override func viewDidLoad() {
         super.viewDidLoad()
         print("SignUpFirstVC - viewDidLoad() called")
@@ -42,7 +41,6 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
         }
     }
     
-    // MARK: - fileprivate func
     fileprivate func config() {
         // navigationbar item
         self.titleItem = TitleItem.titleGeneral(title: "회원가입", isLargeTitles: true)
@@ -78,7 +76,7 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
         self.view.addGestureRecognizer(tabGesture)
     }
     
-    // 이메일 중복체크 api 호출 event
+    // MARK: - exist check email api
     fileprivate func emailChecked(inputEmail: String) {
         AlamofireManager.shared.getExistCheck(errorType: "email", username: nil, email: inputEmail, completion: {
             [weak self] result in
@@ -99,44 +97,15 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
         })
     }
     
-    // messageLabel 셋팅
-    fileprivate func setMsgLabel(flag: Bool, msgLabel: UILabel, msgString: String) {
-        if flag {
-            msgLabel.textColor = .systemGreen
-        } else {
-            msgLabel.textColor = .systemRed
-        }
-        msgLabel.text = msgString
+    // MARK: - go to startview func
+    @objc fileprivate func onGoToStartBtnClicked() {
+        self.navigationController?.popViewController(animated: true)
     }
     
-    // nextButton 활성화 & 비활성화 event
-    fileprivate func nextBtnAbleChecked() {
-        if nameOKFlag && emailOKFlag {
-            self.nextBtn.backgroundColor = COLOR.SIGNATURE_COLOR
-            self.nextBtn.isEnabled = true
-        } else {
-            self.nextBtn.backgroundColor = COLOR.DISABLE_COLOR
-            self.nextBtn.isEnabled = false
-        }
-    }
-    
-    // 이름 정규식 체크 event
-    fileprivate func isValidData(flag: String, data: String) -> Bool {
-        //        print("SignUpFirstVC - isValidData() called / data: \(data), flag: \(flag)")
-        
-        guard data != "" else { return false }
-        let pred : NSPredicate
-        
-        switch flag {
-        case "registerName":
-            pred = NSPredicate(format: "SELF MATCHES %@", REGEX.NAME_REGEX)
-        case "registerEmail":
-            pred = NSPredicate(format: "SELF MATCHES %@", REGEX.EMAIL_REGEX)
-        default:
-            pred = NSPredicate(format: "SELF MATCHES %@", "")
-        }
-        
-        return pred.evaluate(with: data)
+    // MARK: - picker func
+    // imageview click func
+    @objc fileprivate func onProfileImageClicked() {
+        actionSheetAlert()
     }
     
     fileprivate func actionSheetAlert() {
@@ -217,11 +186,7 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
         return overlayView
     }
     
-    // MARK: - @objc func
-    @objc fileprivate func onProfileImageClicked() {
-        actionSheetAlert()
-    }
-    
+    // MARK: - textField delegate
     // textField 변경할 때 event
     @objc func textFieldEditingChanged(_ textField: UITextField) {
         //        print("SignUpFirstVC - textFieldEditingChanged() called / sender.text: \(sender.text)")
@@ -238,11 +203,6 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
         }
     }
     
-    @objc fileprivate func onGoToStartBtnClicked() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    // MARK: - textField delegate
     // textField에서 enter키 눌렀을때 event
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         //        print("SignUpFirstVC - textFieldShouldReturn() called")
@@ -305,6 +265,46 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
         
         nextBtnAbleChecked()
         return true
+    }
+    
+    // messageLabel 셋팅
+    fileprivate func setMsgLabel(flag: Bool, msgLabel: UILabel, msgString: String) {
+        if flag {
+            msgLabel.textColor = .systemGreen
+        } else {
+            msgLabel.textColor = .systemRed
+        }
+        msgLabel.text = msgString
+    }
+    
+    // nextButton 활성화 & 비활성화 event
+    fileprivate func nextBtnAbleChecked() {
+        if nameOKFlag && emailOKFlag {
+            self.nextBtn.backgroundColor = COLOR.SIGNATURE_COLOR
+            self.nextBtn.isEnabled = true
+        } else {
+            self.nextBtn.backgroundColor = COLOR.DISABLE_COLOR
+            self.nextBtn.isEnabled = false
+        }
+    }
+    
+    // 이름 정규식 체크 event
+    fileprivate func isValidData(flag: String, data: String) -> Bool {
+        //        print("SignUpFirstVC - isValidData() called / data: \(data), flag: \(flag)")
+        
+        guard data != "" else { return false }
+        let pred : NSPredicate
+        
+        switch flag {
+        case "registerName":
+            pred = NSPredicate(format: "SELF MATCHES %@", REGEX.NAME_REGEX)
+        case "registerEmail":
+            pred = NSPredicate(format: "SELF MATCHES %@", REGEX.EMAIL_REGEX)
+        default:
+            pred = NSPredicate(format: "SELF MATCHES %@", "")
+        }
+        
+        return pred.evaluate(with: data)
     }
     
     // MARK: - UIGestureRecognizer delegate

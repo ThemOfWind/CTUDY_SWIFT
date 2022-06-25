@@ -296,12 +296,7 @@ final class AlamofireManager {
                 
                 switch statusCode {
                 case 200:
-                    guard let result = responseJson["response"]["success"].bool else { return }
-                    if result {
-                        completion(.success(result))
-                    } else {
-                        completion(.failure(.noUpdatePassword))
-                    }
+                    completion(.failure(.noUpdatePassword))
                 default:
                     print("putPassword() - netsork fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
                     completion(.failure(.noUpdatePassword))
@@ -408,9 +403,9 @@ final class AlamofireManager {
     
     
     // MARK: - 전체 멤버 조회
-    func getSearchMember(page: String, completion: @escaping(Result<JSON, MemberErrors>) -> Void) {
+    func getSearchMember(search: String, roomId: String? = nil, page: String, completion: @escaping(Result<JSON, MemberErrors>) -> Void) {
         self.session
-            .request(MemberRouter.searchmember(page: page))
+            .request(MemberRouter.searchmember(search: search, roomid: roomId, page: page))
             .validate(statusCode: 200..<501)
             .responseJSON(completionHandler: { response in
                 
@@ -637,6 +632,73 @@ final class AlamofireManager {
                 default:
                     print("postInviteMember() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
                     completion(.failure(.noInviteMember))
+                }
+            })
+    }
+    
+    // MARK: - 쿠폰 조회
+    /*
+     mode
+      a : 전체
+      r : 받은 쿠폰
+      rd : 만료된 받은 쿠폰 (사용x)
+     */
+    func getSearchCoupon(id: String, mode: String? = nil, completion: @escaping(Result<[CouponResponse], CouponErrors>) -> Void) {
+        self.session
+            .request(CouponRouter.searchcoupon(id: id, mode: mode))
+            .validate(statusCode: 200..<501)
+            .responseJSON(completionHandler: { response in
+                guard let responseValue = response.value
+                        , let statusCode = response.response?.statusCode else { return }
+                let responseJson = JSON(responseValue)
+                
+                switch statusCode {
+                case 200:
+                    let response = responseJson["response"]
+                    var coupons = [CouponResponse]()
+                    
+                    for (index, subJson) : (String, JSON) in response {
+                        guard let id = subJson["id"].int
+                                , let name = subJson["name"].string
+                                , let startdate = subJson["start_date"].string
+                                , let enddate = subJson["end_date"].string
+                                , let sid = subJson["sender"]["id"].int
+                                , let sname = subJson["sender"]["name"].string
+                                , let susername = subJson["sender"]["username"].string
+                                , let rid = subJson["receiver"]["id"].int
+                                , let rname = subJson["receiver"]["name"].string
+                                , let rusername = subJson["receiver"]["username"].string else { return }
+                        let image = subJson["image"].string ?? ""
+                        let simage = subJson["sender"]["image"].string ?? ""
+                        let rimage = subJson["receiver"]["image"].string ?? ""
+                        
+                        let couponItem = CouponResponse(id: id, name: name, image: image, startdate: startdate, enddate: enddate, sid: sid, sname: sname, susername: susername, simage: simage, rid: rid, rname: rname, rusername: rusername, rimage: rimage)
+                        coupons.append(couponItem)
+                    }
+                    completion(.success(coupons))
+                default:
+                    print("getSearchCoupon() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
+                    completion(.failure(.noSearchCoupon))
+                }
+            })
+    }
+    
+    // MARK: - 쿠폰 사용
+    func deleteUseCoupon(id: String, completion: @escaping(Result<Bool, CouponErrors>) -> Void) {
+        self.session
+            .request(CouponRouter.usecoupon(id: id))
+            .validate(statusCode: 200..<501)
+            .response(completionHandler: { response in
+                guard let responseValue = response.value
+                    , let statusCode = response.response?.statusCode else { return }
+                let responseJson = JSON(responseValue)
+                
+                switch statusCode {
+                case 200:
+                    completion(.success(true))
+                default:
+                    print("deleteUseCoupon() - network fail / error: \(statusCode), \(responseJson["error"]["message"].rawValue)")
+                    completion(.failure(.noUseCoupon))
                 }
             })
     }

@@ -24,13 +24,13 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
     let keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
     lazy var indicatorView: UIView = {
         let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-        indicatorView.backgroundColor = COLOR.INDICATOR_BACKGROUND_COLOR
+        indicatorView.backgroundColor = UIColor.white
         return indicatorView
     }()
     lazy var indicator: NVActivityIndicatorView = {
         let indicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40),
                                                 type: .pacman,
-                                                color: COLOR.BASIC_TINT_COLOR,
+                                                color: COLOR.SIGNATURE_COLOR,
                                                 padding: 0)
         indicator.translatesAutoresizingMaskIntoConstraints = false
         return indicator
@@ -39,7 +39,7 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 10))
         label.font = UIFont.boldSystemFont(ofSize: 15)
         label.text = "loading..."
-        label.textColor = COLOR.BASIC_TINT_COLOR
+        label.textColor = COLOR.SIGNATURE_COLOR
         label.translatesAutoresizingMaskIntoConstraints = false
        return label
     }()
@@ -53,7 +53,7 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
     var usernameOKFlag: Bool = false
     var passwordOKFlag: Bool = false
     
-    // MARK: - overrid func
+    // MARK: - view load func
     override func viewDidLoad() {
         super.viewDidLoad()
         print("SignUpSecondVC - viewDidLoad() called")
@@ -69,7 +69,6 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
         }
     }
     
-    // MARK: - fileprivate func
     fileprivate func config() {
         // navigationbar item 설정
         self.leftItem = LeftItem.backGeneral
@@ -101,7 +100,7 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
         self.view.addGestureRecognizer(keyboardDismissTabGesture)
     }
     
-    // 아이디 중복체크 api 호출 event
+    // MARK: - exist check id api
     fileprivate func userNameChecked(inputUserName: String) {
         AlamofireManager.shared.getExistCheck(errorType: "username", username: inputUserName, email: nil, completion: {
             [weak self] result in
@@ -124,69 +123,35 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
         })
     }
     
-    // msgLabel 셋팅
-    fileprivate func setMsgLabel(flag: Bool, msgLabel: UILabel, msgString: String) {
-        if flag {
-            msgLabel.textColor = .systemGreen
-        } else {
-            msgLabel.textColor = .systemRed
-        }
-        msgLabel.text = msgString
-    }
+    // MARK: - signup api
+    // 회원가입 버튼 event
+    @objc func onSignUpBtnClicked() {
+        print("registerName: \(registerName), registerEmail: \(registerEmail)")
+        self.onStartActivityIndicator()
     
-    // 회원가입 버튼 활성화 & 비활성화 event
-    fileprivate func signUpBtnAbleChecked() {
-        if usernameOKFlag && passwordOKFlag {
-            self.signUpBtn.backgroundColor = COLOR.SIGNATURE_COLOR
-            self.signUpBtn.isEnabled = true
-        } else {
-            self.signUpBtn.backgroundColor = COLOR.DISABLE_COLOR
-            self.signUpBtn.isEnabled = false
-        }
-    }
-    
-    // 정규식(아이디(이메일), 비밀번호) 체크 event
-    fileprivate func isValidData(flag: String, data: String) -> Bool {
-        guard data != "" else { return false }
-        let pred : NSPredicate
-        
-        switch flag {
-        case "registerUsername":
-            pred = NSPredicate(format: "SELF MATCHES %@", REGEX.USERNAME_REGEX)
-        case "registerPassword":
-            pred = NSPredicate(format: "SELF MATCHES %@", REGEX.PASSWORD_REGEX)
-        default:
-            pred = NSPredicate(format: "SELF MATCHES %@", "")
-        }
-        
-        return pred.evaluate(with: data)
-    }
-    
-    // 비밀번호와 비밀번호확인 textfield 일치 여부 event
-    fileprivate func passwordValueChecked() {
-        if registerPassword.text == "" {
-            passwordOKFlag = false
-            passwordChkMsg.text = ""
-            return
-        } else {
-            if registerPasswordChk.text == "" {
-                passwordOKFlag = false
-                passwordChkMsg.text = ""
-                return
-            }
-        }
-        
-        // 비밀번호 & 비밀번호확인 textField 모두 입력되었을때
-        if registerPassword.text == registerPasswordChk.text {
-            passwordOKFlag = true
-            setMsgLabel(flag: passwordOKFlag, msgLabel: passwordChkMsg, msgString: "비밀번호가 일치합니다.")
+        AlamofireManager.shared.postSignUp(name: registerName!, email: registerEmail!, username: registerUsername.text!, password: registerPassword.text!, image: userImage, completion: { [weak self] result in
+            guard let self = self else { return }
             
-        } else {
-            passwordOKFlag = false
-            setMsgLabel(flag: passwordOKFlag, msgLabel: passwordChkMsg, msgString: "비밀번호가 일치하지 않습니다.")
+            self.onStopActivityIndicator()
+            
+            switch result {
+            case .success(let memberData):
+                // 회원가입 완료 페이지 띄우기
+                self.memberName = memberData.name
+                self.memberUsername = memberData.username
+                self.performSegue(withIdentifier: "SignUpSuccessVC", sender: nil)
+            case .failure(let error):
+                print("SignUpSecondVC - postSignUp.failure / error: \(error.rawValue)")
+                self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
+            }
+        })
+        
+        if self.indicator.isAnimating {
+            self.onStopActivityIndicator()
         }
     }
     
+    // MARK: - indicator in api calling
     fileprivate func onStartActivityIndicator() {
         DispatchQueue.main.async {
             // 불투명 뷰 추가
@@ -216,35 +181,7 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
         }
     }
     
-    // MARK: - @objc func
-    // 회원가입 버튼 event
-    @objc func onSignUpBtnClicked() {
-    
-        print("registerName: \(registerName), registerEmail: \(registerEmail)")
-        self.onStartActivityIndicator()
-    
-        AlamofireManager.shared.postSignUp(name: registerName!, email: registerEmail!, username: registerUsername.text!, password: registerPassword.text!, image: userImage, completion: { [weak self] result in
-            guard let self = self else { return }
-            
-            self.onStopActivityIndicator()
-            
-            switch result {
-            case .success(let memberData):
-                // 회원가입 완료 페이지 띄우기
-                self.memberName = memberData.name
-                self.memberUsername = memberData.username
-                self.performSegue(withIdentifier: "SignUpSuccessVC", sender: nil)
-            case .failure(let error):
-                print("SignUpSecondVC - postSignUp.failure / error: \(error.rawValue)")
-                self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
-            }
-        })
-        
-        if self.indicator.isAnimating {
-            self.onStopActivityIndicator()
-        }
-    }
-    
+    // MARK: - textfield Delegate
     // textfield 변경할때 event
     @objc func textFieldEditingChanged(_ textField: UITextField) {
         switch textField {
@@ -267,7 +204,6 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
         signUpBtnAbleChecked()
     }
     
-    // MARK: - textField Delegate
     // textField에서 enter키 눌렀을때 event
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         switch textField {
@@ -336,6 +272,69 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
         
         signUpBtnAbleChecked()
         return true
+    }
+    
+    // msgLabel 셋팅
+    fileprivate func setMsgLabel(flag: Bool, msgLabel: UILabel, msgString: String) {
+        if flag {
+            msgLabel.textColor = .systemGreen
+        } else {
+            msgLabel.textColor = .systemRed
+        }
+        msgLabel.text = msgString
+    }
+    
+    // 회원가입 버튼 활성화 & 비활성화 event
+    fileprivate func signUpBtnAbleChecked() {
+        if usernameOKFlag && passwordOKFlag {
+            self.signUpBtn.backgroundColor = COLOR.SIGNATURE_COLOR
+            self.signUpBtn.isEnabled = true
+        } else {
+            self.signUpBtn.backgroundColor = COLOR.DISABLE_COLOR
+            self.signUpBtn.isEnabled = false
+        }
+    }
+    
+    // 정규식(아이디(이메일), 비밀번호) 체크 event
+    fileprivate func isValidData(flag: String, data: String) -> Bool {
+        guard data != "" else { return false }
+        let pred : NSPredicate
+        
+        switch flag {
+        case "registerUsername":
+            pred = NSPredicate(format: "SELF MATCHES %@", REGEX.USERNAME_REGEX)
+        case "registerPassword":
+            pred = NSPredicate(format: "SELF MATCHES %@", REGEX.PASSWORD_REGEX)
+        default:
+            pred = NSPredicate(format: "SELF MATCHES %@", "")
+        }
+        
+        return pred.evaluate(with: data)
+    }
+    
+    // 비밀번호와 비밀번호확인 textfield 일치 여부 event
+    fileprivate func passwordValueChecked() {
+        if registerPassword.text == "" {
+            passwordOKFlag = false
+            passwordChkMsg.text = ""
+            return
+        } else {
+            if registerPasswordChk.text == "" {
+                passwordOKFlag = false
+                passwordChkMsg.text = ""
+                return
+            }
+        }
+        
+        // 비밀번호 & 비밀번호확인 textField 모두 입력되었을때
+        if registerPassword.text == registerPasswordChk.text {
+            passwordOKFlag = true
+            setMsgLabel(flag: passwordOKFlag, msgLabel: passwordChkMsg, msgString: "비밀번호가 일치합니다.")
+            
+        } else {
+            passwordOKFlag = false
+            setMsgLabel(flag: passwordOKFlag, msgLabel: passwordChkMsg, msgString: "비밀번호가 일치하지 않습니다.")
+        }
     }
     
     // MARK: - UIGestureRecognizerDelegate

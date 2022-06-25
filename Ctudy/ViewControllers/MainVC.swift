@@ -9,15 +9,36 @@ import Foundation
 import UIKit
 import Alamofire
 import Kingfisher
+import NVActivityIndicatorView
 
 class MainVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
     // MARK: - 변수
     @IBOutlet var studyCollectionView: UICollectionView!
+    lazy var indicatorView: UIView = {
+        let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
+        indicatorView.backgroundColor = UIColor.white
+        return indicatorView
+    }()
+    lazy var indicator: NVActivityIndicatorView = {
+        let indicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40),
+                                                type: .pacman,
+                                                color: COLOR.SIGNATURE_COLOR,
+                                                padding: 0)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+    lazy var loading: UILabel = {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 10))
+        label.font = UIFont.boldSystemFont(ofSize: 15)
+        label.text = "loading..."
+        label.textColor = COLOR.SIGNATURE_COLOR
+        label.translatesAutoresizingMaskIntoConstraints = false
+       return label
+    }()
     var rooms = [] as! Array<SearchRoomResponse>
     var roomId: Int?
     
-    // MARK: - overrid func
+    // MARK: - view load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.config()
@@ -38,7 +59,6 @@ class MainVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         }
     }
     
-    // MARK: - fileprivate func
     fileprivate func config() {
         // 스터디룸 조회
         self.getSearchRoom()
@@ -53,13 +73,46 @@ class MainVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         self.studyCollectionView.clearsContextBeforeDrawing = true
     }
     
-    // 스터디룸 조회 api 호출
+    // MARK: - indicator in api calling
+    fileprivate func onStartActivityIndicator() {
+        DispatchQueue.main.async {
+            // 불투명 뷰 추가
+            self.view.addSubview(self.indicatorView)
+            // activity indicator 추가
+            self.indicatorView.addSubview(self.indicator)
+            self.indicatorView.addSubview(self.loading)
+            
+            NSLayoutConstraint.activate([
+                self.indicator.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+                self.indicator.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+                self.loading.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+                self.loading.centerYAnchor.constraint(equalTo: self.indicator.bottomAnchor, constant: 5)
+            ])
+            
+            // 애니메이션 시작
+            self.indicator.startAnimating()
+        }
+    }
+    
+    fileprivate func onStopActivityIndicator() {
+        DispatchQueue.main.asyncAfter(deadline: .now()) {
+            // 애니메이션 정지.
+            // 서버 통신 완료 후 다음의 메서드를 실행해서 통신의 끝나는 느낌을 줄 수 있다.
+            self.indicator.stopAnimating()
+            self.indicatorView.removeFromSuperview()
+        }
+    }
+    
+    // MARK: - search room api
     fileprivate func getSearchRoom() {
-        self.rooms.removeAll()
-        
+        rooms.removeAll()
+        self.onStartActivityIndicator()
+
         AlamofireManager.shared.getSearchRoom(completion: {
             [weak self] result in
             guard let self = self else { return }
+            
+            self.onStopActivityIndicator()
             
             switch result {
             case .success(let roomList):
@@ -71,11 +124,11 @@ class MainVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
                 print("MainVC - getSearchRoom.failure / error: \(error.rawValue)")
             }
         })
+        
+        if self.indicator.isAnimating {
+            self.onStopActivityIndicator()
+        }
     }
-    
-//    fileprivate func reloadDataWithDiff(newData: [SearchRoomResponse], prevData: [SearchRoomResponse]) -> [SearchRoomResponse] {
-//        let diff = newData.difference(from: prevData, by: )
-//    }
     
     // MARK: - collectionView delegate
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -11,22 +11,22 @@ import SwiftyJSON
 import NVActivityIndicatorView
 import Kingfisher
 
-class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, MemberCheckButtonDelegate {
+class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, MemberCheckButtonDelegate, UITextFieldDelegate {
     
     // MARK: - 변수
     @IBOutlet weak var memberTableView: UITableView!
     @IBOutlet weak var registerRoomBtn: UIButton!
     @IBOutlet weak var memberSearchBar: UISearchBar!
-    let keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: RegisterStudyRoomSecondVC.self, action: nil)
+    let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: RegisterStudyRoomSecondVC.self, action: nil)
     lazy var indicatorView: UIView = {
         let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-        indicatorView.backgroundColor = COLOR.INDICATOR_BACKGROUND_COLOR
+        indicatorView.backgroundColor = UIColor.white
         return indicatorView
     }()
     lazy var indicator: NVActivityIndicatorView = {
         let indicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40),
                                                 type: .pacman,
-                                                color: COLOR.BASIC_TINT_COLOR,
+                                                color: COLOR.SIGNATURE_COLOR,
                                                 padding: 0)
         indicator.translatesAutoresizingMaskIntoConstraints = false
         return indicator
@@ -35,7 +35,7 @@ class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataS
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 10))
         label.font = UIFont.boldSystemFont(ofSize: 15)
         label.text = "loading..."
-        label.textColor = COLOR.BASIC_TINT_COLOR
+        label.textColor = COLOR.SIGNATURE_COLOR
         label.translatesAutoresizingMaskIntoConstraints = false
        return label
     }()
@@ -49,48 +49,51 @@ class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataS
     // MARK: - view load func
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.config()
+        config()
     }
     
     fileprivate func config() {
         // navigationBar item 설정
-        self.leftItem = LeftItem.backGeneral
-        self.titleItem = TitleItem.titleGeneral(title: "멤버 등록", isLargeTitles: true)
+        leftItem = LeftItem.backGeneral
+        titleItem = TitleItem.titleGeneral(title: "멤버 등록", isLargeTitles: true)
         
         // btn
-        self.registerRoomBtn.tintColor = .white
-        self.registerRoomBtn.backgroundColor = COLOR.SIGNATURE_COLOR
-        self.registerRoomBtn.layer.cornerRadius = 10
-        
+        registerRoomBtn.tintColor = .white
+        registerRoomBtn.backgroundColor = COLOR.SIGNATURE_COLOR
+        registerRoomBtn.layer.cornerRadius = 10
         
         // 셀 리소스 파일 가져오기
         let memberCell = UINib(nibName: String(describing: MemberTableViewCell.self), bundle: nil)
         
         // 셀 리소스 등록하기
-        self.memberTableView.register(memberCell, forCellReuseIdentifier: "MemberTableViewCell")
+        memberTableView.register(memberCell, forCellReuseIdentifier: "MemberTableViewCell")
         
         // 셀 설정
-        self.memberTableView.rowHeight = 90
+        memberTableView.rowHeight = 90
 //        self.memberTableView.allowsSelection = false
-        self.memberTableView.showsVerticalScrollIndicator = false // scroll 제거
+        memberTableView.showsVerticalScrollIndicator = false // scroll 제거
 //        self.memberTableView.estimatedRowHeight = 100
         
+        // button event 연결
+        memberSearchBar.searchTextField.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
+        
         // delegate 연결
-        self.memberTableView.delegate = self
-        self.memberTableView.dataSource = self
-        self.keyboardDismissTabGesture.delegate = self
+        memberTableView.delegate = self
+        memberTableView.dataSource = self
+        memberSearchBar.searchTextField.delegate = self
+        tabGesture.delegate = self
         
         // gesture 연결
-        self.view.addGestureRecognizer(keyboardDismissTabGesture)
+        self.view.addGestureRecognizer(tabGesture)
         
         // 전체 멤버 조회
-        self.getSearchMember()
+        getSearchMember(text: memberSearchBar.searchTextField.text ?? "")
     }
     
     // MARK: - search member api
     // 전체 멤버 조회
-    fileprivate func getSearchMember() {
-        AlamofireManager.shared.getSearchMember(page: nextPage ?? "0", completion: {
+    fileprivate func getSearchMember(text: String) {
+        AlamofireManager.shared.getSearchMember(search: text, roomId: nil, page: nextPage ?? "0", completion: {
             [weak self] result in
             guard let self = self else { return }
             
@@ -174,7 +177,7 @@ class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataS
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                         // 데이터 가져오기
-                        self.getSearchMember()
+                        self.getSearchMember(text: self.memberSearchBar.searchTextField.text ?? "")
                         
                         // 로딩 off & view reload
                         self.fetchingMore = false
@@ -186,7 +189,7 @@ class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataS
         }
     }
     
-    // MARK: - @IBAction func
+    // MARK: - register room api
     @IBAction func onRegisterRoomBtnClicked(_ sender: Any) {
         var selectedMemeberList: Array<Int> = []
         
@@ -243,6 +246,12 @@ class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataS
     func checkBtnClicked(btn: UIButton, ischecked: Bool) {
         print("RegisterStudyRoomSecondVC - checkBtnClicked() called / btn.tag: \(btn.tag), btn.id: \(members[btn.tag].id) ischecked: \(ischecked)")
         self.members[btn.tag].ischecked = ischecked
+    }
+    
+    // MARK: - textfield delegate
+    // textField 변경할 때 event
+    @objc func textFieldEditingChanged(_ textField: UITextField) {
+        getSearchMember(text: textField.text ?? "")
     }
     
     // MARK: - UIGestureRecognizerDelegate
