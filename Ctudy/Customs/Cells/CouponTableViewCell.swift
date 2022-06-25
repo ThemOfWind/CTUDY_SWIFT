@@ -9,17 +9,28 @@ import Foundation
 import UIKit
 
 class CouponTableViewCell: UITableViewCell {
+    @IBOutlet weak var couponImg: UIImageView!
     @IBOutlet weak var couponName: UILabel!
+    @IBOutlet weak var senderImg: UIImageView!
     @IBOutlet weak var senderName: UILabel!
     @IBOutlet weak var senderUsername: UILabel!
-    @IBOutlet weak var couponImg: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        // image
+        // coupon image
         couponImg.image = UIImage(systemName: "tag.fill")
         couponImg.tintColor = COLOR.SIGNATURE_COLOR
+        
+        // sender image
+        senderImg.layer.cornerRadius = senderImg.bounds.height / 3
+        senderImg.layer.borderWidth = 1
+        senderImg.layer.borderColor = COLOR.BORDER_COLOR.cgColor
+        senderImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
+        senderImg.tintColor = COLOR.BASIC_TINT_COLOR
+        senderImg.image = UIImage(systemName: "user_default.png")
+        senderImg.contentMode = .scaleAspectFill
+        senderImg.translatesAutoresizingMaskIntoConstraints = false
         
         // ui
         senderUsername.textColor = COLOR.SUBTITLE_COLOR

@@ -8,15 +8,17 @@
 import Foundation
 import UIKit
 
-class CouponDetailVC: UIViewController {
+class CouponDetailVC: UIViewController, UIGestureRecognizerDelegate {
     // MARK: - 변수
+    @IBOutlet weak var alertView: UIView!
     @IBOutlet weak var couponName: UILabel!
-    @IBOutlet weak var recieverName: UILabel!
+    @IBOutlet weak var senderName: UILabel!
     @IBOutlet weak var endDate: UILabel!
     @IBOutlet weak var label1: UILabel!
     @IBOutlet weak var label2: UILabel!
     @IBOutlet weak var label3: UILabel!
     @IBOutlet weak var couponImg: UIImageView!
+    let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: CouponDetailVC.self, action: nil)
     var coupon: CouponResponse!
     
     // view load func
@@ -26,9 +28,16 @@ class CouponDetailVC: UIViewController {
     }
     
     fileprivate func config() {
+        // view
+        self.view.isOpaque = false
+        self.view.backgroundColor = UIColor.clear
+        
+        // alertView
+        alertView.layer.cornerRadius = 10
+        
         // label
         couponName.text = coupon.name
-        recieverName.text = coupon.rname
+        senderName.text = coupon.sname
         endDate.text = coupon.enddate
        
         // coupon image
@@ -49,5 +58,26 @@ class CouponDetailVC: UIViewController {
         label1.textColor = COLOR.TITLE_COLOR
         label2.textColor = COLOR.TITLE_COLOR
         label3.textColor = COLOR.TITLE_COLOR
+        
+        // delegate 연결
+        self.tabGesture.delegate = self
+               
+        // gesture 연결
+        self.view.addGestureRecognizer(tabGesture)
+    }
+    
+    // MARK: - alert창 끄기
+    fileprivate func dismissAction(_ sender: Any) {
+        dismiss(animated: true)
+    }
+    
+    // MARK: - UIGestureRecognizer delegate
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        if touch.view?.isDescendant(of: alertView) == true {
+            return true
+        } else {
+            dismissAction(touch)
+            return true
+        }
     }
 }

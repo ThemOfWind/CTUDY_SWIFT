@@ -19,13 +19,13 @@ class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource,
     let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: AddStudyRoomMemberVC.self, action: nil)
     lazy var indicatorView: UIView = {
         let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-        indicatorView.backgroundColor = COLOR.INDICATOR_BACKGROUND_COLOR
+        indicatorView.backgroundColor = UIColor.white
         return indicatorView
     }()
     lazy var indicator: NVActivityIndicatorView = {
         let indicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40),
                                                 type: .pacman,
-                                                color: COLOR.BASIC_TINT_COLOR,
+                                                color: COLOR.SIGNATURE_COLOR,
                                                 padding: 0)
         indicator.translatesAutoresizingMaskIntoConstraints = false
         return indicator
@@ -34,7 +34,7 @@ class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource,
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 10))
         label.font = UIFont.boldSystemFont(ofSize: 15)
         label.text = "loading..."
-        label.textColor = COLOR.BASIC_TINT_COLOR
+        label.textColor = COLOR.SIGNATURE_COLOR
         label.translatesAutoresizingMaskIntoConstraints = false
        return label
     }()
@@ -89,13 +89,10 @@ class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource,
     // MARK: - search member api
     // 전체 멤버 조회
     fileprivate func getSearchMember(text: String) {
-        self.onStartActivityIndicator()
 
         AlamofireManager.shared.getSearchMember(search: text, roomId: String(roomId), page: nextPage ?? "0", completion: {
             [weak self] result in
             guard let self = self else { return }
-            
-            self.onStopActivityIndicator()
             
             switch result {
             case .success(let response):
@@ -118,10 +115,6 @@ class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource,
                 print("AddStudyRoomMemberVC - getSearchMember.failure / error: \(error.rawValue)")
             }
         })
-        
-        if self.indicator.isAnimating {
-            self.onStopActivityIndicator()
-        }
     }
     
     // MARK: - invitation api

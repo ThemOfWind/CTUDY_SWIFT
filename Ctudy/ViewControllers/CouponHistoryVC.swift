@@ -14,13 +14,14 @@ class CouponHistoryVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var couponHistoryTableView: UITableView!
     lazy var indicatorView: UIView = {
         let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-        indicatorView.backgroundColor = COLOR.INDICATOR_BACKGROUND_COLOR
+        indicatorView.backgroundColor = UIColor.white
+        indicatorView.isOpaque = false
         return indicatorView
     }()
     lazy var indicator: NVActivityIndicatorView = {
         let indicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40),
                                                 type: .pacman,
-                                                color: COLOR.BASIC_TINT_COLOR,
+                                                color: COLOR.SIGNATURE_COLOR,
                                                 padding: 0)
         indicator.translatesAutoresizingMaskIntoConstraints = false
         return indicator
@@ -29,7 +30,7 @@ class CouponHistoryVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 10))
         label.font = UIFont.boldSystemFont(ofSize: 15)
         label.text = "loading..."
-        label.textColor = COLOR.BASIC_TINT_COLOR
+        label.textColor = COLOR.SIGNATURE_COLOR
         label.translatesAutoresizingMaskIntoConstraints = false
        return label
     }()
@@ -49,9 +50,11 @@ class CouponHistoryVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         
         // 셀 리소스 파일 가져오기
         let couponCell = UINib(nibName: String(describing: CouponHistoryTableViewCell.self), bundle: nil)
+        let emptyCell = EmptyTableViewCell.nib()
         
         // 셀 리소스 등록하기
         couponHistoryTableView.register(couponCell, forCellReuseIdentifier: "CouponHistoryTableViewCell")
+        couponHistoryTableView.register(emptyCell, forCellReuseIdentifier: "EmptyTableViewCell")
         
         // 셀 설정
         couponHistoryTableView.rowHeight = 100
@@ -149,30 +152,56 @@ class CouponHistoryVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - tableview delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return coupons.count
+        if coupons.count == 0 {
+            return 1
+        } else {
+            return coupons.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = couponHistoryTableView.dequeueReusableCell(withIdentifier: "CouponHistoryTableViewCell", for: indexPath) as! CouponHistoryTableViewCell
-        cell.selectionStyle = .none // 선택 block 없애기
-        // sender
-        if coupons[indexPath.row].simage != "" {
-            cell.senderImg.kf.setImage(with: URL(string: API.IMAGE_URL + coupons[indexPath.row].simage)!)
+        if coupons.isEmpty == true {
+            let cell = couponHistoryTableView.dequeueReusableCell(withIdentifier: "EmptyTableViewCell", for: indexPath) as! EmptyTableViewCell
+            cell.selectionStyle = .none
+            cell.titleLabel.text = "아직 쿠폰을 주고받은 내역이 없습니다.🥲"
+            couponHistoryTableView.rowHeight = self.couponHistoryTableView.bounds.height
+            return cell
         } else {
-            cell.senderImg.image = UIImage(named: "user_default.png")
+            let cell = couponHistoryTableView.dequeueReusableCell(withIdentifier: "CouponHistoryTableViewCell", for: indexPath) as! CouponHistoryTableViewCell
+            cell.selectionStyle = .none // 선택 block 없애기
+            // sender
+            if coupons[indexPath.row].simage != "" {
+                cell.senderImg.kf.setImage(with: URL(string: API.IMAGE_URL + coupons[indexPath.row].simage)!)
+            } else {
+                cell.senderImg.image = UIImage(named: "user_default.png")
+            }
+            cell.senderName.text = coupons[indexPath.row].sname
+            cell.senderUsername.text = "@\(coupons[indexPath.row].susername)"
+            
+            // reciever
+            if coupons[indexPath.row].rimage != "" {
+                cell.recieverImg.kf.setImage(with: URL(string: API.IMAGE_URL + coupons[indexPath.row].rimage)!)
+            } else {
+                cell.recieverImg.image = UIImage(named: "user_default.png")
+            }
+            cell.recieverName.text = coupons[indexPath.row].rname
+            cell.recieverUsername.text = "@\(coupons[indexPath.row].rusername)"
+            couponHistoryTableView.rowHeight = 100
+            return cell
         }
-        cell.senderName.text = coupons[indexPath.row].sname
-        cell.senderUsername.text = "@\(coupons[indexPath.row].susername)"
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let controller = self.storyboard?.instantiateViewController(withIdentifier: "CouponDetailVC") as? CouponDetailVC else { return }
+        controller.modalTransitionStyle = .coverVertical
+        controller.modalPresentationStyle = .pageSheet
+        controller.coupon = coupons[indexPath.row]
         
-        // reciever
-        if coupons[indexPath.row].rimage != "" {
-            cell.recieverImg.kf.setImage(with: URL(string: API.IMAGE_URL + coupons[indexPath.row].rimage)!)
-        } else {
-            cell.recieverImg.image = UIImage(named: "user_default.png")
+        if let sheet = controller.sheetPresentationController {
+            sheet.detents = [.medium()]
+            sheet.largestUndimmedDetentIdentifier = .medium
         }
-        cell.recieverName.text = coupons[indexPath.row].rname
-        cell.recieverUsername.text = "@\(coupons[indexPath.row].rusername)"
         
-        return cell
+        self.present(controller, animated: true, completion: nil)
     }
 }

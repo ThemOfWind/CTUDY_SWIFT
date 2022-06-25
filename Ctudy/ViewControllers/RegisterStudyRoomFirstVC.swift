@@ -175,6 +175,13 @@ class RegisterStudyRoomFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognize
         self.performSegue(withIdentifier: "RegisterStudyRoomSecondVC", sender: nil)
     }
     
+    // MARK: - textField delegate
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        self.dismiss(animated: true, completion: nil)
+        return true
+    }
+    
     // MARK: - UIGestureRecognizer delegate
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         if touch.view?.isDescendant(of: registerStudyName) == true {
@@ -187,12 +194,5 @@ class RegisterStudyRoomFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognize
             view.endEditing(true)
             return true
         }
-    }
-    
-    // MARK: - textField delegate
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        self.dismiss(animated: true, completion: nil)
-        return true
     }
 }

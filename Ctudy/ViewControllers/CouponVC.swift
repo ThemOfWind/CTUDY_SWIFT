@@ -10,18 +10,20 @@ import UIKit
 import NVActivityIndicatorView
 import SwiftUI
 
-class CouponVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
+class CouponVC: BasicVC, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
     // MARK: - 변수
     @IBOutlet weak var couponTableView: UITableView!
+//    let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: RegisterStudyRoomFirstVC.self, action: nil)
     lazy var indicatorView: UIView = {
         let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-        indicatorView.backgroundColor = COLOR.INDICATOR_BACKGROUND_COLOR
+        indicatorView.backgroundColor = UIColor.white
+        indicatorView.isOpaque = false
         return indicatorView
     }()
     lazy var indicator: NVActivityIndicatorView = {
         let indicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40),
                                                 type: .pacman,
-                                                color: COLOR.BASIC_TINT_COLOR,
+                                                color: COLOR.SIGNATURE_COLOR,
                                                 padding: 0)
         indicator.translatesAutoresizingMaskIntoConstraints = false
         return indicator
@@ -30,7 +32,7 @@ class CouponVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 10))
         label.font = UIFont.boldSystemFont(ofSize: 15)
         label.text = "loading..."
-        label.textColor = COLOR.BASIC_TINT_COLOR
+        label.textColor = COLOR.SIGNATURE_COLOR
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -48,11 +50,6 @@ class CouponVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
             if let controller = segue.destination as? CouponHistoryVC {
                 controller.roomId = roomId
             }
-            
-//        } else if let id = segue.identifier, id == "CouponDetailVC" {
-//            if let controller = segue.destination as? CouponDetailVC {
-//                controller.coupon = coupon
-//            }
         }
     }
     
@@ -64,9 +61,11 @@ class CouponVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         
         // 셀 리소스 파일 가져오기
         let couponCell = UINib(nibName: String(describing: CouponTableViewCell.self), bundle: nil)
+        let emptyCell = EmptyTableViewCell.nib()
         
         // 셀 리소스 등록하기
         couponTableView.register(couponCell, forCellReuseIdentifier: "CouponTableViewCell")
+        couponTableView.register(emptyCell, forCellReuseIdentifier: "EmptyTableViewCell")
         
         // 셀 설정
         couponTableView.rowHeight = 100
@@ -76,6 +75,10 @@ class CouponVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         // delegate 연결
         couponTableView.delegate = self
         couponTableView.dataSource = self
+//        self.tabGesture.delegate = self
+        
+        // gesture 연결
+//        self.view.addGestureRecognizer(tabGesture)
         
         // 히스토리 조회
         getSearchCoupon()
@@ -130,7 +133,6 @@ class CouponVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
                 self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
             }
         })
-        
         if self.indicator.isAnimating {
             self.onStopActivityIndicator()
         }
@@ -159,11 +161,9 @@ class CouponVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
                     self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
                 }
             })
-            
             if self.indicator.isAnimating {
                 self.onStopActivityIndicator()
             }
-            
         }))
         
         self.present(alert, animated: false)
@@ -190,43 +190,71 @@ class CouponVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - tableview delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return coupons.count
+        if coupons.count == 0 {
+            return 1
+        } else {
+            return coupons.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = couponTableView.dequeueReusableCell(withIdentifier: "CouponTableViewCell", for: indexPath) as! CouponTableViewCell
-        cell.selectionStyle = .none // 선택 block 없애기
-        cell.couponName.text = coupons[indexPath.row].name
-        cell.senderName.text = coupons[indexPath.row].sname
-        cell.senderUsername.text = "@\(coupons[indexPath.row].susername)"
-        return cell
+        if coupons.isEmpty == true {
+            let cell = couponTableView.dequeueReusableCell(withIdentifier: "EmptyTableViewCell", for: indexPath) as! EmptyTableViewCell
+            cell.selectionStyle = .none
+            cell.titleLabel.text = "아직 선물받은 쿠폰이 없습니다.🥲"
+            couponTableView.rowHeight = self.couponTableView.bounds.height
+            return cell
+        } else {
+            let cell = couponTableView.dequeueReusableCell(withIdentifier: "CouponTableViewCell", for: indexPath) as! CouponTableViewCell
+            cell.selectionStyle = .none // 선택 block 없애기
+            cell.couponName.text = coupons[indexPath.row].name
+            if coupons[indexPath.row].simage != "" {
+                cell.senderImg.kf.setImage(with: URL(string: API.IMAGE_URL + coupons[indexPath.row].simage)!)
+            } else {
+                cell.senderImg.image = UIImage(named: "user_default.png")
+            }
+            cell.senderName.text = coupons[indexPath.row].sname
+            cell.senderUsername.text = "@\(coupons[indexPath.row].susername)"
+            couponTableView.rowHeight = 100
+            return cell
+        }
     }
     
     // slide button
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let use = UIContextualAction(style: .normal, title: "사용하기") {
-            (UIContextualAction, UIView, success: @escaping (Bool) -> Void) in
-            print("coupon use click! / indexPath: \(indexPath.row)")
-            self.onUseBtnClicked(couponId: String(self.coupons[indexPath.row].id))
-            success(true)
+        if coupons.isEmpty == true {
+            return nil
+        } else {
+            let use = UIContextualAction(style: .normal, title: "사용하기") {
+                (UIContextualAction, UIView, success: @escaping (Bool) -> Void) in
+                print("coupon use click! / indexPath: \(indexPath.row)")
+                self.onUseBtnClicked(couponId: String(self.coupons[indexPath.row].id))
+                success(true)
+            }
+            use.backgroundColor = .systemCyan
+            use.image = UIImage(systemName: "hand.point.up.left.fill")
+            
+            return UISwipeActionsConfiguration(actions: [use])
         }
-        use.backgroundColor = .systemCyan
-        use.image = UIImage(systemName: "hand.point.up.left.fill")
-        
-        return UISwipeActionsConfiguration(actions: [use])
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let controller = self.storyboard?.instantiateViewController(withIdentifier: "CouponDetailVC") as? CouponDetailVC else { return }
-        controller.modalTransitionStyle = .coverVertical
-        controller.modalPresentationStyle = .pageSheet
-//        controller.preferredContentSize = CGSize(width: self.view.bounds.width, height: 500)
-        controller.coupon = coupons[indexPath.row]
-        
-        if let sheet = controller.sheetPresentationController {
-            sheet.detents = [.medium()]
-            sheet.largestUndimmedDetentIdentifier = .medium
+        if coupons.isEmpty == true {
+            return
+        } else {
+            guard let controller = self.storyboard?.instantiateViewController(withIdentifier: "CouponDetailVC") as? CouponDetailVC else { return }
+            controller.modalTransitionStyle = .coverVertical
+            controller.modalPresentationStyle = .pageSheet
+    //        controller.modalPresentationStyle = .overCurrentContext
+    //        controller.modalTransitionStyle = .crossDissolve
+    //        controller.preferredContentSize = CGSize(width: self.view.bounds.width, height: 500)
+            controller.coupon = coupons[indexPath.row]
+            
+            if let sheet = controller.sheetPresentationController {
+                sheet.detents = [.large()]
+                sheet.largestUndimmedDetentIdentifier = .medium
+            }
+            self.present(controller, animated: true, completion: nil)
         }
-        self.present(controller, animated: true, completion: nil)
     }
 }

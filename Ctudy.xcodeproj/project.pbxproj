@@ -18,6 +18,8 @@
 		5A2D86C027EAE8A9000BF69B /* MemberTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A2D86BF27EAE8A9000BF69B /* MemberTableViewCell.xib */; };
 		5A2D86C227EAEBB8000BF69B /* MemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2D86C127EAEBB8000BF69B /* MemberTableViewCell.swift */; };
 		5A31966E2766045D007400EE /* SignUpSuccessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A31966D2766045D007400EE /* SignUpSuccessVC.swift */; };
+		5A35D8412867323A002D7315 /* EmptyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A35D8402867323A002D7315 /* EmptyTableViewCell.swift */; };
+		5A35D84328673248002D7315 /* EmptyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A35D84228673248002D7315 /* EmptyTableViewCell.xib */; };
 		5A3BBBE927EAF31300BA9E3F /* SearhMemberResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3BBBE827EAF31300BA9E3F /* SearhMemberResponse.swift */; };
 		5A3BBBEC27EB4F6C00BA9E3F /* StartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3BBBEB27EB4F6C00BA9E3F /* StartVC.swift */; };
 		5A453AFE27E9B25B006F0A1D /* RegisterStudyRoomFirstVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A453AFD27E9B25B006F0A1D /* RegisterStudyRoomFirstVC.swift */; };
@@ -112,6 +114,8 @@
 		5A2D86BF27EAE8A9000BF69B /* MemberTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MemberTableViewCell.xib; sourceTree = "<group>"; };
 		5A2D86C127EAEBB8000BF69B /* MemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberTableViewCell.swift; sourceTree = "<group>"; };
 		5A31966D2766045D007400EE /* SignUpSuccessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpSuccessVC.swift; sourceTree = "<group>"; };
+		5A35D8402867323A002D7315 /* EmptyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyTableViewCell.swift; sourceTree = "<group>"; };
+		5A35D84228673248002D7315 /* EmptyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyTableViewCell.xib; sourceTree = "<group>"; };
 		5A3BBBE827EAF31300BA9E3F /* SearhMemberResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearhMemberResponse.swift; sourceTree = "<group>"; };
 		5A3BBBEB27EB4F6C00BA9E3F /* StartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartVC.swift; sourceTree = "<group>"; };
 		5A453AFD27E9B25B006F0A1D /* RegisterStudyRoomFirstVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterStudyRoomFirstVC.swift; sourceTree = "<group>"; };
@@ -391,6 +395,8 @@
 				5A07BBAB283CD9C3006FD4B1 /* CouponHistoryTableViewCell.swift */,
 				5A80B4CE285368E300A1CDD1 /* SettingTableViewCell.xib */,
 				5A80B4CC285368C100A1CDD1 /* SettingTableViewCell.swift */,
+				5A35D84228673248002D7315 /* EmptyTableViewCell.xib */,
+				5A35D8402867323A002D7315 /* EmptyTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -533,6 +539,7 @@
 				5A4CD0D927E86F1F00F6C829 /* AddBarButtonItem.xib in Resources */,
 				5A58EEA9275F7E84000A1A39 /* LaunchScreen.storyboard in Resources */,
 				5A58EEA6275F7E84000A1A39 /* Assets.xcassets in Resources */,
+				5A35D84328673248002D7315 /* EmptyTableViewCell.xib in Resources */,
 				5AA8D80728534BA6002AC1ED /* SettingBarButtonItem.xib in Resources */,
 				5A80B4CF285368E300A1CDD1 /* SettingTableViewCell.xib in Resources */,
 				5A58EEA1275F7E83000A1A39 /* Main.storyboard in Resources */,
@@ -650,6 +657,7 @@
 				5AF63CE82859BC1900B7F8B9 /* RegisterCouponSecondVC.swift in Sources */,
 				5A98551028465DAF0078B72C /* RegisterCouponRequest.swift in Sources */,
 				5A4CD0DC27E8A09E00F6C829 /* AddBarButtonItem.swift in Sources */,
+				5A35D8412867323A002D7315 /* EmptyTableViewCell.swift in Sources */,
 				5AA8D80528534B78002AC1ED /* SettingBarButtonItem.swift in Sources */,
 				5AFC177B285DD31E003C1D45 /* StudyRoomSettingVC.swift in Sources */,
 				5AC92394284DF388006E6A29 /* UpdateRoomRequest.swift in Sources */,

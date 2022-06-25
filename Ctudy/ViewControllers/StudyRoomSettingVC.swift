@@ -14,13 +14,13 @@ class StudyRoomSettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var settingTableView: UITableView!
     lazy var indicatorView: UIView = {
         let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-        indicatorView.backgroundColor = COLOR.INDICATOR_BACKGROUND_COLOR
+        indicatorView.backgroundColor = UIColor.white
         return indicatorView
     }()
     lazy var indicator: NVActivityIndicatorView = {
         let indicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40),
                                                 type: .pacman,
-                                                color: COLOR.BASIC_TINT_COLOR,
+                                                color: COLOR.SIGNATURE_COLOR,
                                                 padding: 0)
         indicator.translatesAutoresizingMaskIntoConstraints = false
         return indicator
@@ -29,7 +29,7 @@ class StudyRoomSettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 10))
         label.font = UIFont.boldSystemFont(ofSize: 15)
         label.text = "loading..."
-        label.textColor = COLOR.BASIC_TINT_COLOR
+        label.textColor = COLOR.SIGNATURE_COLOR
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
