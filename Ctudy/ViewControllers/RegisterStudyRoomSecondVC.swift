@@ -64,9 +64,11 @@ class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataS
         
         // 셀 리소스 파일 가져오기
         let memberCell = UINib(nibName: String(describing: MemberTableViewCell.self), bundle: nil)
+        let emptyCell = EmptyTableViewCell.nib()
         
         // 셀 리소스 등록하기
         memberTableView.register(memberCell, forCellReuseIdentifier: "MemberTableViewCell")
+        memberTableView.register(emptyCell, forCellReuseIdentifier: "EmptyTableViewCell")
         
         // 셀 설정
         memberTableView.rowHeight = 90
@@ -223,10 +225,21 @@ class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataS
     
     // MARK: - tableView delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return members.count
+        if members.count == 0 {
+            return 1
+        } else {
+            return members.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if members.isEmpty == true {
+            let cell = memberTableView.dequeueReusableCell(withIdentifier: "EmptyTableViewCell", for: indexPath) as! EmptyTableViewCell
+            cell.selectionStyle = .none
+            cell.titleLabel.text = "초대할 멤버가 없습니다.🥲"
+            memberTableView.rowHeight = self.memberTableView.bounds.height
+            return cell
+        } else {
         let cell = memberTableView.dequeueReusableCell(withIdentifier: "MemberTableViewCell", for: indexPath) as! MemberTableViewCell
         cell.selectionStyle = .none // 선택 block 없애기
         if members[indexPath.row].image != "" {
@@ -240,7 +253,9 @@ class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataS
         cell.checkBtn.tag = indexPath.row
         cell.checkBtn.isChecked = members[indexPath.row].ischecked
         cell.checkBtn.checkBtnDelegate = self
+            memberTableView.rowHeight = 90
         return cell
+        }
     }
     
     func checkBtnClicked(btn: UIButton, ischecked: Bool) {

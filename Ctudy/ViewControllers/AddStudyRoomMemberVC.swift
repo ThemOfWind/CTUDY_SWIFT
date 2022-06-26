@@ -36,7 +36,7 @@ class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource,
         label.text = "loading..."
         label.textColor = COLOR.SIGNATURE_COLOR
         label.translatesAutoresizingMaskIntoConstraints = false
-       return label
+        return label
     }()
     var members: Array<SearchMemberResponse> = []
     var roomId: Int! // 전달받은 roomId
@@ -61,9 +61,11 @@ class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource,
         
         // 셀 리소스 파일 가져오기
         let memberCell = UINib(nibName: String(describing: MemberTableViewCell.self), bundle: nil)
+        let emptyCell = EmptyTableViewCell.nib()
         
         // 셀 리소스 등록하기
         memberTableView.register(memberCell, forCellReuseIdentifier: "MemberTableViewCell")
+        memberTableView.register(emptyCell, forCellReuseIdentifier: "EmptyTableViewCell")
         
         // 셀 설정
         memberTableView.rowHeight = 90
@@ -89,7 +91,7 @@ class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource,
     // MARK: - search member api
     // 전체 멤버 조회
     fileprivate func getSearchMember(text: String) {
-
+        
         AlamofireManager.shared.getSearchMember(search: text, roomId: String(roomId), page: nextPage ?? "0", completion: {
             [weak self] result in
             guard let self = self else { return }
@@ -103,8 +105,8 @@ class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource,
                 let list = response["items"]
                 for (_, subJson) : (String, JSON) in list {
                     guard let id = subJson["id"].int
-                        , let username = subJson["username"].string
-                        , let name = subJson["name"].string else { return }
+                            , let username = subJson["username"].string
+                            , let name = subJson["name"].string else { return }
                     let image = subJson["image"].string ?? ""
                     let memberItem = SearchMemberResponse(id: id, name: name, userName: username, image: image, ischecked: false)
                     self.members.append(memberItem)
@@ -219,26 +221,38 @@ class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource,
     
     // MARK: - tableView delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return members.count
+        if members.count == 0 {
+            return 1
+        } else {
+            return members.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = memberTableView.dequeueReusableCell(withIdentifier: "MemberTableViewCell", for: indexPath) as! MemberTableViewCell
-        cell.selectionStyle = .none // 선택 block 없애기
-        if members[indexPath.row].image != "" {
-            cell.memberImg.kf.indicatorType = .activity
-            cell.memberImg.kf.setImage(with: URL(string: API.IMAGE_URL + members[indexPath.row].image)!)
+        if members.isEmpty == true {
+            let cell = memberTableView.dequeueReusableCell(withIdentifier: "EmptyTableViewCell", for: indexPath) as! EmptyTableViewCell
+            cell.selectionStyle = .none
+            cell.titleLabel.text = "초대할 멤버가 없습니다.🥲"
+            memberTableView.rowHeight = self.memberTableView.bounds.height
+            return cell
         } else {
-            cell.memberImg.image = UIImage(named: "user_default.png")
+            let cell = memberTableView.dequeueReusableCell(withIdentifier: "MemberTableViewCell", for: indexPath) as! MemberTableViewCell
+            cell.selectionStyle = .none // 선택 block 없애기
+            if members[indexPath.row].image != "" {
+                cell.memberImg.kf.indicatorType = .activity
+                cell.memberImg.kf.setImage(with: URL(string: API.IMAGE_URL + members[indexPath.row].image)!)
+            } else {
+                cell.memberImg.image = UIImage(named: "user_default.png")
+            }
+            cell.member.text = members[indexPath.row].name
+            cell.memberName.text = "@\(members[indexPath.row].userName)"
+            cell.checkBtn.tag = indexPath.row
+            cell.checkBtn.isChecked = members[indexPath.row].ischecked
+            cell.checkBtn.checkBtnDelegate = self
+            memberTableView.rowHeight = 90
+            return cell
         }
-        cell.member.text = members[indexPath.row].name
-        cell.memberName.text = "@\(members[indexPath.row].userName)"
-        cell.checkBtn.tag = indexPath.row
-        cell.checkBtn.isChecked = members[indexPath.row].ischecked
-        cell.checkBtn.checkBtnDelegate = self
-        return cell
     }
-    
     
     // custom button event
     func checkBtnClicked(btn: UIButton, ischecked: Bool) {

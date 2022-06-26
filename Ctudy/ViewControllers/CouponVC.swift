@@ -244,15 +244,12 @@ class CouponVC: BasicVC, UITableViewDelegate, UITableViewDataSource, UIGestureRe
         } else {
             guard let controller = self.storyboard?.instantiateViewController(withIdentifier: "CouponDetailVC") as? CouponDetailVC else { return }
             controller.modalTransitionStyle = .coverVertical
-            controller.modalPresentationStyle = .pageSheet
-    //        controller.modalPresentationStyle = .overCurrentContext
-    //        controller.modalTransitionStyle = .crossDissolve
-    //        controller.preferredContentSize = CGSize(width: self.view.bounds.width, height: 500)
+            controller.modalPresentationStyle = .popover
             controller.coupon = coupons[indexPath.row]
             
             if let sheet = controller.sheetPresentationController {
                 sheet.detents = [.large()]
-                sheet.largestUndimmedDetentIdentifier = .medium
+                sheet.largestUndimmedDetentIdentifier = .large
             }
             self.present(controller, animated: true, completion: nil)
         }

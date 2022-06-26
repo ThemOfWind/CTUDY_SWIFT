@@ -47,6 +47,8 @@
 		5A7BC0FD284BA73F0077F10F /* UpdateMasterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7BC0FC284BA73F0077F10F /* UpdateMasterVC.swift */; };
 		5A7BC0FF284BAEEF0077F10F /* SettingMasterResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7BC0FE284BAEEF0077F10F /* SettingMasterResponse.swift */; };
 		5A7BC101284BBD260077F10F /* SettingStudyRoomResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7BC100284BBD260077F10F /* SettingStudyRoomResponse.swift */; };
+		5A7C22CC286840A300CF3CA4 /* EmptyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7C22CB286840A300CF3CA4 /* EmptyCollectionViewCell.swift */; };
+		5A7C22CE286840DE00CF3CA4 /* EmptyCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A7C22CD286840DE00CF3CA4 /* EmptyCollectionViewCell.xib */; };
 		5A80B4CD285368C100A1CDD1 /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A80B4CC285368C100A1CDD1 /* SettingTableViewCell.swift */; };
 		5A80B4CF285368E300A1CDD1 /* SettingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A80B4CE285368E300A1CDD1 /* SettingTableViewCell.xib */; };
 		5A8BAB142786E94100CFF908 /* StudyCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A8BAB132786E94100CFF908 /* StudyCollectionViewCell.xib */; };
@@ -145,6 +147,8 @@
 		5A7BC0FC284BA73F0077F10F /* UpdateMasterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateMasterVC.swift; sourceTree = "<group>"; };
 		5A7BC0FE284BAEEF0077F10F /* SettingMasterResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingMasterResponse.swift; sourceTree = "<group>"; };
 		5A7BC100284BBD260077F10F /* SettingStudyRoomResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingStudyRoomResponse.swift; sourceTree = "<group>"; };
+		5A7C22CB286840A300CF3CA4 /* EmptyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCollectionViewCell.swift; sourceTree = "<group>"; };
+		5A7C22CD286840DE00CF3CA4 /* EmptyCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyCollectionViewCell.xib; sourceTree = "<group>"; };
 		5A80B4CC285368C100A1CDD1 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
 		5A80B4CE285368E300A1CDD1 /* SettingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingTableViewCell.xib; sourceTree = "<group>"; };
 		5A8BAB132786E94100CFF908 /* StudyCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StudyCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -313,20 +317,20 @@
 				5A6FEEB7284084EA007C7751 /* SearchPwSuccessVC.swift */,
 				5AC0E3B42840B6F200E99943 /* RegisterCouponFirstVC.swift */,
 				5AF63CE72859BC1900B7F8B9 /* RegisterCouponSecondVC.swift */,
-				5A7BC0FC284BA73F0077F10F /* UpdateMasterVC.swift */,
-				5A9D31B9277B17DD00DCEAEA /* ProfileVC.swift */,
+				5AFC177A285DD31E003C1D45 /* StudyRoomSettingVC.swift */,
 				5AA3F27A28508CDC00A4EF80 /* SettingVC.swift */,
-				5AC84435285097140081C4B2 /* UpdateProfileVC.swift */,
-				5A60DFA228571CBB00791779 /* UpdatePasswordVC.swift */,
+				5A9D31B9277B17DD00DCEAEA /* ProfileVC.swift */,
 				5A5C98D32857731B001AEF03 /* WithdrawVC.swift */,
 				5AFC1770285C7DE9003C1D45 /* PrivacyVC.swift */,
 				5AFC1772285C815D003C1D45 /* ServiceVC.swift */,
 				5AFC1774285C81BA003C1D45 /* NoticeVC.swift */,
 				5AA22789285C4B0B00626793 /* VersionVC.swift */,
 				5AFC1778285DD294003C1D45 /* AddStudyRoomMemberVC.swift */,
-				5AFC177A285DD31E003C1D45 /* StudyRoomSettingVC.swift */,
-				5A7BC0FA284BA6250077F10F /* UpdateStudyRoomVC.swift */,
 				5A8DF8F428449BE200AFF41F /* AddCouponReciverVC.swift */,
+				5A7BC0FC284BA73F0077F10F /* UpdateMasterVC.swift */,
+				5AC84435285097140081C4B2 /* UpdateProfileVC.swift */,
+				5A60DFA228571CBB00791779 /* UpdatePasswordVC.swift */,
+				5A7BC0FA284BA6250077F10F /* UpdateStudyRoomVC.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -397,6 +401,8 @@
 				5A80B4CC285368C100A1CDD1 /* SettingTableViewCell.swift */,
 				5A35D84228673248002D7315 /* EmptyTableViewCell.xib */,
 				5A35D8402867323A002D7315 /* EmptyTableViewCell.swift */,
+				5A7C22CD286840DE00CF3CA4 /* EmptyCollectionViewCell.xib */,
+				5A7C22CB286840A300CF3CA4 /* EmptyCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -537,6 +543,7 @@
 				5A2D86C027EAE8A9000BF69B /* MemberTableViewCell.xib in Resources */,
 				5A0C7D6C28608FD200247251 /* CouponTableViewCell.xib in Resources */,
 				5A4CD0D927E86F1F00F6C829 /* AddBarButtonItem.xib in Resources */,
+				5A7C22CE286840DE00CF3CA4 /* EmptyCollectionViewCell.xib in Resources */,
 				5A58EEA9275F7E84000A1A39 /* LaunchScreen.storyboard in Resources */,
 				5A58EEA6275F7E84000A1A39 /* Assets.xcassets in Resources */,
 				5A35D84328673248002D7315 /* EmptyTableViewCell.xib in Resources */,
@@ -630,6 +637,7 @@
 				5A7BC0FF284BAEEF0077F10F /* SettingMasterResponse.swift in Sources */,
 				5AC0E3B52840B6F200E99943 /* RegisterCouponFirstVC.swift in Sources */,
 				5A6FEEB42840845E007C7751 /* SearchPwSecondVC.swift in Sources */,
+				5A7C22CC286840A300CF3CA4 /* EmptyCollectionViewCell.swift in Sources */,
 				5ABB95C22760F697003B4764 /* SignUpSecondVC.swift in Sources */,
 				5AFC1771285C7DE9003C1D45 /* PrivacyVC.swift in Sources */,
 				5ABA13F2283CBBFE007AE4F0 /* CouponVC.swift in Sources */,

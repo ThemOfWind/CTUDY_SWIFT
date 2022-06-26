@@ -59,7 +59,6 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        self.members.removeAll()
         super.viewDidDisappear(animated)
     }
     
@@ -187,6 +186,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - search room member api
     fileprivate func getSearchStudyMemeber(id: String) {
+        self.members.removeAll()
         self.onStartActivityIndicator()
         
         AlamofireManager.shared.getSearchStudyMember(id: id, completion: {
@@ -261,7 +261,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
                 
                 switch result {
                 case .success(_):
-                    self.memberTableView.reloadData()
+                    self.getSearchStudyMemeber(id: String(self.roomId))
                 case .failure(let error):
                     print("MainDetailVC - deleteStudyMember().failure / error: \(error)")
                     self.view.makeToast(error.rawValue, duration: 1.0, position: .center)

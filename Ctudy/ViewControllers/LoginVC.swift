@@ -134,10 +134,6 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
     @objc func onLoginBtnClicked() {
         print("LoginVC - onLoginBtnClicked() called")
         
-//        if token?.token == KeyChainManager().tokenLoad(API.SERVICEID, account: "accessToken") || token != nil {
-//            print("token: \(token?.token)")
-//            return }
-        
         self.onStartActivityIndicator()
         
         AlamofireManager.shared.postSignIn(username: userName.text!, password: password.text!, completion: { [weak self] result in

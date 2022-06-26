@@ -16,20 +16,20 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ite-aD-LJb">
-                        <rect key="frame" x="207" y="246" width="0.0" height="0.0"/>
+                        <rect key="frame" x="207" y="277" width="0.0" height="0.0"/>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="52m-jE-Zhd">
-                        <rect key="frame" x="207" y="256" width="0.0" height="0.0"/>
+                        <rect key="frame" x="207" y="287" width="0.0" height="0.0"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Ite-aD-LJb" firstAttribute="centerY" secondItem="Kdk-Dz-ZMi" secondAttribute="centerY" multiplier="0.8" id="ZFJ-oo-qBG"/>
+                    <constraint firstItem="Ite-aD-LJb" firstAttribute="centerY" secondItem="Kdk-Dz-ZMi" secondAttribute="centerY" multiplier="0.9" id="ZFJ-oo-qBG"/>
                     <constraint firstItem="52m-jE-Zhd" firstAttribute="centerX" secondItem="Kdk-Dz-ZMi" secondAttribute="centerX" id="ZR2-k5-oZ0"/>
                     <constraint firstItem="52m-jE-Zhd" firstAttribute="top" secondItem="Ite-aD-LJb" secondAttribute="bottom" constant="10" id="sR2-hT-F4l"/>
                     <constraint firstItem="Ite-aD-LJb" firstAttribute="centerX" secondItem="Kdk-Dz-ZMi" secondAttribute="centerX" id="tdJ-WY-4wq"/>

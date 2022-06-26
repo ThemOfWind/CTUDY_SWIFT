@@ -32,7 +32,7 @@ class CouponHistoryVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         label.text = "loading..."
         label.textColor = COLOR.SIGNATURE_COLOR
         label.translatesAutoresizingMaskIntoConstraints = false
-       return label
+        return label
     }()
     var coupons = [] as! Array<CouponResponse>
     var roomId: Int!
@@ -58,9 +58,9 @@ class CouponHistoryVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         
         // 셀 설정
         couponHistoryTableView.rowHeight = 100
-//        couponHistoryTableView.allowsSelection = false
-//        self.couponHistoryTableView.layer.borderWidth = 1
-//        self.couponHistoryTableView.layer.borderColor = COLOR.BORDER_COLOR.cgColor
+        //        couponHistoryTableView.allowsSelection = false
+        //        self.couponHistoryTableView.layer.borderWidth = 1
+        //        self.couponHistoryTableView.layer.borderColor = COLOR.BORDER_COLOR.cgColor
         
         // delegate 연결
         couponHistoryTableView.delegate = self
@@ -192,16 +192,20 @@ class CouponHistoryVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let controller = self.storyboard?.instantiateViewController(withIdentifier: "CouponDetailVC") as? CouponDetailVC else { return }
-        controller.modalTransitionStyle = .coverVertical
-        controller.modalPresentationStyle = .pageSheet
-        controller.coupon = coupons[indexPath.row]
-        
-        if let sheet = controller.sheetPresentationController {
-            sheet.detents = [.medium()]
-            sheet.largestUndimmedDetentIdentifier = .medium
+        if coupons.isEmpty == true {
+            return
+        } else {
+            guard let controller = self.storyboard?.instantiateViewController(withIdentifier: "CouponDetailVC") as? CouponDetailVC else { return }
+            controller.modalTransitionStyle = .coverVertical
+            controller.modalPresentationStyle = .popover
+            controller.coupon = coupons[indexPath.row]
+            
+            if let sheet = controller.sheetPresentationController {
+                sheet.detents = [.large()]
+                sheet.largestUndimmedDetentIdentifier = .large
+            }
+            
+            self.present(controller, animated: true, completion: nil)
         }
-        
-        self.present(controller, animated: true, completion: nil)
     }
 }
