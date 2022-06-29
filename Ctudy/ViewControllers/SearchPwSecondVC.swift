@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import NVActivityIndicatorView
 
-class SearchPwSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
+class SearchPwSecondVC: BasicVC, UITextFieldDelegate {
     // MARK: - 변수
     @IBOutlet weak var inputAuthNumber: UITextField!
     @IBOutlet weak var authBtn: UIButton!
@@ -71,6 +71,7 @@ class SearchPwSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegat
     // MARK: confing func
     fileprivate func config() {
         // navigationvar item 설정
+        self.navigationController?.navigationBar.sizeToFit()
         leftItem = LeftItem.backGeneral
         titleItem = TitleItem.titleGeneral(title: "비밀번호 찾기", isLargeTitles: true)
         

@@ -9,11 +9,13 @@ import Foundation
 import UIKit
 
 class MemberTableViewCell : UITableViewCell {
+    // MARK: - 변수
     @IBOutlet weak var memberImg: UIImageView!
     @IBOutlet weak var memberName: UILabel!
     @IBOutlet weak var member: UILabel!
     @IBOutlet weak var checkBtn: MemberCheckButton!
     
+    // MARK: - view load func
     override func awakeFromNib() {
         super.awakeFromNib()
     
@@ -28,7 +30,7 @@ class MemberTableViewCell : UITableViewCell {
         self.memberImg.translatesAutoresizingMaskIntoConstraints = false
     }
     
-    // cell간 간격 띄우기 (수정해야돼)
+    // cell간 간격 띄우기
     override func layoutSubviews() {
         super.layoutSubviews()
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))

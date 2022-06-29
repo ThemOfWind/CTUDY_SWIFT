@@ -21,6 +21,7 @@ class SignUpSuccessVC: BasicVC {
         print("SignUpSuccessVC - viewDidLoad() calld")
         
         // navigationBar setting
+        self.navigationController?.navigationBar.sizeToFit()
         self.leftItem = LeftItem.none
 //        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
         // navigationBar left item

@@ -11,7 +11,7 @@ import Toast_Swift
 import Alamofire
 import NVActivityIndicatorView
 
-class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
+class SignUpSecondVC: BasicVC, UITextFieldDelegate{
     
     // MARK: - 변수
     @IBOutlet weak var registerUsername: UITextField!
@@ -71,6 +71,7 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate{
     
     fileprivate func config() {
         // navigationbar item 설정
+        self.navigationController?.navigationBar.sizeToFit()
         self.leftItem = LeftItem.backGeneral
         self.titleItem = TitleItem.titleGeneral(title: "회원가입", isLargeTitles: true)
         

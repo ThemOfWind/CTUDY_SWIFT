@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class BasicVC: UIViewController {
+class BasicVC: UIViewController, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
     
     // left navigationBar item
     enum LeftItem {
@@ -180,6 +180,7 @@ class BasicVC: UIViewController {
         // leftItem
         switch self.leftItem {
         case .none:
+//            self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
             break
         case .backSystemDefault:
             self.navigationItem.backBarButtonItem = nil
@@ -247,12 +248,10 @@ class BasicVC: UIViewController {
         self.updateNavigationBarRightUI()
     }
     
-//    override func viewWillAppear(_ animated: Bool) {
-//        self.reset()
-//        self.updateNavigationBarLeftUI()
-//        self.updateNavigationBarTitleUI()
-//        self.updateNavigationBarRightUI()
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+    }
     
     fileprivate func reset() {
         self.navigationItem.title = ""
@@ -261,16 +260,20 @@ class BasicVC: UIViewController {
         self.navigationItem.leftBarButtonItem = nil
         self.navigationItem.hidesBackButton = true
         self.navigationItem.rightBarButtonItem = nil
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+    }
+    
+    // MARK :  Navigation Stack에 쌓인 뷰가 1개를 초과하고 leftItem이 .none이 아닌 경우 제스처가 동작
+    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+//        var enable = (self.navigationController?.viewControllers.count ?? 0 > 0)
+        var enable: Bool = false
+        switch leftItem {
+        case .none:
+            enable = false
+        default:
+            enable = true
+        }
+          
+        return enable
     }
 }
-
-//extension UINavigationController: ObservableObject, UIGestureRecognizerDelegate {
-//    open override func viewDidLoad() {
-//        super.viewDidLoad()
-//        interactivePopGestureRecognizer?.delegate = self
-//    }
-//
-//    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-//        return viewControllers.count > 1 && BasicVC.LeftItem.self != .none
-//    }
-//}

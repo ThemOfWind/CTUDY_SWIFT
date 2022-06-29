@@ -8,7 +8,7 @@
 import UIKit
 import NVActivityIndicatorView
 
-class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
+class LoginVC: BasicVC, UITextFieldDelegate {
     
     // MARK: - 변수
     @IBOutlet weak var loginView: UIView!
@@ -77,6 +77,8 @@ class LoginVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
         self.password.text = ""
         
         // navigationBar item
+        self.navigationController?.navigationBar.sizeToFit()
+        self.leftItem = LeftItem.none
         self.titleItem = TitleItem.titleGeneral(title: "로그인", isLargeTitles: true)
         
         // btn ui

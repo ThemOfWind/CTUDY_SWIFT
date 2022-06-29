@@ -40,7 +40,7 @@ class SettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         , [ "id" : "username", "text" : "계정관리", "color" : UIColor.black ]
         , [ "id" : "privacy", "text" : "개인정보 처리 방침", "color" : UIColor.black ]
         , [ "id" : "service", "text" : "이용약관", "color" : UIColor.black ]
-        , [ "id" : "notice", "text" : "오픈소스 라이센스 이용고지", "color" : UIColor.black ]
+        , [ "id" : "opensource", "text" : "오픈소스 라이센스 이용고지", "color" : UIColor.black ]
         , [ "id" : "version", "text" : "버전정보", "color" : UIColor.black ]
         , [ "id" : "logout", "text" : "로그아웃", "color" : UIColor.red ]
     ]
@@ -126,18 +126,13 @@ class SettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
                     self.navigationController?.view.makeToast("로그아웃 되었습니다.", duration: 1.0, position: .center)
                 case .failure(let error):
                     print("SettingVC - logout().failure / error: \(error)")
-//                    guard let loginVC = self.storyboard?.instantiateViewController(withIdentifier: "LoginVC") as? LoginVC else { return }
-//                    (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(loginVC, animated: false)
-                    //self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
                 }
             })
-            
             if self.indicator.isAnimating {
                 self.onStopActivityIndicator()
             }
-            
-        }))
         
+        }))
         self.present(alert, animated: false)
     }
     
@@ -150,6 +145,7 @@ class SettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         print("SettingVC - tableView() called / cellText: \(settingList[(indexPath as NSIndexPath).row]["text"] as! String)")
         let cell = settingTableView.dequeueReusableCell(withIdentifier: "SettingTableViewCell", for: indexPath) as! SettingTableViewCell
         cell.selectionStyle = .none // 선택 block 없애기
+        cell.tag = indexPath.row
         cell.settingLabel.text = settingList[(indexPath as NSIndexPath).row]["text"] as! String
         cell.settingLabel.textColor = settingList[(indexPath as NSIndexPath).row]["color"] as! UIColor
         return cell
@@ -173,9 +169,9 @@ class SettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
             // 이용약관 화면으로 이동
             self.performSegue(withIdentifier: "ServiceVC", sender: self)
             break
-        case "notice":
+        case "opensource":
             // 오픈소스 라이센스 이용고지 화면으로 이동
-            self.performSegue(withIdentifier: "NoticeVC", sender: self)
+            self.performSegue(withIdentifier: "OpenSourceVC", sender: self)
             break
         case "version":
             // 버전정보 화면으로 이동

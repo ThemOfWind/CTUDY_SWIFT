@@ -10,7 +10,7 @@ import UIKit
 import NVActivityIndicatorView
 import SwiftUI
 
-class CouponVC: BasicVC, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate {
+class CouponVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     // MARK: - 변수
     @IBOutlet weak var couponTableView: UITableView!
 //    let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: RegisterStudyRoomFirstVC.self, action: nil)
@@ -55,6 +55,7 @@ class CouponVC: BasicVC, UITableViewDelegate, UITableViewDataSource, UIGestureRe
     
     fileprivate func config() {
         // navigationbar item 설정
+        self.navigationController?.navigationBar.sizeToFit()
         leftItem = LeftItem.backGeneral
         titleItem = TitleItem.titleGeneral(title: "내 쿠폰", isLargeTitles: true)
         rightItem = RightItem.anyCustoms(items: [.setting], title: nil, rightSpaceCloseToDefault: true)

@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import NVActivityIndicatorView
 
-class UpdatePasswordVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegate {
+class UpdatePasswordVC: BasicVC, UITextFieldDelegate {
     // MARK: - 변수
     @IBOutlet weak var inputPassword: UITextField!
     @IBOutlet weak var passwordMsg: UILabel!
@@ -54,6 +54,7 @@ class UpdatePasswordVC: BasicVC, UIGestureRecognizerDelegate, UITextFieldDelegat
     // MARK: - fileprivaten func
     fileprivate func config() {
         // navigationbar ui
+        self.navigationController?.navigationBar.sizeToFit()
         leftItem = LeftItem.backGeneral
         titleItem = TitleItem.titleGeneral(title: "계정관리", isLargeTitles: true)
         

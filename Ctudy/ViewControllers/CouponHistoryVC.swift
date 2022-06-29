@@ -45,6 +45,7 @@ class CouponHistoryVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     
     fileprivate func config() {
         // navigationbar item 설정
+        self.navigationController?.navigationBar.sizeToFit()
         leftItem = LeftItem.backGeneral
         titleItem = TitleItem.titleGeneral(title: "히스토리", isLargeTitles: true)
         

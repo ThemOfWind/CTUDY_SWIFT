@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import NVActivityIndicatorView
 
-class SearchIdFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate {
+class SearchIdFirstVC: BasicVC, UITextFieldDelegate {
     // MARK: - 변수
     @IBOutlet weak var inputEmail: UITextField!
     @IBOutlet weak var emailMsg: UILabel!
@@ -57,6 +57,7 @@ class SearchIdFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate
     // MARK: - fileprivate func
     fileprivate func config() {
         // navigationbar item
+        self.navigationController?.navigationBar.sizeToFit()
         self.leftItem = LeftItem.backGeneral
         self.titleItem = TitleItem.titleGeneral(title: "아이디 찾기", isLargeTitles: true)
         

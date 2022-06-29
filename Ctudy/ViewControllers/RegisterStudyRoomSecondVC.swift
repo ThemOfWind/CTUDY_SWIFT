@@ -11,7 +11,7 @@ import SwiftyJSON
 import NVActivityIndicatorView
 import Kingfisher
 
-class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, MemberCheckButtonDelegate, UITextFieldDelegate {
+class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataSource, MemberCheckButtonDelegate, UITextFieldDelegate {
     
     // MARK: - 변수
     @IBOutlet weak var memberTableView: UITableView!
@@ -54,6 +54,7 @@ class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataS
     
     fileprivate func config() {
         // navigationBar item 설정
+        self.navigationController?.navigationBar.sizeToFit()
         leftItem = LeftItem.backGeneral
         titleItem = TitleItem.titleGeneral(title: "멤버 등록", isLargeTitles: true)
         

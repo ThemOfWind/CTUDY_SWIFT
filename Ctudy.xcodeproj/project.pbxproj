@@ -49,6 +49,8 @@
 		5A7BC101284BBD260077F10F /* SettingStudyRoomResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7BC100284BBD260077F10F /* SettingStudyRoomResponse.swift */; };
 		5A7C22CC286840A300CF3CA4 /* EmptyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7C22CB286840A300CF3CA4 /* EmptyCollectionViewCell.swift */; };
 		5A7C22CE286840DE00CF3CA4 /* EmptyCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A7C22CD286840DE00CF3CA4 /* EmptyCollectionViewCell.xib */; };
+		5A7C22D0286AFD7900CF3CA4 /* OpenSourceWebVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7C22CF286AFD7900CF3CA4 /* OpenSourceWebVC.swift */; };
+		5A7C22D2286AFFD400CF3CA4 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A7C22D1286AFFD400CF3CA4 /* WebKit.framework */; };
 		5A80B4CD285368C100A1CDD1 /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A80B4CC285368C100A1CDD1 /* SettingTableViewCell.swift */; };
 		5A80B4CF285368E300A1CDD1 /* SettingTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A80B4CE285368E300A1CDD1 /* SettingTableViewCell.xib */; };
 		5A8BAB142786E94100CFF908 /* StudyCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A8BAB132786E94100CFF908 /* StudyCollectionViewCell.xib */; };
@@ -96,7 +98,7 @@
 		5AF63CE82859BC1900B7F8B9 /* RegisterCouponSecondVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF63CE72859BC1900B7F8B9 /* RegisterCouponSecondVC.swift */; };
 		5AFC1771285C7DE9003C1D45 /* PrivacyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFC1770285C7DE9003C1D45 /* PrivacyVC.swift */; };
 		5AFC1773285C815D003C1D45 /* ServiceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFC1772285C815D003C1D45 /* ServiceVC.swift */; };
-		5AFC1775285C81BA003C1D45 /* NoticeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFC1774285C81BA003C1D45 /* NoticeVC.swift */; };
+		5AFC1775285C81BA003C1D45 /* OpenSourceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFC1774285C81BA003C1D45 /* OpenSourceVC.swift */; };
 		5AFC1779285DD294003C1D45 /* AddStudyRoomMemberVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFC1778285DD294003C1D45 /* AddStudyRoomMemberVC.swift */; };
 		5AFC177B285DD31E003C1D45 /* StudyRoomSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFC177A285DD31E003C1D45 /* StudyRoomSettingVC.swift */; };
 		5E8F0DACD2EAF7F0B8D95D57 /* Pods_Ctudy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7AEB34C08528B3EDE17B79DD /* Pods_Ctudy.framework */; };
@@ -149,6 +151,8 @@
 		5A7BC100284BBD260077F10F /* SettingStudyRoomResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingStudyRoomResponse.swift; sourceTree = "<group>"; };
 		5A7C22CB286840A300CF3CA4 /* EmptyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCollectionViewCell.swift; sourceTree = "<group>"; };
 		5A7C22CD286840DE00CF3CA4 /* EmptyCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyCollectionViewCell.xib; sourceTree = "<group>"; };
+		5A7C22CF286AFD7900CF3CA4 /* OpenSourceWebVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSourceWebVC.swift; sourceTree = "<group>"; };
+		5A7C22D1286AFFD400CF3CA4 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		5A80B4CC285368C100A1CDD1 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
 		5A80B4CE285368E300A1CDD1 /* SettingTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingTableViewCell.xib; sourceTree = "<group>"; };
 		5A8BAB132786E94100CFF908 /* StudyCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StudyCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -196,7 +200,7 @@
 		5AF63CE72859BC1900B7F8B9 /* RegisterCouponSecondVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterCouponSecondVC.swift; sourceTree = "<group>"; };
 		5AFC1770285C7DE9003C1D45 /* PrivacyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyVC.swift; sourceTree = "<group>"; };
 		5AFC1772285C815D003C1D45 /* ServiceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceVC.swift; sourceTree = "<group>"; };
-		5AFC1774285C81BA003C1D45 /* NoticeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeVC.swift; sourceTree = "<group>"; };
+		5AFC1774285C81BA003C1D45 /* OpenSourceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenSourceVC.swift; sourceTree = "<group>"; };
 		5AFC1778285DD294003C1D45 /* AddStudyRoomMemberVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStudyRoomMemberVC.swift; sourceTree = "<group>"; };
 		5AFC177A285DD31E003C1D45 /* StudyRoomSettingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyRoomSettingVC.swift; sourceTree = "<group>"; };
 		7AEB34C08528B3EDE17B79DD /* Pods_Ctudy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ctudy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -207,6 +211,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A7C22D2286AFFD400CF3CA4 /* WebKit.framework in Frameworks */,
 				5E8F0DACD2EAF7F0B8D95D57 /* Pods_Ctudy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -323,7 +328,8 @@
 				5A5C98D32857731B001AEF03 /* WithdrawVC.swift */,
 				5AFC1770285C7DE9003C1D45 /* PrivacyVC.swift */,
 				5AFC1772285C815D003C1D45 /* ServiceVC.swift */,
-				5AFC1774285C81BA003C1D45 /* NoticeVC.swift */,
+				5AFC1774285C81BA003C1D45 /* OpenSourceVC.swift */,
+				5A7C22CF286AFD7900CF3CA4 /* OpenSourceWebVC.swift */,
 				5AA22789285C4B0B00626793 /* VersionVC.swift */,
 				5AFC1778285DD294003C1D45 /* AddStudyRoomMemberVC.swift */,
 				5A8DF8F428449BE200AFF41F /* AddCouponReciverVC.swift */,
@@ -472,6 +478,7 @@
 		CD4427033A5D0FEA0775A649 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5A7C22D1286AFFD400CF3CA4 /* WebKit.framework */,
 				7AEB34C08528B3EDE17B79DD /* Pods_Ctudy.framework */,
 			);
 			name = Frameworks;
@@ -676,9 +683,10 @@
 				5A58EEA4275F7E83000A1A39 /* Ctudy.xcdatamodeld in Sources */,
 				5A2D86C227EAEBB8000BF69B /* MemberTableViewCell.swift in Sources */,
 				5A9D31C3277C71B900DCEAEA /* UserInfos.swift in Sources */,
+				5A7C22D0286AFD7900CF3CA4 /* OpenSourceWebVC.swift in Sources */,
 				5A9D31BC277B18D100DCEAEA /* MainTabBarVC.swift in Sources */,
 				5AA3F27B28508CDC00A4EF80 /* SettingVC.swift in Sources */,
-				5AFC1775285C81BA003C1D45 /* NoticeVC.swift in Sources */,
+				5AFC1775285C81BA003C1D45 /* OpenSourceVC.swift in Sources */,
 				5AC4471D27745E8400077242 /* MyLogger.swift in Sources */,
 				5AAE346D2761D2BE00EE6A5D /* Constants.swift in Sources */,
 			);

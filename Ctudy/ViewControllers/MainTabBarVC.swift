@@ -55,17 +55,8 @@ class MainTabBarVC: UITabBarController, UITabBarControllerDelegate {
         self.settingBtn.addTarget(self, action: #selector(onSettingBtnClicked(sender:)), for: .touchUpInside)
         self.navigationItem.setRightBarButton(UIBarButtonItem(customView: addBtn), animated: true)
         
-        // delegate
         self.delegate = self
     }
-    
-    //    fileprivate func navigationBarReset() {
-    //        // navigationBar setting
-    //        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-    //        // navigationBar left item
-    //        self.navigationItem.leftBarButtonItem = nil
-    //        self.navigationItem.hidesBackButton = true
-    //    }
     
     // MARK: - action func
     // navigationBar item customBtn event
@@ -93,5 +84,10 @@ class MainTabBarVC: UITabBarController, UITabBarControllerDelegate {
             self.navigationItem.rightBarButtonItem = nil
             self.navigationItem.setRightBarButton(UIBarButtonItem(customView: settingBtn), animated: true)
         }
+    }
+    
+    // MARK: - UIGestureRecognizer delegate
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return false
     }
 }

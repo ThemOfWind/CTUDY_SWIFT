@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIImagePickerControllerDelegate {
     // MARK: - 변수
     @IBOutlet weak var userImg: UIImageView!
     @IBOutlet weak var registerName: UITextField!
@@ -30,6 +30,11 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
         self.config()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        // 화면 swipe 기능 막기
+        leftItem = LeftItem.none
+    }
+    
     // 다음 화면 이동 시 입력받은 이름정보 넘기기
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let id = segue.identifier, id == "SignUpSecondVC" {
@@ -43,6 +48,7 @@ class SignUpFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, 
     
     fileprivate func config() {
         // navigationbar item
+        self.navigationController?.navigationBar.sizeToFit()
         self.titleItem = TitleItem.titleGeneral(title: "회원가입", isLargeTitles: true)
         
         // button ui

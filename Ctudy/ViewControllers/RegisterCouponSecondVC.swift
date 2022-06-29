@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import NVActivityIndicatorView
 
-class RegisterCouponSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class RegisterCouponSecondVC: BasicVC, UITextFieldDelegate, UIImagePickerControllerDelegate {
     
     // MARK: - 변수
     @IBOutlet weak var couponName: UITextField!
@@ -63,6 +63,7 @@ class RegisterCouponSecondVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerD
     // MARK: - fileprivate func
     fileprivate func config() {
         // navigationbar item
+        self.navigationController?.navigationBar.sizeToFit()
         leftItem = LeftItem.backGeneral
         titleItem = TitleItem.titleGeneral(title: "쿠폰 발급", isLargeTitles: true)
         

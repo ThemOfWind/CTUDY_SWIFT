@@ -102,6 +102,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
     
     fileprivate func config() {
         // navigationbar item 설정
+        self.navigationController?.navigationBar.sizeToFit()
         leftItem = LeftItem.backGeneral
         titleItem = TitleItem.titleGeneral(title: "", isLargeTitles: true)
         rightItem = RightItem.anyCustoms(items: [.setting], title: nil, rightSpaceCloseToDefault: false)
@@ -187,13 +188,10 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
     // MARK: - search room member api
     fileprivate func getSearchStudyMemeber(id: String) {
         self.members.removeAll()
-        self.onStartActivityIndicator()
         
         AlamofireManager.shared.getSearchStudyMember(id: id, completion: {
             [weak self] result in
             guard let self = self else { return }
-            
-            self.onStopActivityIndicator()
             
             switch result {
             case .success(let response):
@@ -236,12 +234,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
             case .failure(let error):
                 print("MainDetailVC - getSearchStudyMember.failure / error: \(error.rawValue)")
             }
-            
         })
-        
-        if self.indicator.isAnimating {
-            self.onStopActivityIndicator()
-        }
     }
     
     // MARK: - delete memeber api

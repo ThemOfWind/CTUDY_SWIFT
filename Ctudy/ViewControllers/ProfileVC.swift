@@ -47,12 +47,9 @@ class ProfileVC: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: - fileprivate func
     fileprivate func config() {
-        //subView
-//        subView.layer.zPosition = 999
-//        subStackView.bringSubviewToFront(profileSettingBtn)
-//        view.bringSubviewToFront(subStackView)
-//        view.bringSubviewToFront(profileSettingBtn)
-//        subView.bringSubviewToFront(profileSettingBtn)
+        // 화면 swipe 기능 막기
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        self.navigationController?.navigationBar.sizeToFit()
         
         // profile
         profileImg.layer.cornerRadius = profileImg.bounds.height / 2
@@ -127,7 +124,7 @@ class ProfileVC: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: - UIGestureRecognizer delegate
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        print("touch.view: \(touch.view)")
+//        print("touch.view: \(touch.view)")
         if touch.view?.isDescendant(of: profileImg) == true {
             view.endEditing(true)
             onGoToProfileSettingVC()
@@ -141,5 +138,9 @@ class ProfileVC: UIViewController, UIGestureRecognizerDelegate {
             return true
         }
         return true
+    }
+    
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return false
     }
 }

@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 //import YPImagePicker
 
-class RegisterStudyRoomFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class RegisterStudyRoomFirstVC: BasicVC, UITextFieldDelegate, UIImagePickerControllerDelegate {
     // UIImagePickerControllerDelegate - 이미지를 선택하고 카메라를 찍었을때 다양한 동작을 도와줌
     // UINavigationControllerDelegate - 앨범사진을 선택했을때 화면전환을 네비게이션으로 이동함
     // MARK: - 변수
@@ -46,6 +46,7 @@ class RegisterStudyRoomFirstVC: BasicVC, UITextFieldDelegate, UIGestureRecognize
     
     fileprivate func config() {
         // navigationBar item 설정
+        self.navigationController?.navigationBar.sizeToFit()
         self.leftItem = LeftItem.backGeneral
         self.titleItem = TitleItem.titleGeneral(title: "스터디룸 등록", isLargeTitles: true)
         

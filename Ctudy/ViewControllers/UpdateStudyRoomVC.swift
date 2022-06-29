@@ -14,7 +14,7 @@ protocol SettingSendDelegate: AnyObject {
     func onMemberViewClicked(master: SettingMasterResponse)
 }
 
-class UpdateStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, SettingSendDelegate, UITextFieldDelegate{
+class UpdateStudyRoomVC: BasicVC, UIImagePickerControllerDelegate, SettingSendDelegate, UITextFieldDelegate{
     // MARK: - 변수
     @IBOutlet weak var roomImg: UIImageView!
     @IBOutlet weak var roomName: UITextField!
@@ -59,6 +59,7 @@ class UpdateStudyRoomVC: BasicVC, UIGestureRecognizerDelegate, UIImagePickerCont
     // MARK: - fileprivate func
     fileprivate func config() {
         // navigationbar item
+        self.navigationController?.navigationBar.sizeToFit()
         leftItem = LeftItem.backGeneral
         titleItem = TitleItem.titleGeneral(title: "스터디룸 설정", isLargeTitles: true)
         

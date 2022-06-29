@@ -10,7 +10,7 @@ import UIKit
 import Kingfisher
 import NVActivityIndicatorView
 
-class UpdateProfileVC: BasicVC, UIGestureRecognizerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIImagePickerControllerDelegate {
+class UpdateProfileVC: BasicVC, UITextFieldDelegate, UIImagePickerControllerDelegate {
     // MARK: - 변수
     @IBOutlet weak var profileUsername: UILabel!
     @IBOutlet weak var profileImg: UIImageView!
@@ -55,6 +55,7 @@ class UpdateProfileVC: BasicVC, UIGestureRecognizerDelegate, UINavigationControl
     // MARK: - fileprivate func
     fileprivate func config() {
         // navigationbar item
+        self.navigationController?.navigationBar.sizeToFit()
         leftItem = LeftItem.backGeneral
         titleItem = TitleItem.titleGeneral(title: "프로필 설정", isLargeTitles: true)
         

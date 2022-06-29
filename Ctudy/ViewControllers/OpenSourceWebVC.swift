@@ -1,22 +1,22 @@
 //
-//  WithdrawVC.swift
+//  OpenSourceWebVC.swift
 //  Ctudy
 //
-//  Created by 김지은 on 2022/06/13.
+//  Created by 김지은 on 2022/06/28.
 //
 
 import Foundation
 import UIKit
+import WebKit
 import NVActivityIndicatorView
 
-class WithdrawVC: BasicVC {
+class OpenSourceWebVC: BasicVC, WKUIDelegate, WKNavigationDelegate {
     // MARK: - 변수
-    @IBOutlet weak var withdrawImg: UIImageView!
-    @IBOutlet weak var withdrawNoti: UILabel!
-    @IBOutlet weak var withdrawBtn: UIButton!
+    @IBOutlet weak var webView: WKWebView!
     lazy var indicatorView: UIView = {
         let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
         indicatorView.backgroundColor = UIColor.white
+        indicatorView.isOpaque = false
         return indicatorView
     }()
     lazy var indicator: NVActivityIndicatorView = {
@@ -35,37 +35,33 @@ class WithdrawVC: BasicVC {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
+    var url: URL!
+    var titleText: String!
     
-    // MARK: - override func
+    // MARK: - view load func
     override func viewDidLoad() {
         super.viewDidLoad()
         config()
     }
     
-    // MARK: - fileprivate func
     fileprivate func config() {
         self.navigationController?.navigationBar.sizeToFit()
         leftItem = LeftItem.backGeneral
-        titleItem = TitleItem.titleGeneral(title: "회원탈퇴", isLargeTitles: true)
+        titleItem = TitleItem.titleGeneral(title: titleText, isLargeTitles: false)
         
-        // withdraw image ui
-//        withdrawImg.layer.cornerRadius = withdrawImg.bounds.height / 2
-        withdrawImg.image = UIImage(systemName: "xmark.circle")
-        withdrawImg.tintColor = .red
-        
-        // withdraw textfield ui
-        withdrawNoti.numberOfLines = 0
-        withdrawNoti.text = "* 회원탈퇴 시\n* 개인정보 삭제\n* 쿠폰 삭제\n* 스터디룸 삭제\n* 현재 계정으로 재가입 불가"
-        
-        // withdraw button ui
-        withdrawBtn.layer.cornerRadius = 10
-        withdrawBtn.tintColor = .white
-        withdrawBtn.backgroundColor = COLOR.SIGNATURE_COLOR
-        
-        // event 연결
-        withdrawBtn.addTarget(self, action: #selector(onWithdrawBtnClicked), for: .touchUpInside)
+        self.onStartActivityIndicator()
+        loadUrl()
+        self.onStopActivityIndicator()
     }
     
+    fileprivate func loadUrl() {
+        let request = URLRequest(url: url)
+        webView.load(request)
+        webView.uiDelegate = self
+        webView.navigationDelegate = self
+    }
+    
+    // MARK: - indicator in api calling
     fileprivate func onStartActivityIndicator() {
         DispatchQueue.main.async {
             // 불투명 뷰 추가
@@ -95,36 +91,9 @@ class WithdrawVC: BasicVC {
         }
     }
     
-    // MARK: - @objc func
-    @objc fileprivate func onWithdrawBtnClicked() {
-        // logout alert 띄우기
-        let alert = UIAlertController(title: nil, message: "정말 탈퇴하시겠습니까?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
-        alert.addAction(UIAlertAction(title: "확인", style: .destructive, handler: { (_) in
-            
-            self.onStartActivityIndicator()
-            
-            AlamofireManager.shared.deleteWithdraw(completion: {
-                [weak self] result in
-                guard let self = self else { return }
-                
-                self.onStopActivityIndicator()
-                
-                switch result {
-                case .success(_):
-                    self.performSegue(withIdentifier: "unwindStartVC", sender: self)
-                    self.navigationController?.view.makeToast("회원탈퇴가 완료되었습니다.", duration: 1.0, position: .center)
-                case .failure(let error):
-                    print("WithdrawVC - deleteWithdraw().failure / error: \(error)")
-                    self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
-                }
-            })
-            
-            if self.indicator.isAnimating {
-                self.onStopActivityIndicator()
-            }
-        }))
-        
-        self.present(alert, animated: false)
+    // MARK: - WKNavigatioDenlegate
+    // 중복적인 reload 방지 (ios 9 이후 지원)
+    func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
+        webView.reload()
     }
 }

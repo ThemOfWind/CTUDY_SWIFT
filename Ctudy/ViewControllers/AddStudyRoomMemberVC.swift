@@ -10,7 +10,7 @@ import UIKit
 import NVActivityIndicatorView
 import SwiftyJSON
 
-class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate, MemberCheckButtonDelegate, UITextFieldDelegate {
+class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource, MemberCheckButtonDelegate, UITextFieldDelegate {
     
     // MARK: - 변수
     @IBOutlet weak var invitationBtn: UIButton!
@@ -51,6 +51,7 @@ class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource,
     
     fileprivate func config() {
         // navigationbar item 설정
+        self.navigationController?.navigationBar.sizeToFit()
         leftItem = LeftItem.backGeneral
         titleItem = TitleItem.titleGeneral(title: "멤버 초대", isLargeTitles: true)
         
@@ -91,7 +92,6 @@ class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource,
     // MARK: - search member api
     // 전체 멤버 조회
     fileprivate func getSearchMember(text: String) {
-        
         AlamofireManager.shared.getSearchMember(search: text, roomId: String(roomId), page: nextPage ?? "0", completion: {
             [weak self] result in
             guard let self = self else { return }

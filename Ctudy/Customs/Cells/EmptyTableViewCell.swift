@@ -29,5 +29,11 @@ class EmptyTableViewCell: UITableViewCell {
     static func nib() -> UINib {
         return UINib(nibName: "EmptyTableViewCell", bundle: Bundle(for: EmptyTableViewCell.self))
     }
+    
+    // cell간 간격 띄우기 (수정해야돼)
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5))
+    }
 }
 

@@ -15,7 +15,7 @@ protocol CouponSendDelegate: AnyObject {
     func onMemberViewClicked(receiver: CouponReciverRequest)
 }
 
-class RegisterCouponFirstVC: BasicVC, UIGestureRecognizerDelegate, UINavigationControllerDelegate, CouponSendDelegate {
+class RegisterCouponFirstVC: BasicVC, CouponSendDelegate {
     
     // MARK: - 변수
     @IBOutlet weak var senderImg: UIImageView!
@@ -49,6 +49,7 @@ class RegisterCouponFirstVC: BasicVC, UIGestureRecognizerDelegate, UINavigationC
     // MARK: - fileprivate func
     fileprivate func config() {
         // navigationbar item
+        self.navigationController?.navigationBar.sizeToFit()
         leftItem = LeftItem.backGeneral
         titleItem = TitleItem.titleGeneral(title: "쿠폰 발급", isLargeTitles: true)
         
