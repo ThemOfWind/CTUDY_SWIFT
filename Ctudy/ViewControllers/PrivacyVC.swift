@@ -9,6 +9,10 @@ import Foundation
 import UIKit
 
 class PrivacyVC: BasicVC {
+    // MARK: - 변수
+    @IBOutlet weak var privacyText: UILabel!
+    
+    // MARK: - view load func
     override func viewDidLoad() {
         super.viewDidLoad()
         config()

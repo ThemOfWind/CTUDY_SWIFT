@@ -1,57 +1,26 @@
 //
-//  SingUpVC.swift
+//  SignUpSecondVC.swift
 //  Ctudy
 //
-//  Created by 김지은 on 2021/12/08.
+//  Created by 김지은 on 2022/03/23.
 //
 
 import Foundation
 import UIKit
-import Toast_Swift
-import Alamofire
-import NVActivityIndicatorView
 
-class SignUpSecondVC: BasicVC, UITextFieldDelegate{
-    
+class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIImagePickerControllerDelegate {
     // MARK: - 변수
-    @IBOutlet weak var registerUsername: UITextField!
-    @IBOutlet weak var registerPassword: UITextField!
-    @IBOutlet weak var registerPasswordChk: UITextField!
-    @IBOutlet weak var usernameMsg: UILabel!
-    @IBOutlet weak var passwordMsg: UILabel!
-    @IBOutlet weak var passwordChkMsg: UILabel!
-    @IBOutlet weak var signUpBtn: UIButton!
-    let keyboardDismissTabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: nil)
-    lazy var indicatorView: UIView = {
-        let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-        indicatorView.backgroundColor = UIColor.white
-        return indicatorView
-    }()
-    lazy var indicator: NVActivityIndicatorView = {
-        let indicator = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40),
-                                                type: .pacman,
-                                                color: COLOR.SIGNATURE_COLOR,
-                                                padding: 0)
-        indicator.translatesAutoresizingMaskIntoConstraints = false
-        return indicator
-    }()
-    lazy var loading: UILabel = {
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 20, height: 10))
-        label.font = UIFont.boldSystemFont(ofSize: 15)
-        label.text = "loading..."
-        label.textColor = COLOR.SIGNATURE_COLOR
-        label.translatesAutoresizingMaskIntoConstraints = false
-       return label
-    }()
-    // 이전 화면에서 데이터 전달
-    var userImage: Data?
-    var registerName: String!
-    var registerEmail: String!
-    
-    var memberName: String?
-    var memberUsername: String?
-    var usernameOKFlag: Bool = false
-    var passwordOKFlag: Bool = false
+    @IBOutlet weak var userImg: UIImageView!
+    @IBOutlet weak var registerName: UITextField!
+    @IBOutlet weak var registerEmail: UITextField!
+    @IBOutlet weak var nextBtn: UIButton!
+    @IBOutlet weak var nameMsg: UILabel!
+    @IBOutlet weak var emailMsg: UILabel!
+    let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: SignUpSecondVC.self, action: nil)
+//    var memberName: String?
+    var nameOKFlag: Bool = false
+    var emailOKFlag: Bool = false
+    var imageFlag: Bool = false // image 초기화 flag
     
     // MARK: - view load func
     override func viewDidLoad() {
@@ -60,50 +29,55 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate{
         self.config()
     }
     
+    // 다음 화면 이동 시 입력받은 이름정보 넘기기
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let id = segue.identifier, id == "SignUpSuccessVC" {
-            if let controller = segue.destination as? SignUpSuccessVC {
-                controller.memberName = self.memberName
-                controller.memberUserName = self.memberUsername
+        if let id = segue.identifier, id == "SignUpThirdVC" {
+            if let controller = segue.destination as? SignUpThirdVC {
+                controller.userImage = imageFlag ? self.userImg.image?.pngData() : nil
+                controller.registerName = self.registerName.text
+                controller.registerEmail = self.registerEmail.text
             }
         }
     }
     
     fileprivate func config() {
-        // navigationbar item 설정
+        // navigationbar item
         self.navigationController?.navigationBar.sizeToFit()
         self.leftItem = LeftItem.backGeneral
         self.titleItem = TitleItem.titleGeneral(title: "회원가입", isLargeTitles: true)
         
-        // ui
-        self.signUpBtn.tintColor = .white
-        self.signUpBtn.backgroundColor = COLOR.DISABLE_COLOR
-        self.signUpBtn.layer.cornerRadius = 10
-        self.signUpBtn.isEnabled = false
-        self.registerPassword.isSecureTextEntry = true
-        self.registerPasswordChk.isSecureTextEntry = true
+        // button ui
+        self.nextBtn.tintColor = .white
+        self.nextBtn.backgroundColor = COLOR.DISABLE_COLOR
+        self.nextBtn.layer.cornerRadius = 10
+        self.nextBtn.isEnabled = false
         
-        // btn event 연결
-        self.signUpBtn.addTarget(self, action: #selector(onSignUpBtnClicked), for: .touchUpInside)
+        // imageView ui
+        self.userImg.layer.cornerRadius = self.userImg.layer.bounds.height / 2
+        self.userImg.layer.borderWidth = 1
+        self.userImg.layer.borderColor = COLOR.BORDER_COLOR.cgColor
+        self.userImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
+        self.userImg.tintColor = COLOR.BASIC_TINT_COLOR
+        self.userImg.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: self.userImg.bounds.height / 5, weight: .regular, scale: .large))
+        self.userImg.contentMode = .center
+        self.userImg.isUserInteractionEnabled = true
         
         // textField event 연결
-        self.registerUsername.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
-        self.registerPassword.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
-        self.registerPasswordChk.addTarget(self, action: #selector(passwordChkEditingChanged(_:)), for: .editingChanged)
+        self.registerName.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
+        self.registerEmail.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
         
         // delegate 연결
-        self.registerUsername.delegate = self
-        self.registerPassword.delegate = self
-        self.registerPasswordChk.delegate = self
-        self.keyboardDismissTabGesture.delegate = self
+        self.registerName.delegate = self
+        self.registerEmail.delegate = self
+        self.tabGesture.delegate = self
         
         // gesture 연결
-        self.view.addGestureRecognizer(keyboardDismissTabGesture)
+        self.view.addGestureRecognizer(tabGesture)
     }
     
-    // MARK: - exist check id api
-    fileprivate func userNameChecked(inputUserName: String) {
-        AlamofireManager.shared.getExistCheck(errorType: "username", username: inputUserName, email: nil, completion: {
+    // MARK: - exist check email api
+    fileprivate func emailChecked(inputEmail: String) {
+        AlamofireManager.shared.getExistCheck(errorType: "email", username: nil, email: inputEmail, completion: {
             [weak self] result in
             guard let self = self else { return }
             switch result {
@@ -111,112 +85,129 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate{
                 print("SignUpSecondVC - getExistCheck.success")
                 // 사용가능 문구 띄우기
                 //self.view.makeToast("사용가능한 아이디(이메일)입니다.", duration: 1.0, position: .center)
-                self.usernameOKFlag = true
-                self.setMsgLabel(flag: self.usernameOKFlag, msgLabel: self.usernameMsg, msgString: "사용가능한 아이디입니다.")
+                self.emailOKFlag = true
+                self.setMsgLabel(flag: self.emailOKFlag, msgLabel: self.emailMsg, msgString: "사용가능한 이메일입니다.")
             case .failure(let error):
                 print("SignUpSecondVC - getExistCheck.failure / error: \(error)")
-                // 중복사용 문구 띄우기
-                //self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
-                self.usernameOKFlag = false
-                self.setMsgLabel(flag: self.usernameOKFlag, msgLabel: self.usernameMsg, msgString: error.rawValue)
-                self.signUpBtnAbleChecked()
+                self.emailOKFlag = false
+                self.setMsgLabel(flag: self.emailOKFlag, msgLabel: self.emailMsg, msgString: error.rawValue)
+                self.nextBtnAbleChecked()
             }
         })
     }
     
-    // MARK: - signup api
-    // 회원가입 버튼 event
-    @objc func onSignUpBtnClicked() {
-        print("registerName: \(registerName), registerEmail: \(registerEmail)")
-        self.onStartActivityIndicator()
+    // MARK: - picker func
+    // imageview click func
+    @objc fileprivate func onProfileImageClicked() {
+        actionSheetAlert()
+    }
     
-        AlamofireManager.shared.postSignUp(name: registerName!, email: registerEmail!, username: registerUsername.text!, password: registerPassword.text!, image: userImage, completion: { [weak self] result in
-            guard let self = self else { return }
-            
-            self.onStopActivityIndicator()
-            
-            switch result {
-            case .success(let memberData):
-                // 회원가입 완료 페이지 띄우기
-                self.memberName = memberData.name
-                self.memberUsername = memberData.username
-                self.performSegue(withIdentifier: "SignUpSuccessVC", sender: nil)
-            case .failure(let error):
-                print("SignUpSecondVC - postSignUp.failure / error: \(error.rawValue)")
-                self.view.makeToast(error.rawValue, duration: 1.0, position: .center)
-            }
+    fileprivate func actionSheetAlert() {
+        let alert = UIAlertController(title: "내 이미지 설정", message: nil, preferredStyle: .actionSheet)
+        let cancel = UIAlertAction(title: "초기화", style: .cancel, handler: { [weak self] (_) in
+            self?.presentCancel()
+        })
+        let camera = UIAlertAction(title: "카메라", style: .default, handler: { [weak self] (_) in
+            self?.presentCamera()
+        })
+        let album = UIAlertAction(title: "앨범", style: .default, handler: { [weak self] (_) in
+            self?.presentAlbum()
         })
         
-        if self.indicator.isAnimating {
-            self.onStopActivityIndicator()
-        }
+        alert.addAction(cancel)
+        alert.addAction(camera)
+        alert.addAction(album)
+        present(alert, animated: true, completion: nil)
     }
     
-    // MARK: - indicator in api calling
-    fileprivate func onStartActivityIndicator() {
-        DispatchQueue.main.async {
-            // 불투명 뷰 추가
-            self.view.addSubview(self.indicatorView)
-            // activity indicator 추가
-            self.indicatorView.addSubview(self.indicator)
-            self.indicatorView.addSubview(self.loading)
-            
-            NSLayoutConstraint.activate([
-                self.indicator.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-                self.indicator.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
-                self.loading.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-                self.loading.centerYAnchor.constraint(equalTo: self.indicator.bottomAnchor, constant: 5)
-            ])
-            
-            // 애니메이션 시작
-            self.indicator.startAnimating()
-        }
+    // 초기화 picker setting
+    fileprivate func presentCancel() {
+        self.imageFlag = false
+        self.userImg.image = UIImage(systemName: "plus", withConfiguration: UIImage.SymbolConfiguration(pointSize: self.userImg.bounds.height / 5, weight: .regular, scale: .large))
+        self.userImg.contentMode = .center
     }
     
-    fileprivate func onStopActivityIndicator() {
-        DispatchQueue.main.asyncAfter(deadline: .now()) {
-            // 애니메이션 정지.
-            // 서버 통신 완료 후 다음의 메서드를 실행해서 통신의 끝나는 느낌을 줄 수 있다.
-            self.indicator.stopAnimating()
-            self.indicatorView.removeFromSuperview()
-        }
+    // 카메라 picker setting
+    fileprivate func presentCamera() {
+        let vc = UIImagePickerController()
+        vc.sourceType = .camera
+        vc.delegate = self
+        vc.allowsEditing = true
+        vc.cameraFlashMode = .off
+        vc.modalPresentationStyle = .fullScreen
+        //        vc.cameraOverlayView?.addSubview(customOverlayView())
+        present(vc, animated: true, completion: nil)
     }
     
-    // MARK: - textfield Delegate
-    // textfield 변경할때 event
+    // 앨범 picker setting
+    fileprivate func presentAlbum() {
+        let vc = UIImagePickerController()
+        vc.sourceType = .photoLibrary
+        vc.delegate = self
+        vc.allowsEditing = true
+        vc.modalPresentationStyle = .fullScreen
+        //        vc.showsCameraControls = false
+        //        vc.cameraOverlayView?.addSubview(customOverlayView())
+        present(vc, animated: true, completion: nil)
+    }
+    
+    // 취소버튼 click event
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    // 카메라 촬영 or 앨범에서 사용하기 버튼 click event
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        // update image
+        var newImage: UIImage? = nil
+        
+        // 수정된 image가 있을 경우
+        if let possibleImage = info[.editedImage] as? UIImage {
+            newImage = possibleImage
+        } else if let possibleImage = info[.originalImage] as? UIImage {
+            newImage = possibleImage
+        }
+        
+        self.userImg.contentMode = .scaleAspectFill
+        self.userImg.image = newImage
+        self.imageFlag = true
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func customOverlayView() -> UIView {
+        let overlayView = UIView()
+        overlayView.frame = self.userImg.frame
+        return overlayView
+    }
+    
+    // MARK: - textField delegate
+    // textField 변경할 때 event
     @objc func textFieldEditingChanged(_ textField: UITextField) {
+        //        print("SignUpSecondVC - textFieldEditingChanged() called / sender.text: \(sender.text)")
+        
         switch textField {
-        case registerUsername:
+        case registerName:
+            // 이름 형식 체크 (자음 및 모음 X, 2글자 이상, 특수문자 사용 X)
+            textFieldCheck(textField: textField, msgLabel: nameMsg, inputData: registerName.text ?? "")
+        case registerEmail:
             // @email 형식 체크
-            textFieldCheck(textField: textField, msgLabel: usernameMsg, inputData: registerUsername.text ?? "")
-        case registerPassword:
-            // 비밀번호 정규식
-            textFieldCheck(textField: textField, msgLabel: passwordMsg, inputData: registerPassword.text ?? "")
+            textFieldCheck(textField: textField, msgLabel: emailMsg, inputData: registerEmail.text ?? "")
         default:
             break
         }
     }
     
-    // 비밀번호 일치하는지 체크하는 editingChanged event
-    @objc func passwordChkEditingChanged(_ sender: UITextField) {
-        // 비밀번호 & 비밀번호확인 일치 체크
-        passwordValueChecked()
-        // 버튼 활성화 & 비활성화 체크
-        signUpBtnAbleChecked()
-    }
-    
     // textField에서 enter키 눌렀을때 event
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        //        print("SignUpSecondVC - textFieldShouldReturn() called")
+        
         switch textField {
-        case registerUsername:
-            // 아이디 형식 체크
-            textFieldCheck(textField: textField, msgLabel: usernameMsg, inputData: registerUsername.text ?? "")
-        case registerPassword:
-            // 비밀번호 정규식
-            textFieldCheck(textField: textField, msgLabel: passwordMsg, inputData: registerPassword.text ?? "")
-        case registerPasswordChk:
-            // 비밀번호 & 비밀번호확인 일치 체크
-            passwordValueChecked()
+        case registerName:
+            // 이름 형식 체크 (자음 및 모음 X, 2글자 이상, 특수문자 사용 X)
+            textFieldCheck(textField: textField, msgLabel: nameMsg, inputData: registerName.text ?? "" )
+        case registerEmail:
+            // @email 형식 체크
+            textFieldCheck(textField: textField, msgLabel: emailMsg, inputData: registerEmail.text ?? "")
         default:
             break
         }
@@ -225,57 +216,52 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate{
         return true
     }
     
-    // textField 정규식 체크 event
     func textFieldCheck(textField: UITextField, msgLabel: UILabel, inputData: String) {
+        print("SignUpSecondVC - textFieldCheck() called / msgLabel: \(msgLabel), inputData: \(inputData)")
+        
         guard inputData != "" else {
             msgLabel.text = ""
-            if textField == registerPassword { passwordChkMsg.text = "" }
             return
         }
         
         switch textField {
-        case registerUsername:
-            usernameOKFlag = isValidData(flag: "registerUsername", data: inputData)
-            if usernameOKFlag {
-                userNameChecked(inputUserName: inputData)
+        case registerName:
+            nameOKFlag = isValidData(flag: "registerName", data: inputData)
+            if nameOKFlag {
+                setMsgLabel(flag: nameOKFlag, msgLabel: msgLabel, msgString: "")
             } else {
-                setMsgLabel(flag: usernameOKFlag, msgLabel: msgLabel, msgString: "아이디가 옳바르지 않습니다.")
+                setMsgLabel(flag: nameOKFlag, msgLabel: msgLabel, msgString: "이름이 옳바르지 않습니다.")
             }
-        case registerPassword:
-            let flag = isValidData(flag: "registerPassword", data: inputData)
-            if flag {
-                setMsgLabel(flag: flag, msgLabel: msgLabel, msgString: "사용가능한 비밀번호 입니다.")
+        case registerEmail:
+            emailOKFlag = isValidData(flag: "registerEmail", data: inputData)
+            if emailOKFlag {
+//                setMsgLabel(flag: emailOKFlag, msgLabel: msgLabel, msgString: "")
+                emailChecked(inputEmail: inputData)
             } else {
-                setMsgLabel(flag: flag, msgLabel: msgLabel, msgString: "비밀번호가 옳바르지 않습니다.")
+                setMsgLabel(flag: emailOKFlag, msgLabel: msgLabel, msgString: "이메일이 옳바르지 않습니다.")
             }
-            
-            // 비밀번호 & 비밀번호확인 일치 체크
-            passwordValueChecked()
         default:
             break
         }
         
-        signUpBtnAbleChecked()
+        nextBtnAbleChecked()
     }
     
-    // textField clearBtn event
     func textFieldShouldClear(_ textField: UITextField) -> Bool {
         switch textField {
-        case registerUsername:
-            usernameOKFlag = false
-        case registerPassword:
-            passwordValueChecked()
-        case registerPasswordChk:
-            passwordValueChecked()
+        case registerName:
+            nameOKFlag = false
+        case registerEmail:
+            emailOKFlag = false
         default:
             break
         }
         
-        signUpBtnAbleChecked()
+        nextBtnAbleChecked()
         return true
     }
     
-    // msgLabel 셋팅
+    // messageLabel 셋팅
     fileprivate func setMsgLabel(flag: Bool, msgLabel: UILabel, msgString: String) {
         if flag {
             msgLabel.textColor = .systemGreen
@@ -285,27 +271,29 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate{
         msgLabel.text = msgString
     }
     
-    // 회원가입 버튼 활성화 & 비활성화 event
-    fileprivate func signUpBtnAbleChecked() {
-        if usernameOKFlag && passwordOKFlag {
-            self.signUpBtn.backgroundColor = COLOR.SIGNATURE_COLOR
-            self.signUpBtn.isEnabled = true
+    // nextButton 활성화 & 비활성화 event
+    fileprivate func nextBtnAbleChecked() {
+        if nameOKFlag && emailOKFlag {
+            self.nextBtn.backgroundColor = COLOR.SIGNATURE_COLOR
+            self.nextBtn.isEnabled = true
         } else {
-            self.signUpBtn.backgroundColor = COLOR.DISABLE_COLOR
-            self.signUpBtn.isEnabled = false
+            self.nextBtn.backgroundColor = COLOR.DISABLE_COLOR
+            self.nextBtn.isEnabled = false
         }
     }
     
-    // 정규식(아이디(이메일), 비밀번호) 체크 event
+    // 이름 정규식 체크 event
     fileprivate func isValidData(flag: String, data: String) -> Bool {
+        //        print("SignUpSecondVC - isValidData() called / data: \(data), flag: \(flag)")
+        
         guard data != "" else { return false }
         let pred : NSPredicate
         
         switch flag {
-        case "registerUsername":
-            pred = NSPredicate(format: "SELF MATCHES %@", REGEX.USERNAME_REGEX)
-        case "registerPassword":
-            pred = NSPredicate(format: "SELF MATCHES %@", REGEX.PASSWORD_REGEX)
+        case "registerName":
+            pred = NSPredicate(format: "SELF MATCHES %@", REGEX.NAME_REGEX)
+        case "registerEmail":
+            pred = NSPredicate(format: "SELF MATCHES %@", REGEX.EMAIL_REGEX)
         default:
             pred = NSPredicate(format: "SELF MATCHES %@", "")
         }
@@ -313,40 +301,17 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate{
         return pred.evaluate(with: data)
     }
     
-    // 비밀번호와 비밀번호확인 textfield 일치 여부 event
-    fileprivate func passwordValueChecked() {
-        if registerPassword.text == "" {
-            passwordOKFlag = false
-            passwordChkMsg.text = ""
-            return
-        } else {
-            if registerPasswordChk.text == "" {
-                passwordOKFlag = false
-                passwordChkMsg.text = ""
-                return
-            }
-        }
-        
-        // 비밀번호 & 비밀번호확인 textField 모두 입력되었을때
-        if registerPassword.text == registerPasswordChk.text {
-            passwordOKFlag = true
-            setMsgLabel(flag: passwordOKFlag, msgLabel: passwordChkMsg, msgString: "비밀번호가 일치합니다.")
-            
-        } else {
-            passwordOKFlag = false
-            setMsgLabel(flag: passwordOKFlag, msgLabel: passwordChkMsg, msgString: "비밀번호가 일치하지 않습니다.")
-        }
-    }
-    
-    // MARK: - UIGestureRecognizerDelegate
+    // MARK: - UIGestureRecognizer delegate
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        if touch.view?.isDescendant(of: registerUsername) == true {
+        if touch.view?.isDescendant(of: userImg) == true {
+            view.endEditing(true)
+            onProfileImageClicked()
+            return true
+        } else if touch.view?.isDescendant(of: registerName) == true {
             return false
-        } else if touch.view?.isDescendant(of: registerPassword) == true {
+        } else if touch.view?.isDescendant(of: registerEmail) == true {
             return false
-        } else if touch.view?.isDescendant(of: registerPasswordChk) == true {
-            return false
-        } else {
+        }  else {
             view.endEditing(true)
             return true
         }

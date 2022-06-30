@@ -13,9 +13,9 @@ class ProfileVC: UIViewController, UIGestureRecognizerDelegate {
     // MARK: - 변수
     @IBOutlet weak var profileImg: UIImageView!
     @IBOutlet weak var profileName: UILabel!
-//    @IBOutlet weak var profileSettingBtn: UIButton!
+    //    @IBOutlet weak var profileSettingBtn: UIButton!
     @IBOutlet weak var profileUsername: UILabel!
-//    @IBOutlet weak var subView: UIView!
+    //    @IBOutlet weak var subView: UIView!
     let tabGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: ProfileVC.self, action: nil)
     lazy var indicatorView: UIView = {
         let indicatorView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
@@ -47,8 +47,6 @@ class ProfileVC: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: - fileprivate func
     fileprivate func config() {
-        // 화면 swipe 기능 막기
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         self.navigationController?.navigationBar.sizeToFit()
         
         // profile
@@ -71,14 +69,14 @@ class ProfileVC: UIViewController, UIGestureRecognizerDelegate {
         profileUsername.textColor = COLOR.SUBTITLE_COLOR
         
         // btn ui
-//        profileSettingBtn.tintColor = COLOR.SIGNATURE_COLOR
-//        profileSettingBtn.setImage(UIImage(systemName: "pencil"), for: .normal)
-//        profileSettingBtn.contentMode = .center
-//        profileSettingBtn.translatesAutoresizingMaskIntoConstraints = false
-//        profileSettingBtn.isUserInteractionEnabled = false
+        //        profileSettingBtn.tintColor = COLOR.SIGNATURE_COLOR
+        //        profileSettingBtn.setImage(UIImage(systemName: "pencil"), for: .normal)
+        //        profileSettingBtn.contentMode = .center
+        //        profileSettingBtn.translatesAutoresizingMaskIntoConstraints = false
+        //        profileSettingBtn.isUserInteractionEnabled = false
         
         // image, btn 연결 event
-//        profileSettingBtn.addTarget(self, action: #selector(onProfileSettingBtnClicked(_:)), for: .touchUpInside)
+        //        profileSettingBtn.addTarget(self, action: #selector(onProfileSettingBtnClicked(_:)), for: .touchUpInside)
         
         
         // delegate 연결
@@ -86,6 +84,8 @@ class ProfileVC: UIViewController, UIGestureRecognizerDelegate {
         
         // gesture 연결
         self.view.addGestureRecognizer(tabGesture)
+        // 화면 swipe 기능 막기
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     fileprivate func onStartActivityIndicator() {
@@ -124,18 +124,20 @@ class ProfileVC: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: - UIGestureRecognizer delegate
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-//        print("touch.view: \(touch.view)")
-        if touch.view?.isDescendant(of: profileImg) == true {
-            view.endEditing(true)
-            onGoToProfileSettingVC()
-            return true
-        } else if touch.view?.isDescendant(of: profileName) == true {
-            view.endEditing(true)
-            onGoToProfileSettingVC()
-            return true
-        } else {
-            view.endEditing(true)
-            return true
+        print("gestureRecognizer: \(gestureRecognizer)")
+        if gestureRecognizer == tabGesture {
+            if touch.view?.isDescendant(of: profileImg) == true {
+                view.endEditing(true)
+                onGoToProfileSettingVC()
+                return true
+            } else if touch.view?.isDescendant(of: profileName) == true {
+                view.endEditing(true)
+                onGoToProfileSettingVC()
+                return true
+            } else {
+                view.endEditing(true)
+                return true
+            }
         }
         return true
     }

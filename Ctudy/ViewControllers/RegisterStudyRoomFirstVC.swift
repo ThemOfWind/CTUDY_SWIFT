@@ -185,15 +185,19 @@ class RegisterStudyRoomFirstVC: BasicVC, UITextFieldDelegate, UIImagePickerContr
     
     // MARK: - UIGestureRecognizer delegate
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        if touch.view?.isDescendant(of: registerStudyName) == true {
-            return false
-        } else if touch.view?.isDescendant(of: roomImg) == true {
-            view.endEditing(true)
-            onProfileImageClicked()
-            return true
-        } else {
-            view.endEditing(true)
-            return true
+        if gestureRecognizer == tabGesture {
+            if touch.view?.isDescendant(of: registerStudyName) == true {
+                return false
+            } else if touch.view?.isDescendant(of: roomImg) == true {
+                view.endEditing(true)
+                onProfileImageClicked()
+                return true
+            } else {
+                view.endEditing(true)
+                return true
+            }
         }
+        
+        return true
     }
 }
