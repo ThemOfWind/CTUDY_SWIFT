@@ -18,8 +18,13 @@
 		5A2D86C027EAE8A9000BF69B /* MemberTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A2D86BF27EAE8A9000BF69B /* MemberTableViewCell.xib */; };
 		5A2D86C227EAEBB8000BF69B /* MemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2D86C127EAEBB8000BF69B /* MemberTableViewCell.swift */; };
 		5A31966E2766045D007400EE /* SignUpSuccessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A31966D2766045D007400EE /* SignUpSuccessVC.swift */; };
+		5A32A6DD28893D0E008A9611 /* GoToNextViewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A32A6DC28893D0E008A9611 /* GoToNextViewButton.swift */; };
+		5A32A6DF28897CFE008A9611 /* AgreementRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A32A6DE28897CFE008A9611 /* AgreementRequest.swift */; };
 		5A35D8412867323A002D7315 /* EmptyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A35D8402867323A002D7315 /* EmptyTableViewCell.swift */; };
 		5A35D84328673248002D7315 /* EmptyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A35D84228673248002D7315 /* EmptyTableViewCell.xib */; };
+		5A36116F28855AAF00539F92 /* AgreementCheckButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A36116E28855AAF00539F92 /* AgreementCheckButton.swift */; };
+		5A3611732886B12700539F92 /* AgreementTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3611722886B12700539F92 /* AgreementTableViewCell.swift */; };
+		5A3611752886B13600539F92 /* AgreementTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A3611742886B13600539F92 /* AgreementTableViewCell.xib */; };
 		5A3BBBE927EAF31300BA9E3F /* SearhMemberResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3BBBE827EAF31300BA9E3F /* SearhMemberResponse.swift */; };
 		5A3BBBEC27EB4F6C00BA9E3F /* StartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3BBBEB27EB4F6C00BA9E3F /* StartVC.swift */; };
 		5A453AFE27E9B25B006F0A1D /* RegisterStudyRoomFirstVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A453AFD27E9B25B006F0A1D /* RegisterStudyRoomFirstVC.swift */; };
@@ -119,8 +124,13 @@
 		5A2D86BF27EAE8A9000BF69B /* MemberTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MemberTableViewCell.xib; sourceTree = "<group>"; };
 		5A2D86C127EAEBB8000BF69B /* MemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberTableViewCell.swift; sourceTree = "<group>"; };
 		5A31966D2766045D007400EE /* SignUpSuccessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpSuccessVC.swift; sourceTree = "<group>"; };
+		5A32A6DC28893D0E008A9611 /* GoToNextViewButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoToNextViewButton.swift; sourceTree = "<group>"; };
+		5A32A6DE28897CFE008A9611 /* AgreementRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementRequest.swift; sourceTree = "<group>"; };
 		5A35D8402867323A002D7315 /* EmptyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyTableViewCell.swift; sourceTree = "<group>"; };
 		5A35D84228673248002D7315 /* EmptyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyTableViewCell.xib; sourceTree = "<group>"; };
+		5A36116E28855AAF00539F92 /* AgreementCheckButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementCheckButton.swift; sourceTree = "<group>"; };
+		5A3611722886B12700539F92 /* AgreementTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementTableViewCell.swift; sourceTree = "<group>"; };
+		5A3611742886B13600539F92 /* AgreementTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AgreementTableViewCell.xib; sourceTree = "<group>"; };
 		5A3BBBE827EAF31300BA9E3F /* SearhMemberResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearhMemberResponse.swift; sourceTree = "<group>"; };
 		5A3BBBEB27EB4F6C00BA9E3F /* StartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartVC.swift; sourceTree = "<group>"; };
 		5A453AFD27E9B25B006F0A1D /* RegisterStudyRoomFirstVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterStudyRoomFirstVC.swift; sourceTree = "<group>"; };
@@ -412,6 +422,8 @@
 				5A35D8402867323A002D7315 /* EmptyTableViewCell.swift */,
 				5A7C22CD286840DE00CF3CA4 /* EmptyCollectionViewCell.xib */,
 				5A7C22CB286840A300CF3CA4 /* EmptyCollectionViewCell.swift */,
+				5A3611742886B13600539F92 /* AgreementTableViewCell.xib */,
+				5A3611722886B12700539F92 /* AgreementTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -420,6 +432,8 @@
 			isa = PBXGroup;
 			children = (
 				5A9EDD1327F0C89500ED3343 /* MemberCheckButton.swift */,
+				5A36116E28855AAF00539F92 /* AgreementCheckButton.swift */,
+				5A32A6DC28893D0E008A9611 /* GoToNextViewButton.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -463,6 +477,7 @@
 				5A1C2FFA28000B1100487A16 /* ProfileResponse.swift */,
 				5A8D9FF82836890B008FBD9F /* SignUpRequest.swift */,
 				5AD3C8D5285B23F200ADA836 /* CertificateResponseRequest.swift */,
+				5A32A6DE28897CFE008A9611 /* AgreementRequest.swift */,
 			);
 			path = Auths;
 			sourceTree = "<group>";
@@ -557,6 +572,7 @@
 				5A58EEA9275F7E84000A1A39 /* LaunchScreen.storyboard in Resources */,
 				5A58EEA6275F7E84000A1A39 /* Assets.xcassets in Resources */,
 				5A35D84328673248002D7315 /* EmptyTableViewCell.xib in Resources */,
+				5A3611752886B13600539F92 /* AgreementTableViewCell.xib in Resources */,
 				5AA8D80728534BA6002AC1ED /* SettingBarButtonItem.xib in Resources */,
 				5A80B4CF285368E300A1CDD1 /* SettingTableViewCell.xib in Resources */,
 				5A58EEA1275F7E83000A1A39 /* Main.storyboard in Resources */,
@@ -621,6 +637,7 @@
 				5A60DFA328571CBB00791779 /* UpdatePasswordVC.swift in Sources */,
 				5A5C98D42857731B001AEF03 /* WithdrawVC.swift in Sources */,
 				5AC1CE732765CADC009586B2 /* RoomRouter.swift in Sources */,
+				5A36116F28855AAF00539F92 /* AgreementCheckButton.swift in Sources */,
 				5AA86D0B2761005D0067620C /* MainVC.swift in Sources */,
 				5A8DC12B27EB5FA5008FA26E /* SignUpSecondVC.swift in Sources */,
 				5A563C7F2861AECA005FD226 /* CouponHistoryVC.swift in Sources */,
@@ -657,6 +674,7 @@
 				5A741B3B27F4090B005E1D11 /* BarButtonItem.swift in Sources */,
 				5AD723102860AF4D00A36B76 /* CouponRouter.swift in Sources */,
 				5ADDFC792765B983001291DD /* AlamofireManager.swift in Sources */,
+				5A32A6DD28893D0E008A9611 /* GoToNextViewButton.swift in Sources */,
 				5A58EE9C275F7E83000A1A39 /* SceneDelegate.swift in Sources */,
 				5A7BC101284BBD260077F10F /* SettingStudyRoomResponse.swift in Sources */,
 				5A51DA742864531A00AF415F /* CouponDetailVC.swift in Sources */,
@@ -671,6 +689,7 @@
 				5AA22788285C41C100626793 /* AppVersionCheck.swift in Sources */,
 				5A453AFE27E9B25B006F0A1D /* RegisterStudyRoomFirstVC.swift in Sources */,
 				5AA84FE3283F604E0090C4E6 /* SearchPwFirstVC.swift in Sources */,
+				5A32A6DF28897CFE008A9611 /* AgreementRequest.swift in Sources */,
 				5AD95160280A8D570038048F /* SearchStudyMemberResponse.swift in Sources */,
 				5AF63CE82859BC1900B7F8B9 /* RegisterCouponSecondVC.swift in Sources */,
 				5A98551028465DAF0078B72C /* RegisterCouponRequest.swift in Sources */,
@@ -680,6 +699,7 @@
 				5AFC177B285DD31E003C1D45 /* StudyRoomSettingVC.swift in Sources */,
 				5AC92394284DF388006E6A29 /* UpdateRoomRequest.swift in Sources */,
 				5A24494327EA17280082EC88 /* RegisterStudyRoomSecondVC.swift in Sources */,
+				5A3611732886B12700539F92 /* AgreementTableViewCell.swift in Sources */,
 				5A4AC44C27FD2A09002D55CD /* RegisterRoomRequest.swift in Sources */,
 				5AC4471F2774620F00077242 /* MyStatusLogger.swift in Sources */,
 				5A4CD0DE27E8C2F600F6C829 /* MainDetailVC.swift in Sources */,

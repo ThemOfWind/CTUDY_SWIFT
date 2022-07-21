@@ -1766,161 +1766,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gB4-eg-0h0">
-                                <rect key="frame" x="20" y="108" width="374" height="705"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oBD-1G-v5j">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="3956"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uel-ge-ROn">
-                                                <rect key="frame" x="0.0" y="0.0" width="374" height="3956"/>
-                                                <string key="text">&lt; Ctudy &gt;('Ctudy'이하 'Ctudy')은(는) 「개인정보 보호법」 제30조에 따라 정보주체의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여 다음과 같이 개인정보 처리방침을 수립·공개합니다.
-
-제1조(개인정보의 처리 목적)
-&lt; Ctudy &gt;('Ctudy'이하 'Ctudy')은(는) 다음의 목적을 위하여 개인정보를 처리합니다. 처리하고 있는 개인정보는 다음의 목적 이외의 용도로는 이용되지 않으며 이용 목적이 변경되는 경우에는 「개인정보 보호법」 제18조에 따라 별도의 동의를 받는 등 필요한 조치를 이행할 예정입니다.
-
-- 1. 회원가입 및 관리
-회원 가입의사 확인, 회원제 서비스 제공에 따른 본인 식별·인증, 회원자격 유지·관리 목적으로 개인정보를 처리합니다.
-
-제2조(개인정보의 처리 및 보유 기간)
-① &lt; Ctudy &gt;은(는) 법령에 따른 개인정보 보유·이용기간 또는 정보주체로부터 개인정보를 수집 시에 동의받은 개인정보 보유·이용기간 내에서 개인정보를 처리·보유합니다.
-② 각각의 개인정보 처리 및 보유 기간은 다음과 같습니다.
-
-- 회원 가입 및 관리 : 서비스 이용계약 또는 회원 가입 해지시까지. 다만, 다음의 사유에 해당하는 경우에는 해당 사유 종료시까지
-    1. 서비스 이용에 따른 채권.채무관계 잔존시에는 해당 채권.채무관계 정산시까지
-    2. 전자상거래에서의 계약.청약철회, 대금결제, 재화 등 공급기록 : 5년
-
-제3조(처리하는 개인정보의 항목)
-① &lt; Ctudy &gt;은(는) 다음의 개인정보 항목을 처리하고 있습니다.
-
-- 회원가입 및 관리
-    - 필수항목 : 이메일, 비밀번호, 로그인ID
-    - 선택항목 : 프로필 이미지
-
-제4조(개인정보의 파기절차 및 파기방법)
-
-① &lt; Ctudy &gt; 은(는) 개인정보 보유기간의 경과, 처리목적 달성 등 개인정보가 불필요하게 되었을 때에는 지체없이 해당 개인정보를 파기합니다.
-
-② 개인정보 파기의 절차 및 방법은 다음과 같습니다.
-1. 파기절차
-&lt; Ctudy &gt; 은(는) 파기 사유가 발생한 개인정보를 선정하고, &lt; Ctudy &gt; 의 개인정보 보호책임자의 승인을 받아 개인정보를 파기합니다.
-
-2. 파기방법
-
-전자적 파일 형태의 정보는 기록을 재생할 수 없는 기술적 방법을 사용합니다
-
-제5조(미이용자의 개인정보 파기 등에 관한 조치)
-
-① &lt;개인정보처리자명&gt;은(는) 1년간 서비스를 이용하지 않은 이용자의 정보를 파기하고 있습니다. 다만, 다른 법령에서 정한 보존기간이 경과할 때까지 다른 이용자의 개인정보와 분리하여 별도로 저장·관리할 수 있습니다.
-② &lt;개인정보처리자명&gt;은(는) 개인정보의 파기 30일 전까지 개인정보가 파기되는 사실, 기간 만료일 및 파기되는 개인정보의 항목을 이메일, 문자 등 이용자에게 통지 가능한 방법으로 알리고 있습니다.
-③ 개인정보의 파기를 원하지 않으시는 경우, 기간 만료 전 서비스 로그인을 하시면 됩니다.
-
-제6조(정보주체와 법정대리인의 권리·의무 및 그 행사방법에 관한 사항)
-
-① 정보주체는 Ctudy에 대해 언제든지 개인정보 열람·정정·삭제·처리정지 요구 등의 권리를 행사할 수 있습니다.
-
-② 제1항에 따른 권리 행사는Ctudy에 대해 「개인정보 보호법」 시행령 제41조제1항에 따라 서면, 전자우편, 모사전송(FAX) 등을 통하여 하실 수 있으며 Ctudy은(는) 이에 대해 지체 없이 조치하겠습니다.
-
-③ 제1항에 따른 권리 행사는 정보주체의 법정대리인이나 위임을 받은 자 등 대리인을 통하여 하실 수 있습니다.이 경우 “개인정보 처리 방법에 관한 고시(제2020-7호)” 별지 제11호 서식에 따른 위임장을 제출하셔야 합니다.
-
-④ 개인정보 열람 및 처리정지 요구는 「개인정보 보호법」 제35조 제4항, 제37조 제2항에 의하여 정보주체의 권리가 제한 될 수 있습니다.
-
-⑤ 개인정보의 정정 및 삭제 요구는 다른 법령에서 그 개인정보가 수집 대상으로 명시되어 있는 경우에는 그 삭제를 요구할 수 없습니다.
-
-⑥ Ctudy은(는) 정보주체 권리에 따른 열람의 요구, 정정·삭제의 요구, 처리정지의 요구 시 열람 등 요구를 한 자가 본인이거나 정당한 대리인인지를 확인합니다.
-
-제7조(개인정보의 안전성 확보조치에 관한 사항)
-&lt; Ctudy &gt;은(는) 개인정보의 안전성 확보를 위해 다음과 같은 조치를 취하고 있습니다.
-
-1. 정기적인 자체 감사 실시
-개인정보 취급 관련 안정성 확보를 위해 정기적(분기 1회)으로 자체 감사를 실시하고 있습니다.
-2. 개인정보 취급 직원의 최소화 및 교육
-개인정보를 취급하는 직원을 지정하고 담당자에 한정시켜 최소화 하여 개인정보를 관리하는 대책을 시행하고 있습니다.
-3. 해킹 등에 대비한 기술적 대책
-&lt;Ctudy&gt;('Ctudy')은 해킹이나 컴퓨터 바이러스 등에 의한 개인정보 유출 및 훼손을 막기 위하여 보안프로그램을 설치하고 주기적인 갱신·점검을 하며 외부로부터 접근이 통제된 구역에 시스템을 설치하고 기술적/물리적으로 감시 및 차단하고 있습니다.
-4. 개인정보의 암호화
-이용자의 개인정보는 비밀번호는 암호화 되어 저장 및 관리되고 있어, 본인만이 알 수 있으며 중요한 데이터는 파일 및 전송 데이터를 암호화 하거나 파일 잠금 기능을 사용하는 등의 별도 보안기능을 사용하고 있습니다.
-
-제8조(개인정보를 자동으로 수집하는 장치의 설치·운영 및 그 거부에 관한 사항)
-
-Ctudy 은(는) 정보주체의 이용정보를 저장하고 수시로 불러오는 ‘쿠키(cookie)’를 사용하지 않습니다.
-
-제9조 (개인정보 보호책임자에 관한 사항)
-
-① Ctudy 은(는) 개인정보 처리에 관한 업무를 총괄해서 책임지고, 개인정보 처리와 관련한 정보주체의 불만처리 및 피해구제 등을 위하여 아래와 같이 개인정보 보호책임자를 지정하고 있습니다.
-
-- ▶ 개인정보 보호책임자
-- 성명 :김민규
-- 연락처 : ctudy.official@gmail.com
-
-② 정보주체께서는 Ctudy 의 서비스(또는 사업)을 이용하시면서 발생한 모든 개인정보 보호 관련 문의, 불만처리, 피해구제 등에 관한 사항을 개인정보 보호책임자 및 담당부서로 문의하실 수 있습니다. Ctudy 은(는) 정보주체의 문의에 대해 지체 없이 답변 및 처리해드릴 것입니다.
-
-제10조(개인정보의 열람청구를 접수·처리하는 부서)
-정보주체는 ｢개인정보 보호법｣ 제35조에 따른 개인정보의 열람 청구를 아래의 부서에 할 수 있습니다.
-&lt; Ctudy &gt;은(는) 정보주체의 개인정보 열람청구가 신속하게 처리되도록 노력하겠습니다.
-
-- ▶ 개인정보 열람청구 접수·처리 부서
-- 담당자 : 김민규
-- 연락처 : ctudy.official@gmail.com
-
-제11조(정보주체의 권익침해에 대한 구제방법)
-
-정보주체는 개인정보침해로 인한 구제를 받기 위하여 개인정보분쟁조정위원회, 한국인터넷진흥원 개인정보침해신고센터 등에 분쟁해결이나 상담 등을 신청할 수 있습니다. 이 밖에 기타 개인정보침해의 신고, 상담에 대하여는 아래의 기관에 문의하시기 바랍니다.
-
-1. 개인정보분쟁조정위원회 : (국번없이) 1833-6972 (www.kopico.go.kr)
-
-2. 개인정보침해신고센터 : (국번없이) 118 (privacy.kisa.or.kr)
-
-3. 대검찰청 : (국번없이) 1301 (www.spo.go.kr)
-
-4. 경찰청 : (국번없이) 182 (ecrm.cyber.go.kr)
-
-「개인정보보호법」제35조(개인정보의 열람), 제36조(개인정보의 정정·삭제), 제37조(개인정보의 처리정지 등)의 규정에 의한 요구에 대 하여 공공기관의 장이 행한 처분 또는 부작위로 인하여 권리 또는 이익의 침해를 받은 자는 행정심판법이 정하는 바에 따라 행정심판을 청구할 수 있습니다.
-
-※ 행정심판에 대해 자세한 사항은 중앙행정심판위원회(www.simpan.go.kr) 홈페이지를 참고하시기 바랍니다.
-
-제12조(개인정보 처리방침 변경)
-
-① 이 개인정보처리방침은 2022년 7월 1부터 적용됩니다.
-
-② 이전의 개인정보 처리방침은 아래에서 확인하실 수 있습니다.</string>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <constraints>
-                                            <constraint firstItem="Uel-ge-ROn" firstAttribute="top" secondItem="oBD-1G-v5j" secondAttribute="top" id="0dY-CQ-cIr"/>
-                                            <constraint firstAttribute="bottom" secondItem="Uel-ge-ROn" secondAttribute="bottom" id="7uA-jD-3DM"/>
-                                            <constraint firstAttribute="trailing" secondItem="Uel-ge-ROn" secondAttribute="trailing" id="C4f-EG-3pN"/>
-                                            <constraint firstItem="Uel-ge-ROn" firstAttribute="leading" secondItem="oBD-1G-v5j" secondAttribute="leading" id="wks-Xf-eLG"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="oBD-1G-v5j" firstAttribute="leading" secondItem="rHT-7d-Y0h" secondAttribute="leading" id="L3I-li-fND"/>
-                                    <constraint firstItem="oBD-1G-v5j" firstAttribute="top" secondItem="rHT-7d-Y0h" secondAttribute="top" id="a3L-RH-17H"/>
-                                    <constraint firstItem="oBD-1G-v5j" firstAttribute="width" secondItem="Xja-WE-1C8" secondAttribute="width" id="eOn-Uv-y4h"/>
-                                    <constraint firstItem="oBD-1G-v5j" firstAttribute="trailing" secondItem="rHT-7d-Y0h" secondAttribute="trailing" id="qgm-Ad-onP"/>
-                                    <constraint firstItem="oBD-1G-v5j" firstAttribute="bottom" secondItem="rHT-7d-Y0h" secondAttribute="bottom" id="wfe-eV-NfA"/>
-                                </constraints>
-                                <viewLayoutGuide key="contentLayoutGuide" id="rHT-7d-Y0h"/>
-                                <viewLayoutGuide key="frameLayoutGuide" id="Xja-WE-1C8"/>
-                            </scrollView>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8MO-cT-p34">
+                                <rect key="frame" x="0.0" y="98" width="414" height="715"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="uap-jK-8Nh"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="gB4-eg-0h0" firstAttribute="leading" secondItem="uap-jK-8Nh" secondAttribute="leading" constant="20" id="243-2l-Ro6"/>
-                            <constraint firstItem="uap-jK-8Nh" firstAttribute="bottom" secondItem="gB4-eg-0h0" secondAttribute="bottom" id="3C7-aZ-mVc"/>
-                            <constraint firstItem="uap-jK-8Nh" firstAttribute="trailing" secondItem="gB4-eg-0h0" secondAttribute="trailing" constant="20" id="7e5-qf-P4z"/>
-                            <constraint firstItem="gB4-eg-0h0" firstAttribute="top" secondItem="uap-jK-8Nh" secondAttribute="top" constant="20" id="kjd-Wz-XIi"/>
+                            <constraint firstItem="uap-jK-8Nh" firstAttribute="trailing" secondItem="8MO-cT-p34" secondAttribute="trailing" id="9dY-ND-dpI"/>
+                            <constraint firstItem="8MO-cT-p34" firstAttribute="top" secondItem="uap-jK-8Nh" secondAttribute="top" constant="10" id="MX9-dh-PmG"/>
+                            <constraint firstItem="8MO-cT-p34" firstAttribute="leading" secondItem="uap-jK-8Nh" secondAttribute="leading" id="N6m-Ub-iJG"/>
+                            <constraint firstItem="uap-jK-8Nh" firstAttribute="bottom" secondItem="8MO-cT-p34" secondAttribute="bottom" id="gnj-Jx-1Nd"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="TrS-Mr-5I0"/>
                     <connections>
-                        <outlet property="privacyText" destination="Uel-ge-ROn" id="in2-IQ-vaP"/>
+                        <outlet property="webView" destination="8MO-cT-p34" id="bso-SU-Uyn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C0H-nL-qLp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2754,331 +2619,19 @@ Ctudy 은(는) 정보주체의 이용정보를 저장하고 수시로 불러오�
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Ou-1i-hNB">
                                 <rect key="frame" x="20" y="108" width="374" height="553"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bys-Vt-ez4">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="701"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="➢ 개인정보 처리 방침" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5AG-KG-GbP">
-                                                <rect key="frame" x="0.0" y="10" width="146" height="20.5"/>
-                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LTe-Ca-rK2">
-                                                <rect key="frame" x="0.0" y="35.5" width="374" height="300"/>
-                                                <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l4h-1A-T1D">
-                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="3077.5"/>
-                                                        <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="poO-8f-cde">
-                                                                <rect key="frame" x="10" y="10" width="354" height="3057.5"/>
-                                                                <mutableString key="text">&lt; Ctudy &gt;('Ctudy'이하 'Ctudy')은(는) 「개인정보 보호법」 제30조에 따라 정보주체의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여 다음과 같이 개인정보 처리방침을 수립·공개합니다.
-
-제1조(개인정보의 처리 목적)
-&lt; Ctudy &gt;('Ctudy'이하 'Ctudy')은(는) 다음의 목적을 위하여 개인정보를 처리합니다. 처리하고 있는 개인정보는 다음의 목적 이외의 용도로는 이용되지 않으며 이용 목적이 변경되는 경우에는 「개인정보 보호법」 제18조에 따라 별도의 동의를 받는 등 필요한 조치를 이행할 예정입니다.
-
-- 1. 회원가입 및 관리
-회원 가입의사 확인, 회원제 서비스 제공에 따른 본인 식별·인증, 회원자격 유지·관리 목적으로 개인정보를 처리합니다.
-
-제2조(개인정보의 처리 및 보유 기간)
-① &lt; Ctudy &gt;은(는) 법령에 따른 개인정보 보유·이용기간 또는 정보주체로부터 개인정보를 수집 시에 동의받은 개인정보 보유·이용기간 내에서 개인정보를 처리·보유합니다.
-② 각각의 개인정보 처리 및 보유 기간은 다음과 같습니다.
-
-- 회원 가입 및 관리 : 서비스 이용계약 또는 회원 가입 해지시까지. 다만, 다음의 사유에 해당하는 경우에는 해당 사유 종료시까지
-    1. 서비스 이용에 따른 채권.채무관계 잔존시에는 해당 채권.채무관계 정산시까지
-    2. 전자상거래에서의 계약.청약철회, 대금결제, 재화 등 공급기록 : 5년
-
-제3조(처리하는 개인정보의 항목)
-① &lt; Ctudy &gt;은(는) 다음의 개인정보 항목을 처리하고 있습니다.
-
-- 회원가입 및 관리
-    - 필수항목 : 이메일, 비밀번호, 로그인ID
-    - 선택항목 : 프로필 이미지
-
-제4조(개인정보의 파기절차 및 파기방법)
-
-① &lt; Ctudy &gt; 은(는) 개인정보 보유기간의 경과, 처리목적 달성 등 개인정보가 불필요하게 되었을 때에는 지체없이 해당 개인정보를 파기합니다.
-
-② 개인정보 파기의 절차 및 방법은 다음과 같습니다.
-1. 파기절차
-&lt; Ctudy &gt; 은(는) 파기 사유가 발생한 개인정보를 선정하고, &lt; Ctudy &gt; 의 개인정보 보호책임자의 승인을 받아 개인정보를 파기합니다.
-
-2. 파기방법
-
-전자적 파일 형태의 정보는 기록을 재생할 수 없는 기술적 방법을 사용합니다
-
-제5조(미이용자의 개인정보 파기 등에 관한 조치)
-
-① &lt;개인정보처리자명&gt;은(는) 1년간 서비스를 이용하지 않은 이용자의 정보를 파기하고 있습니다. 다만, 다른 법령에서 정한 보존기간이 경과할 때까지 다른 이용자의 개인정보와 분리하여 별도로 저장·관리할 수 있습니다.
-② &lt;개인정보처리자명&gt;은(는) 개인정보의 파기 30일 전까지 개인정보가 파기되는 사실, 기간 만료일 및 파기되는 개인정보의 항목을 이메일, 문자 등 이용자에게 통지 가능한 방법으로 알리고 있습니다.
-③ 개인정보의 파기를 원하지 않으시는 경우, 기간 만료 전 서비스 로그인을 하시면 됩니다.
-
-제6조(정보주체와 법정대리인의 권리·의무 및 그 행사방법에 관한 사항)
-
-① 정보주체는 Ctudy에 대해 언제든지 개인정보 열람·정정·삭제·처리정지 요구 등의 권리를 행사할 수 있습니다.
-
-② 제1항에 따른 권리 행사는Ctudy에 대해 「개인정보 보호법」 시행령 제41조제1항에 따라 서면, 전자우편, 모사전송(FAX) 등을 통하여 하실 수 있으며 Ctudy은(는) 이에 대해 지체 없이 조치하겠습니다.
-
-③ 제1항에 따른 권리 행사는 정보주체의 법정대리인이나 위임을 받은 자 등 대리인을 통하여 하실 수 있습니다.이 경우 “개인정보 처리 방법에 관한 고시(제2020-7호)” 별지 제11호 서식에 따른 위임장을 제출하셔야 합니다.
-
-④ 개인정보 열람 및 처리정지 요구는 「개인정보 보호법」 제35조 제4항, 제37조 제2항에 의하여 정보주체의 권리가 제한 될 수 있습니다.
-
-⑤ 개인정보의 정정 및 삭제 요구는 다른 법령에서 그 개인정보가 수집 대상으로 명시되어 있는 경우에는 그 삭제를 요구할 수 없습니다.
-
-⑥ Ctudy은(는) 정보주체 권리에 따른 열람의 요구, 정정·삭제의 요구, 처리정지의 요구 시 열람 등 요구를 한 자가 본인이거나 정당한 대리인인지를 확인합니다.
-
-제7조(개인정보의 안전성 확보조치에 관한 사항)
-&lt; Ctudy &gt;은(는) 개인정보의 안전성 확보를 위해 다음과 같은 조치를 취하고 있습니다.
-
-1. 정기적인 자체 감사 실시
-개인정보 취급 관련 안정성 확보를 위해 정기적(분기 1회)으로 자체 감사를 실시하고 있습니다.
-2. 개인정보 취급 직원의 최소화 및 교육
-개인정보를 취급하는 직원을 지정하고 담당자에 한정시켜 최소화 하여 개인정보를 관리하는 대책을 시행하고 있습니다.
-3. 해킹 등에 대비한 기술적 대책
-&lt;Ctudy&gt;('Ctudy')은 해킹이나 컴퓨터 바이러스 등에 의한 개인정보 유출 및 훼손을 막기 위하여 보안프로그램을 설치하고 주기적인 갱신·점검을 하며 외부로부터 접근이 통제된 구역에 시스템을 설치하고 기술적/물리적으로 감시 및 차단하고 있습니다.
-4. 개인정보의 암호화
-이용자의 개인정보는 비밀번호는 암호화 되어 저장 및 관리되고 있어, 본인만이 알 수 있으며 중요한 데이터는 파일 및 전송 데이터를 암호화 하거나 파일 잠금 기능을 사용하는 등의 별도 보안기능을 사용하고 있습니다.
-
-제8조(개인정보를 자동으로 수집하는 장치의 설치·운영 및 그 거부에 관한 사항)
-
-Ctudy 은(는) 정보주체의 이용정보를 저장하고 수시로 불러오는 ‘쿠키(cookie)’를 사용하지 않습니다.
-
-제9조 (개인정보 보호책임자에 관한 사항)
-
-① Ctudy 은(는) 개인정보 처리에 관한 업무를 총괄해서 책임지고, 개인정보 처리와 관련한 정보주체의 불만처리 및 피해구제 등을 위하여 아래와 같이 개인정보 보호책임자를 지정하고 있습니다.
-
-- ▶ 개인정보 보호책임자
-- 성명 :김민규
-- 연락처 : ctudy.official@gmail.com
-
-② 정보주체께서는 Ctudy 의 서비스(또는 사업)을 이용하시면서 발생한 모든 개인정보 보호 관련 문의, 불만처리, 피해구제 등에 관한 사항을 개인정보 보호책임자 및 담당부서로 문의하실 수 있습니다. Ctudy 은(는) 정보주체의 문의에 대해 지체 없이 답변 및 처리해드릴 것입니다.
-
-제10조(개인정보의 열람청구를 접수·처리하는 부서)
-정보주체는 ｢개인정보 보호법｣ 제35조에 따른 개인정보의 열람 청구를 아래의 부서에 할 수 있습니다.
-&lt; Ctudy &gt;은(는) 정보주체의 개인정보 열람청구가 신속하게 처리되도록 노력하겠습니다.
-
-- ▶ 개인정보 열람청구 접수·처리 부서
-- 담당자 : 김민규
-- 연락처 : ctudy.official@gmail.com
-
-제11조(정보주체의 권익침해에 대한 구제방법)
-
-정보주체는 개인정보침해로 인한 구제를 받기 위하여 개인정보분쟁조정위원회, 한국인터넷진흥원 개인정보침해신고센터 등에 분쟁해결이나 상담 등을 신청할 수 있습니다. 이 밖에 기타 개인정보침해의 신고, 상담에 대하여는 아래의 기관에 문의하시기 바랍니다.
-
-1. 개인정보분쟁조정위원회 : (국번없이) 1833-6972 (www.kopico.go.kr)
-
-2. 개인정보침해신고센터 : (국번없이) 118 (privacy.kisa.or.kr)
-
-3. 대검찰청 : (국번없이) 1301 (www.spo.go.kr)
-
-4. 경찰청 : (국번없이) 182 (ecrm.cyber.go.kr)
-
-「개인정보보호법」제35조(개인정보의 열람), 제36조(개인정보의 정정·삭제), 제37조(개인정보의 처리정지 등)의 규정에 의한 요구에 대 하여 공공기관의 장이 행한 처분 또는 부작위로 인하여 권리 또는 이익의 침해를 받은 자는 행정심판법이 정하는 바에 따라 행정심판을 청구할 수 있습니다.
-
-※ 행정심판에 대해 자세한 사항은 중앙행정심판위원회(www.simpan.go.kr) 홈페이지를 참고하시기 바랍니다.
-
-제12조(개인정보 처리방침 변경)
-
-① 이 개인정보처리방침은 2022년 7월 1부터 적용됩니다.
-
-② 이전의 개인정보 처리방침은 아래에서 확인하실 수 있습니다.</mutableString>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                        </subviews>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                        <constraints>
-                                                            <constraint firstItem="poO-8f-cde" firstAttribute="top" secondItem="l4h-1A-T1D" secondAttribute="top" constant="10" id="9lU-eh-ncN"/>
-                                                            <constraint firstItem="poO-8f-cde" firstAttribute="leading" secondItem="l4h-1A-T1D" secondAttribute="leading" constant="10" id="Qeq-QC-Tna"/>
-                                                            <constraint firstAttribute="trailing" secondItem="poO-8f-cde" secondAttribute="trailing" constant="10" id="dBW-ey-al5"/>
-                                                            <constraint firstAttribute="bottom" secondItem="poO-8f-cde" secondAttribute="bottom" constant="10" id="zHv-aM-98l"/>
-                                                        </constraints>
-                                                    </view>
-                                                </subviews>
-                                                <constraints>
-                                                    <constraint firstItem="l4h-1A-T1D" firstAttribute="leading" secondItem="Ool-iL-W58" secondAttribute="leading" id="4BI-l8-itd"/>
-                                                    <constraint firstItem="l4h-1A-T1D" firstAttribute="width" secondItem="hFZ-2o-t16" secondAttribute="width" id="8nL-0k-iQs"/>
-                                                    <constraint firstAttribute="height" constant="300" id="Kc5-kI-Rq4"/>
-                                                    <constraint firstItem="l4h-1A-T1D" firstAttribute="trailing" secondItem="Ool-iL-W58" secondAttribute="trailing" id="VhV-mB-dpI"/>
-                                                    <constraint firstItem="l4h-1A-T1D" firstAttribute="bottom" secondItem="Ool-iL-W58" secondAttribute="bottom" id="eSw-GR-xK5"/>
-                                                    <constraint firstItem="l4h-1A-T1D" firstAttribute="top" secondItem="Ool-iL-W58" secondAttribute="top" id="k23-Pb-GYR"/>
-                                                </constraints>
-                                                <viewLayoutGuide key="contentLayoutGuide" id="Ool-iL-W58"/>
-                                                <viewLayoutGuide key="frameLayoutGuide" id="hFZ-2o-t16"/>
-                                            </scrollView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="➢ 이용약관" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Log-d2-txH">
-                                                <rect key="frame" x="0.0" y="375.5" width="79" height="20.5"/>
-                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dyf-zl-0v6">
-                                                <rect key="frame" x="0.0" y="401" width="374" height="300"/>
-                                                <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sKC-en-zYF">
-                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="3077.5"/>
-                                                        <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VSw-Pu-u9w">
-                                                                <rect key="frame" x="10" y="10" width="354" height="3057.5"/>
-                                                                <mutableString key="text">&lt; Ctudy &gt;('Ctudy'이하 'Ctudy')은(는) 「개인정보 보호법」 제30조에 따라 정보주체의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여 다음과 같이 개인정보 처리방침을 수립·공개합니다.
-
-제1조(개인정보의 처리 목적)
-&lt; Ctudy &gt;('Ctudy'이하 'Ctudy')은(는) 다음의 목적을 위하여 개인정보를 처리합니다. 처리하고 있는 개인정보는 다음의 목적 이외의 용도로는 이용되지 않으며 이용 목적이 변경되는 경우에는 「개인정보 보호법」 제18조에 따라 별도의 동의를 받는 등 필요한 조치를 이행할 예정입니다.
-
-- 1. 회원가입 및 관리
-회원 가입의사 확인, 회원제 서비스 제공에 따른 본인 식별·인증, 회원자격 유지·관리 목적으로 개인정보를 처리합니다.
-
-제2조(개인정보의 처리 및 보유 기간)
-① &lt; Ctudy &gt;은(는) 법령에 따른 개인정보 보유·이용기간 또는 정보주체로부터 개인정보를 수집 시에 동의받은 개인정보 보유·이용기간 내에서 개인정보를 처리·보유합니다.
-② 각각의 개인정보 처리 및 보유 기간은 다음과 같습니다.
-
-- 회원 가입 및 관리 : 서비스 이용계약 또는 회원 가입 해지시까지. 다만, 다음의 사유에 해당하는 경우에는 해당 사유 종료시까지
-    1. 서비스 이용에 따른 채권.채무관계 잔존시에는 해당 채권.채무관계 정산시까지
-    2. 전자상거래에서의 계약.청약철회, 대금결제, 재화 등 공급기록 : 5년
-
-제3조(처리하는 개인정보의 항목)
-① &lt; Ctudy &gt;은(는) 다음의 개인정보 항목을 처리하고 있습니다.
-
-- 회원가입 및 관리
-    - 필수항목 : 이메일, 비밀번호, 로그인ID
-    - 선택항목 : 프로필 이미지
-
-제4조(개인정보의 파기절차 및 파기방법)
-
-① &lt; Ctudy &gt; 은(는) 개인정보 보유기간의 경과, 처리목적 달성 등 개인정보가 불필요하게 되었을 때에는 지체없이 해당 개인정보를 파기합니다.
-
-② 개인정보 파기의 절차 및 방법은 다음과 같습니다.
-1. 파기절차
-&lt; Ctudy &gt; 은(는) 파기 사유가 발생한 개인정보를 선정하고, &lt; Ctudy &gt; 의 개인정보 보호책임자의 승인을 받아 개인정보를 파기합니다.
-
-2. 파기방법
-
-전자적 파일 형태의 정보는 기록을 재생할 수 없는 기술적 방법을 사용합니다
-
-제5조(미이용자의 개인정보 파기 등에 관한 조치)
-
-① &lt;개인정보처리자명&gt;은(는) 1년간 서비스를 이용하지 않은 이용자의 정보를 파기하고 있습니다. 다만, 다른 법령에서 정한 보존기간이 경과할 때까지 다른 이용자의 개인정보와 분리하여 별도로 저장·관리할 수 있습니다.
-② &lt;개인정보처리자명&gt;은(는) 개인정보의 파기 30일 전까지 개인정보가 파기되는 사실, 기간 만료일 및 파기되는 개인정보의 항목을 이메일, 문자 등 이용자에게 통지 가능한 방법으로 알리고 있습니다.
-③ 개인정보의 파기를 원하지 않으시는 경우, 기간 만료 전 서비스 로그인을 하시면 됩니다.
-
-제6조(정보주체와 법정대리인의 권리·의무 및 그 행사방법에 관한 사항)
-
-① 정보주체는 Ctudy에 대해 언제든지 개인정보 열람·정정·삭제·처리정지 요구 등의 권리를 행사할 수 있습니다.
-
-② 제1항에 따른 권리 행사는Ctudy에 대해 「개인정보 보호법」 시행령 제41조제1항에 따라 서면, 전자우편, 모사전송(FAX) 등을 통하여 하실 수 있으며 Ctudy은(는) 이에 대해 지체 없이 조치하겠습니다.
-
-③ 제1항에 따른 권리 행사는 정보주체의 법정대리인이나 위임을 받은 자 등 대리인을 통하여 하실 수 있습니다.이 경우 “개인정보 처리 방법에 관한 고시(제2020-7호)” 별지 제11호 서식에 따른 위임장을 제출하셔야 합니다.
-
-④ 개인정보 열람 및 처리정지 요구는 「개인정보 보호법」 제35조 제4항, 제37조 제2항에 의하여 정보주체의 권리가 제한 될 수 있습니다.
-
-⑤ 개인정보의 정정 및 삭제 요구는 다른 법령에서 그 개인정보가 수집 대상으로 명시되어 있는 경우에는 그 삭제를 요구할 수 없습니다.
-
-⑥ Ctudy은(는) 정보주체 권리에 따른 열람의 요구, 정정·삭제의 요구, 처리정지의 요구 시 열람 등 요구를 한 자가 본인이거나 정당한 대리인인지를 확인합니다.
-
-제7조(개인정보의 안전성 확보조치에 관한 사항)
-&lt; Ctudy &gt;은(는) 개인정보의 안전성 확보를 위해 다음과 같은 조치를 취하고 있습니다.
-
-1. 정기적인 자체 감사 실시
-개인정보 취급 관련 안정성 확보를 위해 정기적(분기 1회)으로 자체 감사를 실시하고 있습니다.
-2. 개인정보 취급 직원의 최소화 및 교육
-개인정보를 취급하는 직원을 지정하고 담당자에 한정시켜 최소화 하여 개인정보를 관리하는 대책을 시행하고 있습니다.
-3. 해킹 등에 대비한 기술적 대책
-&lt;Ctudy&gt;('Ctudy')은 해킹이나 컴퓨터 바이러스 등에 의한 개인정보 유출 및 훼손을 막기 위하여 보안프로그램을 설치하고 주기적인 갱신·점검을 하며 외부로부터 접근이 통제된 구역에 시스템을 설치하고 기술적/물리적으로 감시 및 차단하고 있습니다.
-4. 개인정보의 암호화
-이용자의 개인정보는 비밀번호는 암호화 되어 저장 및 관리되고 있어, 본인만이 알 수 있으며 중요한 데이터는 파일 및 전송 데이터를 암호화 하거나 파일 잠금 기능을 사용하는 등의 별도 보안기능을 사용하고 있습니다.
-
-제8조(개인정보를 자동으로 수집하는 장치의 설치·운영 및 그 거부에 관한 사항)
-
-Ctudy 은(는) 정보주체의 이용정보를 저장하고 수시로 불러오는 ‘쿠키(cookie)’를 사용하지 않습니다.
-
-제9조 (개인정보 보호책임자에 관한 사항)
-
-① Ctudy 은(는) 개인정보 처리에 관한 업무를 총괄해서 책임지고, 개인정보 처리와 관련한 정보주체의 불만처리 및 피해구제 등을 위하여 아래와 같이 개인정보 보호책임자를 지정하고 있습니다.
-
-- ▶ 개인정보 보호책임자
-- 성명 :김민규
-- 연락처 : ctudy.official@gmail.com
-
-② 정보주체께서는 Ctudy 의 서비스(또는 사업)을 이용하시면서 발생한 모든 개인정보 보호 관련 문의, 불만처리, 피해구제 등에 관한 사항을 개인정보 보호책임자 및 담당부서로 문의하실 수 있습니다. Ctudy 은(는) 정보주체의 문의에 대해 지체 없이 답변 및 처리해드릴 것입니다.
-
-제10조(개인정보의 열람청구를 접수·처리하는 부서)
-정보주체는 ｢개인정보 보호법｣ 제35조에 따른 개인정보의 열람 청구를 아래의 부서에 할 수 있습니다.
-&lt; Ctudy &gt;은(는) 정보주체의 개인정보 열람청구가 신속하게 처리되도록 노력하겠습니다.
-
-- ▶ 개인정보 열람청구 접수·처리 부서
-- 담당자 : 김민규
-- 연락처 : ctudy.official@gmail.com
-
-제11조(정보주체의 권익침해에 대한 구제방법)
-
-정보주체는 개인정보침해로 인한 구제를 받기 위하여 개인정보분쟁조정위원회, 한국인터넷진흥원 개인정보침해신고센터 등에 분쟁해결이나 상담 등을 신청할 수 있습니다. 이 밖에 기타 개인정보침해의 신고, 상담에 대하여는 아래의 기관에 문의하시기 바랍니다.
-
-1. 개인정보분쟁조정위원회 : (국번없이) 1833-6972 (www.kopico.go.kr)
-
-2. 개인정보침해신고센터 : (국번없이) 118 (privacy.kisa.or.kr)
-
-3. 대검찰청 : (국번없이) 1301 (www.spo.go.kr)
-
-4. 경찰청 : (국번없이) 182 (ecrm.cyber.go.kr)
-
-「개인정보보호법」제35조(개인정보의 열람), 제36조(개인정보의 정정·삭제), 제37조(개인정보의 처리정지 등)의 규정에 의한 요구에 대 하여 공공기관의 장이 행한 처분 또는 부작위로 인하여 권리 또는 이익의 침해를 받은 자는 행정심판법이 정하는 바에 따라 행정심판을 청구할 수 있습니다.
-
-※ 행정심판에 대해 자세한 사항은 중앙행정심판위원회(www.simpan.go.kr) 홈페이지를 참고하시기 바랍니다.
-
-제12조(개인정보 처리방침 변경)
-
-① 이 개인정보처리방침은 2022년 7월 1부터 적용됩니다.
-
-② 이전의 개인정보 처리방침은 아래에서 확인하실 수 있습니다.</mutableString>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                        </subviews>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="trailing" secondItem="VSw-Pu-u9w" secondAttribute="trailing" constant="10" id="4DS-Fg-Xwk"/>
-                                                            <constraint firstItem="VSw-Pu-u9w" firstAttribute="top" secondItem="sKC-en-zYF" secondAttribute="top" constant="10" id="781-Ud-7pD"/>
-                                                            <constraint firstAttribute="bottom" secondItem="VSw-Pu-u9w" secondAttribute="bottom" constant="10" id="jC4-N8-QLm"/>
-                                                            <constraint firstItem="VSw-Pu-u9w" firstAttribute="leading" secondItem="sKC-en-zYF" secondAttribute="leading" constant="10" id="vS1-4b-RgF"/>
-                                                        </constraints>
-                                                    </view>
-                                                </subviews>
-                                                <constraints>
-                                                    <constraint firstItem="sKC-en-zYF" firstAttribute="leading" secondItem="z0B-Qc-Al2" secondAttribute="leading" id="8Ou-xj-CEL"/>
-                                                    <constraint firstItem="sKC-en-zYF" firstAttribute="bottom" secondItem="z0B-Qc-Al2" secondAttribute="bottom" id="Sjr-7e-PJ7"/>
-                                                    <constraint firstItem="sKC-en-zYF" firstAttribute="trailing" secondItem="z0B-Qc-Al2" secondAttribute="trailing" id="Vw0-j0-39C"/>
-                                                    <constraint firstItem="sKC-en-zYF" firstAttribute="top" secondItem="z0B-Qc-Al2" secondAttribute="top" id="gR2-ZV-Ffa"/>
-                                                    <constraint firstItem="sKC-en-zYF" firstAttribute="width" secondItem="sR7-JZ-r3o" secondAttribute="width" id="sQs-mJ-Wgl"/>
-                                                    <constraint firstAttribute="height" constant="300" id="yiB-cQ-Wtd"/>
-                                                </constraints>
-                                                <viewLayoutGuide key="contentLayoutGuide" id="z0B-Qc-Al2"/>
-                                                <viewLayoutGuide key="frameLayoutGuide" id="sR7-JZ-r3o"/>
-                                            </scrollView>
-                                        </subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="3ky-3P-wh9">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="553"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="LTe-Ca-rK2" secondAttribute="trailing" id="2LG-JW-PDi"/>
-                                            <constraint firstItem="LTe-Ca-rK2" firstAttribute="leading" secondItem="bys-Vt-ez4" secondAttribute="leading" id="7SG-az-8ZF"/>
-                                            <constraint firstItem="5AG-KG-GbP" firstAttribute="top" secondItem="bys-Vt-ez4" secondAttribute="top" constant="10" id="Aew-I5-K9u"/>
-                                            <constraint firstAttribute="bottom" secondItem="dyf-zl-0v6" secondAttribute="bottom" id="Ayd-jg-t8j"/>
-                                            <constraint firstItem="Log-d2-txH" firstAttribute="leading" secondItem="bys-Vt-ez4" secondAttribute="leading" id="Bek-pP-aHm"/>
-                                            <constraint firstItem="Log-d2-txH" firstAttribute="leading" secondItem="bys-Vt-ez4" secondAttribute="leading" id="D5S-d1-Qfn"/>
-                                            <constraint firstItem="LTe-Ca-rK2" firstAttribute="top" secondItem="5AG-KG-GbP" secondAttribute="bottom" constant="5" id="GQf-JC-9qF"/>
-                                            <constraint firstItem="Log-d2-txH" firstAttribute="top" secondItem="LTe-Ca-rK2" secondAttribute="bottom" constant="40" id="GUH-2Y-FXe"/>
-                                            <constraint firstItem="dyf-zl-0v6" firstAttribute="top" secondItem="Log-d2-txH" secondAttribute="bottom" constant="5" id="e4k-FW-4Ui"/>
-                                            <constraint firstItem="dyf-zl-0v6" firstAttribute="leading" secondItem="bys-Vt-ez4" secondAttribute="leading" id="nNx-dT-xM9"/>
-                                            <constraint firstAttribute="trailing" secondItem="dyf-zl-0v6" secondAttribute="trailing" id="taF-1b-kV3"/>
-                                            <constraint firstItem="5AG-KG-GbP" firstAttribute="leading" secondItem="bys-Vt-ez4" secondAttribute="leading" id="wAb-Gc-gef"/>
-                                        </constraints>
-                                    </view>
+                                    </tableView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="bys-Vt-ez4" firstAttribute="top" secondItem="Qrb-1g-t1Z" secondAttribute="top" id="0oA-fq-QtZ"/>
-                                    <constraint firstItem="bys-Vt-ez4" firstAttribute="width" secondItem="ael-Tu-wKH" secondAttribute="width" id="4a0-Ae-7Ms"/>
-                                    <constraint firstItem="bys-Vt-ez4" firstAttribute="trailing" secondItem="Qrb-1g-t1Z" secondAttribute="trailing" id="Etj-9g-ea3"/>
-                                    <constraint firstItem="bys-Vt-ez4" firstAttribute="bottom" secondItem="Qrb-1g-t1Z" secondAttribute="bottom" id="S5R-XC-2IP"/>
-                                    <constraint firstItem="bys-Vt-ez4" firstAttribute="leading" secondItem="Qrb-1g-t1Z" secondAttribute="leading" id="prX-MK-9Gd"/>
+                                    <constraint firstItem="3ky-3P-wh9" firstAttribute="bottom" secondItem="Qrb-1g-t1Z" secondAttribute="bottom" id="4GP-he-XDN"/>
+                                    <constraint firstItem="3ky-3P-wh9" firstAttribute="trailing" secondItem="Qrb-1g-t1Z" secondAttribute="trailing" id="CHG-3l-WYO"/>
+                                    <constraint firstItem="3ky-3P-wh9" firstAttribute="leading" secondItem="Qrb-1g-t1Z" secondAttribute="leading" id="DgU-pC-Pnq"/>
+                                    <constraint firstItem="3ky-3P-wh9" firstAttribute="top" secondItem="Qrb-1g-t1Z" secondAttribute="top" id="FM7-ur-JLp"/>
+                                    <constraint firstItem="3ky-3P-wh9" firstAttribute="width" secondItem="ael-Tu-wKH" secondAttribute="width" id="VcW-8o-eRY"/>
+                                    <constraint firstItem="3ky-3P-wh9" firstAttribute="top" secondItem="ael-Tu-wKH" secondAttribute="top" id="a7w-fG-TuA"/>
+                                    <constraint firstItem="ael-Tu-wKH" firstAttribute="bottom" secondItem="3ky-3P-wh9" secondAttribute="bottom" id="utD-Oh-7MJ"/>
                                 </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="Qrb-1g-t1Z"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="ael-Tu-wKH"/>
@@ -3108,10 +2661,11 @@ Ctudy 은(는) 정보주체의 이용정보를 저장하고 수시로 불러오�
                     </view>
                     <navigationItem key="navigationItem" id="4Ih-cR-vOP"/>
                     <connections>
+                        <outlet property="agreementTableView" destination="3ky-3P-wh9" id="ZRU-BP-fI1"/>
                         <outlet property="goToStartBtn" destination="KEg-Ag-WUX" id="wTw-QN-WDS"/>
                         <outlet property="nextBtn" destination="NhB-7L-4E2" id="rRl-nc-FmN"/>
-                        <outlet property="privacyView" destination="LTe-Ca-rK2" id="jkm-zY-TwD"/>
-                        <outlet property="serviceView" destination="dyf-zl-0v6" id="9g7-Uv-8T3"/>
+                        <segue destination="LKA-TT-K22" kind="show" identifier="PrivacyVC" id="dns-h0-xqU"/>
+                        <segue destination="IX6-Qw-xSi" kind="show" identifier="ServiceVC" id="Zhx-Tk-AiC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HVU-m6-0cb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -3446,14 +3000,32 @@ Ctudy 은(는) 정보주체의 이용정보를 저장하고 수시로 불러오�
                     <view key="view" contentMode="scaleToFill" id="3Aj-RE-YlY">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VnQ-we-E6W">
+                                <rect key="frame" x="0.0" y="98" width="414" height="715"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="MJ9-Ny-sJA"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="MJ9-Ny-sJA" firstAttribute="bottom" secondItem="VnQ-we-E6W" secondAttribute="bottom" id="7d6-QF-g9g"/>
+                            <constraint firstItem="MJ9-Ny-sJA" firstAttribute="trailing" secondItem="VnQ-we-E6W" secondAttribute="trailing" id="BT3-p6-N7f"/>
+                            <constraint firstItem="VnQ-we-E6W" firstAttribute="top" secondItem="MJ9-Ny-sJA" secondAttribute="top" constant="10" id="L6w-fu-URS"/>
+                            <constraint firstItem="VnQ-we-E6W" firstAttribute="leading" secondItem="MJ9-Ny-sJA" secondAttribute="leading" id="zHu-YL-HB4"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="cPe-Kp-3la"/>
+                    <connections>
+                        <outlet property="webView" destination="VnQ-we-E6W" id="ueL-Ak-CH8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qbr-Oo-hAq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8499" y="1398"/>
+            <point key="canvasLocation" x="8498.5507246376819" y="1397.5446428571429"/>
         </scene>
         <!--Open SourceVC-->
         <scene sceneID="2I2-6t-wy9">
@@ -3600,7 +3172,9 @@ Ctudy 은(는) 정보주체의 이용정보를 저장하고 수시로 불러오�
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="Zhx-Tk-AiC"/>
         <segue reference="MTc-r2-fOe"/>
+        <segue reference="dns-h0-xqU"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="chevron.right" catalog="system" width="96" height="128"/>

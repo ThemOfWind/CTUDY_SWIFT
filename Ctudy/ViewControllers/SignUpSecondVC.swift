@@ -285,7 +285,6 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIImagePickerControllerDeleg
     // 이름 정규식 체크 event
     fileprivate func isValidData(flag: String, data: String) -> Bool {
         //        print("SignUpSecondVC - isValidData() called / data: \(data), flag: \(flag)")
-        
         guard data != "" else { return false }
         let pred : NSPredicate
         

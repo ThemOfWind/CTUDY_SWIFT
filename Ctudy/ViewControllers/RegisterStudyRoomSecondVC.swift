@@ -73,11 +73,9 @@ class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataS
         
         // 셀 설정
         memberTableView.rowHeight = 90
-//        self.memberTableView.allowsSelection = false
         memberTableView.showsVerticalScrollIndicator = false // scroll 제거
-//        self.memberTableView.estimatedRowHeight = 100
         
-        // button event 연결
+        // event 연결
         memberSearchBar.searchTextField.addTarget(self, action: #selector(textFieldEditingChanged), for: .editingChanged)
         
         // delegate 연결
@@ -254,7 +252,7 @@ class RegisterStudyRoomSecondVC : BasicVC, UITableViewDelegate, UITableViewDataS
         cell.checkBtn.tag = indexPath.row
         cell.checkBtn.isChecked = members[indexPath.row].ischecked
         cell.checkBtn.checkBtnDelegate = self
-            memberTableView.rowHeight = 90
+        memberTableView.rowHeight = 90
         return cell
         }
     }

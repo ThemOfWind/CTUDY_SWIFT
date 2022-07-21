@@ -15,6 +15,8 @@ enum API {
 //    static let IMAGE_DEFAULT: String = "https://api.ctudy.com/media/public/room/864b172ba4d74a5ea6946f58c0233c29.png" // studyroom default image
     static let IMAGE_URL: String = "https://api.ctudy.com"
     static let SERVICEID: String = "com.jinny.Ctudy"
+    static let SERVICE_URL: String = "https://grass-hemisphere-7ac.notion.site/Ctudy-4e92e0f9d6d347a78bcea219fde9585a"
+    static let PRIVACY_URL: String = "https://grass-hemisphere-7ac.notion.site/Ctudy-b9835d0564fc4b22911ac1aea16d882e"
 }
 
 enum REGEX {
