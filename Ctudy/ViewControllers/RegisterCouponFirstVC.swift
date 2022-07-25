@@ -49,7 +49,6 @@ class RegisterCouponFirstVC: BasicVC, CouponSendDelegate {
     // MARK: - fileprivate func
     fileprivate func config() {
         // navigationbar item
-        self.navigationController?.navigationBar.sizeToFit()
         leftItem = LeftItem.backGeneral
         titleItem = TitleItem.titleGeneral(title: "쿠폰 발급", isLargeTitles: true)
         

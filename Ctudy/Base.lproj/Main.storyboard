@@ -1761,7 +1761,7 @@
         <!--PrivacyVC-->
         <scene sceneID="2Mg-gc-ueb">
             <objects>
-                <viewController id="LKA-TT-K22" customClass="PrivacyVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PrivacyVC" id="LKA-TT-K22" customClass="PrivacyVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tyC-df-eZG">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2664,8 +2664,6 @@
                         <outlet property="agreementTableView" destination="3ky-3P-wh9" id="ZRU-BP-fI1"/>
                         <outlet property="goToStartBtn" destination="KEg-Ag-WUX" id="wTw-QN-WDS"/>
                         <outlet property="nextBtn" destination="NhB-7L-4E2" id="rRl-nc-FmN"/>
-                        <segue destination="LKA-TT-K22" kind="show" identifier="PrivacyVC" id="dns-h0-xqU"/>
-                        <segue destination="IX6-Qw-xSi" kind="show" identifier="ServiceVC" id="Zhx-Tk-AiC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HVU-m6-0cb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2996,7 +2994,7 @@
         <!--ServiceVC-->
         <scene sceneID="QQO-AW-lx0">
             <objects>
-                <viewController id="IX6-Qw-xSi" customClass="ServiceVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ServiceVC" id="IX6-Qw-xSi" customClass="ServiceVC" customModule="Ctudy" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3Aj-RE-YlY">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -3172,9 +3170,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Zhx-Tk-AiC"/>
-        <segue reference="MTc-r2-fOe"/>
-        <segue reference="dns-h0-xqU"/>
+        <segue reference="4no-wb-8Xr"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="chevron.right" catalog="system" width="96" height="128"/>

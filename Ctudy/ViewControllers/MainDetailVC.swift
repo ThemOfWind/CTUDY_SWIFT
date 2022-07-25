@@ -102,7 +102,6 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
     
     fileprivate func config() {
         // navigationbar item 설정
-        self.navigationController?.navigationBar.sizeToFit()
         leftItem = LeftItem.backGeneral
         titleItem = TitleItem.titleGeneral(title: "", isLargeTitles: true)
         rightItem = RightItem.anyCustoms(items: [.setting], title: nil, rightSpaceCloseToDefault: false)
@@ -273,7 +272,7 @@ class MainDetailVC : BasicVC, UITableViewDelegate, UITableViewDataSource {
     @IBAction func unwindMainDetailVC(_ segue: UIStoryboardSegue) {}
     
     // MARK: - navigation right button func
-    override func AnyItemAction(sender: UIBarButtonItem) {
+    override func anyItemAction(sender: UIBarButtonItem) {
         self.performSegue(withIdentifier: "StudyRoomSettingVC", sender: nil)
     }
     

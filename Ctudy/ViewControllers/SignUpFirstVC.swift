@@ -14,11 +14,7 @@ class SignUpFirstVC: BasicVC, AgreementCheckButtonDelegate, GoToViewButtonDelega
     @IBOutlet weak var agreementTableView: UITableView!
     @IBOutlet weak var nextBtn: UIButton!
     @IBOutlet weak var goToStartBtn: UIButton!
-//    let agreementList = [
-//        [ "id" : "privacy", "text" : "[필수] 개인정보 처리 방침에 동의합니다.", "page" : "PrivacyVC", "isChecked" : false ],
-//        [ "id" : "service", "text" : "[필수] 이용약관에 동의합니다.", "page" : "ServiceVC", "isChecked" : false ]
-//    ]
-    var agreementList: Array<AgreementRequest> = []
+    var agreementList: Array<AgreementModel> = []
     
     // MARK: - view load func
     override func viewWillAppear(_ animated: Bool) {
@@ -28,21 +24,19 @@ class SignUpFirstVC: BasicVC, AgreementCheckButtonDelegate, GoToViewButtonDelega
     
     fileprivate func config() {
         // navigationbar item
-        self.navigationController?.navigationBar.sizeToFit()
-        leftItem = LeftItem.none
-        titleItem = TitleItem.titleGeneral(title: "회원가입", isLargeTitles: true)
+        self.leftItem = LeftItem.none
+        self.titleItem = TitleItem.titleGeneral(title: "회원가입", isLargeTitles: true)
         
         // list 담기
-        let privacy = AgreementRequest(id: "privacy", text: "[필수] 개인정보 처리 방침에 동의합니다.", page: "PrivacyVC", isChecked: false)
-        let service = AgreementRequest(id: "service", text: "[필수] 이용약관에 동의합니다.", page: "ServiceVC", isChecked: false)
+        let privacy = AgreementModel(id: "privacy", text: "[필수] 개인정보 처리 방침에 동의합니다.", page: "PrivacyVC", isChecked: false)
+        let service = AgreementModel(id: "service", text: "[필수] 이용약관에 동의합니다.", page: "ServiceVC", isChecked: false)
         agreementList.append(privacy)
         agreementList.append(service)
         
         // button ui
         nextBtn.tintColor = .white
-        nextBtn.backgroundColor = COLOR.DISABLE_COLOR
         nextBtn.layer.cornerRadius = 10
-        nextBtn.isEnabled = false
+        nextBtnAbleChecked()
         
         // 셀 리소스 파일 가져오기
         let agreementCell = UINib(nibName: String(describing: AgreementTableViewCell.self), bundle: nil)
@@ -64,9 +58,6 @@ class SignUpFirstVC: BasicVC, AgreementCheckButtonDelegate, GoToViewButtonDelega
     
     // nextButton 활성화 & 비활성화 event
     fileprivate func nextBtnAbleChecked() {
-        print("nextBtnAbleChecked() called")
-//        let privacy_isChecked =
-//        let service_isChecked =
         if  agreementList[0].isChecked && agreementList[1].isChecked{
             self.nextBtn.backgroundColor = COLOR.SIGNATURE_COLOR
             self.nextBtn.isEnabled = true
@@ -107,6 +98,8 @@ class SignUpFirstVC: BasicVC, AgreementCheckButtonDelegate, GoToViewButtonDelega
     // MARK: - goToViewButton delegate
     func goToViewBtnClicked(sender: UIButton) {
         print("sender.tag: \(sender.tag), page: \(agreementList[sender.tag].page)")
-        self.performSegue(withIdentifier: agreementList[sender.tag].page, sender: self)
+//        self.performSegue(withIdentifier: agreementList[sender.tag].page, sender: self)
+        let pushVC = self.storyboard?.instantiateViewController(withIdentifier: agreementList[sender.tag].page)
+        self.navigationController?.pushViewController(pushVC!, animated: true)
     }
 }

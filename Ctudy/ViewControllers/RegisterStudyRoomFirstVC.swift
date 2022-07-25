@@ -46,7 +46,6 @@ class RegisterStudyRoomFirstVC: BasicVC, UITextFieldDelegate, UIImagePickerContr
     
     fileprivate func config() {
         // navigationBar item 설정
-        self.navigationController?.navigationBar.sizeToFit()
         self.leftItem = LeftItem.backGeneral
         self.titleItem = TitleItem.titleGeneral(title: "스터디룸 등록", isLargeTitles: true)
         

@@ -59,7 +59,6 @@ class UpdateStudyRoomVC: BasicVC, UIImagePickerControllerDelegate, SettingSendDe
     // MARK: - fileprivate func
     fileprivate func config() {
         // navigationbar item
-        self.navigationController?.navigationBar.sizeToFit()
         leftItem = LeftItem.backGeneral
         titleItem = TitleItem.titleGeneral(title: "스터디룸 설정", isLargeTitles: true)
         

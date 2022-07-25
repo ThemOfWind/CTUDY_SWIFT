@@ -40,6 +40,7 @@ class MainVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     fileprivate func config() {
         // 화면 swipe 기능 연결
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
+        self.navigationController?.navigationBar.sizeToFit()
         
         // 스터디룸 조회
         self.getSearchRoom()

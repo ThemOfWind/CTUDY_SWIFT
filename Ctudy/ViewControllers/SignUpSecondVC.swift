@@ -25,7 +25,6 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIImagePickerControllerDeleg
     // MARK: - view load func
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("SignUpSecondVC - viewDidLoad() called")
         self.config()
     }
     
@@ -42,7 +41,6 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIImagePickerControllerDeleg
     
     fileprivate func config() {
         // navigationbar item
-        self.navigationController?.navigationBar.sizeToFit()
         self.leftItem = LeftItem.backGeneral
         self.titleItem = TitleItem.titleGeneral(title: "회원가입", isLargeTitles: true)
         

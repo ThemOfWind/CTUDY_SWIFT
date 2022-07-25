@@ -39,9 +39,9 @@ class ProfileVC: UIViewController, UIGestureRecognizerDelegate {
         return label
     }()
     
-    // MARK: - overrid func
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    // MARK: - view load func
+    override func viewDidLoad() {
+        super.viewDidLoad()
         self.config()
     }
     
@@ -118,7 +118,7 @@ class ProfileVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     fileprivate func onGoToProfileSettingVC() {
-        self.performSegue(withIdentifier: "UpdateProfileVC", sender: nil)
+        self.performSegue(withIdentifier: "UpdateProfileVC", sender: self)
     }
     
     

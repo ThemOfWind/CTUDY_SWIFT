@@ -60,7 +60,6 @@ class SearchPwFirstVC: BasicVC, UITextFieldDelegate {
     // MARK: - fileprivate func
     fileprivate func config() {
         // navigationbar item
-        self.navigationController?.navigationBar.sizeToFit()
         self.leftItem = LeftItem.backGeneral
         self.titleItem = TitleItem.titleGeneral(title: "비밀번호 찾기", isLargeTitles: true)
         

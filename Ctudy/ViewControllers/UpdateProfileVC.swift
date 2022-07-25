@@ -55,7 +55,6 @@ class UpdateProfileVC: BasicVC, UITextFieldDelegate, UIImagePickerControllerDele
     // MARK: - fileprivate func
     fileprivate func config() {
         // navigationbar item
-        self.navigationController?.navigationBar.sizeToFit()
         leftItem = LeftItem.backGeneral
         titleItem = TitleItem.titleGeneral(title: "프로필 설정", isLargeTitles: true)
         

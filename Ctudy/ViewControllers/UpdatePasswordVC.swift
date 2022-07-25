@@ -44,7 +44,6 @@ class UpdatePasswordVC: BasicVC, UITextFieldDelegate {
     var newPasswordOKFlag: Bool = false
     var onlyPasswordOKFlag: Bool = true
     
-    
     // MARK: - override func
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +53,6 @@ class UpdatePasswordVC: BasicVC, UITextFieldDelegate {
     // MARK: - fileprivaten func
     fileprivate func config() {
         // navigationbar ui
-        self.navigationController?.navigationBar.sizeToFit()
         leftItem = LeftItem.backGeneral
         titleItem = TitleItem.titleGeneral(title: "계정관리", isLargeTitles: true)
         

@@ -44,7 +44,6 @@ class WithdrawVC: BasicVC {
     
     // MARK: - fileprivate func
     fileprivate func config() {
-        self.navigationController?.navigationBar.sizeToFit()
         leftItem = LeftItem.backGeneral
         titleItem = TitleItem.titleGeneral(title: "회원탈퇴", isLargeTitles: true)
         

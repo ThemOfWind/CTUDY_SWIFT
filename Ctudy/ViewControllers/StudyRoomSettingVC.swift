@@ -36,7 +36,7 @@ class StudyRoomSettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     var members: Array<SearchStudyMemberResponse>? // 전달받은 멤버 리스트
     var settingRoom: SettingStudyRoomResponse! // 전달받은 room 정보
     var isMaster: Bool! // 사용자가 master인지 체크, 전달받은 master bool값
-    var settingList: Array<Dictionary<String, Any>>! // 셋팅 항목
+    var settingList: Array<SettingModel> = [] // 셋팅 항목
     
     // MARK: - view load func
     override func viewWillAppear(_ animated: Bool) {
@@ -59,11 +59,10 @@ class StudyRoomSettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     
     fileprivate func config() {
         // navigationbar
-        self.navigationController?.navigationBar.sizeToFit() // UIKit에 포함된 특정 View를 자체 내부 요구의 사이즈로 resize 해주는 함수
         leftItem = LeftItem.backGeneral
         titleItem = TitleItem.titleGeneral(title: "스터디룸 관리", isLargeTitles: true)
 
-        // 셀 리소스 파일 가져오기
+        // 셀 리소스 파일 가져오기2
         let settingCell = UINib(nibName: String(describing: SettingTableViewCell.self), bundle: nil)
         
         // 셀 리소스 등록하기
@@ -78,16 +77,17 @@ class StudyRoomSettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         self.settingTableView.delegate = self
         self.settingTableView.dataSource = self
         
+        // list 담기
         // 사용자가 master일 경우
         if isMaster {
-            settingList =  [
-                [ "id" : "setting", "text" : "스터디룸 설정", "color" : UIColor.black ]
-              , [ "id" : "add", "text" : "멤버 초대", "color" : UIColor.black ]
-              , [ "id" : "out", "text" : "나가기", "color" : UIColor.red ]
-            ]
-        } else {
-            settingList = [ [ "id" : "out", "text" : "나가기", "color" : UIColor.red ] ]
+            let setting = SettingModel(id: "setting", text: "스터디룸 설정", color: "black", page: "UpdateStudyRoomVC")
+            let add = SettingModel(id: "add", text: "멤버 초대", color: "black", page: "AddStudyRoomMemberVC")
+            settingList.append(setting)
+            settingList.append(add)
         }
+        
+        let out = SettingModel(id: "out", text: "나가기", color: "red", page: "")
+        settingList.append(out)
     }
     
     // MARK: - indicator in api calling
@@ -169,29 +169,25 @@ class StudyRoomSettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("StudyRoomSettingVC - tableView() called / cellText: \(settingList[(indexPath as NSIndexPath).row]["text"] as! String)")
+//        print("StudyRoomSettingVC - tableView() called / cellText: \(settingList[(indexPath as NSIndexPath).row]["text"] as! String)")
         let cell = settingTableView.dequeueReusableCell(withIdentifier: "SettingTableViewCell", for: indexPath) as! SettingTableViewCell
         cell.selectionStyle = .none // 선택 block 없애기
-        cell.settingLabel.text = settingList[(indexPath as NSIndexPath).row]["text"] as! String
-        cell.settingLabel.textColor = settingList[(indexPath as NSIndexPath).row]["color"] as! UIColor
+//        cell.settingLabel.text = settingList[(indexPath as NSIndexPath).row]["text"] as! String
+//        cell.settingLabel.textColor = settingList[(indexPath as NSIndexPath).row]["color"] as! UIColor
+        cell.settingLabel.text = settingList[indexPath.row].text
+        cell.settingLabel.textColor = UIColor(named: settingList[indexPath.row].color)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch settingList[(indexPath as NSIndexPath).row]["id"] as! String {
-        case "setting":
-            // 스터디룸 설정 화면으로 이동
-            self.performSegue(withIdentifier: "UpdateStudyRoomVC", sender: self)
-            break
-        case "add":
-            // 멤버 초대 화면으로 이동
-            self.performSegue(withIdentifier: "AddStudyRoomMemberVC", sender: self)
-            break
+//        switch settingList[(indexPath as NSIndexPath).row]["id"] as! String {
+        switch settingList[indexPath.row].id {
         case "out":
             // 나가기 (스터디룸 화면으로 이동)
             outStudyRoom()
             break
         default:
+            self.performSegue(withIdentifier: settingList[indexPath.row].page, sender: self)
             break
         }
     }

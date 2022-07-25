@@ -24,7 +24,6 @@ class SearchIdSuccessVC: BasicVC {
     // MARK: - fileprivate func
     fileprivate func config() {
         // navigationbar item
-        self.navigationController?.navigationBar.sizeToFit()
         leftItem = LeftItem.none
         titleItem = TitleItem.titleGeneral(title: "아이디 찾기", isLargeTitles: true)
         

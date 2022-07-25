@@ -55,7 +55,6 @@ class CouponVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     
     fileprivate func config() {
         // navigationbar item 설정
-        self.navigationController?.navigationBar.sizeToFit()
         leftItem = LeftItem.backGeneral
         titleItem = TitleItem.titleGeneral(title: "내 쿠폰", isLargeTitles: true)
         rightItem = RightItem.anyCustoms(items: [.setting], title: nil, rightSpaceCloseToDefault: true)
@@ -170,7 +169,7 @@ class CouponVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         self.present(alert, animated: false)
     }
     
-    override func AnyItemAction(sender: UIBarButtonItem) {
+    override func anyItemAction(sender: UIBarButtonItem) {
         self.performSegue(withIdentifier: "CouponHistoryVC", sender: nil)
     }
     

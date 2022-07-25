@@ -41,17 +41,21 @@ class OpenSourceWebVC: BasicVC, WKUIDelegate, WKNavigationDelegate {
     // MARK: - view load func
     override func viewDidLoad() {
         super.viewDidLoad()
-        config()
-    }
-    
-    fileprivate func config() {
-        self.navigationController?.navigationBar.sizeToFit()
-        leftItem = LeftItem.backGeneral
-        titleItem = TitleItem.titleGeneral(title: titleText, isLargeTitles: false)
         
         self.onStartActivityIndicator()
         loadUrl()
         self.onStopActivityIndicator()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        config()
+    }
+    
+    fileprivate func config() {
+        leftItem = LeftItem.backGeneral
+        titleItem = TitleItem.titleGeneral(title: titleText, isLargeTitles: false)
     }
     
     fileprivate func loadUrl() {

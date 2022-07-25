@@ -57,7 +57,6 @@ class SearchIdFirstVC: BasicVC, UITextFieldDelegate {
     // MARK: - fileprivate func
     fileprivate func config() {
         // navigationbar item
-        self.navigationController?.navigationBar.sizeToFit()
         self.leftItem = LeftItem.backGeneral
         self.titleItem = TitleItem.titleGeneral(title: "아이디 찾기", isLargeTitles: true)
         

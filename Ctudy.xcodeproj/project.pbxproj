@@ -19,7 +19,7 @@
 		5A2D86C227EAEBB8000BF69B /* MemberTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2D86C127EAEBB8000BF69B /* MemberTableViewCell.swift */; };
 		5A31966E2766045D007400EE /* SignUpSuccessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A31966D2766045D007400EE /* SignUpSuccessVC.swift */; };
 		5A32A6DD28893D0E008A9611 /* GoToNextViewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A32A6DC28893D0E008A9611 /* GoToNextViewButton.swift */; };
-		5A32A6DF28897CFE008A9611 /* AgreementRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A32A6DE28897CFE008A9611 /* AgreementRequest.swift */; };
+		5A32A6DF28897CFE008A9611 /* AgreementModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A32A6DE28897CFE008A9611 /* AgreementModel.swift */; };
 		5A35D8412867323A002D7315 /* EmptyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A35D8402867323A002D7315 /* EmptyTableViewCell.swift */; };
 		5A35D84328673248002D7315 /* EmptyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5A35D84228673248002D7315 /* EmptyTableViewCell.xib */; };
 		5A36116F28855AAF00539F92 /* AgreementCheckButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A36116E28855AAF00539F92 /* AgreementCheckButton.swift */; };
@@ -80,6 +80,7 @@
 		5AA86D0B2761005D0067620C /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA86D0A2761005D0067620C /* MainVC.swift */; };
 		5AA8D80528534B78002AC1ED /* SettingBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA8D80428534B78002AC1ED /* SettingBarButtonItem.swift */; };
 		5AA8D80728534BA6002AC1ED /* SettingBarButtonItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AA8D80628534BA6002AC1ED /* SettingBarButtonItem.xib */; };
+		5AADD935288A74FF00B85696 /* SettingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AADD934288A74FF00B85696 /* SettingModel.swift */; };
 		5AAE346D2761D2BE00EE6A5D /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAE346C2761D2BE00EE6A5D /* Constants.swift */; };
 		5ABA13F2283CBBFE007AE4F0 /* CouponVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABA13F1283CBBFE007AE4F0 /* CouponVC.swift */; };
 		5ABB95C22760F697003B4764 /* SignUpThirdVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABB95C12760F697003B4764 /* SignUpThirdVC.swift */; };
@@ -125,7 +126,7 @@
 		5A2D86C127EAEBB8000BF69B /* MemberTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberTableViewCell.swift; sourceTree = "<group>"; };
 		5A31966D2766045D007400EE /* SignUpSuccessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpSuccessVC.swift; sourceTree = "<group>"; };
 		5A32A6DC28893D0E008A9611 /* GoToNextViewButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoToNextViewButton.swift; sourceTree = "<group>"; };
-		5A32A6DE28897CFE008A9611 /* AgreementRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementRequest.swift; sourceTree = "<group>"; };
+		5A32A6DE28897CFE008A9611 /* AgreementModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementModel.swift; sourceTree = "<group>"; };
 		5A35D8402867323A002D7315 /* EmptyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyTableViewCell.swift; sourceTree = "<group>"; };
 		5A35D84228673248002D7315 /* EmptyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyTableViewCell.xib; sourceTree = "<group>"; };
 		5A36116E28855AAF00539F92 /* AgreementCheckButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementCheckButton.swift; sourceTree = "<group>"; };
@@ -188,6 +189,7 @@
 		5AA86D0A2761005D0067620C /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		5AA8D80428534B78002AC1ED /* SettingBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingBarButtonItem.swift; sourceTree = "<group>"; };
 		5AA8D80628534BA6002AC1ED /* SettingBarButtonItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingBarButtonItem.xib; sourceTree = "<group>"; };
+		5AADD934288A74FF00B85696 /* SettingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingModel.swift; sourceTree = "<group>"; };
 		5AAE346C2761D2BE00EE6A5D /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		5ABA13F1283CBBFE007AE4F0 /* CouponVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CouponVC.swift; sourceTree = "<group>"; };
 		5ABB95C12760F697003B4764 /* SignUpThirdVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpThirdVC.swift; sourceTree = "<group>"; };
@@ -392,6 +394,15 @@
 			path = Managers;
 			sourceTree = "<group>";
 		};
+		5AADD931288A4EC800B85696 /* Lists */ = {
+			isa = PBXGroup;
+			children = (
+				5A32A6DE28897CFE008A9611 /* AgreementModel.swift */,
+				5AADD934288A74FF00B85696 /* SettingModel.swift */,
+			);
+			path = Lists;
+			sourceTree = "<group>";
+		};
 		5AAE346B2761D2AE00EE6A5D /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -456,6 +467,7 @@
 				5A8BAB172788125300CFF908 /* Rooms */,
 				5A3BBBEA27EAFB4B00BA9E3F /* Members */,
 				5A98550C28450B8D0078B72C /* Coupons */,
+				5AADD931288A4EC800B85696 /* Lists */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -473,11 +485,10 @@
 			isa = PBXGroup;
 			children = (
 				5AC1CE7B2765D5E8009586B2 /* SignUpResponse.swift */,
+				5A8D9FF82836890B008FBD9F /* SignUpRequest.swift */,
 				5ACF0C9227673065003907E9 /* SignInResponse.swift */,
 				5A1C2FFA28000B1100487A16 /* ProfileResponse.swift */,
-				5A8D9FF82836890B008FBD9F /* SignUpRequest.swift */,
 				5AD3C8D5285B23F200ADA836 /* CertificateResponseRequest.swift */,
-				5A32A6DE28897CFE008A9611 /* AgreementRequest.swift */,
 			);
 			path = Auths;
 			sourceTree = "<group>";
@@ -684,12 +695,13 @@
 				5AA84FE1283F60240090C4E6 /* SearchIdFirstVC.swift in Sources */,
 				5A07BBAC283CD9C3006FD4B1 /* CouponHistoryTableViewCell.swift in Sources */,
 				5A9D31C0277C0B9900DCEAEA /* KeyChainManager.swift in Sources */,
+				5AADD935288A74FF00B85696 /* SettingModel.swift in Sources */,
 				5A8DF8F528449BE200AFF41F /* AddCouponReciverVC.swift in Sources */,
 				5A8BAB19278812AD00CFF908 /* SearchRoomResponse.swift in Sources */,
 				5AA22788285C41C100626793 /* AppVersionCheck.swift in Sources */,
 				5A453AFE27E9B25B006F0A1D /* RegisterStudyRoomFirstVC.swift in Sources */,
 				5AA84FE3283F604E0090C4E6 /* SearchPwFirstVC.swift in Sources */,
-				5A32A6DF28897CFE008A9611 /* AgreementRequest.swift in Sources */,
+				5A32A6DF28897CFE008A9611 /* AgreementModel.swift in Sources */,
 				5AD95160280A8D570038048F /* SearchStudyMemberResponse.swift in Sources */,
 				5AF63CE82859BC1900B7F8B9 /* RegisterCouponSecondVC.swift in Sources */,
 				5A98551028465DAF0078B72C /* RegisterCouponRequest.swift in Sources */,

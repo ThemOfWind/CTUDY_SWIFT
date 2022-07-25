@@ -7,9 +7,9 @@
 
 import Foundation
 import UIKit
+import CoreMedia
 
 class BasicVC: UIViewController, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
-    
     // left navigationBar item
     enum LeftItem {
         case none // nil
@@ -81,7 +81,7 @@ class BasicVC: UIViewController, UIGestureRecognizerDelegate, UINavigationContro
     }
     
     // anyItem click event
-    func AnyItemAction(sender: UIBarButtonItem) {
+    func anyItemAction(sender: UIBarButtonItem) {
         // custom action event
     }
     
@@ -180,7 +180,6 @@ class BasicVC: UIViewController, UIGestureRecognizerDelegate, UINavigationContro
         // leftItem
         switch self.leftItem {
         case .none:
-//            self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
             break
         case .backSystemDefault:
             self.navigationItem.backBarButtonItem = nil
@@ -211,9 +210,9 @@ class BasicVC: UIViewController, UIGestureRecognizerDelegate, UINavigationContro
             break
         case .titleGeneral(title: let title, isLargeTitles: let isLargeTitles):
             if (self.navigationController?.viewControllers.count ?? 0 > 1) {
-                self.navigationItem.title = title
                 self.navigationController?.navigationBar.prefersLargeTitles = isLargeTitles
                 self.navigationItem.largeTitleDisplayMode = .always
+                self.navigationItem.title = title
             }
         default:
             break
@@ -229,7 +228,7 @@ class BasicVC: UIViewController, UIGestureRecognizerDelegate, UINavigationContro
             //case .anyCustoms(items:, title: let title, rightSpaceCloseToDefault: let rightSpaceCloseToDefault):
         case .anyCustoms(items: let items, title: let title, rightSpaceCloseToDefault: let rightSpaceCloseToDefault):
             if (self.navigationController?.viewControllers.count ?? 0 > 1) {
-                self.navigationItem.setRightBarButtonItems(createAnyButtons(items: items, title: title, rightSpaceCloseToDefault: rightSpaceCloseToDefault, anyFn: AnyItemAction(sender:)), animated: true)
+                self.navigationItem.setRightBarButtonItems(createAnyButtons(items: items, title: title, rightSpaceCloseToDefault: rightSpaceCloseToDefault, anyFn: anyItemAction(sender:)), animated: true)
                 //                self.navigationItem.setRightBarButtonItems(createAnyButtons(items: items, title: title, rightSpaceCloseToDefault: rightSpaceCloseToDefault, anyFn: AnyItemAction(sender: items ?? [])), animated: true)
                 //                self.navigationItem.rightBarButtonItems = createAnyButtons(items: items, title: title, rightSpaceCloseToDefault: rightSpaceCloseToDefault, anyFn: AnyItemAction(sender:))
             }
@@ -254,8 +253,10 @@ class BasicVC: UIViewController, UIGestureRecognizerDelegate, UINavigationContro
     }
     
     fileprivate func reset() {
+        self.navigationController?.navigationBar.sizeToFit() // UIKit에 포함된 특정 View를 자체 내부 요구의 사이즈로 resize 해주는 함수
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationItem.largeTitleDisplayMode = .automatic
         self.navigationItem.title = ""
-        self.navigationController?.navigationBar.prefersLargeTitles = false
         self.navigationItem.backBarButtonItem = createEmptyButton()
         self.navigationItem.leftBarButtonItem = nil
         self.navigationItem.hidesBackButton = true
@@ -276,4 +277,5 @@ class BasicVC: UIViewController, UIGestureRecognizerDelegate, UINavigationContro
           
         return enable
     }
+    
 }

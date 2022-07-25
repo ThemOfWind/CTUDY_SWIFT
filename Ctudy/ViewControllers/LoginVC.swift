@@ -77,7 +77,6 @@ class LoginVC: BasicVC, UITextFieldDelegate {
         self.password.text = ""
         
         // navigationBar item
-        self.navigationController?.navigationBar.sizeToFit()
         self.leftItem = LeftItem.none
         self.titleItem = TitleItem.titleGeneral(title: "로그인", isLargeTitles: true)
         

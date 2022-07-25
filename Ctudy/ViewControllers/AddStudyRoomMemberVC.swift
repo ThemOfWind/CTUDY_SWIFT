@@ -51,7 +51,6 @@ class AddStudyRoomMemberVC: BasicVC, UITableViewDelegate, UITableViewDataSource,
     
     fileprivate func config() {
         // navigationbar item 설정
-        self.navigationController?.navigationBar.sizeToFit()
         leftItem = LeftItem.backGeneral
         titleItem = TitleItem.titleGeneral(title: "멤버 초대", isLargeTitles: true)
         

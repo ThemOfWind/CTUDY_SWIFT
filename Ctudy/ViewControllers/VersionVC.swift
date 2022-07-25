@@ -16,15 +16,14 @@ class VersionVC: BasicVC {
     var updateBtn = UIButton()
     
     // MARK: - override func
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         config()
     }
     
     // MARK: - fileprivate func
     fileprivate func config() {
         // navigationbar
-        self.navigationController?.navigationBar.sizeToFit() // UIKit에 포함된 특정 View를 자체 내부 요구의 사이즈로 resize 해주는 함수
         leftItem = LeftItem.backGeneral
         titleItem = TitleItem.titleGeneral(title: "버전정보", isLargeTitles: false)
         

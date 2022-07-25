@@ -52,7 +52,6 @@ class SearchPwThirdVC: BasicVC, UITextFieldDelegate{
     // MARK: - config func
     fileprivate func config() {
         // navigationbar item
-        self.navigationController?.navigationBar.sizeToFit()
         self.leftItem = LeftItem.none
         self.titleItem = TitleItem.titleGeneral(title: "새로운 비밀번호", isLargeTitles: true)
         

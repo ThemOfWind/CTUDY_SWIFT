@@ -35,17 +35,18 @@ class SettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
         return label
     }()
     // 셋팅 항목
-    let settingList = [
-        [ "id" : "profile", "text" : "프로필 설정", "color" : UIColor.black ]
-        , [ "id" : "username", "text" : "계정관리", "color" : UIColor.black ]
-        , [ "id" : "privacy", "text" : "개인정보 처리 방침", "color" : UIColor.black ]
-        , [ "id" : "service", "text" : "이용약관", "color" : UIColor.black ]
-        , [ "id" : "opensource", "text" : "오픈소스 라이센스 이용고지", "color" : UIColor.black ]
-        , [ "id" : "version", "text" : "버전정보", "color" : UIColor.black ]
-        , [ "id" : "logout", "text" : "로그아웃", "color" : UIColor.red ]
-    ]
+//    let settingList = [
+//        [ "id" : "profile", "text" : "프로필 설정", "color" : UIColor.black ]
+//        , [ "id" : "username", "text" : "계정관리", "color" : UIColor.black ]
+//        , [ "id" : "privacy", "text" : "개인정보 처리 방침", "color" : UIColor.black ]
+//        , [ "id" : "service", "text" : "이용약관", "color" : UIColor.black ]
+//        , [ "id" : "opensource", "text" : "오픈소스 라이센스 이용고지", "color" : UIColor.black ]
+//        , [ "id" : "version", "text" : "버전정보", "color" : UIColor.black ]
+//        , [ "id" : "logout", "text" : "로그아웃", "color" : UIColor.red ]
+//    ]
+    var settingList: Array<SettingModel> = []
     
-    // MARK: - override func
+    // MARK: - view load func
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         config()
@@ -54,9 +55,24 @@ class SettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     // MARK: - fileprivate func
     fileprivate func config() {
         // navigationbar
-        self.navigationController?.navigationBar.sizeToFit() // UIKit에 포함된 특정 View를 자체 내부 요구의 사이즈로 resize 해주는 함수
         leftItem = LeftItem.backGeneral
         titleItem = TitleItem.titleGeneral(title: "설정", isLargeTitles: true)
+        
+        // list 담기
+        let profile = SettingModel(id: "profile", text: "프로필 설정", color: "black", page: "UpdateProfileVC")
+        let username = SettingModel(id: "username", text: "계정관리", color: "black", page: "UpdatePasswordVC")
+        let privacy = SettingModel(id: "privacy", text: "개인정보 처리 방침", color: "black", page: "PrivacyVC")
+        let service = SettingModel(id: "service", text: "이용약관", color: "black", page: "ServiceVC")
+        let opensource = SettingModel(id: "opensource", text: "오픈소스 라이센스 이용고지", color: "black", page: "OpenSourceVC")
+        let version = SettingModel(id: "version", text: "버전정보", color: "black", page: "VersionVC")
+        let logout = SettingModel(id: "logout", text: "로그아웃", color: "red", page: "")
+        settingList.append(profile)
+        settingList.append(username)
+        settingList.append(privacy)
+        settingList.append(service)
+        settingList.append(opensource)
+        settingList.append(version)
+        settingList.append(logout)
 
         // 셀 리소스 파일 가져오기
         let settingCell = UINib(nibName: String(describing: SettingTableViewCell.self), bundle: nil)
@@ -142,47 +158,27 @@ class SettingVC: BasicVC, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("SettingVC - tableView() called / cellText: \(settingList[(indexPath as NSIndexPath).row]["text"] as! String)")
+//        print("SettingVC - tableView() called / cellText: \(settingList[(indexPath as NSIndexPath).row]["text"] as! String)")
         let cell = settingTableView.dequeueReusableCell(withIdentifier: "SettingTableViewCell", for: indexPath) as! SettingTableViewCell
         cell.selectionStyle = .none // 선택 block 없애기
         cell.tag = indexPath.row
-        cell.settingLabel.text = settingList[(indexPath as NSIndexPath).row]["text"] as! String
-        cell.settingLabel.textColor = settingList[(indexPath as NSIndexPath).row]["color"] as! UIColor
+//        cell.settingLabel.text = settingList[(indexPath as NSIndexPath).row]["text"] as! String
+//        cell.settingLabel.textColor = settingList[(indexPath as NSIndexPath).row]["color"] as! UIColor
+        cell.settingLabel.text = settingList[indexPath.row].text
+        cell.settingLabel.textColor = UIColor(named: settingList[indexPath.row].color)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch settingList[(indexPath as NSIndexPath).row]["id"] as! String {
-        case "profile":
-            // 프로필설정 화면으로 이동
-            self.performSegue(withIdentifier: "UpdateProfileVC", sender: self)
-            break
-        case "username":
-            // 계정관리 화면으로 이동
-            self.performSegue(withIdentifier: "UpdatePasswordVC", sender: self)
-            break
-        case "privacy":
-            // 개인정보 처리 방침 화면으로 이동
-            self.performSegue(withIdentifier: "PrivacyVC", sender: self)
-            break
-        case "service":
-            // 이용약관 화면으로 이동
-            self.performSegue(withIdentifier: "ServiceVC", sender: self)
-            break
-        case "opensource":
-            // 오픈소스 라이센스 이용고지 화면으로 이동
-            self.performSegue(withIdentifier: "OpenSourceVC", sender: self)
-            break
-        case "version":
-            // 버전정보 화면으로 이동
-            self.performSegue(withIdentifier: "VersionVC", sender: self)
-            break
+        // switch settingList[(indexPath as NSIndexPath).row]["id"] as! String {
+        switch settingList[indexPath.row].id {
         case "logout":
-            // 로그아웃 (Start화면으로 이동)
+            //로그아웃 (Start화면으로 이동)
             logout()
             break
         default:
-            break
+            // 해당화면으로 이동 (프로필설정, 계정관리, 개인정보 처리 방침, 이용약관, 오픈소스 라이센스 이용고지, 버전정보)
+            self.performSegue(withIdentifier: settingList[indexPath.row].page, sender: self)
         }
     }
 }

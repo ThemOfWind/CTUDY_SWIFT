@@ -47,7 +47,6 @@ class SignUpThirdVC: BasicVC, UITextFieldDelegate{
     var userImage: Data?
     var registerName: String!
     var registerEmail: String!
-    
     var memberName: String?
     var memberUsername: String?
     var usernameOKFlag: Bool = false
@@ -56,7 +55,6 @@ class SignUpThirdVC: BasicVC, UITextFieldDelegate{
     // MARK: - view load func
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("SignUpThirdVC - viewDidLoad() called")
         self.config()
     }
     
@@ -71,7 +69,6 @@ class SignUpThirdVC: BasicVC, UITextFieldDelegate{
     
     fileprivate func config() {
         // navigationbar item 설정
-        self.navigationController?.navigationBar.sizeToFit()
         self.leftItem = LeftItem.backGeneral
         self.titleItem = TitleItem.titleGeneral(title: "회원가입", isLargeTitles: true)
         
@@ -140,7 +137,7 @@ class SignUpThirdVC: BasicVC, UITextFieldDelegate{
                 // 회원가입 완료 페이지 띄우기
                 self.memberName = memberData.name
                 self.memberUsername = memberData.username
-                self.performSegue(withIdentifier: "SignUpSuccessVC", sender: nil)
+                self.performSegue(withIdentifier: "SignUpSuccessVC", sender: self)
             case .failure(let error):
                 print("SignUpThirdVC - postSignUp.failure / error: \(error.rawValue)")
                 self.view.makeToast(error.rawValue, duration: 1.0, position: .center)

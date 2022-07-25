@@ -18,15 +18,10 @@ class SignUpSuccessVC: BasicVC {
     // MARK: - overrid func
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("SignUpSuccessVC - viewDidLoad() calld")
         
         // navigationBar setting
-        self.navigationController?.navigationBar.sizeToFit()
         self.leftItem = LeftItem.none
-//        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
-        // navigationBar left item
-//        self.navigationItem.leftBarButtonItem = nil
-//        self.navigationItem.hidesBackButton = true
+        self.titleItem = TitleItem.none
         
         // btn ui
         self.goToStartBtn.tintColor = .white
