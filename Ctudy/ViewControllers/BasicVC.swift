@@ -252,11 +252,14 @@ class BasicVC: UIViewController, UIGestureRecognizerDelegate, UINavigationContro
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationItem.title = ""
+    }
+    
     fileprivate func reset() {
         self.navigationController?.navigationBar.sizeToFit() // UIKit에 포함된 특정 View를 자체 내부 요구의 사이즈로 resize 해주는 함수
         self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationItem.largeTitleDisplayMode = .automatic
-        self.navigationItem.title = ""
         self.navigationItem.backBarButtonItem = createEmptyButton()
         self.navigationItem.leftBarButtonItem = nil
         self.navigationItem.hidesBackButton = true
