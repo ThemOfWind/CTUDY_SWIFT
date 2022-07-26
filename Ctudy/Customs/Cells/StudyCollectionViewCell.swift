@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 class StudyCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var roomStackViewCell: UIStackView!
+    @IBOutlet weak var roomViewCell: UIView!
     @IBOutlet weak var roomImg: UIImageView!
     @IBOutlet weak var roomName: UILabel!
     @IBOutlet weak var roomMasterImg: UIImageView!
@@ -21,9 +21,9 @@ class StudyCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         
         // room Cell
-        self.roomStackViewCell.layer.cornerRadius = 10
-        self.roomStackViewCell.layer.borderWidth = 1
-        self.roomStackViewCell.layer.borderColor = COLOR.BORDER_COLOR.cgColor
+        self.roomViewCell.layer.cornerRadius = 10
+        self.roomViewCell.layer.borderWidth = 1
+        self.roomViewCell.layer.borderColor = COLOR.BORDER_COLOR.cgColor
         
         // room lmg
         self.roomImg.backgroundColor = COLOR.BASIC_BACKGROUD_COLOR
