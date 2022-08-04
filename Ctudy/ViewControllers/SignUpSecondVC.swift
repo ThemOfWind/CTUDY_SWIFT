@@ -23,8 +23,13 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIImagePickerControllerDeleg
     var imageFlag: Bool = false // image 초기화 flag
     
     // MARK: - view load func
-    override func viewDidLoad() {
-        super.viewDidLoad()
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        self.config()
+//    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.config()
     }
     
@@ -46,9 +51,8 @@ class SignUpSecondVC: BasicVC, UITextFieldDelegate, UIImagePickerControllerDeleg
         
         // button ui
         self.nextBtn.tintColor = .white
-        self.nextBtn.backgroundColor = COLOR.DISABLE_COLOR
         self.nextBtn.layer.cornerRadius = 10
-        self.nextBtn.isEnabled = false
+        nextBtnAbleChecked()
         
         // imageView ui
         self.userImg.layer.cornerRadius = self.userImg.layer.bounds.height / 2
