@@ -40,13 +40,15 @@ class ProfileVC: UIViewController, UIGestureRecognizerDelegate {
     }()
     
     // MARK: - view load func
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.config()
     }
     
     // MARK: - fileprivate func
     fileprivate func config() {
+        // 화면 swipe 기능 막기
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
         self.navigationController?.navigationBar.sizeToFit()
         
         // profile
@@ -84,8 +86,6 @@ class ProfileVC: UIViewController, UIGestureRecognizerDelegate {
         
         // gesture 연결
         self.view.addGestureRecognizer(tabGesture)
-        // 화면 swipe 기능 막기
-        self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     
     fileprivate func onStartActivityIndicator() {
@@ -124,7 +124,7 @@ class ProfileVC: UIViewController, UIGestureRecognizerDelegate {
     
     // MARK: - UIGestureRecognizer delegate
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        print("gestureRecognizer: \(gestureRecognizer)")
+//        print("gestureRecognizer: \(gestureRecognizer)")
         if gestureRecognizer == tabGesture {
             if touch.view?.isDescendant(of: profileImg) == true {
                 view.endEditing(true)

@@ -249,6 +249,7 @@ class BasicVC: UIViewController, UIGestureRecognizerDelegate, UINavigationContro
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        // 화면 swipe 기능 막기
         self.navigationController?.interactivePopGestureRecognizer?.delegate = self
     }
     

@@ -285,7 +285,7 @@
 			children = (
 				5AC1CE7A2765D4DD009586B2 /* Models */,
 				5ADDFC772765B970001291DD /* API */,
-				5A79F9A8275F885100B061AF /* ViewControllers */,
+				5A79F9A8275F885100B061AF /* Views */,
 				5AAE346B2761D2AE00EE6A5D /* Utils */,
 				5A4CD0DA27E895CB00F6C829 /* Customs */,
 				5A58EE99275F7E83000A1A39 /* AppDelegate.swift */,
@@ -311,7 +311,7 @@
 			path = NavigationBarItems;
 			sourceTree = "<group>";
 		};
-		5A79F9A8275F885100B061AF /* ViewControllers */ = {
+		5A79F9A8275F885100B061AF /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				5A0AD87627EC3D250038FD07 /* BasicVC.swift */,
@@ -353,7 +353,7 @@
 				5A60DFA228571CBB00791779 /* UpdatePasswordVC.swift */,
 				5A7BC0FA284BA6250077F10F /* UpdateStudyRoomVC.swift */,
 			);
-			path = ViewControllers;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		5A8BAB172788125300CFF908 /* Rooms */ = {
