@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="107" id="HZm-rD-VJr" customClass="AgreementTableViewCell" customModule="Ctudy" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="485" height="107"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HZm-rD-VJr" id="xet-h8-hY7">
+                <rect key="frame" x="0.0" y="0.0" width="485" height="107"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ad-UH-Qrl" customClass="AgreementCheckButton" customModule="Ctudy" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="36" width="35" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="35" id="ajt-QF-8mf"/>
+                            <constraint firstAttribute="height" constant="35" id="rk6-qg-vgW"/>
+                        </constraints>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain"/>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k6W-Gf-AcC">
+                        <rect key="frame" x="42" y="53.5" width="398" height="0.0"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FPY-9t-wpM" customClass="GoToNextViewButton" customModule="Ctudy" customModuleProvider="target">
+                        <rect key="frame" x="450" y="36" width="35" height="35"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="35" id="2WF-qH-I3H"/>
+                            <constraint firstAttribute="height" constant="35" id="494-Jx-jBo"/>
+                        </constraints>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain"/>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="k6W-Gf-AcC" firstAttribute="centerY" secondItem="xet-h8-hY7" secondAttribute="centerY" id="2EZ-gX-ULS"/>
+                    <constraint firstItem="FPY-9t-wpM" firstAttribute="centerY" secondItem="xet-h8-hY7" secondAttribute="centerY" id="BN0-Lv-4Bo"/>
+                    <constraint firstAttribute="trailing" secondItem="FPY-9t-wpM" secondAttribute="trailing" id="NEh-iu-Ve7"/>
+                    <constraint firstItem="k6W-Gf-AcC" firstAttribute="leading" secondItem="0ad-UH-Qrl" secondAttribute="trailing" constant="7" id="a8V-iN-Ljr"/>
+                    <constraint firstItem="0ad-UH-Qrl" firstAttribute="leading" secondItem="xet-h8-hY7" secondAttribute="leading" id="dbp-lJ-jqh"/>
+                    <constraint firstItem="FPY-9t-wpM" firstAttribute="leading" secondItem="k6W-Gf-AcC" secondAttribute="trailing" constant="10" id="oZe-IK-vzw"/>
+                    <constraint firstItem="0ad-UH-Qrl" firstAttribute="centerY" secondItem="xet-h8-hY7" secondAttribute="centerY" id="peu-Pa-iW3"/>
+                </constraints>
+            </tableViewCellContentView>
+            <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+            <connections>
+                <outlet property="agreementCheckBtn" destination="0ad-UH-Qrl" id="aRc-ZG-quv"/>
+                <outlet property="agreementLabel" destination="k6W-Gf-AcC" id="SiR-4s-370"/>
+                <outlet property="goToViewBtn" destination="FPY-9t-wpM" id="n5Q-Yk-wNT"/>
+            </connections>
+            <point key="canvasLocation" x="164.49275362318841" y="86.71875"/>
+        </tableViewCell>
+    </objects>
+</document>
