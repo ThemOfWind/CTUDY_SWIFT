@@ -1,7 +1,13 @@
 # CTUDY_SWIFT
 
 ## 쿠폰 스터디 앱
-## Swift, UIKit, Alamofire, MVC 패턴 개발
+
+<br>
+
+### 개발 환경
+#### Swift, UIKit, Alamofire, MVC 패턴
+
+<br>
 
 ### 구현 기능
 #### [계정]
